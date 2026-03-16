@@ -26,8 +26,9 @@
     - Keep sidebar open when editing issues in large viewports
   - Wizard:
     - Add analytics sharing step
-    - Mark as done after Kit step, without waiting for the background job.
-    - Update Welcome kit with OWASP Top 10:2025 methodology
+    - Mark as done after Kit step, without waiting for the background job
+    - OWASP kit: add with 3 report template variations
+    - Welcome kit: update with OWASP Top 10:2025 methodology
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:

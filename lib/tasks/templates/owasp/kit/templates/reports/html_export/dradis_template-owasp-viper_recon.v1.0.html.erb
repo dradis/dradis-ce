@@ -1,0 +1,950 @@
+<%#
+  Viper Recon — OWASP HTML Report Template v1.0
+  A modern, interactive single-page explorer for OWASP-aligned findings.
+  Self-contained: Bootstrap 5 CDN, inline CSS, vanilla JS, pure CSS/SVG charts.
+%>
+<%
+  # ── Pre-compute data used throughout the template ──────────────────────
+
+  impact_map     = { 'Very High' => 5, 'High' => 4, 'Moderate' => 3, 'Low' => 2, 'Very Low' => 1 }
+  likelihood_map = { 'Very High' => 5, 'High' => 4, 'Moderate' => 3, 'Low' => 2, 'Very Low' => 1 }
+
+  # Compute risk from Impact x Likelihood (the Risk field is a Liquid template,
+  # not a plain value, so we calculate it here in ERB).
+  compute_risk = ->(issue) {
+    imp = impact_map[issue.fields['Impact'].to_s.strip] || 0
+    lik = likelihood_map[issue.fields['Likelihood'].to_s.strip] || 0
+    score = imp * lik
+    case
+    when score >= 20 then 'Critical'
+    when score >= 15 then 'High'
+    when score >= 8  then 'Moderate'
+    when score >= 3  then 'Low'
+    else                  'Info'
+    end
+  }
+
+  compute_risk_score = ->(issue) {
+    imp = impact_map[issue.fields['Impact'].to_s.strip] || 0
+    lik = likelihood_map[issue.fields['Likelihood'].to_s.strip] || 0
+    imp * lik
+  }
+
+  risk_levels  = %w[Critical High Moderate Low Info]
+  risk_colors  = { 'Critical' => '#ef4444', 'High' => '#f97316', 'Moderate' => '#eab308', 'Low' => '#3b82f6', 'Info' => '#6b7280' }
+
+  risk_counts  = Hash.new(0)
+  domain_counts = Hash.new(0)
+  status_counts = Hash.new(0)
+  host_issue_counts = Hash.new(0)
+
+  issues.each do |issue|
+    risk = compute_risk.(issue)
+    risk_counts[risk] += 1
+
+    domain = issue.fields['OWASP Domain'].to_s.strip
+    domain = 'Other' if domain.empty?
+    domain_counts[domain] += 1
+
+    status = issue.fields['Remediation Status'].to_s.strip
+    status = 'Open' if status.empty?
+    status_counts[status] += 1
+
+    issue.evidence.each do |ev|
+      host_issue_counts[ev.node.label] += 1
+    end
+  end
+
+  total_issues   = issues.length
+  critical_count = risk_counts['Critical']
+  open_count     = status_counts['Open']
+  hosts_affected = host_issue_counts.keys.length
+
+  # Sorted issues: Critical first, Info last
+  sorted_issues = issues.sort_by { |i| risk_levels.index(compute_risk.(i)) || 999 }
+
+  # Domain donut chart data
+  domain_colors = { 'Web' => '#3b82f6', 'API' => '#8b5cf6', 'Mobile' => '#10b981', 'Other' => '#9ca3af' }
+  domain_total  = [total_issues, 1].max.to_f
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Viper Recon — OWASP Security Assessment Report</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YcnS/1p8MFPci2M8K0ewP5sMzLB1yKSiO1sG"
+        crossorigin="anonymous">
+  <style>
+    /* ── Base & Typography ─────────────────────────────────────── */
+    :root {
+      --viper-primary: #3b82f6;
+      --viper-primary-dark: #2563eb;
+      --viper-bg: #f8fafc;
+      --viper-card: #ffffff;
+      --viper-text: #1e293b;
+      --viper-muted: #64748b;
+      --viper-border: #e2e8f0;
+      --risk-critical: #ef4444;
+      --risk-high: #f97316;
+      --risk-moderate: #eab308;
+      --risk-low: #3b82f6;
+      --risk-info: #6b7280;
+      --domain-web: #3b82f6;
+      --domain-api: #8b5cf6;
+      --domain-mobile: #10b981;
+      --domain-other: #9ca3af;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--viper-bg);
+      color: var(--viper-text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4, h5, h6 { font-weight: 700; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0; }
+
+    a { color: var(--viper-primary); text-decoration: none; }
+    a:hover { color: var(--viper-primary-dark); text-decoration: underline; }
+
+    /* ── Sticky Navigation ─────────────────────────────────────── */
+    .viper-nav {
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.85);
+      border-bottom: 1px solid var(--viper-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .viper-nav .nav-inner {
+      align-items: center;
+      display: flex;
+      gap: 1.5rem;
+      margin: 0 auto;
+      max-width: 1200px;
+      padding: 0.75rem 1.5rem;
+    }
+    .viper-nav .brand {
+      color: var(--viper-primary);
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .viper-nav .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .viper-nav .nav-links a {
+      color: var(--viper-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .viper-nav .nav-links a:hover { color: var(--viper-primary); text-decoration: none; }
+
+    /* ── Hero Header ───────────────────────────────────────────── */
+    .viper-hero {
+      background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #3b82f6 100%);
+      color: #fff;
+      padding: 3rem 1.5rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .viper-hero::before {
+      background: repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,0.03) 0px,
+        rgba(255,255,255,0.03) 2px,
+        transparent 2px,
+        transparent 20px
+      );
+      content: '';
+      inset: 0;
+      position: absolute;
+    }
+    .viper-hero .hero-inner {
+      margin: 0 auto;
+      max-width: 1200px;
+      position: relative;
+      z-index: 1;
+    }
+    .viper-hero h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
+    .viper-hero .subtitle {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+    .viper-hero .stat-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      margin-top: 2rem;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .stat-card .stat-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .stat-card .stat-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      margin-top: 0.35rem;
+      opacity: 0.75;
+      text-transform: uppercase;
+    }
+
+    /* ── Sections ──────────────────────────────────────────────── */
+    .viper-section {
+      margin: 0 auto;
+      max-width: 1200px;
+      padding: 2.5rem 1.5rem 0;
+    }
+    .section-title {
+      border-bottom: 2px solid var(--viper-primary);
+      display: inline-block;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.3rem;
+    }
+    .card-custom {
+      background: var(--viper-card);
+      border: 1px solid var(--viper-border);
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      padding: 1.5rem;
+    }
+
+    /* ── Risk Stacked Bar ──────────────────────────────────────── */
+    .stacked-bar {
+      border-radius: 8px;
+      display: flex;
+      height: 2rem;
+      overflow: hidden;
+      width: 100%;
+    }
+    .stacked-bar .bar-segment {
+      align-items: center;
+      color: #fff;
+      display: flex;
+      font-size: 0.75rem;
+      font-weight: 700;
+      justify-content: center;
+      min-width: 0;
+      transition: width 0.6s ease;
+    }
+
+    .risk-card-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      margin-top: 1.25rem;
+    }
+    .risk-card {
+      border-radius: 10px;
+      border-top: 4px solid;
+      padding: 1rem;
+      text-align: center;
+    }
+    .risk-card .risk-count {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .risk-card .risk-label {
+      color: var(--viper-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: 0.25rem;
+      text-transform: uppercase;
+    }
+
+    /* ── Domain Donut ──────────────────────────────────────────── */
+    .donut-wrapper {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+    .donut-legend {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .donut-legend li {
+      align-items: center;
+      display: flex;
+      font-size: 0.95rem;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .donut-legend .swatch {
+      border-radius: 4px;
+      display: inline-block;
+      height: 14px;
+      width: 14px;
+    }
+
+    /* ── Remediation Progress ──────────────────────────────────── */
+    .progress-row {
+      align-items: center;
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .progress-row .progress-label {
+      font-weight: 600;
+      min-width: 160px;
+    }
+    .progress-row .progress-track {
+      background: #e2e8f0;
+      border-radius: 6px;
+      flex: 1;
+      height: 1.25rem;
+      overflow: hidden;
+    }
+    .progress-row .progress-fill {
+      border-radius: 6px;
+      height: 100%;
+      transition: width 0.8s ease;
+    }
+    .progress-row .progress-pct {
+      color: var(--viper-muted);
+      font-size: 0.85rem;
+      font-weight: 700;
+      min-width: 3rem;
+      text-align: right;
+    }
+
+    /* ── Filter Buttons ────────────────────────────────────────── */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .filter-btn {
+      background: var(--viper-card);
+      border: 1px solid var(--viper-border);
+      border-radius: 8px;
+      color: var(--viper-muted);
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.4rem 1rem;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--viper-primary);
+      border-color: var(--viper-primary);
+      color: #fff;
+    }
+
+    /* ── Issue Cards ───────────────────────────────────────────── */
+    .issue-card {
+      background: var(--viper-card);
+      border: 1px solid var(--viper-border);
+      border-left: 5px solid var(--risk-info);
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      opacity: 1;
+      overflow: hidden;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .issue-card.hidden-card {
+      display: none;
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    .issue-card.risk-Critical { border-left-color: var(--risk-critical); }
+    .issue-card.risk-High     { border-left-color: var(--risk-high); }
+    .issue-card.risk-Moderate  { border-left-color: var(--risk-moderate); }
+    .issue-card.risk-Low      { border-left-color: var(--risk-low); }
+    .issue-card.risk-Info     { border-left-color: var(--risk-info); }
+
+    .issue-header {
+      align-items: flex-start;
+      cursor: pointer;
+      display: flex;
+      gap: 0.75rem;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      user-select: none;
+    }
+    .issue-header:hover { background: #f1f5f9; }
+    .issue-callsign {
+      color: var(--viper-muted);
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .issue-title {
+      flex: 1;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .badge-group { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .badge-pill {
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      padding: 0.2rem 0.6rem;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .badge-risk-Critical { background: #fef2f2; color: var(--risk-critical); }
+    .badge-risk-High     { background: #fff7ed; color: var(--risk-high); }
+    .badge-risk-Moderate  { background: #fefce8; color: var(--risk-moderate); }
+    .badge-risk-Low      { background: #eff6ff; color: var(--risk-low); }
+    .badge-risk-Info     { background: #f1f5f9; color: var(--risk-info); }
+    .badge-domain        { background: #f0f9ff; color: #0369a1; }
+    .badge-owasp         { background: #faf5ff; color: #7c3aed; }
+    .badge-status-Open              { background: #fef2f2; color: #dc2626; }
+    .badge-status-Remediated        { background: #f0fdf4; color: #16a34a; }
+    .badge-status-Partially         { background: #fefce8; color: #ca8a04; }
+    .badge-status-Accepted          { background: #f1f5f9; color: #475569; }
+
+    .chevron {
+      color: var(--viper-muted);
+      font-size: 1.2rem;
+      transition: transform 0.25s;
+    }
+    .issue-card.expanded .chevron { transform: rotate(90deg); }
+
+    .issue-body {
+      border-top: 1px solid var(--viper-border);
+      display: none;
+      padding: 1.25rem 1.5rem;
+    }
+    .issue-card.expanded .issue-body { display: block; }
+
+    .issue-body h4 {
+      color: var(--viper-muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+      margin-top: 1.25rem;
+      text-transform: uppercase;
+    }
+    .issue-body h4:first-child { margin-top: 0; }
+
+    .issue-description-short {
+      color: var(--viper-muted);
+      font-size: 0.9rem;
+      padding: 0 1.5rem 1rem;
+    }
+
+    .evidence-table {
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      width: 100%;
+    }
+    .evidence-table th {
+      background: #f8fafc;
+      border-bottom: 2px solid var(--viper-border);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+      text-transform: uppercase;
+    }
+    .evidence-table td {
+      border-bottom: 1px solid var(--viper-border);
+      padding: 0.6rem 0.75rem;
+      vertical-align: top;
+    }
+
+    /* ── Host Cards ────────────────────────────────────────────── */
+    .host-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    .host-card {
+      align-items: center;
+      background: var(--viper-card);
+      border: 1px solid var(--viper-border);
+      border-radius: 10px;
+      display: flex;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+    }
+    .host-card .host-count {
+      background: linear-gradient(135deg, var(--viper-primary), #60a5fa);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 800;
+      height: 2.5rem;
+      line-height: 2.5rem;
+      min-width: 2.5rem;
+      text-align: center;
+    }
+    .host-card .host-label {
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-all;
+    }
+
+    /* ── Footer ────────────────────────────────────────────────── */
+    .viper-footer {
+      border-top: 1px solid var(--viper-border);
+      color: var(--viper-muted);
+      font-size: 0.85rem;
+      margin-top: 3rem;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    .viper-footer .tagline {
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── Print ─────────────────────────────────────────────────── */
+    @media print {
+      .viper-nav { display: none; }
+      .filter-bar { display: none; }
+      .issue-card.hidden-card { display: block !important; opacity: 1 !important; }
+      .issue-body { display: block !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     STICKY NAVIGATION
+     ═══════════════════════════════════════════════════════════════ -->
+<nav class="viper-nav">
+  <div class="nav-inner">
+    <span class="brand">Viper Recon</span>
+    <ul class="nav-links">
+      <li><a href="#risk-overview">Risk</a></li>
+      <li><a href="#domains">Domains</a></li>
+      <li><a href="#remediation">Remediation</a></li>
+      <li><a href="#findings">Findings</a></li>
+      <li><a href="#hosts">Hosts</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     HERO HEADER
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="viper-hero">
+  <div class="hero-inner">
+    <h1>OWASP Security Assessment</h1>
+    <p class="subtitle">Generated by <%= h title %></p>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-value" data-counter="<%= total_issues %>">0</div>
+        <div class="stat-label">Total Findings</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" data-counter="<%= critical_count %>" style="color: #fca5a5;">0</div>
+        <div class="stat-label">Critical</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" data-counter="<%= open_count %>" style="color: #fde68a;">0</div>
+        <div class="stat-label">Open</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" data-counter="<%= hosts_affected %>">0</div>
+        <div class="stat-label">Hosts Affected</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     RISK OVERVIEW
+     ═══════════════════════════════════════════════════════════════ -->
+<section id="risk-overview" class="viper-section">
+  <h2 class="section-title">Risk Overview</h2>
+  <div class="card-custom">
+    <% bar_total = [total_issues, 1].max.to_f %>
+    <div class="stacked-bar">
+      <% risk_levels.each do |level| %>
+        <% pct = (risk_counts[level] / bar_total * 100).round(1) %>
+        <% next if pct == 0 %>
+        <div class="bar-segment" style="width: <%= pct %>%; background: <%= risk_colors[level] %>;">
+          <% if pct >= 6 %><%= risk_counts[level] %><% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="risk-card-grid">
+      <% risk_levels.each do |level| %>
+        <div class="risk-card card-custom" style="border-top-color: <%= risk_colors[level] %>;">
+          <div class="risk-count" style="color: <%= risk_colors[level] %>;"><%= risk_counts[level] %></div>
+          <div class="risk-label"><%= level %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     DOMAIN BREAKDOWN (SVG Donut)
+     ═══════════════════════════════════════════════════════════════ -->
+<section id="domains" class="viper-section">
+  <h2 class="section-title">Domain Breakdown</h2>
+  <div class="card-custom">
+    <div class="donut-wrapper">
+      <%
+        # Build SVG donut chart segments
+        donut_radius = 70
+        donut_cx = 100
+        donut_cy = 100
+        donut_stroke = 30
+        circumference = 2 * Math::PI * donut_radius
+        offset = 0.0
+        donut_segments = []
+
+        domain_counts.each do |domain, count|
+          pct = count / domain_total
+          dash = circumference * pct
+          gap  = circumference - dash
+          color = domain_colors[domain] || '#9ca3af'
+          donut_segments << { domain: domain, count: count, pct: pct, dash: dash, gap: gap, offset: offset, color: color }
+          offset += dash
+        end
+      %>
+      <svg width="200" height="200" viewBox="0 0 200 200" role="img" aria-label="Domain distribution donut chart">
+        <% donut_segments.each do |seg| %>
+          <circle cx="<%= donut_cx %>" cy="<%= donut_cy %>" r="<%= donut_radius %>"
+                  fill="none"
+                  stroke="<%= seg[:color] %>"
+                  stroke-width="<%= donut_stroke %>"
+                  stroke-dasharray="<%= seg[:dash].round(2) %> <%= seg[:gap].round(2) %>"
+                  stroke-dashoffset="<%= (-seg[:offset]).round(2) %>"
+                  transform="rotate(-90 <%= donut_cx %> <%= donut_cy %>)" />
+        <% end %>
+        <text x="<%= donut_cx %>" y="<%= donut_cy - 6 %>" text-anchor="middle" font-size="28" font-weight="800" fill="#1e293b"><%= total_issues %></text>
+        <text x="<%= donut_cx %>" y="<%= donut_cy + 14 %>" text-anchor="middle" font-size="11" font-weight="600" fill="#64748b">ISSUES</text>
+      </svg>
+
+      <ul class="donut-legend">
+        <% domain_counts.each do |domain, count| %>
+          <li>
+            <span class="swatch" style="background: <%= domain_colors[domain] || '#9ca3af' %>;"></span>
+            <strong><%= h domain %></strong> — <%= count %> (<%= (count / domain_total * 100).round(1) %>%)
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     REMEDIATION PROGRESS
+     ═══════════════════════════════════════════════════════════════ -->
+<section id="remediation" class="viper-section">
+  <h2 class="section-title">Remediation Progress</h2>
+  <div class="card-custom">
+    <%
+      rem_statuses = ['Remediated', 'In Progress', 'Open', 'Partially Remediated', 'Accepted Risk']
+      rem_colors   = { 'Remediated' => '#22c55e', 'In Progress' => '#f97316', 'Open' => '#ef4444', 'Partially Remediated' => '#eab308', 'Accepted Risk' => '#64748b' }
+      rem_total    = [total_issues, 1].max.to_f
+    %>
+    <% rem_statuses.each do |st| %>
+      <% count = status_counts[st] %>
+      <% pct = (count / rem_total * 100).round(1) %>
+      <div class="progress-row">
+        <span class="progress-label"><%= st %></span>
+        <div class="progress-track">
+          <div class="progress-fill" style="width: <%= pct %>%; background: <%= rem_colors[st] || '#94a3b8' %>;"></div>
+        </div>
+        <span class="progress-pct"><%= count %> (<%= pct %>%)</span>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FINDINGS
+     ═══════════════════════════════════════════════════════════════ -->
+<section id="findings" class="viper-section">
+  <h2 class="section-title">Findings</h2>
+
+  <!-- Filter bar -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <% risk_levels.each do |level| %>
+      <% next if risk_counts[level] == 0 %>
+      <button class="filter-btn" data-filter="risk-<%= level %>"><%= level %></button>
+    <% end %>
+    <% domain_counts.keys.sort.each do |domain| %>
+      <button class="filter-btn" data-filter="domain-<%= domain.downcase %>"><%= h domain %></button>
+    <% end %>
+  </div>
+
+  <!-- Issue cards -->
+  <% sorted_issues.each_with_index do |issue, idx| %>
+    <%
+      risk   = compute_risk.(issue)
+      domain = issue.fields['OWASP Domain'].to_s.strip.presence || 'Other'
+      owasp  = issue.fields['OWASP Top 10'].to_s.strip
+      status = issue.fields['Remediation Status'].to_s.strip.presence || 'Open'
+      status_key = status.split(' ').first  # "Partially", "Accepted", "Open", "Remediated"
+      callsign = "VIPER-%03d" % (idx + 1)
+      visible_evidence = issue.evidence.select { |ev| ev.fields['Show'] == 'Yes' }
+    %>
+    <div class="issue-card risk-<%= risk %>"
+         data-risk="<%= risk %>"
+         data-domain="<%= domain.downcase %>"
+         id="issue-<%= issue.id %>">
+
+      <div class="issue-header" data-behavior="toggle-issue">
+        <span class="issue-callsign"><%= callsign %></span>
+        <span class="issue-title"><%= h issue.fields['Title'] %></span>
+        <div class="badge-group">
+          <% if owasp.present? %>
+            <span class="badge-pill badge-owasp"><%= h owasp %></span>
+          <% end %>
+          <span class="badge-pill badge-domain"><%= h domain %></span>
+          <span class="badge-pill badge-risk-<%= risk %>"><%= risk %></span>
+          <span class="badge-pill badge-status-<%= status_key %>"><%= h status %></span>
+        </div>
+        <span class="chevron">&#9654;</span>
+      </div>
+
+      <% desc_short = issue.fields['Description Short'].to_s.strip %>
+      <% if desc_short.present? %>
+        <div class="issue-description-short"><%= h desc_short %></div>
+      <% end %>
+
+      <div class="issue-body">
+        <% desc_long = issue.fields['Description Long'].to_s.strip %>
+        <% if desc_long.present? %>
+          <h4>Description</h4>
+          <div><%= markup(desc_long, liquid: true) %></div>
+        <% end %>
+
+        <% impact = issue.fields['Impact'].to_s.strip %>
+        <% likelihood = issue.fields['Likelihood'].to_s.strip %>
+        <% risk_score = compute_risk_score.(issue) %>
+        <% if impact.present? || likelihood.present? %>
+          <h4>Risk Assessment</h4>
+          <table class="evidence-table">
+            <thead>
+              <tr>
+                <% if impact.present? %><th>Impact</th><% end %>
+                <% if likelihood.present? %><th>Likelihood</th><% end %>
+                <th>Risk Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <% if impact.present? %><td><%= h impact %></td><% end %>
+                <% if likelihood.present? %><td><%= h likelihood %></td><% end %>
+                <td><%= risk_score %></td>
+              </tr>
+            </tbody>
+          </table>
+        <% end %>
+
+        <% references = issue.fields['References'].to_s.strip %>
+        <% if references.present? %>
+          <h4>References</h4>
+          <div><%= markup(references, liquid: true) %></div>
+        <% end %>
+
+        <% if visible_evidence.any? %>
+          <h4>Evidence (<%= visible_evidence.length %> host<%= visible_evidence.length == 1 ? '' : 's' %>)</h4>
+          <table class="evidence-table">
+            <thead>
+              <tr>
+                <th style="width: 25%;">Host</th>
+                <th>Output</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% visible_evidence.each do |evidence| %>
+                <tr>
+                  <td><strong><%= h evidence.node.label %></strong></td>
+                  <td><%= markup(evidence.fields['Output'], liquid: true) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     AFFECTED HOSTS
+     ═══════════════════════════════════════════════════════════════ -->
+<section id="hosts" class="viper-section">
+  <h2 class="section-title">Affected Hosts</h2>
+  <div class="host-grid">
+    <% host_issue_counts.sort_by { |_label, count| -count }.each do |label, count| %>
+      <div class="host-card">
+        <div class="host-count"><%= count %></div>
+        <div class="host-label"><%= h label %></div>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PRO-ONLY: CONCLUSIONS & APPENDIX
+     ═══════════════════════════════════════════════════════════════ -->
+<% if defined?(Dradis::Pro) %>
+  <section id="conclusions" class="viper-section">
+    <h2 class="section-title">Conclusions &amp; Recommendations</h2>
+    <div class="card-custom">
+      <% content_service.all_content_blocks.each do |block| %>
+        <% if block.fields['Type'] == 'Conclusions' %>
+          <%= markup(block.fields['Description'], liquid: true) %>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+
+  <section id="appendix" class="viper-section">
+    <h2 class="section-title">Appendix</h2>
+    <% content_service.all_content_blocks.each do |block| %>
+      <% if block.fields['Type'] == 'Appendix' %>
+        <div class="card-custom" style="margin-bottom: 1rem;">
+          <h3><%= markup(block.fields['Title'], liquid: true) %></h3>
+          <%= markup(block.fields['Description'], liquid: true) %>
+        </div>
+      <% end %>
+    <% end %>
+  </section>
+<% end %>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════════════════════ -->
+<footer class="viper-footer">
+  <div class="tagline">Viper Squadron — Reconnaissance Complete</div>
+  <p><%= h title %></p>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     JAVASCRIPT — Vanilla only
+     ═══════════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  // ── Animated Counters ───────────────────────────────────────
+  function animateCounters() {
+    var counters = document.querySelectorAll('[data-counter]');
+    counters.forEach(function (el) {
+      var target = parseInt(el.getAttribute('data-counter'), 10);
+      if (isNaN(target) || target === 0) { el.textContent = '0'; return; }
+      var start = 0;
+      var duration = 1000;
+      var startTime = null;
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var progress = Math.min((timestamp - startTime) / duration, 1);
+        // Ease-out cubic
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(eased * target);
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          el.textContent = target;
+        }
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
+  // ── Filter Buttons ──────────────────────────────────────────
+  function initFilters() {
+    var buttons = document.querySelectorAll('[data-filter]');
+    var cards   = document.querySelectorAll('.issue-card');
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        // Update active state
+        buttons.forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+
+        var filter = btn.getAttribute('data-filter');
+
+        cards.forEach(function (card) {
+          if (filter === 'all') {
+            card.classList.remove('hidden-card');
+            return;
+          }
+
+          var match = false;
+          if (filter.indexOf('risk-') === 0) {
+            match = card.getAttribute('data-risk') === filter.replace('risk-', '');
+          } else if (filter.indexOf('domain-') === 0) {
+            match = card.getAttribute('data-domain') === filter.replace('domain-', '');
+          }
+
+          if (match) {
+            card.classList.remove('hidden-card');
+          } else {
+            card.classList.add('hidden-card');
+          }
+        });
+      });
+    });
+  }
+
+  // ── Expand / Collapse Issue Cards ───────────────────────────
+  function initToggle() {
+    var headers = document.querySelectorAll('[data-behavior~=toggle-issue]');
+    headers.forEach(function (header) {
+      header.addEventListener('click', function () {
+        var card = header.closest('.issue-card');
+        if (card) {
+          card.classList.toggle('expanded');
+        }
+      });
+    });
+  }
+
+  // ── Init on load ────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function () {
+    animateCounters();
+    initFilters();
+    initToggle();
+  });
+})();
+</script>
+
+</body>
+</html>

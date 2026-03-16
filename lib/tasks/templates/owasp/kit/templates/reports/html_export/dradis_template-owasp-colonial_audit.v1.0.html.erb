@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Security Assessment Report — Colonial Fleet Security Division</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YcnS/1p8qMuFhDL6o0Ym0h4v8g0Vk2IJB9F" crossorigin="anonymous" />
+  <style type="text/css">
+    /* ── Colonial Audit Theme ─────────────────────────────── */
+    :root {
+      --risk-critical: #dc3545;
+      --risk-high: #fd7e14;
+      --risk-moderate: #ffc107;
+      --risk-low: #198754;
+      --risk-info: #6c757d;
+      --border-color: #c9c9c9;
+      --heading-font: Georgia, 'Times New Roman', Times, serif;
+      --body-font: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      --accent: #1b2a4a;
+      --accent-light: #e8ecf2;
+    }
+
+    html { font-size: 14px; }
+
+    body {
+      background: #fff;
+      color: #212529;
+      font-family: var(--body-font);
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--accent);
+      font-family: var(--heading-font);
+      font-weight: 700;
+      margin-top: 1.5rem;
+    }
+
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.6rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.3rem; }
+    h3 { font-size: 1.3rem; }
+    h4 { font-size: 1.1rem; }
+
+    a { color: var(--accent); }
+    a:hover { color: var(--risk-high); }
+
+    /* ── Classification Watermark ─────────────────────────── */
+    body::before {
+      color: rgba(27, 42, 74, 0.04);
+      content: 'CLASSIFIED — COLONIAL EYES ONLY';
+      font-family: var(--heading-font);
+      font-size: 5rem;
+      font-weight: 700;
+      left: 50%;
+      pointer-events: none;
+      position: fixed;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-30deg);
+      white-space: nowrap;
+      z-index: 0;
+    }
+
+    .report-body { position: relative; z-index: 1; }
+
+    /* ── Cover Page ───────────────────────────────────────── */
+    .cover-page {
+      align-items: center;
+      border: 3px double var(--accent);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 2rem auto;
+      max-width: 52rem;
+      min-height: 90vh;
+      padding: 4rem 3rem;
+      text-align: center;
+    }
+
+    .cover-page .classification {
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--body-font);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      margin-bottom: 3rem;
+      padding: 0.4rem 1.5rem;
+      text-transform: uppercase;
+    }
+
+    .cover-page .emblem {
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      color: var(--accent);
+      font-family: var(--heading-font);
+      font-size: 1rem;
+      font-weight: 700;
+      height: 6rem;
+      letter-spacing: 0.1em;
+      line-height: 6rem;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+      width: 6rem;
+    }
+
+    .cover-page h1 {
+      border: none;
+      font-size: 2.6rem;
+      margin: 0.5rem 0;
+    }
+
+    .cover-page .subtitle {
+      color: #555;
+      font-family: var(--heading-font);
+      font-size: 1.2rem;
+      font-style: italic;
+      margin-bottom: 2rem;
+    }
+
+    .cover-meta {
+      border-top: 1px solid var(--border-color);
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+    }
+
+    .cover-meta table {
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .cover-meta th {
+      color: var(--accent);
+      font-family: var(--heading-font);
+      font-weight: 700;
+      padding: 0.25rem 1.5rem 0.25rem 0;
+      text-align: right;
+    }
+
+    .cover-meta td {
+      padding: 0.25rem 0;
+    }
+
+    /* ── Table of Contents ────────────────────────────────── */
+    .toc {
+      max-width: 52rem;
+      margin: 0 auto;
+      padding: 2rem 3rem;
+    }
+
+    .toc ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .toc li {
+      border-bottom: 1px dotted var(--border-color);
+      padding: 0.35rem 0;
+    }
+
+    .toc li a {
+      text-decoration: none;
+    }
+
+    .toc li .toc-number {
+      display: inline-block;
+      font-weight: 700;
+      min-width: 2.5rem;
+    }
+
+    .toc .toc-sub {
+      padding-left: 2.5rem;
+    }
+
+    /* ── Main Content ─────────────────────────────────────── */
+    .report-section {
+      margin: 0 auto;
+      max-width: 52rem;
+      padding: 1.5rem 3rem;
+    }
+
+    /* ── Tables ───────────────────────────────────────────── */
+    .report-table {
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      width: 100%;
+    }
+
+    .report-table th {
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      color: #fff;
+      font-family: var(--heading-font);
+      font-weight: 700;
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+    }
+
+    .report-table td {
+      border: 1px solid var(--border-color);
+      padding: 0.5rem 0.75rem;
+      vertical-align: top;
+    }
+
+    .report-table tbody tr:nth-child(even) {
+      background: #f8f9fa;
+    }
+
+    /* ── Risk Badges ──────────────────────────────────────── */
+    .risk-badge {
+      border-radius: 0.25rem;
+      color: #fff;
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      min-width: 5rem;
+      padding: 0.2rem 0.6rem;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .risk-critical { background: var(--risk-critical); }
+    .risk-high     { background: var(--risk-high); }
+    .risk-moderate { background: var(--risk-moderate); color: #212529; }
+    .risk-low      { background: var(--risk-low); }
+    .risk-info     { background: var(--risk-info); }
+
+    .status-remediated        { color: var(--risk-low); font-weight: 700; }
+    .status-open              { color: var(--risk-critical); font-weight: 700; }
+    .status-partially         { color: var(--risk-high); font-weight: 700; }
+    .status-accepted          { color: var(--risk-info); font-weight: 700; }
+
+    /* ── Finding Detail ───────────────────────────────────── */
+    .finding {
+      border: 1px solid var(--border-color);
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+    }
+
+    .finding-header {
+      align-items: baseline;
+      border-bottom: 2px solid var(--accent);
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+    }
+
+    .finding-header h3 {
+      border: none;
+      margin: 0;
+    }
+
+    .finding-meta {
+      display: grid;
+      gap: 0.25rem 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+      margin-bottom: 1rem;
+    }
+
+    .finding-meta dt {
+      color: var(--accent);
+      font-family: var(--heading-font);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .finding-meta dd {
+      margin: 0 0 0.5rem;
+    }
+
+    .evidence-table {
+      margin-top: 1rem;
+    }
+
+    .evidence-output {
+      background: #f4f5f7;
+      border: 1px solid var(--border-color);
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.85rem;
+      max-height: 20rem;
+      overflow: auto;
+      padding: 0.75rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* ── OWASP Matrix ─────────────────────────────────────── */
+    .owasp-matrix td.count-zero {
+      color: #aaa;
+      font-style: italic;
+    }
+
+    .owasp-matrix td.count-positive {
+      color: var(--risk-critical);
+      font-weight: 700;
+    }
+
+    /* ── Chart ────────────────────────────────────────────── */
+    .chart-container {
+      margin: 1.5rem auto;
+      max-width: 40rem;
+      min-height: 22rem;
+    }
+
+    /* ── Footer ───────────────────────────────────────────── */
+    .report-footer {
+      border-top: 2px solid var(--accent);
+      color: #666;
+      font-size: 0.75rem;
+      margin: 3rem auto 1rem;
+      max-width: 52rem;
+      padding: 1rem 3rem;
+      text-align: center;
+    }
+
+    .report-footer .classification-footer {
+      background: var(--accent);
+      color: #fff;
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      margin-top: 0.5rem;
+      padding: 0.2rem 1rem;
+      text-transform: uppercase;
+    }
+
+    /* ── Print Styles ─────────────────────────────────────── */
+    @media print {
+      body::before { display: none; }
+
+      .cover-page {
+        min-height: 100vh;
+        page-break-after: always;
+      }
+
+      .toc { page-break-after: always; }
+
+      .report-section { padding: 1rem 0; }
+
+      .section-break { page-break-before: always; }
+
+      .finding { page-break-inside: avoid; }
+
+      .chart-container { page-break-inside: avoid; }
+
+      .no-print { display: none !important; }
+
+      a { color: inherit; text-decoration: none; }
+
+      .report-table th {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .risk-badge {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+<%
+  # ── Data Preparation ──────────────────────────────────────
+  risk_order = { 'Critical' => 5, 'High' => 4, 'Moderate' => 3, 'Low' => 2, 'Info' => 1 }
+  impact_map = { 'Very High' => 5, 'High' => 4, 'Moderate' => 3, 'Low' => 2, 'Very Low' => 1 }
+  likelihood_map = { 'Very High' => 5, 'High' => 4, 'Moderate' => 3, 'Low' => 2, 'Very Low' => 1 }
+
+  # Compute risk from Impact x Likelihood (the Risk field is a Liquid template,
+  # not a plain value, so we calculate it here in ERB).
+  compute_risk = ->(issue) {
+    imp = impact_map[issue.fields['Impact'].to_s.strip] || 0
+    lik = likelihood_map[issue.fields['Likelihood'].to_s.strip] || 0
+    score = imp * lik
+    case
+    when score >= 20 then 'Critical'
+    when score >= 15 then 'High'
+    when score >= 8  then 'Moderate'
+    when score >= 3  then 'Low'
+    else                  'Info'
+    end
+  }
+
+  compute_risk_score = ->(issue) {
+    imp = impact_map[issue.fields['Impact'].to_s.strip] || 0
+    lik = likelihood_map[issue.fields['Likelihood'].to_s.strip] || 0
+    imp * lik
+  }
+
+  risk_css = {
+    'Critical' => 'risk-critical',
+    'High'     => 'risk-high',
+    'Moderate' => 'risk-moderate',
+    'Low'      => 'risk-low',
+    'Info'     => 'risk-info'
+  }
+
+  status_css = {
+    'Remediated'           => 'status-remediated',
+    'Open'                 => 'status-open',
+    'In Progress'          => 'status-partially',
+    'Partially Remediated' => 'status-partially',
+    'Accepted Risk'        => 'status-accepted'
+  }
+
+  sorted_issues = issues.sort_by { |i| -(risk_order[compute_risk.(i)] || 0) }
+
+  risk_counts = { 'Critical' => 0, 'High' => 0, 'Moderate' => 0, 'Low' => 0, 'Info' => 0 }
+  sorted_issues.each { |i| risk_counts[compute_risk.(i)] = (risk_counts[compute_risk.(i)] || 0) + 1 }
+
+  # OWASP Top 10 2025 categories
+  owasp_categories = {
+    'A01:2025' => 'Broken Access Control',
+    'A02:2025' => 'Security Misconfiguration',
+    'A03:2025' => 'Software Supply Chain Failures',
+    'A04:2025' => 'Insecure Cryptography',
+    'A05:2025' => 'Insecure Authentication',
+    'A06:2025' => 'Insecure Design',
+    'A07:2025' => 'Authentication Failures',
+    'A08:2025' => 'Software or Data Integrity Failures',
+    'A09:2025' => 'Logging and Monitoring Failures',
+    'A10:2025' => 'Server-Side Request Forgery'
+  }
+
+  # Count issues per OWASP category
+  owasp_counts = {}
+  owasp_categories.each_key { |k| owasp_counts[k] = 0 }
+  other_standards = {}
+
+  sorted_issues.each do |issue|
+    owasp_val = issue.fields['OWASP Top 10'].to_s.strip
+    next if owasp_val.empty?
+
+    matched = false
+    owasp_categories.each_key do |code|
+      prefix = code.split(':').first + ':'
+      if owasp_val.start_with?(prefix.sub(/0/, '0')) || owasp_val.start_with?(code)
+        owasp_counts[code] += 1
+        matched = true
+        break
+      end
+    end
+
+    unless matched
+      other_standards[owasp_val] = (other_standards[owasp_val] || 0) + 1
+    end
+  end
+
+  report_date = Time.now.strftime('%B %d, %Y')
+%>
+
+<div class="report-body">
+
+  <!-- ════════════════════════════════════════════════════════
+       COVER PAGE
+       ════════════════════════════════════════════════════════ -->
+  <div class="cover-page">
+    <div class="classification">Classified — Colonial Eyes Only</div>
+    <div class="emblem">CFSD</div>
+    <h1>Security Assessment Report</h1>
+    <div class="subtitle">Colonial Fleet Security Division</div>
+    <p style="font-size: 0.95rem; color: #555; max-width: 30rem;">
+      Comprehensive security assessment findings and recommendations
+      prepared in accordance with Colonial Fleet Directive 7-Alpha.
+    </p>
+    <div class="cover-meta">
+      <table>
+        <tr>
+          <th>Document Reference:</th>
+          <td>CFSD-SAR-<%= Time.now.strftime('%Y%m%d') %></td>
+        </tr>
+        <tr>
+          <th>Classification:</th>
+          <td>Colonial Eyes Only</td>
+        </tr>
+        <tr>
+          <th>Date of Issue:</th>
+          <td><%= report_date %></td>
+        </tr>
+        <tr>
+          <th>Version:</th>
+          <td>1.0</td>
+        </tr>
+        <tr>
+          <th>Total Findings:</th>
+          <td><%= issues.length %></td>
+        </tr>
+        <tr>
+          <th>Generated By:</th>
+          <td><%= h title %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       TABLE OF CONTENTS
+       ════════════════════════════════════════════════════════ -->
+  <div class="toc">
+    <h2 id="toc">Table of Contents</h2>
+    <ul>
+      <li><a href="#executive-summary"><span class="toc-number">1.</span> Executive Summary</a></li>
+      <li><a href="#owasp-coverage"><span class="toc-number">2.</span> OWASP Top 10 Coverage Matrix</a></li>
+      <li><a href="#findings-summary"><span class="toc-number">3.</span> Findings Summary</a></li>
+      <li><a href="#detailed-findings"><span class="toc-number">4.</span> Detailed Findings</a></li>
+      <% sorted_issues.each_with_index do |issue, idx| %>
+      <li class="toc-sub"><a href="#finding-<%= issue.id %>"><span class="toc-number">4.<%= idx + 1 %></span> <%= h issue.fields['Title'] %></a></li>
+      <% end %>
+      <li><a href="#affected-systems"><span class="toc-number">5.</span> Affected Systems</a></li>
+      <% if defined?(Dradis::Pro) %>
+      <li><a href="#conclusions"><span class="toc-number">6.</span> Conclusions and Recommendations</a></li>
+      <li><a href="#appendix"><span class="toc-number">7.</span> Appendix</a></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       1. EXECUTIVE SUMMARY
+       ════════════════════════════════════════════════════════ -->
+  <div class="report-section section-break" id="executive-summary">
+    <h2>1. Executive Summary</h2>
+    <p>
+      This report presents the findings of the security assessment conducted
+      by the Colonial Fleet Security Division. A total of
+      <strong><%= issues.length %> finding<%= issues.length == 1 ? '' : 's' %></strong>
+      <%= issues.length == 1 ? 'was' : 'were' %> identified across
+      <strong><%= nodes.length %> system<%= nodes.length == 1 ? '' : 's' %></strong>.
+    </p>
+
+    <p>The risk distribution of identified findings is as follows:</p>
+
+    <table class="report-table" style="max-width: 30rem;">
+      <thead>
+        <tr>
+          <th>Risk Level</th>
+          <th style="text-align: center;">Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% ['Critical', 'High', 'Moderate', 'Low', 'Info'].each do |level| %>
+        <tr>
+          <td><span class="risk-badge <%= risk_css[level] %>"><%= level %></span></td>
+          <td style="text-align: center;"><%= risk_counts[level] || 0 %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%
+      remediation_counts = { 'Remediated' => 0, 'In Progress' => 0, 'Open' => 0, 'Partially Remediated' => 0, 'Accepted Risk' => 0 }
+      sorted_issues.each do |i|
+        status = i.fields['Remediation Status'].to_s.strip
+        remediation_counts[status] = (remediation_counts[status] || 0) + 1 if remediation_counts.key?(status)
+      end
+    %>
+
+    <p style="margin-top: 1.5rem;">Remediation status overview:</p>
+    <table class="report-table" style="max-width: 30rem;">
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th style="text-align: center;">Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% remediation_counts.each do |status, count| %>
+        <tr>
+          <td><span class="<%= status_css[status] %>"><%= status %></span></td>
+          <td style="text-align: center;"><%= count %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div id="risk-chart" class="chart-container"></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       2. OWASP TOP 10 COVERAGE MATRIX
+       ════════════════════════════════════════════════════════ -->
+  <div class="report-section section-break" id="owasp-coverage">
+    <h2>2. OWASP Top 10 Coverage Matrix (2025)</h2>
+    <p>
+      The following matrix maps identified findings against the OWASP Top 10
+      2025 categories. A count of zero indicates the category was assessed
+      but no findings were identified.
+    </p>
+
+    <table class="report-table owasp-matrix">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Category</th>
+          <th style="text-align: center;">Findings</th>
+          <th style="text-align: center;">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% owasp_categories.each do |code, name| %>
+        <tr>
+          <td><strong><%= code %></strong></td>
+          <td><%= name %></td>
+          <td style="text-align: center;" class="<%= owasp_counts[code] > 0 ? 'count-positive' : 'count-zero' %>">
+            <%= owasp_counts[code] %>
+          </td>
+          <td style="text-align: center;">
+            <% if owasp_counts[code] > 0 %>
+              Tested — Findings
+            <% else %>
+              Tested — Clear
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <% unless other_standards.empty? %>
+    <h3>Other Standards Referenced</h3>
+    <p>
+      The following non-OWASP Top 10 2025 references were identified in the
+      assessment findings (e.g. OWASP API Security, Mobile Top 10):
+    </p>
+    <table class="report-table">
+      <thead>
+        <tr>
+          <th>Reference</th>
+          <th style="text-align: center;">Findings</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% other_standards.sort_by { |k, _v| k }.each do |ref, count| %>
+        <tr>
+          <td><%= h ref %></td>
+          <td style="text-align: center;" class="count-positive"><%= count %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% end %>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       3. FINDINGS SUMMARY
+       ════════════════════════════════════════════════════════ -->
+  <div class="report-section section-break" id="findings-summary">
+    <h2>3. Findings Summary</h2>
+    <table class="report-table" id="findings-summary-table">
+      <thead>
+        <tr>
+          <th style="width: 3rem;">#</th>
+          <th>Title</th>
+          <th>Domain</th>
+          <th>OWASP Top 10</th>
+          <th>Risk</th>
+          <th>Impact</th>
+          <th>Likelihood</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% sorted_issues.each_with_index do |issue, idx| %>
+        <tr>
+          <td><%= idx + 1 %></td>
+          <td><a href="#finding-<%= issue.id %>"><%= h issue.fields['Title'] %></a></td>
+          <td><%= h issue.fields['OWASP Domain'] %></td>
+          <td><%= h issue.fields['OWASP Top 10'] %></td>
+          <% issue_risk = compute_risk.(issue) %>
+          <td><span class="risk-badge <%= risk_css[issue_risk] %>"><%= issue_risk %></span></td>
+          <td><%= h issue.fields['Impact'] %></td>
+          <td><%= h issue.fields['Likelihood'] %></td>
+          <td><span class="<%= status_css[issue.fields['Remediation Status'].to_s.strip] %>"><%= h issue.fields['Remediation Status'] %></span></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       4. DETAILED FINDINGS
+       ════════════════════════════════════════════════════════ -->
+  <div class="report-section section-break" id="detailed-findings">
+    <h2>4. Detailed Findings</h2>
+
+    <% sorted_issues.each_with_index do |issue, idx| %>
+    <div class="finding" id="finding-<%= issue.id %>">
+      <div class="finding-header">
+        <h3>Finding 4.<%= idx + 1 %>: <%= h issue.fields['Title'] %></h3>
+        <% finding_risk = compute_risk.(issue) %>
+        <span class="risk-badge <%= risk_css[finding_risk] %>"><%= finding_risk %></span>
+      </div>
+
+      <div class="finding-meta">
+        <div>
+          <dt>OWASP Domain</dt>
+          <dd><%= h issue.fields['OWASP Domain'] %></dd>
+        </div>
+        <div>
+          <dt>OWASP Top 10</dt>
+          <dd><%= h issue.fields['OWASP Top 10'] %></dd>
+        </div>
+        <div>
+          <dt>Impact</dt>
+          <dd><%= h issue.fields['Impact'] %></dd>
+        </div>
+        <div>
+          <dt>Likelihood</dt>
+          <dd><%= h issue.fields['Likelihood'] %></dd>
+        </div>
+        <div>
+          <dt>Risk Score</dt>
+          <dd><%= compute_risk_score.(issue) %></dd>
+        </div>
+        <div>
+          <dt>Remediation Status</dt>
+          <dd><span class="<%= status_css[issue.fields['Remediation Status'].to_s.strip] %>"><%= h issue.fields['Remediation Status'] %></span></dd>
+        </div>
+      </div>
+
+      <h4>Summary</h4>
+      <div class="finding-description">
+        <%= markup(issue.fields['Description Short'], liquid: true) %>
+      </div>
+
+      <h4>Detailed Description</h4>
+      <div class="finding-description">
+        <%= markup(issue.fields['Description Long'], liquid: true) %>
+      </div>
+
+      <% unless issue.fields['References'].to_s.strip.empty? %>
+      <h4>References</h4>
+      <div class="finding-references">
+        <%= markup(issue.fields['References'], liquid: true) %>
+      </div>
+      <% end %>
+
+      <%
+        visible_evidence = issue.evidence.select { |e| e.fields['Show'] == 'Yes' }
+      %>
+      <% unless visible_evidence.empty? %>
+      <h4>Evidence</h4>
+      <table class="report-table evidence-table">
+        <thead>
+          <tr>
+            <th style="width: 20%;">Affected Host</th>
+            <th>Technical Output</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% visible_evidence.each do |evidence| %>
+          <tr>
+            <td><strong><%= h evidence.node.label %></strong></td>
+            <td>
+              <div class="evidence-output"><%= markup(evidence.fields['Output'], liquid: true) %></div>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       5. AFFECTED SYSTEMS
+       ════════════════════════════════════════════════════════ -->
+  <div class="report-section section-break" id="affected-systems">
+    <h2>5. Affected Systems</h2>
+    <p>
+      The following table summarizes all systems assessed during this engagement
+      and the findings associated with each.
+    </p>
+
+    <table class="report-table">
+      <thead>
+        <tr>
+          <th style="width: 3rem;">#</th>
+          <th>Host / System</th>
+          <th>Associated Findings</th>
+          <th style="text-align: center;">Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% nodes.each_with_index do |node, idx| %>
+        <%
+          node_issues = sorted_issues.select do |issue|
+            issue.evidence.any? { |e| e.node.label == node.label }
+          end
+        %>
+        <tr>
+          <td><%= idx + 1 %></td>
+          <td><strong><%= h node.label %></strong></td>
+          <td>
+            <% node_issues.each_with_index do |issue, i| %>
+              <a href="#finding-<%= issue.id %>"><%= h issue.fields['Title'] %></a><%= i < node_issues.length - 1 ? ', ' : '' %>
+            <% end %>
+            <%= 'None' if node_issues.empty? %>
+          </td>
+          <td style="text-align: center;"><%= node_issues.length %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       6 & 7. PRO-ONLY SECTIONS
+       ════════════════════════════════════════════════════════ -->
+  <% if defined?(Dradis::Pro) %>
+  <div class="report-section section-break" id="conclusions">
+    <h2>6. Conclusions and Recommendations</h2>
+    <% content_service.all_content_blocks.each do |block| %>
+      <% if block.fields['Type'] == 'Conclusions' %>
+        <%= markup(block.fields['Description'], liquid: true) %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="report-section section-break" id="appendix">
+    <h2>7. Appendix</h2>
+    <% content_service.all_content_blocks.each do |block| %>
+      <% if block.fields['Type'] == 'Appendix' %>
+        <h3><%= markup(block.fields['Title'], liquid: true) %></h3>
+        <%= markup(block.fields['Description'], liquid: true) %>
+      <% end %>
+    <% end %>
+  </div>
+  <% end %>
+
+  <!-- ════════════════════════════════════════════════════════
+       FOOTER
+       ════════════════════════════════════════════════════════ -->
+  <div class="report-footer">
+    <p>
+      Document Reference: CFSD-SAR-<%= Time.now.strftime('%Y%m%d') %> |
+      Colonial Fleet Security Division |
+      <%= report_date %>
+    </p>
+    <p>Generated by <%= h title %></p>
+    <div class="classification-footer">Classified — Colonial Eyes Only</div>
+  </div>
+
+</div><!-- /.report-body -->
+
+<!-- ══════════════════════════════════════════════════════════
+     HIGHCHARTS — Risk Distribution Chart
+     ══════════════════════════════════════════════════════════ -->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function () {
+    var chartEl = document.getElementById('risk-chart');
+    if (!chartEl) return;
+
+    Highcharts.chart('risk-chart', {
+      chart: {
+        type: 'bar',
+        style: { fontFamily: '"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }
+      },
+      title: {
+        text: 'Risk Distribution of Findings',
+        style: { fontFamily: 'Georgia, "Times New Roman", Times, serif', fontWeight: '700', color: '#1b2a4a' }
+      },
+      xAxis: {
+        categories: ['Critical', 'High', 'Moderate', 'Low', 'Info'],
+        title: { text: null }
+      },
+      yAxis: {
+        min: 0,
+        allowDecimals: false,
+        title: { text: 'Number of Findings', align: 'high' }
+      },
+      legend: { enabled: false },
+      credits: { enabled: false },
+      tooltip: {
+        formatter: function () {
+          return this.x + ': <b>' + this.y + '</b> finding' + (this.y !== 1 ? 's' : '');
+        }
+      },
+      plotOptions: {
+        bar: {
+          borderWidth: 0,
+          dataLabels: { enabled: true }
+        }
+      },
+      series: [{
+        name: 'Findings',
+        data: [
+          { y: <%= risk_counts['Critical'] || 0 %>, color: '#dc3545' },
+          { y: <%= risk_counts['High'] || 0 %>,     color: '#fd7e14' },
+          { y: <%= risk_counts['Moderate'] || 0 %>,  color: '#ffc107' },
+          { y: <%= risk_counts['Low'] || 0 %>,      color: '#198754' },
+          { y: <%= risk_counts['Info'] || 0 %>,      color: '#6c757d' }
+        ]
+      }]
+    });
+
+    // ── Sortable summary table ──────────────────────────────
+    var table = document.getElementById('findings-summary-table');
+    if (!table) return;
+
+    var headers = table.querySelectorAll('thead th');
+    headers.forEach(function (header, index) {
+      header.style.cursor = 'pointer';
+      header.addEventListener('click', function () {
+        var tbody = table.querySelector('tbody');
+        var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+        var ascending = header.getAttribute('data-sort-dir') !== 'asc';
+        header.setAttribute('data-sort-dir', ascending ? 'asc' : 'desc');
+
+        var riskOrder = { 'CRITICAL': 5, 'HIGH': 4, 'MODERATE': 3, 'LOW': 2, 'INFO': 1 };
+
+        rows.sort(function (a, b) {
+          var aText = (a.children[index].textContent || '').trim().toUpperCase();
+          var bText = (b.children[index].textContent || '').trim().toUpperCase();
+
+          // Numeric sort for # column
+          if (index === 0) {
+            return ascending ? parseInt(aText) - parseInt(bText) : parseInt(bText) - parseInt(aText);
+          }
+
+          // Risk-aware sort
+          if (riskOrder[aText] !== undefined && riskOrder[bText] !== undefined) {
+            return ascending ? riskOrder[aText] - riskOrder[bText] : riskOrder[bText] - riskOrder[aText];
+          }
+
+          // Alphabetical fallback
+          if (aText < bText) return ascending ? -1 : 1;
+          if (aText > bText) return ascending ? 1 : -1;
+          return 0;
+        });
+
+        rows.forEach(function (row) { tbody.appendChild(row); });
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
