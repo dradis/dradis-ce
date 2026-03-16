@@ -4,8 +4,8 @@ body.search.index {
   }
 
   .match-snippet {
-    background-color: $secondary-bg;
-    border: 1px solid $border-color;
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--border-color);
     padding: 0.25rem 0.5rem;
   }
 
@@ -14,7 +14,7 @@ body.search.index {
   }
 
   .result-details {
-    color: $text-muted;
+    color: var(--text-muted);
     margin: 10px 0;
 
     p {

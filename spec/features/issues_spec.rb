@@ -71,8 +71,7 @@ describe 'Issues pages' do
         let(:submit_form) { click_button 'Create Issue' }
 
         let(:action_path) { new_project_issue_path(current_project) }
-        it_behaves_like 'a textile form view', Issue
-        it_behaves_like 'an editor that remembers what view you like'
+        it_behaves_like 'a .textile form'
 
         context 'submitting the form with valid information' do
           before do
@@ -205,9 +204,7 @@ describe 'Issues pages' do
         let(:submit_form) { click_button 'Update Issue' }
 
         let(:action_path) { edit_project_issue_path(current_project, @issue) }
-        let(:item) { @issue }
-        it_behaves_like 'a textile form view', Issue
-        it_behaves_like 'an editor that remembers what view you like'
+        it_behaves_like 'a .textile form'
 
         before do
           issuelib = current_project.issue_library
@@ -374,8 +371,7 @@ describe 'Issues pages' do
           end
         end
 
-        let(:commentable) { @issue }
-        it_behaves_like 'a page with a comments feed'
+        it_behaves_like 'a page with a comments feed hook'
 
         let(:subscribable) { @issue }
         it_behaves_like 'a page with subscribe/unsubscribe links'

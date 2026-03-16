@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+  data-theme="<%= current_user.preferences.theme %>"
+  data-controller="theme"
+  data-theme-preferences-path-value="<%= main_app.preferences_path %>">
+  
   <head>
     <title><%= page_title %></title>
     <meta charset="utf-8">
@@ -60,7 +64,7 @@
         <main class="container-fluid">
           <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
           <%= render 'layouts/hera/noscript' %>
-          <%= render "layouts/hera/project_teaser" unless defined?(Dradis::Pro) || controller_path == 'styles' %>
+          <%= render 'layouts/hera/project_teaser' unless defined?(Dradis::Pro) %>
           <%= flash_messages %>
           <%= content_for?(:content) ? yield(:content) : yield %>
         </main>
@@ -75,6 +79,8 @@
 
     <!-- All modals go here -->
     <%= yield(:modals) if content_for?(:modals) %>
+    
+    <%= render 'layouts/hera/try_pro' %>
 
     <%= render 'console/console' %>
     <!-- End of modals -->

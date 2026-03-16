@@ -12,6 +12,7 @@
 
 class UserPreferences
   include ActiveModel::Conversion
+  include Theme
   extend ActiveModel::Naming
 
   VALID_TOURS = %i[first_sign_in projects_show].freeze
@@ -30,7 +31,7 @@ class UserPreferences
   #           seen. Since we can have multiple versions of each tour we need
   #           to be able to track what was the last version we presented to
   #           them. See TourRegistry class.
-  ATTRIBUTES = %i[digest_frequency tours]
+  ATTRIBUTES = %i[digest_frequency theme tours]
   attr_accessor(*ATTRIBUTES)
 
   def to_yaml_properties
@@ -39,6 +40,7 @@ class UserPreferences
 
   def initialize(args = {})
     @digest_frequency = args[:digest_frequency] || DIGEST_FREQUENCY_DEFAULT
+    @theme = args[:theme] || DEFAULT_THEME
 
     @tours = Hash.new { |hash, key| hash[key] = '0' }
 
@@ -55,7 +57,8 @@ class UserPreferences
   end
 
   def valid?(args)
-    DIGEST_FREQUENCIES.include?(self.digest_frequency)
+    DIGEST_FREQUENCIES.include?(self.digest_frequency) &&
+      valid_theme?
   end
 
   # ----------------------------------------------------------------- YAML.load

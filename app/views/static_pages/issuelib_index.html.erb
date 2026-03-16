@@ -1,0 +1,58 @@
+<% content_for :title, 'Issue Library' %>
+
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to 'Dashboard', main_app.root_path %></li>
+    <li class="breadcrumb-item active">Issue Library</li>
+  </ol>
+<% end %>
+
+<% content_for :sidebar do %>
+  <div class="header">
+    <div class="header-inner">
+      <h5 class="header-name">Issue Library Tips</h5>
+      <div class="options">
+        <%= link_to "#il-page-tips", data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle update state</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div id="il-page-tips" class="page-tips show collapse">
+    <div class="bg-info">
+      <p>Maintain a library of findings that can be easily accessed, and achieve consistency across your projects.</p>
+      <p>Authors can be given permission to access or manage the Issue Library.</p>
+      <p class="text-end card-link">More about <a href="https://dradis.com/tools/issuelib.html" target="_blank">Issue Library</a>.</p>
+    </div>
+  </div>
+<% end %>
+
+<div class="row d-flex align-items-start justify-content-between">
+  <div class="col-12 col-md-9">
+    <h1>Build Your Issue Library</h1>
+    <h2 class="mb-3">Maintain reusable findings to ensure consistency across all of your projects</h2>
+  </div>
+  <div class="col-12 col-md-3 d-flex justify-content-start justify-content-md-end mb-4 mb-md-0">
+    <a 
+      href="javascript:void(0)"
+      class="btn btn-primary js-try-pro"
+      data-term="issuelib"
+      data-url="https://dradis.com/pro/pages/issuelib.html">
+      <i class="fa-solid fa-plus me-1"></i>New Entry
+    </a>
+  </div>
+</div>
+
+<div id="issuelib_entries_table" class="card">
+  <div class="card-header bg-primary">
+    <h4 class="card-title mb-0">Issue Library entries</h4>
+  </div>
+  <div class="card-body">
+    <%= render partial: 'issuelib_entries',
+      locals: { 
+        columns: ['Title', 'State', 'Created', 'Updated'],
+        import: false
+      }
+    %>
+  </div>
+</div>

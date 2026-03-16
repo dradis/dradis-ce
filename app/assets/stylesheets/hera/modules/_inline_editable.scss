@@ -43,7 +43,7 @@
   }
 
   select {
-    background-color: $primary-bg;
+    background-color: var(--primary-bg);
     margin: 0 1.5rem 2.25rem 1.5rem;
   }
 }

@@ -10,7 +10,7 @@ body.unauthenticated {
     var(--dark) 100%
   );
   background-repeat: no-repeat;
-  color: $text-default;
+  color: var(--text-default);
   display: flex;
   align-items: center;
   justify-content: center;

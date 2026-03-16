@@ -9,6 +9,14 @@ Rails.application.routes.draw do
 
   resources :comments
 
+  resources :inline_threads, only: [:index, :show, :create, :destroy], controller: 'inline_threads' do
+    resource :resolution, only: [:create, :destroy], controller: 'inline_threads/resolutions'
+    resources :comments, only: [:create], controller: 'inline_threads/comments'
+  end
+
+  # --------------------------------------------------------- User preferences
+  resource :preferences, only: [:update]
+
   # ------------------------------------------------------------ Project routes
   concern :multiple_destroy do
     collection do
@@ -158,6 +166,11 @@ Rails.application.routes.draw do
 
   if defined?(Dradis::Pro)
   else
+    # Static pages
+    get 'projects/1/addons/issuelib', to: 'static_pages#issuelib_index', as: :static_issuelib
+    get 'projects/1/addons/issuelib/import', to: 'static_pages#issuelib_import', as: :static_issuelib_import
+    get 'projects/1/addons/remediationtracker', to: 'static_pages#remediationtracker_index', as: :static_remediationtracker
+
     root to: 'setup/passwords#new'
   end
 

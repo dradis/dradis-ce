@@ -17,9 +17,15 @@ document.addEventListener('turbo:load', function () {
         case 'contact-support':
           title = '<span>[Dradis Pro feature]</span> Dedicated Support team';
           break;
+        case 'devops':
+        case 'jira':
+        case 'servicenow':
+          title =
+            '<span>[Dradis Pro feature]</span> Send findings directly to your ticketing system';
+          break;
         case 'issuelib':
           title =
-            '<span>[Dradis Pro feature]</span> Integrated library of vulnerability descriptions';
+            '<span>[Dradis Pro feature]</span> Integrated Findings library';
           break;
         case 'gateway':
           title =
@@ -31,7 +37,7 @@ document.addEventListener('turbo:load', function () {
           break;
         case 'remediation':
           title =
-            '<span>[Dradis Pro feature]</span> Integrated remediation tracker';
+            '<span>[Dradis Pro feature]</span> Integrated Ticketing System';
           break;
         case 'word-reports':
           title = '<span>[Dradis Pro feature]</span> Custom Word reports';
