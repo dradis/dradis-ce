@@ -160,10 +160,11 @@ module Dradis::Plugins::<module_name>
 end
 ```
 
-If `provides :addon` or `provides :export` is included, add an initializer block to mount the engine:
+If `provides :addon` or `provides :export` is included, add an initializer block to mount the engine.
+Use `routes.append` (not `prepend`) so the engine never overrides the main app's routes:
 ```ruby
-    initializer '<slug>.mount_engine' do |app|
-      app.routes.prepend do
+    initializer '<slug>.mount_engine' do
+      Rails.application.routes.append do
         mount Dradis::Plugins::<module_name>::Engine => '/', as: :<plugin_name>
       end
     end
@@ -173,23 +174,31 @@ If `provides :addon` or `provides :export` is included, add an initializer block
 ```ruby
 require_relative 'gem_version'
 
-module Dradis::Plugins::<module_name>
-  module VERSION
-    MAJOR = 0
-    MINOR = 1
-    TINY  = 0
-    PRE   = nil
+module Dradis
+  module Plugins
+    module <module_name>
+      module VERSION
+        MAJOR = 0
+        MINOR = 1
+        TINY  = 0
+        PRE   = nil
 
-    STRING = [MAJOR, MINOR, TINY, PRE].compact.join('.')
+        STRING = [MAJOR, MINOR, TINY, PRE].compact.join('.')
+      end
+    end
   end
 end
 ```
 
 #### `lib/dradis/plugins/<slug>/gem_version.rb`
 ```ruby
-module Dradis::Plugins::<module_name>
-  def self.gem_version
-    Gem::Version.new VERSION::STRING
+module Dradis
+  module Plugins
+    module <module_name>
+      def self.gem_version
+        Gem::Version.new VERSION::STRING
+      end
+    end
   end
 end
 ```
@@ -460,10 +469,15 @@ end
 If the addon provides `:addon` (and does not already have a `config/routes.rb` from the export step), scaffold:
 
 #### `config/routes.rb`
+
+Routes must be scoped under `/addons/<slug>` to avoid colliding with main app routes.
+The placeholder root is set here so the addon is immediately accessible on first load.
+
 ```ruby
 Dradis::Plugins::<module_name>::Engine.routes.draw do
-  # TODO: add routes
-  # root to: 'dashboard#index'
+  scope '/addons/<slug>' do
+    root to: 'placeholder#index'
+  end
 end
 ```
 
@@ -474,6 +488,15 @@ module Dradis::Plugins::<module_name>
     include ::ProjectScoped
   end
 end
+```
+
+#### `app/views/dradis/plugins/<slug>/_tools_menu.html.erb`
+
+This partial is automatically picked up by the Dradis Tools menu via the view hook system.
+The app calls `render_view_hooks('tools_menu')` and renders this partial for every enabled `:addon` plugin.
+
+```erb
+<%= link_to '<Addon Name>', <plugin_name>.root_path, class: 'dropdown-item' %>
 ```
 
 #### `app/views/dradis/plugins/<slug>/placeholder/index.html.erb`
