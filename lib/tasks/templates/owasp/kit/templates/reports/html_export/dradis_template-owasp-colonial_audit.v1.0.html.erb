@@ -513,8 +513,20 @@
       <% end %>
       <li><a href="#affected-systems"><span class="toc-number">5.</span> Affected Systems</a></li>
       <% if defined?(Dradis::Pro) %>
-      <li><a href="#conclusions"><span class="toc-number">6.</span> Conclusions and Recommendations</a></li>
-      <li><a href="#appendix"><span class="toc-number">7.</span> Appendix</a></li>
+      <%
+        pro_toc_types = ['Document Control', 'Engagement Overview', 'Key Findings', 'Risk Posture', 'Recommendations']
+        pro_toc_num = 5
+      %>
+      <% pro_toc_types.each do |section_type| %>
+        <% if content_service.all_content_blocks.any? { |b| b.fields['Type'] == section_type } %>
+          <% pro_toc_num += 1 %>
+          <li><a href="#pro-<%= section_type.downcase.gsub(' ', '-') %>"><span class="toc-number"><%= pro_toc_num %>.</span> <%= h section_type %></a></li>
+        <% end %>
+      <% end %>
+      <% if content_service.all_content_blocks.any? { |b| b.fields['Type'] == 'Appendix' } %>
+        <% pro_toc_num += 1 %>
+        <li><a href="#appendix"><span class="toc-number"><%= pro_toc_num %>.</span> Appendix</a></li>
+      <% end %>
       <% end %>
     </ul>
   </div>
@@ -810,27 +822,36 @@
   </div>
 
   <!-- ════════════════════════════════════════════════════════
-       6 & 7. PRO-ONLY SECTIONS
+       PRO-ONLY CONTENT BLOCKS
        ════════════════════════════════════════════════════════ -->
   <% if defined?(Dradis::Pro) %>
-  <div class="report-section section-break" id="conclusions">
-    <h2>6. Conclusions and Recommendations</h2>
-    <% content_service.all_content_blocks.each do |block| %>
-      <% if block.fields['Type'] == 'Conclusions' %>
+  <%
+    pro_section_types = ['Document Control', 'Engagement Overview', 'Key Findings', 'Risk Posture', 'Recommendations']
+    pro_section_num = 5
+  %>
+  <% pro_section_types.each do |section_type| %>
+    <% section_blocks = content_service.all_content_blocks.select { |b| b.fields['Type'] == section_type } %>
+    <% next if section_blocks.empty? %>
+    <% pro_section_num += 1 %>
+    <div class="report-section section-break" id="pro-<%= section_type.downcase.gsub(' ', '-') %>">
+      <h2><%= pro_section_num %>. <%= h section_type %></h2>
+      <% section_blocks.each do |block| %>
         <%= markup(block.fields['Description'], liquid: true) %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 
-  <div class="report-section section-break" id="appendix">
-    <h2>7. Appendix</h2>
-    <% content_service.all_content_blocks.each do |block| %>
-      <% if block.fields['Type'] == 'Appendix' %>
+  <% appendix_blocks = content_service.all_content_blocks.select { |b| b.fields['Type'] == 'Appendix' } %>
+  <% unless appendix_blocks.empty? %>
+    <% pro_section_num += 1 %>
+    <div class="report-section section-break" id="appendix">
+      <h2><%= pro_section_num %>. Appendix</h2>
+      <% appendix_blocks.each do |block| %>
         <h3><%= markup(block.fields['Title'], liquid: true) %></h3>
         <%= markup(block.fields['Description'], liquid: true) %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
   <% end %>
 
   <!-- ════════════════════════════════════════════════════════

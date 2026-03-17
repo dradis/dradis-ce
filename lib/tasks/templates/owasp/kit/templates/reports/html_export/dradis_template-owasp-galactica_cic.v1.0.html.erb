@@ -742,23 +742,29 @@
       <% end %>
     </section>
 
-    <!-- ===== PRO-ONLY: CONCLUSIONS & APPENDIX ===== -->
+    <!-- ===== PRO-ONLY: CONTENT BLOCKS ===== -->
     <% if defined?(Dradis::Pro) %>
-      <section class="cic-section">
-        <h1>Conclusions &amp; Recommendations</h1>
-        <% content_service.all_content_blocks.each do |block| %>
-          <% if block.fields['Type'] == 'Conclusions' %>
+      <%
+        pro_section_types = ['Document Control', 'Engagement Overview', 'Key Findings', 'Risk Posture', 'Recommendations']
+      %>
+      <% pro_section_types.each do |section_type| %>
+        <% section_blocks = content_service.all_content_blocks.select { |b| b.fields['Type'] == section_type } %>
+        <% next if section_blocks.empty? %>
+        <section class="cic-section">
+          <h1><%= h section_type %></h1>
+          <% section_blocks.each do |block| %>
             <div class="field-block-content">
               <%= markup(block.fields['Description'], liquid: true) %>
             </div>
           <% end %>
-        <% end %>
-      </section>
+        </section>
+      <% end %>
 
-      <section class="cic-section">
-        <h1>Appendix</h1>
-        <% content_service.all_content_blocks.each do |block| %>
-          <% if block.fields['Type'] == 'Appendix' %>
+      <% appendix_blocks = content_service.all_content_blocks.select { |b| b.fields['Type'] == 'Appendix' } %>
+      <% unless appendix_blocks.empty? %>
+        <section class="cic-section">
+          <h1>Appendix</h1>
+          <% appendix_blocks.each do |block| %>
             <div class="field-block" style="margin-bottom: 2rem;">
               <h2><%= markup(block.fields['Title'], liquid: true) %></h2>
               <div class="field-block-content">
@@ -766,8 +772,8 @@
               </div>
             </div>
           <% end %>
-        <% end %>
-      </section>
+        </section>
+      <% end %>
     <% end %>
 
   </main>

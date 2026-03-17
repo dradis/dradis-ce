@@ -820,31 +820,37 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     PRO-ONLY: CONCLUSIONS & APPENDIX
+     PRO-ONLY: CONTENT BLOCKS
      ═══════════════════════════════════════════════════════════════ -->
 <% if defined?(Dradis::Pro) %>
-  <section id="conclusions" class="viper-section">
-    <h2 class="section-title">Conclusions &amp; Recommendations</h2>
-    <div class="card-custom">
-      <% content_service.all_content_blocks.each do |block| %>
-        <% if block.fields['Type'] == 'Conclusions' %>
+  <%
+    pro_section_types = ['Document Control', 'Engagement Overview', 'Key Findings', 'Risk Posture', 'Recommendations']
+  %>
+  <% pro_section_types.each do |section_type| %>
+    <% section_blocks = content_service.all_content_blocks.select { |b| b.fields['Type'] == section_type } %>
+    <% next if section_blocks.empty? %>
+    <section id="pro-<%= section_type.downcase.gsub(' ', '-') %>" class="viper-section">
+      <h2 class="section-title"><%= h section_type %></h2>
+      <div class="card-custom">
+        <% section_blocks.each do |block| %>
           <%= markup(block.fields['Description'], liquid: true) %>
         <% end %>
-      <% end %>
-    </div>
-  </section>
+      </div>
+    </section>
+  <% end %>
 
-  <section id="appendix" class="viper-section">
-    <h2 class="section-title">Appendix</h2>
-    <% content_service.all_content_blocks.each do |block| %>
-      <% if block.fields['Type'] == 'Appendix' %>
+  <% appendix_blocks = content_service.all_content_blocks.select { |b| b.fields['Type'] == 'Appendix' } %>
+  <% unless appendix_blocks.empty? %>
+    <section id="appendix" class="viper-section">
+      <h2 class="section-title">Appendix</h2>
+      <% appendix_blocks.each do |block| %>
         <div class="card-custom" style="margin-bottom: 1rem;">
           <h3><%= markup(block.fields['Title'], liquid: true) %></h3>
           <%= markup(block.fields['Description'], liquid: true) %>
         </div>
       <% end %>
-    <% end %>
-  </section>
+    </section>
+  <% end %>
 <% end %>
 
 <!-- ═══════════════════════════════════════════════════════════════
