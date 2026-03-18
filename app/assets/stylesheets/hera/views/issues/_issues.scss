@@ -19,7 +19,7 @@ body.qa-issues.edit {
 body.issues.edit {
   #cvss-tabs.nav-pills {
     .nav-link.active {
-      background-color: $primary;
+      background-color: var(--brand-bg);
       color: $white;
     }
   }
@@ -27,7 +27,7 @@ body.issues.edit {
 
 body.issues.index {
   .add-issues {
-    border: 1px solid $primary;
+    border: 1px solid var(--brand-bg);
     height: 100%;
 
     .card-body {
