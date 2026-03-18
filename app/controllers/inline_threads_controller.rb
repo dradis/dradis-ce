@@ -12,6 +12,7 @@ class InlineThreadsController < AuthenticatedController
   layout false
 
   before_action :authorize_commentable
+  before_action :require_anchor, only: [:new]
   before_action :require_comment, only: [:create]
 
   def new
@@ -90,6 +91,8 @@ class InlineThreadsController < AuthenticatedController
     permitted.merge!(anchor: JSON.parse(permitted[:anchor])) if permitted[:anchor]
 
     permitted
+  rescue JSON::ParserError
+    permitted
   end
 
   def inline_thread_params_for_create
@@ -105,6 +108,12 @@ class InlineThreadsController < AuthenticatedController
 
   def project
     @project ||= commentable.respond_to?(:project) ? commentable.project : nil
+  end
+
+  def require_anchor
+    if inline_thread_params.dig(:anchor, 'exact').blank?
+      head :unprocessable_entity
+    end
   end
 
   def require_comment
