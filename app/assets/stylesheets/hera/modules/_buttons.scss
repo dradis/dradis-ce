@@ -396,32 +396,3 @@
   }
 }
 
-@mixin dark-btn-close {
-  .alert .btn-close {
-    filter: none;
-    opacity: 0.75;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
-
-  .btn-close {
-    filter: invert(1) grayscale(100%) brightness(200%);
-    opacity: 0.75;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
-}
-
-[data-theme='dark'] {
-  @include dark-btn-close;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    @include dark-btn-close;
-  }
-}
