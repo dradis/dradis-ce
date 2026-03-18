@@ -25,9 +25,32 @@
   --btn-outline-success-color:   #{$green-500};
   --btn-outline-warning-color:   #{$yellow-500};
 
+  .alert .btn-close {
+    filter: none;
+    opacity: 0.75;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+    opacity: 0.75;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
   // Forms
   --form-select-caret: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23d1d1d1' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
   --form-switch-bg:    url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(255, 255, 255, 0.25)'/%3e%3c/svg%3e");
+
+  // Revisions
+  --del-bg:             #{$red-800};
+  --ins-bg:             #{$green-800};
+  --revision-active-bg: #{$yellow-800};
 
   // Tables
   --table-stripe-bg: rgba(255, 255, 255, 0.05);
@@ -80,6 +103,11 @@
   // Forms
   --form-select-caret: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
   --form-switch-bg:    url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(0, 0, 0, 0.25)'/%3e%3c/svg%3e");
+
+  // Revisions
+  --del-bg:             #{$red-100};
+  --ins-bg:             #{$green-100};
+  --revision-active-bg: #{$yellow-100};
 
   // Tables
   --table-stripe-bg: rgba(0, 0, 0, 0.05);
