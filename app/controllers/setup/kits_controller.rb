@@ -9,7 +9,7 @@ module Setup
       case @kit
       when :none
         Tag::DEFAULT_TAGS.each { |name| Tag.create!(name: name) } unless defined?(Dradis::Pro)
-      when :owasp, :welcome
+      when :owasp, :redteam, :welcome
         kit_folder = Rails.root.join('lib', 'tasks', 'templates', @kit.to_s)
         logger = Log.new.info("Loading #{title(@kit)} kit...")
 
@@ -42,7 +42,7 @@ module Setup
     end
 
     def set_kit
-      if %w{none owasp welcome}.include?(params[:kit])
+      if %w{none owasp redteam welcome}.include?(params[:kit])
         @kit = params[:kit].to_sym
       else
         render :new
@@ -50,7 +50,7 @@ module Setup
     end
 
     def title(kit)
-      { owasp: 'OWASP', welcome: 'Welcome' }[kit]
+      { owasp: 'OWASP', redteam: 'Red Team', welcome: 'Welcome' }[kit]
     end
   end
 end

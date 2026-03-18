@@ -1,0 +1,819 @@
+<%
+  # -- Data preparation --
+  severity_color = {
+    'Critical' => '#c62828', 'High' => '#d84315', 'Medium' => '#ef6c00',
+    'Low' => '#2e7d32', 'Informational' => '#546e7a'
+  }
+  severity_order = { 'Critical' => 0, 'High' => 1, 'Medium' => 2, 'Low' => 3, 'Informational' => 4 }
+
+  severity_counts  = Hash.new(0)
+  tactic_counts    = Hash.new(0)
+  detection_counts = Hash.new(0)
+
+  issues.each do |issue|
+    severity_counts[issue.fields['Severity'].to_s.strip]         += 1
+    tactic_counts[issue.fields['ATT&CK Tactic'].to_s.strip]      += 1
+    detection_counts[issue.fields['Detection Status'].to_s.strip] += 1
+  end
+
+  sorted_issues = issues.sort_by { |i| severity_order[i.fields['Severity'].to_s.strip] || 99 }
+
+  severity_levels    = ['Critical', 'High', 'Medium', 'Low', 'Informational']
+  detection_statuses = ['Detected', 'Partially Detected', 'Undetected']
+  detection_colors   = { 'Detected' => '#2e7d32', 'Partially Detected' => '#ef6c00', 'Undetected' => '#c62828' }
+
+  kill_chain = [
+    'Reconnaissance', 'Initial Access', 'Execution', 'Persistence',
+    'Privilege Escalation', 'Defense Evasion', 'Credential Access',
+    'Discovery', 'Lateral Movement', 'Collection', 'Exfiltration', 'Impact'
+  ]
+
+  issues_by_tactic = {}
+  kill_chain.each { |t| issues_by_tactic[t] = [] }
+  issues.each do |issue|
+    tactic = issue.fields['ATT&CK Tactic'].to_s.strip
+    issues_by_tactic[tactic] << issue if issues_by_tactic.key?(tactic)
+  end
+
+  total_detection = detection_counts.values.sum
+  detected_pct = total_detection > 0 ? ((detection_counts['Detected'].to_f / total_detection) * 100).round(0) : 0
+  undetected_pct = total_detection > 0 ? ((detection_counts['Undetected'].to_f / total_detection) * 100).round(0) : 0
+
+  # Which phases were exercised?
+  active_phases = kill_chain.select { |t| tactic_counts[t] > 0 }
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Red Team Assessment &mdash; After-Action Report</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YcnS/1WR6zNg1OAhRYgZGMrinD3P8VkcdkGp"
+        crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    /* ===== Custom Properties ===== */
+    :root {
+      --rt-bg: #fafafa;
+      --rt-surface: #fff;
+      --rt-text: #1a1a1a;
+      --rt-text-secondary: #555;
+      --rt-text-muted: #999;
+      --rt-border: #e0e0e0;
+      --rt-border-light: #f0f0f0;
+      --rt-red: #c62828;
+      --rt-red-light: #ffebee;
+      --rt-serif: 'Georgia', 'Times New Roman', serif;
+      --rt-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --rt-mono: 'Courier New', Consolas, monospace;
+    }
+
+    /* ===== Base ===== */
+    * { box-sizing: border-box; }
+
+    body {
+      background: var(--rt-bg);
+      color: var(--rt-text);
+      font-family: var(--rt-sans);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+    }
+
+    .report {
+      margin: 0 auto;
+      max-width: 1100px;
+      padding: 0 2rem;
+    }
+
+    a { color: var(--rt-red); }
+
+    /* ===== Typography ===== */
+    h1, h2, h3 { color: var(--rt-text); font-family: var(--rt-serif); font-weight: 400; }
+
+    h2 {
+      font-size: 1.5rem;
+      margin: 3rem 0 1.5rem;
+      padding-bottom: 0.5rem;
+      position: relative;
+    }
+
+    h2::after {
+      background: var(--rt-red);
+      bottom: 0;
+      content: '';
+      height: 1px;
+      left: 0;
+      position: absolute;
+      width: 3rem;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    .section-number {
+      color: var(--rt-red);
+      font-family: var(--rt-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ===== Cover ===== */
+    .cover {
+      border-bottom: 1px solid var(--rt-border);
+      margin-bottom: 2rem;
+      padding: 4rem 0 3rem;
+      text-align: center;
+    }
+
+    .cover-label {
+      color: var(--rt-red);
+      font-family: var(--rt-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+    }
+
+    .cover h1 {
+      font-size: 2.5rem;
+      font-weight: 400;
+      margin: 0.5rem 0 0.25rem;
+    }
+
+    .cover .tagline {
+      color: var(--rt-text-secondary);
+      font-family: var(--rt-serif);
+      font-size: 1.1rem;
+      font-style: italic;
+    }
+
+    .cover-meta {
+      color: var(--rt-text-muted);
+      display: flex;
+      font-size: 0.85rem;
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .cover-meta strong { color: var(--rt-text-secondary); }
+
+    /* ===== Situation Report (at a glance) ===== */
+    .sitrep {
+      background: var(--rt-surface);
+      border: 1px solid var(--rt-border);
+      display: grid;
+      gap: 0;
+      grid-template-columns: repeat(4, 1fr);
+      margin-bottom: 2rem;
+    }
+
+    .sitrep-item {
+      border-right: 1px solid var(--rt-border-light);
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .sitrep-item:last-child { border-right: none; }
+
+    .sitrep-value {
+      font-family: var(--rt-serif);
+      font-size: 2.2rem;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .sitrep-label {
+      color: var(--rt-text-muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      margin-top: 0.25rem;
+      text-transform: uppercase;
+    }
+
+    .sitrep-detail {
+      color: var(--rt-text-secondary);
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    /* ===== Kill Chain Flow ===== */
+    .killchain {
+      margin: 2rem 0;
+      overflow-x: auto;
+    }
+
+    .killchain-flow {
+      display: flex;
+      gap: 0;
+      min-width: 900px;
+    }
+
+    .kc-phase {
+      flex: 1;
+      min-width: 0;
+      position: relative;
+    }
+
+    .kc-phase + .kc-phase::before {
+      color: var(--rt-border);
+      content: '\f054';
+      font-family: 'Font Awesome 6 Free';
+      font-size: 0.6rem;
+      font-weight: 900;
+      left: -0.1rem;
+      position: absolute;
+      top: 0.85rem;
+      z-index: 1;
+    }
+
+    .kc-header {
+      background: var(--rt-border-light);
+      border: 1px solid var(--rt-border);
+      border-bottom: none;
+      font-family: var(--rt-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.05em;
+      line-height: 1.2;
+      padding: 0.4rem 0.3rem;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .kc-active .kc-header {
+      background: var(--rt-red);
+      border-color: var(--rt-red);
+      color: #fff;
+    }
+
+    .kc-body {
+      border: 1px solid var(--rt-border);
+      min-height: 5rem;
+      padding: 0.35rem;
+    }
+
+    .kc-active .kc-body {
+      border-color: var(--rt-red);
+      border-top-color: var(--rt-red);
+    }
+
+    .kc-inactive .kc-header {
+      color: var(--rt-text-muted);
+    }
+
+    .kc-inactive .kc-body {
+      background: var(--rt-border-light);
+      opacity: 0.5;
+    }
+
+    .kc-card {
+      background: var(--rt-surface);
+      border: 1px solid var(--rt-border);
+      font-size: 0.6rem;
+      line-height: 1.3;
+      margin-bottom: 0.25rem;
+      padding: 0.25rem 0.35rem;
+    }
+
+    .kc-card-title {
+      display: block;
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .kc-card-sev {
+      display: inline-block;
+      font-family: var(--rt-mono);
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-top: 0.1rem;
+      text-transform: uppercase;
+    }
+
+    /* ===== Detection Gap Table ===== */
+    .gap-table {
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      width: 100%;
+    }
+
+    .gap-table th {
+      background: var(--rt-bg);
+      border-bottom: 2px solid var(--rt-border);
+      color: var(--rt-text-secondary);
+      font-family: var(--rt-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 0.6rem 0.75rem;
+      text-align: left;
+      text-transform: uppercase;
+    }
+
+    .gap-table td {
+      border-bottom: 1px solid var(--rt-border-light);
+      padding: 0.6rem 0.75rem;
+      vertical-align: middle;
+    }
+
+    .gap-table tbody tr:hover { background: var(--rt-border-light); }
+
+    /* ===== Badges ===== */
+    .sev-badge {
+      display: inline-block;
+      font-family: var(--rt-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0.15em 0.5em;
+      text-transform: uppercase;
+    }
+
+    .sev-Critical      { background: #ffebee; color: #c62828; }
+    .sev-High          { background: #fbe9e7; color: #d84315; }
+    .sev-Medium        { background: #fff3e0; color: #ef6c00; }
+    .sev-Low           { background: #e8f5e9; color: #2e7d32; }
+    .sev-Informational { background: #eceff1; color: #546e7a; }
+
+    .det-badge {
+      display: inline-block;
+      font-family: var(--rt-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0.15em 0.5em;
+      text-transform: uppercase;
+    }
+
+    .det-detected           { background: #e8f5e9; color: #2e7d32; }
+    .det-partially-detected { background: #fff3e0; color: #ef6c00; }
+    .det-undetected         { background: #ffebee; color: #c62828; }
+
+    .tactic-label {
+      color: var(--rt-text-secondary);
+      font-family: var(--rt-mono);
+      font-size: 0.65rem;
+    }
+
+    .technique-label {
+      color: var(--rt-text-muted);
+      font-family: var(--rt-mono);
+      font-size: 0.65rem;
+    }
+
+    /* ===== Detection Breakdown Bar ===== */
+    .detection-bar-container {
+      margin: 1.5rem 0;
+    }
+
+    .detection-bar {
+      display: flex;
+      height: 2rem;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .detection-bar-segment {
+      align-items: center;
+      color: #fff;
+      display: flex;
+      font-family: var(--rt-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      justify-content: center;
+      min-width: 0;
+    }
+
+    .detection-bar-legend {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .detection-bar-legend-item {
+      align-items: center;
+      display: flex;
+      font-size: 0.8rem;
+      gap: 0.4rem;
+    }
+
+    .detection-bar-legend-swatch {
+      display: inline-block;
+      height: 0.75rem;
+      width: 0.75rem;
+    }
+
+    /* ===== Findings ===== */
+    .finding {
+      border-top: 1px solid var(--rt-border);
+      margin-bottom: 2.5rem;
+      padding-top: 1.5rem;
+    }
+
+    .finding-header {
+      align-items: baseline;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .finding-number {
+      color: var(--rt-text-muted);
+      font-family: var(--rt-mono);
+      font-size: 0.8rem;
+    }
+
+    .finding-title {
+      font-family: var(--rt-serif);
+      font-size: 1.25rem;
+      font-weight: 400;
+      margin: 0;
+    }
+
+    .finding-tags {
+      display: flex;
+      gap: 0.5rem;
+      margin-left: auto;
+    }
+
+    .finding-body {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: 1fr;
+    }
+
+    .finding-field-label {
+      color: var(--rt-text-muted);
+      font-family: var(--rt-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.3rem;
+      text-transform: uppercase;
+    }
+
+    .finding-field-content {
+      line-height: 1.7;
+    }
+
+    .finding-field-content p { margin: 0 0 0.75rem; }
+    .finding-field-content p:last-child { margin-bottom: 0; }
+    .finding-field-content ul, .finding-field-content ol { padding-left: 1.5rem; }
+    .finding-field-content code {
+      background: var(--rt-red-light);
+      font-family: var(--rt-mono);
+      font-size: 0.85em;
+      padding: 0.1em 0.3em;
+    }
+    .finding-field-content pre {
+      background: #263238;
+      border: none;
+      color: #cfd8dc;
+      font-family: var(--rt-mono);
+      font-size: 0.8rem;
+      max-height: 400px;
+      overflow: auto;
+      padding: 1rem;
+    }
+
+    /* ===== Evidence ===== */
+    .evidence-block {
+      background: var(--rt-bg);
+      border-left: 2px solid var(--rt-border);
+      margin-bottom: 0.75rem;
+      padding: 0.75rem 1rem;
+    }
+
+    .evidence-node {
+      font-family: var(--rt-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .evidence-timestamp {
+      color: var(--rt-text-muted);
+      font-family: var(--rt-mono);
+      font-size: 0.7rem;
+      margin-left: 0.75rem;
+    }
+
+    .evidence-output { margin-top: 0.5rem; }
+
+    /* ===== Pro Content Blocks ===== */
+    .pro-section {
+      border-top: 1px solid var(--rt-border);
+      margin-bottom: 2rem;
+      padding-top: 1.5rem;
+    }
+
+    .pro-section h2 { margin-top: 0; }
+
+    .pro-section-type {
+      color: var(--rt-red);
+      font-family: var(--rt-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ===== Footer ===== */
+    .report-footer {
+      border-top: 1px solid var(--rt-border);
+      color: var(--rt-text-muted);
+      font-size: 0.8rem;
+      margin-top: 3rem;
+      padding: 1.5rem 0;
+      text-align: center;
+    }
+
+    /* ===== Print ===== */
+    @media print {
+      body { background: #fff; }
+
+      .report { max-width: 100%; padding: 0; }
+
+      .cover { padding: 2rem 0 1.5rem; }
+
+      .sitrep { break-inside: avoid; }
+
+      .killchain { overflow: visible; }
+      .killchain-flow { min-width: auto; }
+
+      .finding { break-inside: avoid; page-break-inside: avoid; }
+
+      .detection-bar-segment { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+      .sev-Critical, .sev-High, .sev-Medium, .sev-Low, .sev-Informational,
+      .det-detected, .det-partially-detected, .det-undetected {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="report">
+
+  <!-- ===== COVER ===== -->
+  <section class="cover">
+    <div class="cover-label">After-Action Report</div>
+    <h1>Red Team Assessment</h1>
+    <div class="tagline">Adversary Simulation &amp; Detection Analysis</div>
+    <div class="cover-meta">
+      <span><strong><%= issues.count %></strong> Findings</span>
+      <span><strong><%= active_phases.length %></strong> of <%= kill_chain.length %> Tactics Exercised</span>
+      <span><strong><%= undetected_pct %>%</strong> Undetected</span>
+    </div>
+  </section>
+
+  <!-- ===== PRO CONTENT BLOCKS (before sitrep) ===== -->
+  <% if defined?(Dradis::Pro) %>
+    <%
+      pro_section_types = ['Rules of Engagement', 'Executive Summary', 'Attack Narrative', 'Key Findings', 'Detection Analysis', 'Recommendations', 'Appendix']
+    %>
+    <% pro_section_types.each do |section_type| %>
+      <% section_blocks = content_service.all_content_blocks.select { |b| b.fields['Type'] == section_type } %>
+      <% next if section_blocks.empty? %>
+      <section class="pro-section">
+        <div class="pro-section-type"><%= h(section_type) %></div>
+        <% section_blocks.each do |block| %>
+          <h2><%= markup(block.fields['Title'], liquid: true) %></h2>
+          <div class="finding-field-content">
+            <%= markup(block.fields['Description'], liquid: true) %>
+          </div>
+        <% end %>
+      </section>
+    <% end %>
+  <% end %>
+
+  <!-- ===== SITUATION REPORT ===== -->
+  <section>
+    <div class="section-number">Section 01</div>
+    <h2>Situation Report</h2>
+
+    <div class="sitrep">
+      <div class="sitrep-item">
+        <div class="sitrep-value"><%= issues.count %></div>
+        <div class="sitrep-label">Total Findings</div>
+        <div class="sitrep-detail">
+          <% severity_levels.each do |sev| %>
+            <% next if severity_counts[sev] == 0 %>
+            <span class="sev-badge sev-<%= sev %>" style="margin-right: 0.25rem;"><%= severity_counts[sev] %> <%= sev %></span>
+          <% end %>
+        </div>
+      </div>
+      <div class="sitrep-item">
+        <div class="sitrep-value" style="color: var(--rt-red);"><%= severity_counts['Critical'] + severity_counts['High'] %></div>
+        <div class="sitrep-label">Critical + High</div>
+        <div class="sitrep-detail">Require immediate attention</div>
+      </div>
+      <div class="sitrep-item">
+        <div class="sitrep-value"><%= active_phases.length %><span style="color: var(--rt-text-muted); font-size: 1rem;">/<%= kill_chain.length %></span></div>
+        <div class="sitrep-label">Tactics Exercised</div>
+        <div class="sitrep-detail">Kill chain coverage</div>
+      </div>
+      <div class="sitrep-item">
+        <div class="sitrep-value" style="color: <%= undetected_pct > 50 ? 'var(--rt-red)' : 'var(--rt-text)' %>;"><%= undetected_pct %>%</div>
+        <div class="sitrep-label">Undetected</div>
+        <div class="sitrep-detail"><%= detection_counts['Undetected'] %> of <%= total_detection %> actions</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== KILL CHAIN PROGRESSION ===== -->
+  <section>
+    <div class="section-number">Section 02</div>
+    <h2>Kill Chain Progression</h2>
+    <p style="color: var(--rt-text-secondary); margin-bottom: 1.5rem;">
+      The adversary simulation progressed through the following MITRE ATT&amp;CK tactics.
+      Red phases were exercised; grey phases were not attempted or not applicable.
+    </p>
+    <div class="killchain">
+      <div class="killchain-flow">
+        <% kill_chain.each do |tactic| %>
+          <% phase_issues = issues_by_tactic[tactic] || [] %>
+          <% active = phase_issues.any? %>
+          <div class="kc-phase <%= active ? 'kc-active' : 'kc-inactive' %>">
+            <div class="kc-header"><%= tactic %></div>
+            <div class="kc-body">
+              <% phase_issues.each do |pi| %>
+                <div class="kc-card">
+                  <span class="kc-card-title" title="<%= h(pi.fields['Title']) %>"><%= h(pi.fields['Title']) %></span>
+                  <span class="kc-card-sev" style="color: <%= severity_color[pi.fields['Severity'].to_s.strip] || '#546e7a' %>;"><%= pi.fields['Severity'].to_s.strip %></span>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DETECTION ANALYSIS ===== -->
+  <section>
+    <div class="section-number">Section 03</div>
+    <h2>Detection Analysis</h2>
+
+    <!-- Stacked bar -->
+    <div class="detection-bar-container">
+      <div class="detection-bar">
+        <% detection_statuses.each do |status| %>
+          <% count = detection_counts[status] %>
+          <% next if count == 0 %>
+          <% pct = (count.to_f / total_detection * 100).round(1) %>
+          <div class="detection-bar-segment" style="width: <%= pct %>%; background: <%= detection_colors[status] %>;">
+            <%= count %>
+          </div>
+        <% end %>
+      </div>
+      <div class="detection-bar-legend">
+        <% detection_statuses.each do |status| %>
+          <div class="detection-bar-legend-item">
+            <span class="detection-bar-legend-swatch" style="background: <%= detection_colors[status] %>;"></span>
+            <%= status %> (<%= detection_counts[status] %>)
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Gap table -->
+    <table class="gap-table">
+      <thead>
+        <tr>
+          <th style="width: 30%;">Finding</th>
+          <th>Severity</th>
+          <th>ATT&amp;CK Tactic</th>
+          <th>Technique</th>
+          <th>Detection</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% sorted_issues.each do |issue| %>
+          <%
+            sev = issue.fields['Severity'].to_s.strip
+            det = issue.fields['Detection Status'].to_s.strip
+            det_class = case det
+                        when 'Detected' then 'det-detected'
+                        when 'Partially Detected' then 'det-partially-detected'
+                        else 'det-undetected'
+                        end
+          %>
+          <tr>
+            <td><strong><%= h(issue.fields['Title']) %></strong></td>
+            <td><span class="sev-badge sev-<%= sev %>"><%= sev %></span></td>
+            <td><span class="tactic-label"><%= h(issue.fields['ATT&CK Tactic']) %></span></td>
+            <td><span class="technique-label"><%= h(issue.fields['ATT&CK Technique']) %></span></td>
+            <td><span class="det-badge <%= det_class %>"><%= h(det) %></span></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== DETAILED FINDINGS ===== -->
+  <section>
+    <div class="section-number">Section 04</div>
+    <h2>Detailed Findings</h2>
+
+    <% sorted_issues.each_with_index do |issue, idx| %>
+      <%
+        sev       = issue.fields['Severity'].to_s.strip
+        tactic    = issue.fields['ATT&CK Tactic'].to_s.strip
+        technique = issue.fields['ATT&CK Technique'].to_s.strip
+        det       = issue.fields['Detection Status'].to_s.strip
+        det_class = case det
+                    when 'Detected' then 'det-detected'
+                    when 'Partially Detected' then 'det-partially-detected'
+                    else 'det-undetected'
+                    end
+      %>
+      <article class="finding" id="finding-<%= issue.id %>">
+        <div class="finding-header">
+          <span class="finding-number"><%= '%02d' % (idx + 1) %></span>
+          <span class="sev-badge sev-<%= sev %>"><%= sev %></span>
+          <h3 class="finding-title"><%= h(issue.fields['Title']) %></h3>
+          <div class="finding-tags">
+            <span class="tactic-label"><%= h(tactic) %></span>
+            <% if technique.to_s.strip.length > 0 %>
+              <span class="technique-label"><%= h(technique) %></span>
+            <% end %>
+            <span class="det-badge <%= det_class %>"><%= h(det) %></span>
+          </div>
+        </div>
+
+        <div class="finding-body">
+          <% if issue.fields['Description'].to_s.strip.length > 0 %>
+            <div>
+              <div class="finding-field-label">Description</div>
+              <div class="finding-field-content"><%= markup(issue.fields['Description']) %></div>
+            </div>
+          <% end %>
+
+          <% if issue.fields['Attack Narrative'].to_s.strip.length > 0 %>
+            <div>
+              <div class="finding-field-label">Attack Narrative</div>
+              <div class="finding-field-content"><%= markup(issue.fields['Attack Narrative']) %></div>
+            </div>
+          <% end %>
+
+          <% if issue.fields['Business Impact'].to_s.strip.length > 0 %>
+            <div>
+              <div class="finding-field-label">Business Impact</div>
+              <div class="finding-field-content"><%= h(issue.fields['Business Impact']) %></div>
+            </div>
+          <% end %>
+
+          <% if issue.fields['Recommendations'].to_s.strip.length > 0 %>
+            <div>
+              <div class="finding-field-label">Recommendations</div>
+              <div class="finding-field-content"><%= h(issue.fields['Recommendations']) %></div>
+            </div>
+          <% end %>
+
+          <!-- Evidence -->
+          <% visible_evidence = issue.evidence.select { |e| e.fields['Show'].to_s.strip == 'Yes' } %>
+          <% if visible_evidence.any? %>
+            <div>
+              <div class="finding-field-label">Evidence</div>
+              <% visible_evidence.each do |evidence| %>
+                <div class="evidence-block">
+                  <span class="evidence-node"><%= h(evidence.node.label) %></span>
+                  <% if evidence.fields['Timestamp'].to_s.strip.length > 0 %>
+                    <span class="evidence-timestamp"><%= h(evidence.fields['Timestamp']) %></span>
+                  <% end %>
+                  <div class="evidence-output">
+                    <%= markup(evidence.fields['Output']) %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+
+          <% if issue.fields['References'].to_s.strip.length > 0 %>
+            <div>
+              <div class="finding-field-label">References</div>
+              <div class="finding-field-content" style="font-family: var(--rt-mono); font-size: 0.85rem;"><%= h(issue.fields['References']) %></div>
+            </div>
+          <% end %>
+        </div>
+      </article>
+    <% end %>
+  </section>
+
+  <footer class="report-footer">
+    Generated with Dradis Framework
+  </footer>
+
+</div><!-- /.report -->
+</body>
+</html>

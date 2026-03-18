@@ -1,0 +1,23 @@
+#[Title]#
+
+#[ATT&CK Tactic]#
+Reconnaissance | Initial Access | Execution | Persistence | Privilege Escalation | Defense Evasion | Credential Access | Discovery | Lateral Movement | Collection | Exfiltration | Impact
+
+#[ATT&CK Technique]#
+
+#[Severity]#
+Critical | High | Medium | Low | Informational
+
+#[Description]#
+
+#[Attack Narrative]#
+
+#[Detection Status]#
+Detected | Partially Detected | Undetected
+
+#[Business Impact]#
+
+#[Recommendations]#
+
+#[References]#
+

@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<board version="3">
+  <id>1</id>
+  <name>MITRE ATT&amp;CK Red Team Methodology</name>
+  <node_id/>
+  <list>
+    <id>1</id>
+    <name>To Do</name>
+    <previous_id/>
+    <card>
+      <id>1</id>
+      <name>Reconnaissance</name>
+      <description>
+<![CDATA[#[Results]#
+Tester comments
+
+#[Objective]#
+Gather information about the target organization's people, technology, and processes to inform subsequent attack phases.
+
+#[Key Activities]#
+* Enumerate public-facing assets, IP ranges, and DNS records
+* Harvest employee names, roles, and email addresses from LinkedIn, job postings, and social media
+* Identify technology stack from job postings, GitHub repos, and web headers
+* Map organizational structure and key personnel
+* Identify potential phishing targets based on role and access
+
+#[Tools]#
+theHarvester, Maltego, Shodan, Recon-ng, SpiderFoot, OSINT Framework
+
+#[ATT&CK Techniques]#
+* "T1589 - Gather Victim Identity Information":https://attack.mitre.org/techniques/T1589/
+* "T1590 - Gather Victim Network Information":https://attack.mitre.org/techniques/T1590/
+* "T1593 - Search Open Websites/Domains":https://attack.mitre.org/techniques/T1593/
+
+#[References]#
+* "MITRE ATT&CK Reconnaissance Tactic":https://attack.mitre.org/tactics/TA0043/
+]]></description>
+      <due_date/>
+      <previous_id/>
+    </card>
+    <card>
+      <id>2</id>
+      <name>Resource Development</name>
+      <description>
+<![CDATA[#[Results]#
+Tester comments
+
+#[Objective]#
+Prepare infrastructure, tools, and payloads required for the engagement.
+
+#[Key Activities]#
+* Register lookalike domains for phishing
+* Set up C2 infrastructure (redirectors, team servers, DNS)
+* Build and test payloads against target's known EDR/AV solution
+* Configure HTTPS certificates for C2 communications
+* Prepare phishing templates and pretexts
+
+#[Tools]#
+Cobalt Strike, Mythic, Sliver, GoPhish, Let's Encrypt, Namecheap
+
+#[ATT&CK Techniques]#
+* "T1583 - Acquire Infrastructure":https://attack.mitre.org/techniques/T1583/
+* "T1587 - Develop Capabilities":https://attack.mitre.org/techniques/T1587/
+* "T1608 - Stage Capabilities":https://attack.mitre.org/techniques/T1608/
+
+#[References]#
+* "MITRE ATT&CK Resource Development Tactic":https://attack.mitre.org/tactics/TA0042/
+]]></description>
+      <due_date/>
+      <previous_id>1</previous_id>
+    </card>
+    <card>
+      <id>3</id>
+      <name>Initial Access</name>
+      <description>
+<![CDATA[#[Results]#
+Tester comments
+
+#[Objective]#
+Gain an initial foothold inside the target network through phishing, web exploitation, or other vectors.
+
+#[Key Activities]#
+* Execute spearphishing campaign against identified targets
+* Attempt exploitation of external-facing web applications
+* Test for credential stuffing or password spraying against exposed services
+* Validate payload delivery and C2 callback
+
+#[Tools]#
+GoPhish, Evilginx, Burp Suite, Hydra, custom payloads
+
+#[ATT&CK Techniques]#
+* "T1566 - Phishing":https://attack.mitre.org/techniques/T1566/
+* "T1190 - Exploit Public-Facing Application":https://attack.mitre.org/techniques/T1190/
+* "T1078 - Valid Accounts":https://attack.mitre.org/techniques/T1078/
+
+#[References]#
+* "MITRE ATT&CK Initial Access Tactic":https://attack.mitre.org/tactics/TA0001/
+]]></description>
+      <due_date/>
+      <previous_id>2</previous_id>
+    </card>
+    <card>
+      <id>4</id>
+      <name>Execution &amp; Persistence</name>
+      <description>
+<![CDATA[#[Results]#
+Tester comments
+
+#[Objective]#
+Execute payloads on compromised systems and establish mechanisms for persistent access.
+
+#[Key Activities]#
+* Verify beacon/implant stability and C2 communications
+* Establish persistence via scheduled tasks, registry keys, or services
+* Implement fallback C2 channels
+* Evade endpoint detection during execution chain
+* Document all persistence mechanisms for cleanup
+
+#[Tools]#
+Cobalt Strike, PowerShell, schtasks, SharPersist
+
+#[ATT&CK Techniques]#
+* "T1204 - User Execution":https://attack.mitre.org/techniques/T1204/
+* "T1053 - Scheduled Task/Job":https://attack.mitre.org/techniques/T1053/
+* "T1547 - Boot or Logon Autostart Execution":https://attack.mitre.org/techniques/T1547/
+
+#[References]#
+* "MITRE ATT&CK Execution Tactic":https://attack.mitre.org/tactics/TA0002/
+* "MITRE ATT&CK Persistence Tactic":https://attack.mitre.org/tactics/TA0003/
+]]></description>
+      <due_date/>
+      <previous_id>3</previous_id>
+    </card>
+    <card>
+      <id>5</id>
+      <name>Discovery &amp; Enumeration</name>
+      <description>
+<![CDATA[#[Results]#
+Tester comments
+
+#[Objective]#
+Map the internal environment to identify targets, trust relationships, and attack paths.
+
+#[Key Activities]#
+* Enumerate Active Directory: users, groups, GPOs, trusts, SPNs
+* Map network topology and identify segmentation boundaries
+* Identify privileged accounts and their login locations
+* Discover file shares, databases, and high-value data stores
+* Run BloodHound collection for attack path analysis
+
+#[Tools]#
+BloodHound, SharpHound, PowerView, ADRecon, Nmap, CrackMapExec
+
+#[ATT&CK Techniques]#
+* "T1087 - Account Discovery":https://attack.mitre.org/techniques/T1087/
+* "T1046 - Network Service Scanning":https://attack.mitre.org/techniques/T1046/
+* "T1069 - Permission Groups Discovery":https://attack.mitre.org/techniques/T1069/
+
+#[References]#
+* "MITRE ATT&CK Discovery Tactic":https://attack.mitre.org/tactics/TA0007/
+]]></description>
+      <due_date/>
+      <previous_id>4</previous_id>
+    </card>
+    <card>
+      <id>6</id>
+      <name>Credential Access</name>
+      <description>
+<![CDATA[#[Results]#
+Tester comments
+
+#[Objective]#
+Obtain credentials to enable lateral movement and privilege escalation.
+
+#[Key Activities]#
+* Kerberoast service accounts with SPNs
+* AS-REP roast accounts without pre-authentication
+* Dump credentials from memory (LSASS), SAM, or NTDS.dit
+* Search for credentials in files, scripts, and Group Policy Preferences
+* Attempt offline cracking of harvested hashes
+
+#[Tools]#
+Rubeus, Mimikatz, Hashcat, CrackMapExec, Impacket (secretsdump)
+
+#[ATT&CK Techniques]#
+* "T1558 - Steal or Forge Kerberos Tickets":https://attack.mitre.org/techniques/T1558/
+* "T1003 - OS Credential Dumping":https://attack.mitre.org/techniques/T1003/
+* "T1552 - Unsecured Credentials":https://attack.mitre.org/techniques/T1552/
+
+#[References]#
+* "MITRE ATT&CK Credential Access Tactic":https://attack.mitre.org/tactics/TA0006/
+]]></description>
+      <due_date/>
+      <previous_id>5</previous_id>
+    </card>
+    <card>
+      <id>7</id>
+      <name>Lateral Movement</name>
+      <description>
+<![CDATA[#[Results]#
+Tester comments
+
+#[Objective]#
+Move between systems to reach high-value targets and expand access.
+
+#[Key Activities]#
+* Use pass-the-hash or pass-the-ticket for authentication
+* Execute commands remotely via SMB, WMI, or WinRM
+* Pivot through compromised systems to reach segmented networks
+* Access additional workstations and servers
+* Document all systems accessed and methods used
+
+#[Tools]#
+CrackMapExec, Impacket (psexec, wmiexec, smbexec), Evil-WinRM, Chisel
+
+#[ATT&CK Techniques]#
+* "T1550 - Use Alternate Authentication Material":https://attack.mitre.org/techniques/T1550/
+* "T1021 - Remote Services":https://attack.mitre.org/techniques/T1021/
+* "T1570 - Lateral Tool Transfer":https://attack.mitre.org/techniques/T1570/
+
+#[References]#
+* "MITRE ATT&CK Lateral Movement Tactic":https://attack.mitre.org/tactics/TA0008/
+]]></description>
+      <due_date/>
+      <previous_id>6</previous_id>
+    </card>
+    <card>
+      <id>8</id>
+      <name>Privilege Escalation</name>
+      <description>
+<![CDATA[#[Results]#
+Tester comments
+
+#[Objective]#
+Escalate privileges to Domain Admin or equivalent level of access.
+
+#[Key Activities]#
+* Identify delegation misconfigurations (unconstrained, constrained, RBCD)
+* Exploit Active Directory certificate services (ESC1-ESC8)
+* Abuse Group Policy or ACL misconfigurations
+* Target backup operators, account operators, or other privileged groups
+* Validate Domain Admin access on the domain controller
+
+#[Tools]#
+BloodHound, Rubeus, Certify, PowerView, SharpGPOAbuse
+
+#[ATT&CK Techniques]#
+* "T1134 - Access Token Manipulation":https://attack.mitre.org/techniques/T1134/
+* "T1484 - Domain Policy Modification":https://attack.mitre.org/techniques/T1484/
+* "T1068 - Exploitation for Privilege Escalation":https://attack.mitre.org/techniques/T1068/
+
+#[References]#
+* "MITRE ATT&CK Privilege Escalation Tactic":https://attack.mitre.org/tactics/TA0004/
+]]></description>
+      <due_date/>
+      <previous_id>7</previous_id>
+    </card>
+    <card>
+      <id>9</id>
+      <name>Collection &amp; Exfiltration</name>
+      <description>
+<![CDATA[#[Results]#
+Tester comments
+
+#[Objective]#
+Demonstrate access to sensitive data and the ability to exfiltrate it from the environment.
+
+#[Key Activities]#
+* Identify and access sensitive file shares, databases, and email archives
+* Collect sample data that demonstrates the impact of compromise
+* Test data exfiltration via DNS, HTTPS, or other covert channels
+* Measure detection response time for exfiltration activities
+* Document all data accessed (do not exfiltrate actual sensitive data without authorization)
+
+#[Tools]#
+dnscat2, Cobalt Strike (download), rclone, custom exfil scripts
+
+#[ATT&CK Techniques]#
+* "T1005 - Data from Local System":https://attack.mitre.org/techniques/T1005/
+* "T1039 - Data from Network Shared Drive":https://attack.mitre.org/techniques/T1039/
+* "T1048 - Exfiltration Over Alternative Protocol":https://attack.mitre.org/techniques/T1048/
+
+#[References]#
+* "MITRE ATT&CK Collection Tactic":https://attack.mitre.org/tactics/TA0009/
+* "MITRE ATT&CK Exfiltration Tactic":https://attack.mitre.org/tactics/TA0010/
+]]></description>
+      <due_date/>
+      <previous_id>8</previous_id>
+    </card>
+    <card>
+      <id>10</id>
+      <name>Defense Evasion Assessment</name>
+      <description>
+<![CDATA[#[Results]#
+Tester comments
+
+#[Objective]#
+Evaluate the target's ability to detect and respond to adversary techniques throughout the kill chain.
+
+#[Key Activities]#
+* Correlate red team activities with SOC alerts and incident tickets
+* Identify which attack phases were detected, partially detected, or missed
+* Measure mean time to detect (MTTD) and mean time to respond (MTTR)
+* Assess EDR, NDR, and SIEM detection coverage against observed techniques
+* Document detection gaps and recommend improvements
+
+#[Tools]#
+SIEM correlation, SOC debrief, EDR telemetry review, MITRE ATT&CK Navigator
+
+#[ATT&CK Techniques]#
+* "T1562 - Impair Defenses":https://attack.mitre.org/techniques/T1562/
+* "T1070 - Indicator Removal":https://attack.mitre.org/techniques/T1070/
+
+#[References]#
+* "MITRE ATT&CK Defense Evasion Tactic":https://attack.mitre.org/tactics/TA0005/
+* "MITRE ATT&CK Navigator":https://mitre-attack.github.io/attack-navigator/
+]]></description>
+      <due_date/>
+      <previous_id>9</previous_id>
+    </card>
+    <card>
+      <id>11</id>
+      <name>Cleanup &amp; Deconfliction</name>
+      <description>
+<![CDATA[#[Results]#
+Tester comments
+
+#[Objective]#
+Remove all red team artifacts, restore systems to pre-engagement state, and provide IOCs for threat hunting.
+
+#[Key Activities]#
+* Remove all persistence mechanisms (scheduled tasks, registry keys, services)
+* Delete dropped tools, payloads, and staged files
+* Decommission C2 infrastructure
+* Provide complete IOC list to the blue team (IPs, domains, hashes, file paths)
+* Confirm all artifacts have been removed through a sweep
+
+#[Tools]#
+Cobalt Strike (cleanup), PowerShell, manual verification
+
+#[ATT&CK Techniques]#
+N/A — this is an operational phase, not an adversary technique
+
+#[References]#
+* Coordinate with the client's IT and security teams for deconfliction
+* Maintain a real-time log of all changes made during the engagement
+]]></description>
+      <due_date/>
+      <previous_id>10</previous_id>
+    </card>
+    <card>
+      <id>12</id>
+      <name>Reporting &amp; Debrief</name>
+      <description>
+<![CDATA[#[Results]#
+Tester comments
+
+#[Objective]#
+Produce a comprehensive report and conduct debriefs with technical and executive stakeholders.
+
+#[Key Activities]#
+* Write the attack narrative as a chronological story
+* Document all findings with evidence, impact, and remediation guidance
+* Create a detection gap analysis mapping activities to MITRE ATT&CK
+* Prepare executive summary with key metrics and risk ratings
+* Conduct technical debrief with the security team (purple team review)
+* Conduct executive debrief with leadership focusing on business impact and recommendations
+
+#[Tools]#
+Dradis Framework, MITRE ATT&CK Navigator, report templates
+
+#[ATT&CK Techniques]#
+N/A — this is a reporting phase
+
+#[References]#
+* "PTES Reporting":http://www.pentest-standard.org/index.php/Reporting
+]]></description>
+      <due_date/>
+      <previous_id>11</previous_id>
+    </card>
+  </list>
+  <list><id>2</id><name>In Progress</name><previous_id>1</previous_id></list>
+  <list><id>3</id><name>Done</name><previous_id>2</previous_id></list>
+</board>
