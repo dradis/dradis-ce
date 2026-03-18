@@ -87,7 +87,7 @@ class InlineThreadsController < AuthenticatedController
     )
     # anchor arrives as a JSON string (from new/create) and must be parsed
     # back into a hash before being passed to the model.
-    return permitted.merge(anchor: JSON.parse(permitted[:anchor])) if permitted[:anchor]
+    permitted.merge!(anchor: JSON.parse(permitted[:anchor])) if permitted[:anchor]
 
     permitted
   end
