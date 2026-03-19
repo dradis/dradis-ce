@@ -103,6 +103,10 @@ th {
 .bg-info {
   background-color: $green-100 !important;
   color: $green-900;
+
+  .content-textile {
+    background-color: transparent;
+  }
 }
 
 .bg-lavender {
