@@ -1,12 +1,13 @@
-$:.push File.expand_path('../lib', __FILE__)
+# -*- encoding: utf-8 -*-
 
-require 'dradis/plugins/echo/version'
+require File.expand_path('../lib/dradis/plugins/echo/version', __FILE__)
+version = Dradis::Plugins::Echo.version
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |spec|
   spec.platform = Gem::Platform::RUBY
   spec.name = 'dradis-echo'
-  spec.version = Dradis::Plugins::Echo::VERSION::STRING
+  spec.version = version
   spec.summary = 'This plugin adds Echo, an AI copilot for Dradis.'
   spec.description = 'Prompt your existing project for insight and reporting help. Get advice on what to try next.'
 

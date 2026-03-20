@@ -1,15 +1,15 @@
 del {
-  background-color: #FCC;
+  background-color: var(--del-bg);
 }
 
 ins {
-  background-color: #CFC;
+  background-color: var(--ins-bg);
 }
 
 .revisions-table {
   tr {
     &.active {
-      background-color: #FFE;
+      background-color: var(--revision-active-bg);
     }
 
     th {

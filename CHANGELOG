@@ -1,4 +1,4 @@
-[v#.#.#] ([month] [YYYY])
+v5.0.0 (March 2026)
   - Layout: Add light/dark/auto theme toggle to support dark mode
   - Activities: remove ActivityTracking for Issues and use EventPublisher
   - QA: add in-line comment threads
@@ -30,31 +30,13 @@
     - OWASP kit: add with 3 report template variations
     - Red Team kit: add with MITRE ATT&CK methodology and kill chain report
     - Welcome kit: update with OWASP Top 10:2025 methodology
-  - [entity]:
-    - [future tense verb] [feature]
   - Upgraded gems:
     - nokogiri, rack
   - Bugs fixes:
     - Nodes: Display error message and preserve input on properties update
     - Notifications: Ensure correct link for note and issue comments
-    - Bug tracker items:
-      - [item]
-  - New integrations:
-    - [integration]
-  - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
   - REST/JSON API enhancements:
     - Issues: Add support for search
-  - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v4.19.0 (November 2025)
   - Editor: Add inline code, and highlight code buttons to the toolbar
