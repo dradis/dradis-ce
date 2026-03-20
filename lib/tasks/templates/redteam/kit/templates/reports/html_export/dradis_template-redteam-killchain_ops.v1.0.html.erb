@@ -2,9 +2,9 @@
   # -- Data preparation --
   severity_color = {
     'Critical' => '#c62828', 'High' => '#d84315', 'Medium' => '#ef6c00',
-    'Low' => '#2e7d32', 'Informational' => '#546e7a'
+    'Low' => '#2e7d32', 'Info' => '#546e7a'
   }
-  severity_order = { 'Critical' => 0, 'High' => 1, 'Medium' => 2, 'Low' => 3, 'Informational' => 4 }
+  severity_order = { 'Critical' => 0, 'High' => 1, 'Medium' => 2, 'Low' => 3, 'Info' => 4 }
 
   severity_counts  = Hash.new(0)
   tactic_counts    = Hash.new(0)
@@ -12,13 +12,13 @@
 
   issues.each do |issue|
     severity_counts[issue.fields['Severity'].to_s.strip]         += 1
-    tactic_counts[issue.fields['ATT&CK Tactic'].to_s.strip]      += 1
-    detection_counts[issue.fields['Detection Status'].to_s.strip] += 1
+    tactic_counts[issue.fields['Tactic'].to_s.strip]      += 1
+    detection_counts[issue.fields['Detection'].to_s.strip] += 1
   end
 
   sorted_issues = issues.sort_by { |i| severity_order[i.fields['Severity'].to_s.strip] || 99 }
 
-  severity_levels    = ['Critical', 'High', 'Medium', 'Low', 'Informational']
+  severity_levels    = ['Critical', 'High', 'Medium', 'Low', 'Info']
   detection_statuses = ['Detected', 'Partially Detected', 'Undetected']
   detection_colors   = { 'Detected' => '#2e7d32', 'Partially Detected' => '#ef6c00', 'Undetected' => '#c62828' }
 
@@ -31,7 +31,7 @@
   issues_by_tactic = {}
   kill_chain.each { |t| issues_by_tactic[t] = [] }
   issues.each do |issue|
-    tactic = issue.fields['ATT&CK Tactic'].to_s.strip
+    tactic = issue.fields['Tactic'].to_s.strip
     issues_by_tactic[tactic] << issue if issues_by_tactic.key?(tactic)
   end
 
@@ -339,11 +339,11 @@
       text-transform: uppercase;
     }
 
-    .sev-Critical      { background: #ffebee; color: #c62828; }
-    .sev-High          { background: #fbe9e7; color: #d84315; }
-    .sev-Medium        { background: #fff3e0; color: #ef6c00; }
-    .sev-Low           { background: #e8f5e9; color: #2e7d32; }
-    .sev-Informational { background: #eceff1; color: #546e7a; }
+    .sev-Critical { background: #ffebee; color: #c62828; }
+    .sev-High     { background: #fbe9e7; color: #d84315; }
+    .sev-Medium   { background: #fff3e0; color: #ef6c00; }
+    .sev-Low      { background: #e8f5e9; color: #2e7d32; }
+    .sev-Info     { background: #eceff1; color: #546e7a; }
 
     .det-badge {
       display: inline-block;
@@ -553,7 +553,7 @@
 
       .detection-bar-segment { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
-      .sev-Critical, .sev-High, .sev-Medium, .sev-Low, .sev-Informational,
+      .sev-Critical, .sev-High, .sev-Medium, .sev-Low, .sev-Info,
       .det-detected, .det-partially-detected, .det-undetected {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
@@ -701,7 +701,7 @@
         <% sorted_issues.each do |issue| %>
           <%
             sev = issue.fields['Severity'].to_s.strip
-            det = issue.fields['Detection Status'].to_s.strip
+            det = issue.fields['Detection'].to_s.strip
             det_class = case det
                         when 'Detected' then 'det-detected'
                         when 'Partially Detected' then 'det-partially-detected'
@@ -711,8 +711,8 @@
           <tr>
             <td><strong><%= h(issue.fields['Title']) %></strong></td>
             <td><span class="sev-badge sev-<%= sev %>"><%= sev %></span></td>
-            <td><span class="tactic-label"><%= h(issue.fields['ATT&CK Tactic']) %></span></td>
-            <td><span class="technique-label"><%= h(issue.fields['ATT&CK Technique']) %></span></td>
+            <td><span class="tactic-label"><%= h(issue.fields['Tactic']) %></span></td>
+            <td><span class="technique-label"><%= h(issue.fields['Technique ID']) %> - <%= h(issue.fields['Technique']) %></span></td>
             <td><span class="det-badge <%= det_class %>"><%= h(det) %></span></td>
           </tr>
         <% end %>
@@ -728,9 +728,9 @@
     <% sorted_issues.each_with_index do |issue, idx| %>
       <%
         sev       = issue.fields['Severity'].to_s.strip
-        tactic    = issue.fields['ATT&CK Tactic'].to_s.strip
-        technique = issue.fields['ATT&CK Technique'].to_s.strip
-        det       = issue.fields['Detection Status'].to_s.strip
+        tactic    = issue.fields['Tactic'].to_s.strip
+        technique = issue.fields['Technique'].to_s.strip
+        det       = issue.fields['Detection'].to_s.strip
         det_class = case det
                     when 'Detected' then 'det-detected'
                     when 'Partially Detected' then 'det-partially-detected'
@@ -745,7 +745,7 @@
           <div class="finding-tags">
             <span class="tactic-label"><%= h(tactic) %></span>
             <% if technique.to_s.strip.length > 0 %>
-              <span class="technique-label"><%= h(technique) %></span>
+              <span class="technique-label"><%= h(issue.fields['Technique ID']) %> - <%= h(technique) %></span>
             <% end %>
             <span class="det-badge <%= det_class %>"><%= h(det) %></span>
           </div>
