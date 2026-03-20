@@ -114,6 +114,10 @@
 
           .body {
             white-space: initial;
+
+            .time {
+              color: $grey-700;
+            }
           }
 
           &:last-child {
