@@ -1,18 +1,24 @@
 <%= render partial: 'layouts/hera/navbar/main_nav/utility_nav/theme_menu' %>
 
-<li class="nav-item">
-  <%= link_to main_app.project_trash_path(current_project), class: 'nav-link' do %>
-    <i class="fa-solid fa-trash-can fa-fw d-none d-lg-inline" title="Trash"></i>
-    <span class="d-inline d-lg-none">Trash</span>
-  <% end %>
-</li>
+<% cache(['navbar-trash', current_project.id]) do %>
+  <li class="nav-item">
+    <%= link_to main_app.project_trash_path(current_project), class: 'nav-link' do %>
+      <i class="fa-solid fa-trash-can fa-fw d-none d-lg-inline" title="Trash"></i>
+      <span class="d-inline d-lg-none">Trash</span>
+    <% end %>
+  </li>
+<% end %>
 
 <%= render partial: 'layouts/hera/navbar/main_nav/utility_nav/configuration_menu' %>
 
-<%= render 'layouts/hera/navbar/main_nav/utility_nav/notifications',
-     project_id: current_project.id %>
+<% cache(['navbar-notifications', current_project.id]) do %>
+  <%= render 'layouts/hera/navbar/main_nav/utility_nav/notifications',
+       project_id: current_project.id %>
+<% end %>
 
 <%= render partial: 'layouts/hera/navbar/main_nav/help_menu' %>
 
-<%= render layout: 'layouts/hera/navbar/main_nav/utility_nav/user_dropdown' do %>
+<% cache(['navbar-user-dropdown', current_user.id, current_user.updated_at]) do %>
+  <%= render layout: 'layouts/hera/navbar/main_nav/utility_nav/user_dropdown' do %>
+  <% end %>
 <% end %>
