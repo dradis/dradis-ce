@@ -28,6 +28,7 @@
     - Add analytics sharing step
     - Mark as done after Kit step, without waiting for the background job
     - OWASP kit: add with 3 report template variations
+    - Red Team kit: add with MITRE ATT&CK methodology and kill chain report
     - Welcome kit: update with OWASP Top 10:2025 methodology
   - [entity]:
     - [future tense verb] [feature]
