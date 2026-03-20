@@ -4,6 +4,7 @@
 @import 'hera/modules/combobox';
 @import 'hera/modules/comments';
 @import 'hera/modules/datatables';
+@import 'hera/modules/divider';
 @import 'hera/modules/dropdown';
 @import 'hera/modules/dots_menu';
 @import 'hera/modules/editor_toolbar';
@@ -164,42 +165,6 @@
   max-height: 70vh;
 }
 
-.divider {
-  border-top: 1px solid var(--border-color);
-  height: 0;
-  margin: 0.25rem 0;
-  position: relative;
-
-  .divider-label {
-    background-color: var(--primary-bg);
-    color: var(--text-default);
-    font-size: $text-small;
-    left: 50%;
-    padding: 0 0.5rem;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-
-    &.lead {
-      font-size: 1.25rem;
-    }
-  }
-
-  &.divider-lg {
-    margin: 1.25rem 0;
-  }
-
-  &.divider-xl {
-    margin: 2rem 0;
-  }
-}
-
-.divider-vertical {
-  border-right: 1px solid var(--border-color);
-  display: initial;
-  margin: 0.25rem;
-  width: 0;
-}
 
 .gravatar {
   float: left;
