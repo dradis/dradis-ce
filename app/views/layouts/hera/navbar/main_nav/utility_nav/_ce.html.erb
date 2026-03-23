@@ -17,7 +17,7 @@
 
 <%= render partial: 'layouts/hera/navbar/main_nav/help_menu' %>
 
-<% cache(['navbar-user-dropdown', current_user.id, current_user.updated_at]) do %>
+<% cache(['navbar-user-dropdown', current_user]) do %>
   <%= render layout: 'layouts/hera/navbar/main_nav/utility_nav/user_dropdown' do %>
   <% end %>
 <% end %>
