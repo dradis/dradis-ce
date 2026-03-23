@@ -9,7 +9,11 @@
   </li>
 <% end %>
 
-<%= render partial: 'layouts/hera/navbar/main_nav/utility_nav/configuration_menu' %>
+<% cache(['navbar-config', current_project.id]) do %>
+  <%= render layout: 'layouts/hera/navbar/main_nav/utility_nav/configuration_menu' do %>
+    <%= render partial: 'layouts/hera/navbar/projects/project_configurations' %>
+  <% end %>
+<% end %>
 
 <% cache('navbar-notifications') do %>
   <%= render 'layouts/hera/navbar/main_nav/utility_nav/notifications' %>
