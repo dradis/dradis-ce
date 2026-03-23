@@ -11,9 +11,8 @@
 
 <%= render partial: 'layouts/hera/navbar/main_nav/utility_nav/configuration_menu' %>
 
-<% cache(['navbar-notifications', current_project.id]) do %>
-  <%= render 'layouts/hera/navbar/main_nav/utility_nav/notifications',
-       project_id: current_project.id %>
+<% cache('navbar-notifications') do %>
+  <%= render 'layouts/hera/navbar/main_nav/utility_nav/notifications' %>
 <% end %>
 
 <%= render partial: 'layouts/hera/navbar/main_nav/help_menu' %>
