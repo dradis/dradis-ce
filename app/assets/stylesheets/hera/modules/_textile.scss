@@ -118,6 +118,13 @@ form:has(.textile-fullscreen) {
     right: 0;
     z-index: 2001;
   }
+
+  .tag-input {
+    bottom: 0.4rem;
+    position: fixed !important;
+    top: auto !important;
+    z-index: 2002;
+  }
 }
 
 .markup-help {
