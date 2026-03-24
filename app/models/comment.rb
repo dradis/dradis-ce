@@ -96,11 +96,13 @@ class Comment < ApplicationRecord
   end
 
   def to_xml(xml_builder, version: 3)
-    xml_builder.content do
-      xml_builder.cdata!(content)
+    xml_builder.comment do
+      xml_builder.content do
+        xml_builder.cdata!(content)
+      end
+      xml_builder.author(user&.email)
+      xml_builder.created_at(created_at.to_i)
     end
-    xml_builder.author(user&.email)
-    xml_builder.created_at(created_at.to_i)
   end
 
   private
