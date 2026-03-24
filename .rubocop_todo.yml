@@ -239,7 +239,6 @@ Style/Alias:
 Style/AlignArray:
   Exclude:
     - 'engines/dradis-api/lib/dradis/ce/api/catch_json_parse_errors.rb'
-    - 'packaging/rake_rules.rb'
 
 # Offense count: 7
 # Cop supports --auto-correct.
@@ -660,7 +659,6 @@ Style/IndentHash:
 # SupportedStyles: normal, rails
 Style/IndentationConsistency:
   Exclude:
-    - 'packaging/rake_rules.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -716,7 +714,6 @@ Style/LeadingCommentSpace:
 Style/LineEndConcatenation:
   Exclude:
     - 'lib/tasks/thorfile.rb'
-    - 'packaging/rake_rules.rb'
 
 # Offense count: 21
 # Cop supports --auto-correct.
@@ -761,7 +758,6 @@ Style/MixinGrouping:
 # SupportedStyles: symmetrical, new_line, same_line
 Style/MultilineArrayBraceLayout:
   Exclude:
-    - 'packaging/rake_rules.rb'
 
 # Offense count: 2
 Style/MultilineBlockChain:
@@ -803,7 +799,6 @@ Style/MultilineOperationIndentation:
     - 'app/helpers/methodologies_helper.rb'
     - 'app/presenters/property_presenter.rb'
     - 'lib/html/pipeline/dradis_textile_filter.rb'
-    - 'packaging/rake_rules.rb'
 
 # Offense count: 10
 # Cop supports --auto-correct.
@@ -812,7 +807,6 @@ Style/MutableConstant:
     - 'app/helpers/revisions_helper.rb'
     - 'app/models/activity.rb'
     - 'lib/dradis/ce/version.rb'
-    - 'packaging/rake_rules.rb'
 
 # Offense count: 10
 # Cop supports --auto-correct.
@@ -1136,7 +1130,6 @@ Style/SpaceInsideStringInterpolation:
     - 'app/controllers/upload_controller.rb'
     - 'engines/dradis-api/spec/requests/dradis/ce/api/v1/issues_spec.rb'
     - 'engines/dradis-api/spec/requests/dradis/ce/api/v1/nodes_spec.rb'
-    - 'packaging/rake_rules.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
