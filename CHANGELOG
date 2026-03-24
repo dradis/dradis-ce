@@ -31,7 +31,7 @@ v5.0.0 (March 2026)
     - Red Team kit: add with MITRE ATT&CK methodology and kill chain report
     - Welcome kit: update with OWASP Top 10:2025 methodology
   - Upgraded gems:
-    - nokogiri, rack
+    - bcrypt, nokogiri, rack
   - Bugs fixes:
     - Nodes: Display error message and preserve input on properties update
     - Notifications: Ensure correct link for note and issue comments
