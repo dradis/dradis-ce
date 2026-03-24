@@ -1,5 +1,23 @@
 @import 'jquery.textile';
 
+//Assert form-actions and tag-input are accessible in fullscreen mode
+body form:has(.textile-wrap.textile-fullscreen) {
+  .form-actions.sticky {
+    left: 0;
+    padding: 1rem;
+    position: fixed;
+    right: 0;
+    z-index: 2001;
+  }
+
+  .tag-input {
+    bottom: 0.4rem;
+    position: fixed;
+    top: auto;
+    z-index: 2002;
+  }
+}
+
 .content-textile,
 .textile-preview {
   background-color: var(--primary-bg);
@@ -106,24 +124,6 @@
   ul,
   ol {
     margin-bottom: 2ex;
-  }
-}
-
-//Assert form-actions and tag-input are accessible in fullscreen mode
-form:has(.textile-fullscreen) {
-  .form-actions.sticky {
-    left: 0;
-    padding: 1rem;
-    position: fixed;
-    right: 0;
-    z-index: 2001;
-  }
-
-  .tag-input {
-    bottom: 0.4rem;
-    position: fixed !important;
-    top: auto !important;
-    z-index: 2002;
   }
 }
 
