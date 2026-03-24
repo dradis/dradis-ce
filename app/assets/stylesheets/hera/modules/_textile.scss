@@ -109,6 +109,17 @@
   }
 }
 
+//Assert form-actions and tag-input are accessible in fullscreen mode
+form:has(.textile-fullscreen) {
+  .form-actions.sticky {
+    left: 0;
+    padding: 1rem;
+    position: fixed;
+    right: 0;
+    z-index: 2001;
+  }
+}
+
 .markup-help {
   h5 {
     margin-top: 2rem;
