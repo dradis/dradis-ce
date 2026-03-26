@@ -1,5 +1,5 @@
 v5.0.0 (March 2026)
-  - Activities: remove ActivityTracking for Issues and use EventPublisher
+  - Activities: Remove ActivityTracking for Issues and use EventPublisher
   - Docker:
     - Update default attachments & templates locations to storage/
     - Include assets for all integrations regardless of enabled/disabled status
@@ -11,8 +11,8 @@ v5.0.0 (March 2026)
     - Rename upload and parent node types and add distinguishing icons
     - Update associated evidence, notes and child nodes' updated_at columns on node merge
     - Warn on node merge that methodology will not be copied
-  - Profile: update default user avatar
-  - QA: add in-line comment threads
+  - Profile: Update default user avatar
+  - QA: Add in-line comment threads
   - Show don't gate:
     - Issue Library
     - Remediation Tracker
@@ -27,9 +27,9 @@ v5.0.0 (March 2026)
   - Wizard:
     - Add analytics sharing step
     - Mark as done after Kit step, without waiting for the background job
-    - OWASP kit: add with 3 report template variations
-    - Red Team kit: add with MITRE ATT&CK methodology and kill chain report
-    - Welcome kit: update with OWASP Top 10:2025 methodology
+    - OWASP kit: Add with 3 report template variations
+    - Red Team kit: Add with MITRE ATT&CK methodology and kill chain report
+    - Welcome kit: Update with OWASP Top 10:2025 methodology
   - Upgraded gems:
     - bcrypt, nokogiri, rack
   - Bugs fixes:
