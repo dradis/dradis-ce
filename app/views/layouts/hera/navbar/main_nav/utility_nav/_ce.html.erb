@@ -15,7 +15,7 @@
   <% end %>
 <% end %>
 
-<% cache('navbar-notifications') do %>
+<% cache(['navbar-notifications', current_project]) do %>
   <%= render 'layouts/hera/navbar/main_nav/utility_nav/notifications' %>
 <% end %>
 
