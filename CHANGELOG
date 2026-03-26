@@ -1,18 +1,18 @@
 v5.0.0 (March 2026)
-  - Layout: Add light/dark/auto theme toggle to support dark mode
   - Activities: remove ActivityTracking for Issues and use EventPublisher
-  - QA: add in-line comment threads
-  - Profile: update default user avatar
-  - Forms: Improve visibility of form actions
   - Docker:
     - Update default attachments & templates locations to storage/
     - Include assets for all integrations regardless of enabled/disabled status
-  - Echo context layer is part of the framework
+  - Echo: Add configurable, reusable prompts for Issues
+  - Forms: Improve visibility of form actions
+  - Layout: Add light/dark/auto theme toggle to support dark mode
   - Nodes:
     - Add more types and icons
-    - Rename addon upload/parent nodes and add icons
+    - Rename upload and parent node types and add distinguishing icons
     - Update associated evidence, notes and child nodes' updated_at columns on node merge
     - Warn on node merge that methodology will not be copied
+  - Profile: update default user avatar
+  - QA: add in-line comment threads
   - Show don't gate:
     - Issue Library
     - Remediation Tracker
