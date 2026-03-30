@@ -15,6 +15,10 @@ body form:has(.textile-wrap.textile-fullscreen) {
     position: fixed;
     top: auto;
     z-index: 2002;
+
+    @media (min-width: 991px) {
+      left: 50%;
+    }
   }
 }
 
