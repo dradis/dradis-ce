@@ -62,7 +62,7 @@ gem 'paper_trail', '~> 16.0'
 
 gem 'record_tag_helper'
 
-gem 'rubyzip', '>= 1.2.2'
+gem 'rubyzip', '~> 2.3'
 
 gem 'thor', '~> 1.4.0'
 
