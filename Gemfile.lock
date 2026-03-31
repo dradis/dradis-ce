@@ -1,12 +1,12 @@
 GIT
   remote: https://github.com/dradis/dradis-plugins.git
-  revision: 7bf110e507b6f46528d2fdcf63273f8d012650e5
+  revision: a27dac43e68b1079c910994634ee956efebda792
   specs:
     dradis-plugins (4.19.0)
 
 GIT
   remote: https://github.com/dradis/dradis-projects.git
-  revision: 12c1f357d02b39590a0c22e9acafe0e4a12a53ca
+  revision: 138f0411cca0b6196167d18bc8d76872b3ffe3e5
   specs:
     dradis-projects (4.19.0)
       dradis-plugins (>= 4.8.0)
@@ -335,10 +335,12 @@ GEM
     mini_portile2 (2.8.9)
     mini_racer (0.6.2)
       libv8-node (~> 16.10.0.0)
-    minitest (5.27.0)
+    minitest (6.0.2)
+      drb (~> 2.0)
+      prism (~> 1.5)
     mono_logger (1.1.1)
     msgpack (1.5.2)
-    multi_json (1.15.0)
+    multi_json (1.19.1)
     mustermann (2.0.2)
       ruby2_keywords (~> 0.0.1)
     nenv (0.3.0)
@@ -383,7 +385,7 @@ GEM
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.4.0)
+    prism (1.9.0)
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -513,7 +515,7 @@ GEM
     ruby2_keywords (0.0.5)
     ruby_audit (3.0.0)
       bundler-audit (~> 0.9.0)
-    rubyzip (2.3.2)
+    rubyzip (3.2.2)
     sanitize (6.0.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
