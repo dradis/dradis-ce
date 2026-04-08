@@ -24,7 +24,7 @@
 .inline-comment-button {
   align-items: center;
   background-color: var(--secondary-bg);
-  border: 1px solid $border-color;
+  border: 1px solid var(--border-color);
   border-radius: 25px;
   box-shadow: 0 20px 30px 0 rgba($shadow-color-dark, 0.1);
   cursor: pointer;
@@ -41,17 +41,31 @@
     border-color: var(--secondary-bg) transparent transparent;
     content: '';
     height: 0;
-    left: 0.7rem;
+    left: 1rem;
     position: absolute;
-    top: 100%;
+    top: 98%;
+    width: 0;
+  }
+
+  &:before {
+    border: 0.5rem solid;
+    border-color: var(--border-color) transparent transparent;
+    content: '';
+    height: 0;
+    left: 1rem;
+    position: absolute;
+    top: 102%;
     width: 0;
   }
 
   &:hover {
     background-color: var(--secondary-bg-subtle);
+
+    &::after {
+      border-color: var(--secondary-bg-subtle) transparent transparent;
+    }
   }
 }
-
 
 .inline-thread-comment {
   @include comment-item;
