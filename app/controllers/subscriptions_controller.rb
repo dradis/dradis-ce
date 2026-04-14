@@ -1,6 +1,8 @@
 class SubscriptionsController < AuthenticatedController
   layout false
 
+  before_action :authorize_subscribable
+
   def index
     @subscriptions = subscribable.subscriptions.includes(:user)
 
@@ -21,6 +23,14 @@ class SubscriptionsController < AuthenticatedController
   end
 
   private
+
+  def authorize_subscribable
+    if subscribable.respond_to?(:project)
+      authorize! :read, subscribable.project
+    else
+      authorize! :read, subscribable
+    end
+  end
 
   def subscribe
     subscription = Subscription.new(subscription_params)
