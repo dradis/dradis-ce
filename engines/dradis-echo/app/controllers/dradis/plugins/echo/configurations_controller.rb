@@ -21,7 +21,7 @@ module Dradis::Plugins::Echo
 
     def admin_required
       unless current_user && current_user.role?(:admin)
-        flash[:notice] = 'Access denied.'
+        flash[:alert] = 'Access denied.'
         redirect_to main_app.projects_path
       end
     end
