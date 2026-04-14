@@ -4,16 +4,13 @@ class TagsController < AuthenticatedController
   include Sortable
 
   before_action :set_columns, only: :index
-  load_and_authorize_resource
+  load_and_authorize_resource through: :current_project
 
-  def index
-    @tags = current_project.tags
-  end
+  def index; end
 
   def new; end
 
   def create
-    @tag.project = current_project
     if @tag.save
       track_created(@tag)
       redirect_to request.referer, notice: 'Tag created.'
