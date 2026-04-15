@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   spec.test_files = spec.files.grep(%r{^(test|spec|features)/})
 
-  spec.add_dependency 'dradis-plugins', '~> 4.0'
+  spec.add_dependency 'dradis-plugins', '>= 4.0'
   spec.add_dependency 'liquid'
   spec.add_dependency 'ollama-ai', '~> 1.3.0'
 
