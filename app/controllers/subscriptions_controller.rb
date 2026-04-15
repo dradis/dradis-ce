@@ -1,7 +1,7 @@
 class SubscriptionsController < AuthenticatedController
-  layout false
-
   before_action :authorize_subscribable
+
+  layout false
 
   def index
     @subscriptions = subscribable.subscriptions.includes(:user)
@@ -25,11 +25,7 @@ class SubscriptionsController < AuthenticatedController
   private
 
   def authorize_subscribable
-    if subscribable.respond_to?(:project)
-      authorize! :read, subscribable.project
-    else
-      authorize! :read, subscribable
-    end
+    authorize! :read, subscribable.try(:project) || subscribable
   end
 
   def subscribe
