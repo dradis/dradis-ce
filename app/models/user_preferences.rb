@@ -76,6 +76,8 @@ class UserPreferences
         instance_variable_set(:"@#{key}", value)
       end
     end
+
+    @theme ||= DEFAULT_THEME
   end
 
   VALID_TOURS.each do |tour|

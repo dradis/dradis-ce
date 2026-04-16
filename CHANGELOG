@@ -1,18 +1,18 @@
-[v#.#.#] ([month] [YYYY])
-  - Layout: Add light/dark/auto theme toggle to support dark mode
-  - Activities: remove ActivityTracking for Issues and use EventPublisher
-  - QA: add in-line comment threads
-  - Profile: update default user avatar
-  - Forms: Improve visibility of form actions
+v5.0.0 (March 2026)
+  - Activities: Remove ActivityTracking for Issues and use EventPublisher
   - Docker:
     - Update default attachments & templates locations to storage/
     - Include assets for all integrations regardless of enabled/disabled status
-  - Echo context layer is part of the framework
+  - Echo: Add configurable, reusable prompts for Issues
+  - Forms: Improve visibility of form actions
+  - Layout: Add light/dark/auto theme toggle to support dark mode
   - Nodes:
     - Add more types and icons
-    - Rename addon upload/parent nodes and add icons
+    - Rename upload and parent node types and add distinguishing icons
     - Update associated evidence, notes and child nodes' updated_at columns on node merge
     - Warn on node merge that methodology will not be copied
+  - Profile: Update default user avatar
+  - QA: Add in-line comment threads
   - Show don't gate:
     - Issue Library
     - Remediation Tracker
@@ -26,33 +26,19 @@
     - Keep sidebar open when editing issues in large viewports
   - Wizard:
     - Add analytics sharing step
-    - Mark as done after Kit step, without waiting for the background job.
-    - Update Welcome kit with OWASP Top 10:2025 methodology
-  - [entity]:
-    - [future tense verb] [feature]
+    - Mark as done after Kit step, without waiting for the background job
+    - OWASP kit: Add with 3 report template variations
+    - Red Team kit: Add with MITRE ATT&CK methodology and kill chain report
+    - Welcome kit: Update with OWASP Top 10:2025 methodology
   - Upgraded gems:
-    - nokogiri, rack
+    - bcrypt, nokogiri, rack, rails, tilt
   - Bugs fixes:
     - Nodes: Display error message and preserve input on properties update
     - Notifications: Ensure correct link for note and issue comments
-    - Bug tracker items:
-      - [item]
-  - New integrations:
-    - [integration]
-  - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
   - REST/JSON API enhancements:
     - Issues: Add support for search
   - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: Authenticated (author) horizontal privilege escalation allowing cross-project subscription and subscriber enumeration
 
 v4.19.0 (November 2025)
   - Editor: Add inline code, and highlight code buttons to the toolbar

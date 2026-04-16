@@ -1,47 +1,27 @@
 <%= render partial: 'layouts/hera/navbar/main_nav/utility_nav/theme_menu' %>
 
-<li class="nav-item">
-  <%= link_to main_app.project_trash_path(current_project), class: 'nav-link' do %>
-    <i class="fa-solid fa-trash-can fa-fw d-none d-lg-inline" title="Trash"></i>
-    <span class="d-inline d-lg-none">Trash</span>
-  <% end %>
-</li>
-
-<%= render partial: 'layouts/hera/navbar/main_nav/utility_nav/configuration_menu' %>
-
-<% cache(['navbar-notifications', current_user.notifications.unread]) do %>
-  <li class="nav-item notifications dropdown">
-    <%= link_to main_app.project_notifications_path(current_project),
-      class: 'nav-link dropdown-toggle no-caret',
-      data: {
-        id: 'notifications',
-        bs_toggle: 'dropdown',
-        behavior: 'notifications-dropdown close-collapse',
-        project_id: current_project.id
-      },
-      role: 'button',
-      'aria-expanded': 'false' do %>
-      <i class="notifications-bell fa-solid fa-bell d-none d-lg-inline" title="Notifications"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i>
-      <span class="d-inline d-lg-none">Notifications</span>
+<% cache(['navbar-trash', current_project]) do %>
+  <li class="nav-item">
+    <%= link_to main_app.project_trash_path(current_project), class: 'nav-link' do %>
+      <i class="fa-solid fa-trash-can fa-fw d-none d-lg-inline" title="Trash"></i>
+      <span class="d-inline d-lg-none">Trash</span>
     <% end %>
-    <div class="dropdown-menu dropdown-menu-end" data-url="<%= main_app.notifications_path %>" aria-labelledby="notifications">
-    </div>
   </li>
+<% end %>
+
+<% cache(['navbar-config', current_project]) do %>
+  <%= render layout: 'layouts/hera/navbar/main_nav/utility_nav/configuration_menu' do %>
+    <%= render partial: 'layouts/hera/navbar/projects/project_configurations' %>
+  <% end %>
+<% end %>
+
+<% cache(['navbar-notifications', current_project]) do %>
+  <%= render 'layouts/hera/navbar/main_nav/utility_nav/notifications' %>
 <% end %>
 
 <%= render partial: 'layouts/hera/navbar/main_nav/help_menu' %>
 
-<li class="nav-item dropdown me-0 mb-3 mb-lg-0">
-  <a class="nav-link dropdown-toggle pe-0 py-lg-0 d-flex align-items-center no-caret-xl" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="user-profile">
-    <%= avatar_image(current_user, size: 32) %>
-    <span class="d-block d-lg-none ms-1"><%= current_user.name %></span>
-  </a>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="user-profile">
-    <li>
-      <%= link_to main_app.logout_path,  class: 'dropdown-item', data: { turbo: false } do %>
-        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-        <span class="ms-1">Logout</span>
-      <% end %>
-    </li>
-  </ul>
-</li>
+<% cache(['navbar-user-dropdown', current_user]) do %>
+  <%= render layout: 'layouts/hera/navbar/main_nav/utility_nav/user_dropdown' do %>
+  <% end %>
+<% end %>
