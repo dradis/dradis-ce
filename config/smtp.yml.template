@@ -1,0 +1,34 @@
+# This file is a template for configuring SMTP for Dradis VM deployments.
+# Copy to config/smtp.yml and fill in your settings.
+#
+# Docker deployments should use environment variables instead. See:
+# https://dradis.com/support/guides/customization/mail_server.html
+#
+# For a full list of ActionMailer options, see:
+# https://guides.rubyonrails.org/action_mailer_basics.html#action-mailer-configuration
+
+default: &default
+  default_url_options:
+    host:         https://dradisframework.dev
+    script_name:  '/pro'
+  default_options:
+    from:     from@dradisframework.dev
+    reply_to: reply@dradisframework.dev
+  smtp_settings:
+    address:               mail.starfleet.com
+    port:                  123456
+    domain:                starfleet.com
+    user_name:             username
+    password:              password
+    authentication:        plain
+    enable_starttls_auto:  true
+    openssl_verify_mode:   none
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
