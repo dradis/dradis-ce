@@ -37,6 +37,8 @@ v5.0.0 (March 2026)
     - Notifications: Ensure correct link for note and issue comments
   - REST/JSON API enhancements:
     - Issues: Add support for search
+  - Security Fixes:
+    - Medium: Authenticated (author) horizontal privilege escalation allowing cross-project subscription and subscriber enumeration
 
 v4.19.0 (November 2025)
   - Editor: Add inline code, and highlight code buttons to the toolbar
