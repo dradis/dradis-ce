@@ -12,8 +12,20 @@
   font-style: normal;
 }
 
+// Accordion dark mode — Bootstrap 5.2 sets --bs-accordion-* directly on .accordion
+@mixin dark-accordion {
+  --bs-accordion-active-bg: var(--secondary-bg);
+  --bs-accordion-active-color: var(--text-default);
+  --bs-accordion-bg: var(--primary-bg);
+  --bs-accordion-border-color: var(--border-color);
+  --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23d1d1d1'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  --bs-accordion-btn-color: var(--text-default);
+  --bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23d1d1d1'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  --bs-accordion-color: var(--text-default);
+}
+
 body:not(.unauthenticated) {
-  background-color: $white;
+  background-color: var(--primary-bg);
   display: grid;
   font-family: 'ProximaNovaLight', 'system-ui';
   min-height: 100vh;
@@ -23,7 +35,7 @@ body:not(.unauthenticated) {
 }
 
 a {
-  color: $text-link;
+  color: var(--text-link);
   text-decoration: none;
   transition: color 0.2s ease-in-out;
 
@@ -33,7 +45,7 @@ a {
   }
 
   &:hover {
-    color: $text-link-hover;
+    color: var(--text-link-hover);
   }
 }
 
@@ -79,18 +91,22 @@ th {
 }
 
 .badge-outline-info {
-  border: 1px solid darken($green-700, 10%);
-  color: darken($green-700, 10%);
+  border: 1px solid var(--badge-info-color);
+  color: var(--badge-info-color);
 }
 
 .badge-outline-lavender {
-  border: 1px solid $lavender-dark;
-  color: $lavender-dark;
+  border: 1px solid var(--badge-lavender-color);
+  color: var(--badge-lavender-color);
 }
 
 .bg-info {
   background-color: $green-100 !important;
   color: $green-900;
+
+  .content-textile {
+    background-color: transparent;
+  }
 }
 
 .bg-lavender {
@@ -128,6 +144,10 @@ code {
   color: $primary;
   border-radius: $border-radius;
   padding: 0.15rem 0.5rem;
+}
+
+[data-theme='dark'] .accordion {
+  @include dark-accordion;
 }
 
 .empty-state {
@@ -169,15 +189,43 @@ fieldset.check_boxes {
   }
 }
 
-.form-actions {
-  padding-top: 1rem;
-  border-top: 1px solid $border-color;
+.form-actions.sticky {
+  background-color: var(--primary-bg);
+  border-top: 1px solid var(--border-color);
+  bottom: 0;
+  padding: 1rem 0;
+  position: sticky;
+  width: 100%;
+
+  @media (max-width: 991px) {
+    margin-top: 2rem;
+  }
 }
 
 .form-check-input {
+  background-color: var(--primary-bg);
+  border-color: var(--border-color);
+
   &:checked {
     background-color: $primary;
     border-color: $primary;
+  }
+}
+
+.form-switch .form-check-input {
+  background-image: var(--form-switch-bg);
+}
+
+.form-control,
+.form-select {
+  background-color: var(--primary-bg);
+  border-color: var(--border-color);
+  color: var(--text-default);
+
+  &:disabled,
+  &[readonly] {
+    background-color: var(--secondary-bg-strong);
+    color: var(--text-muted);
   }
 }
 
@@ -185,9 +233,15 @@ fieldset.check_boxes {
   font-size: inherit;
 
   &:focus {
-    border-color: $dark;
+    background-color: var(--primary-bg);
+    border-color: var(--border-color);
     box-shadow: $focus-shadow;
+    color: var(--text-default);
   }
+}
+
+.form-select {
+  background-image: var(--form-select-caret);
 }
 
 h1,
@@ -201,6 +255,12 @@ h6 {
   & * {
     font-family: 'ProximaNovaLight', 'system-ui';
   }
+}
+
+.input-group-text {
+  background-color: var(--secondary-bg);
+  border-color: var(--border-color);
+  color: var(--text-default);
 }
 
 mark {
@@ -219,17 +279,21 @@ mark {
   }
 
   .nav-link {
-    background-color: $secondary-bg;
-    border: 1px solid $border-color;
-    color: $text-link;
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-link);
     transition: all 0s ease-in-out;
 
     &.active {
-      background-color: $main-nav-bg;
-      border: 1px solid $border-color;
-      color: $main-nav-links;
+      background-color: $brand-200;
+      border: 1px solid var(--border-color);
+      color: $brand-700;
     }
   }
+}
+
+.nav-tabs {
+  border-color: var(--border-color);
 }
 
 .nav-tabs + .tab-content {
@@ -251,14 +315,14 @@ p:last-child {
 }
 
 pre {
-  background-color: $secondary-bg;
-  border: solid 2px $border-color-dark;
+  background-color: var(--secondary-bg);
+  border: solid 2px var(--border-color-dark);
   border-radius: 0.25rem;
   padding: 0.375rem 0.75rem;
 
   code {
     background: initial;
-    color: $brand-700;
+    color: var(--pre-code-color);
     padding: 0;
   }
 }
@@ -267,24 +331,35 @@ pre {
   color: $red;
 }
 
+::selection,
+::-moz-selection {
+  background: $light;
+  color: var(--text-default);
+}
+
+.table {
+  --bs-table-striped-bg: var(--table-stripe-bg);
+}
+
 .text-break-spaces {
   white-space: break-spaces !important;
 }
 
+.text-danger,
 .text-error {
-  color: $text-error !important;
+  color: var(--text-error) !important;
 }
 
 .text-error-hover {
-  color: $text-error !important;
+  color: var(--text-error) !important;
 
   &:hover {
-    color: darken($text-error, 10%) !important;
+    color: var(--text-error-hover) !important;
   }
 }
 
 .text-muted {
-  color: $text-muted !important;
+  color: var(--text-muted) !important;
 }
 
 .text-primary {
@@ -292,10 +367,10 @@ pre {
 }
 
 .text-success {
-  color: $text-success !important;
+  color: var(--text-success) !important;
 }
 .text-warning {
-  color: $text-warning !important;
+  color: var(--text-warning) !important;
 }
 
 ul {
@@ -322,6 +397,16 @@ ul {
   .h4 {
     font-size: 1.2rem;
   }
+
+  h5,
+  .h5 {
+    font-size: 1.1rem;
+  }
+
+  h6,
+  .h6 {
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 1199px) {
@@ -343,5 +428,21 @@ ul {
   h4,
   .h4 {
     font-size: 1.1rem;
+  }
+
+  h5,
+  .h5 {
+    font-size: 1.05rem;
+  }
+
+  h6,
+  .h6 {
+    font-size: 1rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .accordion {
+    @include dark-accordion;
   }
 }

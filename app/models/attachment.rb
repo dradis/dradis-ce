@@ -62,10 +62,10 @@
 class Attachment < File
   require 'fileutils'
   # Set the path to the attachment storage
-  AttachmentPwd = Rails.env.test? ? Rails.root.join('tmp', 'attachments') : Rails.root.join('attachments')
+  AttachmentPwd = Rails.env.test? ? Rails.root.join('tmp', 'storage', 'attachments') : Rails.root.join('storage', 'attachments')
   FileUtils.mkdir_p(AttachmentPwd) unless File.exist?(AttachmentPwd)
 
-  SCREENSHOT_REGEX = /\!((https?:\/\/.+)|((\/pro)?\/projects\/(\d+)\/nodes\/(\d+)\/attachments\/(.+?)(\(.*\))?))\!/i
+  SCREENSHOT_REGEX = /\!(?:{[\w #;:]*})?((https?:\/\/.+)|((\/pro)?\/projects\/(\d+)\/nodes\/(\d+)\/attachments\/(.+?)(\(.*\))?))\!/i
 
   # -- Class Methods  ---------------------------------------------------------
 

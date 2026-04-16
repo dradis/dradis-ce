@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.4.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.0.4'
+gem 'rails', '~> 8.0.5'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -62,7 +62,7 @@ gem 'paper_trail', '~> 16.0'
 
 gem 'record_tag_helper'
 
-gem 'rubyzip', '>= 1.2.2'
+gem 'rubyzip', '~> 2.3'
 
 gem 'thor', '~> 1.4.0'
 
@@ -85,7 +85,7 @@ gem 'sprockets-rails', '>= 3.0.0'
 
 # Use Active Model has_secure_password
 # Password digests
-gem 'bcrypt', '3.1.12'
+gem 'bcrypt', '3.1.22'
 
 # Required by Rails (uglifier and activesupport)
 gem 'json', '2.3.0'
@@ -183,6 +183,9 @@ group :development do
   gem 'ruby_audit', '~> 3.0.0', require: false
 
   gem 'rubocop', '1.79.0', require: false
+
+  # syntax highlighter for styles
+  gem 'rouge'
 end
 
 group :development, :test do
@@ -193,7 +196,6 @@ group :development, :test do
 end
 
 group :test do
-  gem 'database_cleaner'
   gem 'factory_bot_rails', '~> 6.5'
   gem 'capybara', '~> 3.40'
   gem 'guard-rspec', require: false
@@ -220,12 +222,14 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 4.19.0'
+gem 'dradis-plugins', '~> 5.0.0'
 
+# Built-in Engines
 gem 'dradis-api', path: 'engines/dradis-api'
+gem 'dradis-echo', path: 'engines/dradis-echo'
 
 # Import / export project data
-gem 'dradis-projects', '~> 4.19.0'
+gem 'dradis-projects', '~> 5.0.0'
 
 plugins_file = 'Gemfile.plugins'
 if File.exist?(plugins_file)
@@ -236,35 +240,34 @@ end
 # effective.
 
 # ----------------------------------------------------------------- Calculators
-
-gem 'dradis-calculator_cvss', '~> 4.19.0'
-gem 'dradis-calculator_dread', '~> 4.19.0'
-gem 'dradis-calculator_mitre', '~> 4.19.0'
+gem 'dradis-calculator_cvss', '~> 5.0.0'
+gem 'dradis-calculator_dread', '~> 5.0.0'
+gem 'dradis-calculator_mitre', '~> 5.0.0'
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv_export', '~> 4.19.0'
-gem 'dradis-html_export', '~> 4.19.0'
+gem 'dradis-csv_export', '~> 5.0.0'
+gem 'dradis-html_export', '~> 5.0.0'
 
 # ---------------------------------------------------------------------- Import
-gem 'dradis-csv', '~> 4.19.0'
+gem 'dradis-csv', '~> 5.0.0'
 
 # ---------------------------------------------------------------------- Upload
-gem 'dradis-acunetix', '~> 4.19.0'
-gem 'dradis-brakeman', '~> 4.19.0'
-gem 'dradis-burp', '~> 4.19.0'
-gem 'dradis-coreimpact', '~> 4.19.0'
-gem 'dradis-metasploit', '~> 4.19.0'
-gem 'dradis-nessus', '~> 4.19.0'
-gem 'dradis-netsparker', '~> 4.19.0'
-gem 'dradis-nexpose', '~> 4.19.0'
-gem 'dradis-nikto', '~> 4.19.0'
-gem 'dradis-nipper', '~> 4.19.0'
-gem 'dradis-nmap', '~> 4.19.0'
-gem 'dradis-ntospider', '~> 4.19.0'
-gem 'dradis-openvas', '~> 4.19.0'
-gem 'dradis-pentera', '~> 4.19.0'
-gem 'dradis-qualys', '~> 4.19.0'
-gem 'dradis-saint', '~> 4.19.0'
-gem 'dradis-veracode', '~> 4.19.0'
-gem 'dradis-wpscan', '~> 4.19.0'
-gem 'dradis-zap', '~> 4.19.0'
+gem 'dradis-acunetix', '~> 5.0.0'
+gem 'dradis-brakeman', '~> 5.0.0'
+gem 'dradis-burp', '~> 5.0.0'
+gem 'dradis-coreimpact', '~> 5.0.0'
+gem 'dradis-metasploit', '~> 5.0.0'
+gem 'dradis-nessus', '~> 5.0.0'
+gem 'dradis-netsparker', '~> 5.0.0'
+gem 'dradis-nexpose', '~> 5.0.0'
+gem 'dradis-nikto', '~> 5.0.0'
+gem 'dradis-nipper', '~> 5.0.0'
+gem 'dradis-nmap', '~> 5.0.0'
+gem 'dradis-ntospider', '~> 5.0.0'
+gem 'dradis-openvas', '~> 5.0.0'
+gem 'dradis-pentera', github: 'dradis/dradis-pentera', branch: 'main'
+gem 'dradis-qualys', '~> 5.0.0'
+gem 'dradis-saint', '~> 5.0.0'
+gem 'dradis-veracode', '~> 5.0.0'
+gem 'dradis-wpscan', '~> 5.0.0'
+gem 'dradis-zap', '~> 5.0.0'

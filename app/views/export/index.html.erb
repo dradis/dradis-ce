@@ -21,15 +21,18 @@
 <% else %>
 
   <ul id="plugin-chooser" class="tabs-container nav nav-tabs">
-    <%= render_view_hooks 'export/index-tabs', feature: :export %>
-
     <% if !defined?(Dradis::Pro) %>
-      <li class="nav-item"><a href="javascript:void(0)" class="js-try-pro nav-link" data-term="word-reports" data-url="https://dradis.com/pro/pages/reporting.html"><i class="fa-solid fa-file-word fa-fw"></i>Word</a></li>
-      <li class="nav-item"><a href="javascript:void(0)" class="js-try-pro nav-link" data-term="excel-reports" data-url="https://dradis.com/pro/pages/excel.html"><i class="fa-solid fa-file-excel fa-fw"></i>Excel</a></li>
+      <%= render 'static_pages/export_tabs'%>
     <% end %>
+
+    <%= render_view_hooks 'export/index-tabs', feature: :export %>
   </ul>
   <div class="content-container">
     <div class="tab-content">
+      <% if !defined?(Dradis::Pro) %>
+        <%= render 'static_pages/export_content'%>
+      <% end %>
+
       <%= render_view_hooks 'export/index-content', feature: :export %>
     </div>
   </div>

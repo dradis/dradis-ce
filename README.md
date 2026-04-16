@@ -66,7 +66,7 @@ docker image pull dradis/dradis-ce:latest
 And then run the container:
 
 ```
-docker run -it -p 3000:3000 dradis/dradis-ce
+docker run -it -p 3000:80 dradis/dradis-ce
 ```
 
 

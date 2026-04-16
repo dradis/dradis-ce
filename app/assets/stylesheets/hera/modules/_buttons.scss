@@ -12,7 +12,7 @@
   text-shadow: 0 0 0;
   font-weight: 300;
   font-size: inherit;
-  color: $black;
+  color: var(--text-default);
 
   &.btn-block {
     display: block;
@@ -25,8 +25,14 @@
   }
 
   &.btn-default {
-    @include button($secondary-bg);
-    color: $text-default;
+    border: 0px none;
+    background: var(--secondary-bg);
+    color: var(--text-default);
+
+    &:hover,
+    &:not(:disabled):not(.disabled):active {
+      background: var(--secondary-bg-strong);
+    }
   }
 
   &.btn-lavender {
@@ -47,7 +53,7 @@
 
   &.btn-link {
     background-color: transparent;
-    color: $text-link;
+    color: var(--text-link);
     font-size: inherit;
     margin: 0;
     padding: 0;
@@ -57,14 +63,29 @@
     &:focus-visible,
     &:not(:disabled):not(.disabled):active {
       background-color: transparent;
-      color: $text-link-hover;
+      color: var(--text-link-hover);
       text-decoration: none;
     }
   }
 
+  &.btn-outline-danger {
+    color: $red;
+    border-color: $red;
+
+    &:hover,
+    &:focus,
+    &:focus-visible,
+    &:active,
+    &:not(:disabled):not(.disabled):active {
+      background: $red;
+      border-color: $red;
+      color: $white;
+    }
+  }
+
   &.btn-outline-info {
-    color: darken($green-700, 10%);
-    border-color: darken($green-700, 10%);
+    color: var(--btn-outline-info-color);
+    border-color: var(--btn-outline-info-color);
 
     &:hover,
     &:focus,
@@ -78,8 +99,8 @@
   }
 
   &.btn-outline-lavender {
-    border-color: $lavender-dark;
-    color: $lavender-dark;
+    border-color: var(--btn-outline-lavender-color);
+    color: var(--btn-outline-lavender-color);
 
     &:hover,
     &:focus,
@@ -93,8 +114,12 @@
   }
 
   &.btn-outline-primary {
-    border-color: $primary;
-    color: $primary;
+    border-color: var(--text-link);
+    color: var(--text-link);
+
+    .fa-check {
+      color: inherit;
+    }
 
     &:focus,
     &:focus-visible,
@@ -113,8 +138,8 @@
   }
 
   &.btn-outline-secondary {
-    border-color: $grey-700;
-    color: $grey-700;
+    border-color: var(--btn-outline-secondary-color);
+    color: var(--btn-outline-secondary-color);
 
     &:hover,
     &:focus,
@@ -128,8 +153,8 @@
   }
 
   &.btn-outline-success {
-    border-color: darken($green-700, 10%);
-    color: darken($green-700, 10%);
+    border-color: var(--btn-outline-success-color);
+    color: var(--btn-outline-success-color);
 
     &:hover,
     &:focus,
@@ -143,12 +168,15 @@
   }
 
   &.btn-outline-warning {
+    border-color: var(--btn-outline-warning-color);
+    color: var(--btn-outline-warning-color);
+
     &:hover,
     &:focus,
     &:focus-visible,
     &:active,
     &:not(:disabled):not(.disabled):active {
-      color: $white;
+      color: $black;
     }
   }
 
@@ -199,6 +227,12 @@
 
   &.btn-success {
     @include button($green);
+    color: $black;
+
+    &:hover,
+    &:not(:disabled):not(.disabled):active {
+      color: $black;
+    }
   }
 
   &.btn-transparent {
@@ -211,6 +245,12 @@
 
   &.btn-warning {
     @include button($yellow);
+    color: $black;
+
+    &:hover,
+    &:not(:disabled):not(.disabled):active {
+      color: $black;
+    }
   }
 
   &.btn-xs {
@@ -225,7 +265,7 @@
       vertical-align: middle;
     }
 
-    & + .dropdown-menu {
+    .dropdown-menu {
       max-width: 19rem;
       padding: 0;
       width: max-content;
@@ -233,7 +273,7 @@
       &:hover {
         .dropdown-item,
         .dropdown-item-text {
-          background-color: $grey-100;
+          background-color: var(--secondary-bg);
         }
       }
 
@@ -242,7 +282,7 @@
       }
 
       .dropdown-item-text {
-        color: $text-default;
+        color: var(--text-default);
         font-size: 0.8rem;
         padding: 0;
         white-space: normal;
@@ -296,7 +336,7 @@
 
   span:not(:last-child) {
     .state {
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid var(--border-color);
     }
   }
 
@@ -306,18 +346,18 @@
     padding: 0.5rem 1.75rem 0.5rem 0.5rem;
 
     &:has(input:disabled) {
-      background-color: $grey-200;
+      background-color: var(--secondary-bg);
       cursor: not-allowed;
 
       .state-label {
         p {
-          color: $grey-700;
+          color: var(--text-muted);
         }
       }
     }
 
     &:hover {
-      background-color: $grey-100;
+      background-color: var(--secondary-bg);
     }
 
     i {
@@ -337,6 +377,7 @@
       }
 
       span {
+        color: var(--text-default);
         font-size: 0.8rem;
       }
     }
@@ -354,3 +395,4 @@
     border-color: $primary;
   }
 }
+

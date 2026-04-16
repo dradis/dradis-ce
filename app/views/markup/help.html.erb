@@ -126,6 +126,34 @@ but we only allow the 100-continue expectation.
     </div>
   </div>
 
+  <h5 class="header-underline">Alignment</h5>
+  <div class="row">
+    <div class="col-6">
+      <p>Paragraph</p>
+      <pre>p<. This is a left-aligned paragraph.</pre>
+      <pre>p=. This is a center-aligned paragraph.</pre>
+      <pre>p>. This is a right-aligned paragraph.</pre>
+    </div>
+    <div class="col-6 mt-2 pt-4">
+      <p style="text-align: left;">This is a left-aligned paragraph.</p>
+      <p style="text-align: center;">This is a center-aligned paragraph.</p>
+      <p style="text-align: right;">This is a right-aligned paragraph.</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <p>Image</p>
+      <small>Center-aligned image:</small>
+      <pre>p=. !/images/logo_small.png(Dradis logo)!</pre>
+      <small>Left and right alignment for images is also available using <code><</code> or <code>></code> instead of <code>=</code></small>
+    </div>
+    <div class="col-6 mt-2 pt-4">
+      <p style="text-align: center;">
+        <%= image_tag 'logo_small.png', title: 'Dradis logo', class: 'example-img' %>
+      </p>
+    </div>
+  </div>
+
   <h5 class="header-underline">Miscellaneous</h5>
   <div class="row">
     <div class="col-6">

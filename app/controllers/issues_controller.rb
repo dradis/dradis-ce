@@ -1,8 +1,8 @@
 class IssuesController < AuthenticatedController
-  include ActivityTracking
   include ConflictResolver
   include ContentFromTemplate
   include DynamicFieldNamesCacher
+  include EventPublisher
   include IssuesHelper
   include LiquidEnabledResource
   include Mentioned
@@ -47,22 +47,21 @@ class IssuesController < AuthenticatedController
 
     respond_to do |format|
       if @issue.save &&
-          # FIXME: need to fix Taggable concern.
-          #
-          # For some reason we can't save the :tags before we save the model,
-          # so first we save it, then we apply the tags.
-          #
-          # See #set_or_initialize_issue()
-          #
-          @issue.update(issue_params)
-
-        track_created(@issue)
+        # FIXME: need to fix Taggable concern.
+        #
+        # For some reason we can't save the :tags before we save the model,
+        # so first we save it, then we apply the tags.
+        #
+        # See #set_or_initialize_issue()
+        #
+        @issue.update(issue_params)
 
         # Only after we save the issue, we can create valid taggings (w/ valid
         # taggable IDs)
         @issue.tag_from_field_content!
 
         format.html { redirect_to [current_project, @issue], notice: 'Issue added.' }
+        publish_event('issue.created', @issue.to_event_payload)
       else
         format.html do
           flash.now[:alert] = 'Issue couldn\'t be added.'
@@ -84,8 +83,8 @@ class IssuesController < AuthenticatedController
       if @issue.update(issue_params)
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
-        track_updated(@issue)
         format.html { redirect_to_main_or_qa }
+        publish_event('issue.updated', @issue.to_event_payload)
       else
         format.html do
           flash.now[:alert] = 'Issue couldn\'t be updated.'
@@ -100,9 +99,9 @@ class IssuesController < AuthenticatedController
   def destroy
     respond_to do |format|
       if @issue.destroy
-        track_destroyed(@issue)
         format.html { redirect_to project_issues_path(current_project), notice: 'Issue deleted.' }
         format.json
+        publish_event('issue.destroyed', @issue.to_event_payload)
       else
         format.html { redirect_to project_issues_path(current_project), notice: "Error while deleting issue: #{@issue.errors}" }
         format.json

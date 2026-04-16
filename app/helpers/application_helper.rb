@@ -3,6 +3,10 @@ module ApplicationHelper # :nodoc:
     return unless text.present?
 
     context = {}
+
+    # Note that future HTML::Pipeline versions have migrated from Sanitize -> Selma
+    context[:whitelist] = HTML::Pipeline::Dradis::Sanitize::ALLOWLIST
+
     pipeline_filters = [
       HTML::Pipeline::Dradis::FieldableFilter,
       HTML::Pipeline::Dradis::TextileFilter,

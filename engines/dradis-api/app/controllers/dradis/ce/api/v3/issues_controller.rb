@@ -1,15 +1,20 @@
 module Dradis::CE::API
   module V3
     class IssuesController < Dradis::CE::API::APIController
-      include ActivityTracking
+      include EventPublisher
       include Dradis::CE::API::ProjectScoped
 
       before_action :set_issue, except: [:index]
       before_action :validate_state, only: [:create, :update]
 
       def index
-        @issues = current_project.issues.includes(:tags).order('updated_at desc')
-        @issues = @issues.page(params[:page].to_i) if params[:page]
+        @issues = Search.new(
+          query: params[:q],
+          scope: :issues,
+          page: params[:page],
+          project: current_project
+        ).results
+
         @issues = @issues.sort
       end
 
@@ -23,8 +28,8 @@ module Dradis::CE::API
         @issue.node     = current_project.issue_library
 
         if @issue.save
-          track_created(@issue)
           @issue.tag_from_field_content!
+          publish_event('issue.created', @issue.to_event_payload)
           render status: 201, location: dradis_api.issue_url(@issue)
         else
           render_validation_errors(@issue)
@@ -33,7 +38,7 @@ module Dradis::CE::API
 
       def update
         if @issue.update(issue_params)
-          track_updated(@issue)
+          publish_event('issue.updated', @issue.to_event_payload)
           render node: @node
         else
           render_validation_errors(@issue)
@@ -42,7 +47,7 @@ module Dradis::CE::API
 
       def destroy
         @issue.destroy
-        track_destroyed(@issue)
+        publish_event('issue.destroyed', @issue.to_event_payload)
         render_successful_destroy_message
       end
 
