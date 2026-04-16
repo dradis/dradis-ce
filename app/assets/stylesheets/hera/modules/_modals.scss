@@ -5,6 +5,9 @@
     }
 
     .modal-content {
+      background-color: var(--primary-bg);
+      border-color: var(--border-color);
+      color: var(--text-default);
       font-size: 0.9rem;
 
       .modal-body {
@@ -13,7 +16,7 @@
 
           .add_multiple_nodes_error {
             display: none;
-            color: #b94a48;
+            color: var(--text-error);
             margin-top: 10px;
           }
         }
@@ -28,7 +31,7 @@
 
       .modal-header {
         align-items: center;
-        background-color: $secondary-bg;
+        background-color: var(--secondary-bg);
 
         .close {
           margin: 0;
@@ -43,7 +46,7 @@
       }
 
       .modal-footer {
-        background-color: $secondary-bg;
+        background-color: var(--secondary-bg);
       }
     }
   }
@@ -56,7 +59,7 @@
   }
 
   .tree-modal-box {
-    border: 1px solid $border-color;
+    border: 1px solid var(--border-color);
     padding: 0.5em 1em;
     margin-bottom: 0.5em;
     max-height: 50vh;

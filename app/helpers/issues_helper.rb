@@ -72,7 +72,7 @@ module IssuesHelper
           ]
         else
           [
-            content_tag(:i, nil, class: 'fa-solid fa-tag'),
+            content_tag(:i, nil, class: 'fa-solid fa-tag', style: 'color: var(--untagged-color)'),
             'No tag'
           ]
         end

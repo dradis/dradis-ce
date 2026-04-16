@@ -1,3 +1,10 @@
+shared_examples 'a page with a comments feed hook' do
+  it 'renders the comments feed', js: true do
+    find('[data-behavior~=fetch-comments]')
+    expect(page).to have_css('[data-behavior~=fetch-comments] .comment-feed')
+  end
+end
+
 # Define the following let variables before using these examples:
 #
 #   create_comments : a block which creates the comments AND IS CALLED
@@ -57,7 +64,7 @@ shared_examples 'a page with a comments feed' do |commentable_factory|
         it 'prefills textarea with cached value' do
           within 'form[data-behavior~=local-auto-save]' do
             fill_in 'comment[content]', with: 'test comment'
-            sleep 1 # Needed for debounce function in local_auto_save.js
+            # debounceTimer is 0 in test env, see local.js
           end
           page.driver.browser.navigate.refresh
           content = page.find_field('comment[content]').value
@@ -69,7 +76,7 @@ shared_examples 'a page with a comments feed' do |commentable_factory|
         it 'clears cached value' do
           within 'form[data-behavior~=local-auto-save]' do
             fill_in 'comment[content]', with: 'test comment'
-            sleep 1 # Needed for debounce function in local_auto_save.js
+            # debounceTimer is 0 in test env, see local.js
             click_button 'Add comment'
           end
           page.driver.browser.navigate.refresh
@@ -118,7 +125,7 @@ shared_examples 'a page with a comments feed' do |commentable_factory|
         within "div#comment_#{model.id}" do
           click_link 'Edit'
           fill_in 'comment[content]', with: 'test comment edited'
-          sleep 1 # Needed for debounce function in local_auto_save.js
+          # debounceTimer is 0 in test env, see local.js
           page.driver.browser.action.move_to(nil, 0, 0).perform # needed so hover works after page refresh
         end
       end

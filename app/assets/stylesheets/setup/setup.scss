@@ -1,5 +1,7 @@
 @import '_bootstrap';
 @import '../hera/variables';
+@import '../hera/themes';
+@import '../hera/modules/divider';
 @import 'font-awesome';
 
 html {
@@ -13,11 +15,11 @@ body {
 }
 
 a {
-  color: $text-link;
+  color: var(--text-link);
   transition: color 0.2s ease-in-out;
 
   &:hover {
-    color: $text-link-hover;
+    color: var(--text-link-hover);
     text-decoration: none;
   }
 }
@@ -36,13 +38,16 @@ a {
 }
 
 .btn-experience {
-  border: 1.5px solid $primary;
+  border: 1.5px solid $border-color;
   border-radius: 5px;
   box-shadow: 0px 0px 0px 0px rgba(62, 66, 66, 0.1);
   height: 100%;
   padding: 1.375rem 1.85rem;
-  transition: box-shadow 0.2s ease-in-out;
+  text-align: left;
+  transition: box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  width: 100%;
 
+  &:focus,
   &:hover {
     border-color: $primary;
     box-shadow: 0px 0px 50px 0px rgba(62, 66, 66, 0.1);

@@ -1,0 +1,7 @@
+<% content_for :body_class, 'has-sub-nav' %>
+
+<% content_for :sub_nav do %>
+  <%= render 'layouts/hera/navbar/sub_nav', locals: { sub_nav_content: 'dradis/plugins/echo/layouts/sub_nav_content' } %>
+<% end %>
+
+<%= render template: 'layouts/hera' %>

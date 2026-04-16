@@ -45,8 +45,7 @@ describe 'evidence' do
       should have_selector 'p',  text: 'Issue info'
     end
 
-    let(:commentable) { @evidence }
-    it_behaves_like 'a page with a comments feed'
+    it_behaves_like 'a page with a comments feed hook'
 
     let(:subscribable) { @evidence }
     it_behaves_like 'a page with subscribe/unsubscribe links'
@@ -112,13 +111,9 @@ describe 'evidence' do
 
     it 'uses the full-screen editor plugin' # TODO
 
-    it_behaves_like 'a form with a help button'
-
     describe 'textile form view' do
       let(:action_path) { edit_project_node_evidence_path(current_project, @node, @evidence) }
-      let(:item) { @evidence }
-      it_behaves_like 'a textile form view', Evidence
-      it_behaves_like 'an editor that remembers what view you like'
+      it_behaves_like 'a .textile form'
     end
 
     describe 'submitting the form with valid information', js: true do
@@ -189,14 +184,7 @@ describe 'evidence' do
 
     describe 'textile form view' do
       let(:action_path) { new_project_node_evidence_path(current_project, @node) }
-      let(:params) { {} }
-      let(:required_form) do
-        find('#evidence_issue_id + .combobox').click
-        find('.combobox-menu .combobox-option:nth-of-type(2)').click
-      end
-
-      it_behaves_like 'a textile form view', Evidence
-      it_behaves_like 'an editor that remembers what view you like'
+      it_behaves_like 'a .textile form'
     end
 
     context 'when no template is specified' do
@@ -208,8 +196,6 @@ describe 'evidence' do
       end
 
       it 'uses the textile-editor plugin'
-
-      it_behaves_like 'a form with a help button'
 
       describe 'submitting the form with valid information' do
         before do
