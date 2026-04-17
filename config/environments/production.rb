@@ -118,17 +118,6 @@ Rails.application.configure do
       authentication: ENV.fetch('SMTP_AUTHENTICATION', 'plain').to_sym,
       openssl_verify_mode: ENV.fetch('SMTP_SSL_VERIFY_MODE', 'none')
     }
-  elsif (smtp_config_path = Rails.root.join('config/smtp.yml')).exist?
-    # Deprecated: smtp.yml-based SMTP config for VM deployments.
-    # This will be removed when VM deployment support is dropped.
-    smtp_config = YAML.load_file(smtp_config_path, aliases: true)[Rails.env.to_s]
-    if smtp_config
-      config.action_mailer.asset_host = smtp_config.dig('default_url_options', 'host')
-      config.action_mailer.deliver_later_queue_name = :dradis_mailers
-      config.action_mailer.default_options = smtp_config['default_options'].symbolize_keys
-      config.action_mailer.default_url_options = smtp_config['default_url_options'].symbolize_keys
-      config.action_mailer.smtp_settings = smtp_config['smtp_settings'].symbolize_keys
-    end
   end
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
