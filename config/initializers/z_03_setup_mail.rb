@@ -10,6 +10,7 @@ config_path = Rails.root.join('config/smtp.yml')
 return unless config_path.exist?
 
 config = YAML.load_file(config_path, aliases: true)[Rails.env.to_s]
+return unless config
 
 ActionMailer::Base.default_options = config['default_options'].symbolize_keys
 ActionMailer::Base.default_url_options = config['default_url_options'].symbolize_keys
