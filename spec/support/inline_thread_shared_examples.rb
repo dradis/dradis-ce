@@ -71,7 +71,7 @@ shared_examples 'inline threads' do
             inline_thread: {
               commentable_type: commentable.class.to_s,
               commentable_id: commentable.id,
-              anchor: valid_anchor,
+              anchor: valid_anchor.to_json,
               comments_attributes: { '0' => { content: 'This needs revision' } }
             }
           },
