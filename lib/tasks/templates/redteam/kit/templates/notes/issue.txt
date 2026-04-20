@@ -1,0 +1,29 @@
+#[Title]#
+
+#[Severity]#
+Critical | High | Medium | Low | Info
+
+#[Tactic]#
+{% assign m_field = "Tactic" %}{% assign m_value = "" %}{% assign m_scopes = "Enterprise,Mobile,ICS" | split: "," %}{% for m_scope in m_scopes %}{% if m_value == "" or m_value == "N/A" %}{% capture m_key %}MITRE.{{ m_scope }}.{{ m_field }}{% endcapture %}{% for pair in issue.fields %}{% if pair[0] == m_key %}{% assign m_value = pair[1] %}{% endif %}{% endfor %}{% endif %}{% endfor %}{{ m_value }}
+
+#[Technique]#
+{% assign m_scopes = "Enterprise,Mobile,ICS" | split: "," %}{% assign m_technique = "" %}{% assign m_subtechnique = "" %}{% for m_scope in m_scopes %}{% if m_technique == "" or m_technique == "N/A" %}{% capture m_key %}MITRE.{{ m_scope }}.Technique{% endcapture %}{% for pair in issue.fields %}{% if pair[0] == m_key %}{% assign m_technique = pair[1] %}{% endif %}{% endfor %}{% endif %}{% endfor %}{% for m_scope in m_scopes %}{% if m_subtechnique == "" or m_subtechnique == "N/A" %}{% capture m_key %}MITRE.{{ m_scope }}.Sub-technique{% endcapture %}{% for pair in issue.fields %}{% if pair[0] == m_key %}{% assign m_subtechnique = pair[1] %}{% endif %}{% endfor %}{% endif %}{% endfor %}{% if m_subtechnique == "" or m_subtechnique == "N/A" %}{{ m_technique }}{% else %}{{ m_technique }}: {{ m_subtechnique }}{% endif %}
+
+#[Technique ID]#
+{% assign m_value = "" %}{% assign m_scopes = "Enterprise,Mobile,ICS" | split: "," %}{% assign m_field = "Sub-technique.ID" %}{% for m_scope in m_scopes %}{% if m_value == "" or m_value == "N/A" %}{% capture m_key %}MITRE.{{ m_scope }}.{{ m_field }}{% endcapture %}{% for pair in issue.fields %}{% if pair[0] == m_key %}{% assign m_value = pair[1] %}{% endif %}{% endfor %}{% endif %}{% endfor %}{% if m_value == "" or m_value == "N/A" %}{% assign m_field = "Technique.ID" %}{% for m_scope in m_scopes %}{% if m_value == "" or m_value == "N/A" %}{% capture m_key %}MITRE.{{ m_scope }}.{{ m_field }}{% endcapture %}{% for pair in issue.fields %}{% if pair[0] == m_key %}{% assign m_value = pair[1] %}{% endif %}{% endfor %}{% endif %}{% endfor %}{% endif %}{{ m_value }}
+
+#[Detection]#
+Undetected | Detected | Partially Detected
+
+#[Key Finding]#
+Yes | No
+
+#[Description]#
+
+#[Attack Narrative]#
+
+#[Business Impact]#
+
+#[Recommendations]#
+
+#[References]#

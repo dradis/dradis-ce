@@ -105,7 +105,7 @@
                   allow_dropdown: true,
                   behavior: 'auto-save rich-toolbar drop-zone',
                   paths: editor_paths,
-                  'rich-toolbar': 'block-code bold field image italic link list-ol list-ul table',
+                  'rich-toolbar': 'defaults field image',
                   'rich-toolbar-uploader': '[data-behavior~=jquery-upload]',
                 },
                 rows: 20,
@@ -115,7 +115,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <div class="form-actions">
+          <div class="form-actions sticky">
             <%= f.submit 'Create Evidence', class: 'btn btn-primary' %> or
             <%= link_to 'Cancel', project_issue_path(current_project, @issue, tab: 'evidence-tab'), class: 'cancel-link', data: { behavior: 'clear-local-auto-save' } %>
           </div>

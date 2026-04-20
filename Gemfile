@@ -2,10 +2,10 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.2'
+ruby '3.4.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.2.2.1'
+gem 'rails', '~> 8.0.5'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -26,7 +26,7 @@ gem 'turbo-rails', '~> 2.0'
 gem 'stimulus-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.7'
+gem 'jbuilder', '~> 2.13'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -56,15 +56,17 @@ gem 'liquid'
 
 gem 'kaminari', '~> 1.2.1'
 
-gem 'paper_trail', '~> 15.2.0'
+gem 'paper_trail', '~> 16.0'
 
 # gem 'rails_autolink', '~> 1.1'
 
 gem 'record_tag_helper'
 
-gem 'rubyzip', '>= 1.2.2'
+gem 'rubyzip', '~> 2.3'
 
-gem 'thor', '~> 1.2.1'
+gem 'thor', '~> 1.4.0'
+
+gem 'thruster'
 
 # Ruby dependency, version specified here due to CVE-2023-28756
 gem 'time', '>= 0.2.2'
@@ -83,13 +85,13 @@ gem 'sprockets-rails', '>= 3.0.0'
 
 # Use Active Model has_secure_password
 # Password digests
-gem 'bcrypt', '3.1.12'
+gem 'bcrypt', '3.1.22'
 
 # Required by Rails (uglifier and activesupport)
 gem 'json', '2.3.0'
 
 # XML manipulation
-gem 'nokogiri', '>= 1.18.8'
+gem 'nokogiri', '>= 1.18.9'
 
 # MySQL backend
 # gem 'mysql2', '~> 0.5.6'
@@ -111,7 +113,7 @@ gem 'sanitize', '6.0.2'
 
 # SQLite3 DB driver
 gem 'sqlite3'
-gem 'pg'
+# gem 'pg'
 
 # --------------------------------------------------------- Dradis Professional
 # Authorisation
@@ -119,9 +121,6 @@ gem 'cancancan', '~> 1.10'
 
 # Redis-based background worker
 gem 'resque'
-
-# See https://github.com/sinatra/sinatra/issues/1055
-gem 'sinatra', '~> 2.2.3'
 
 # Forms that integrate with Twitter's Bootstrap
 gem 'simple_form'
@@ -142,7 +141,9 @@ gem 'net-smtp'
 gem 'net-pop'
 gem 'net-imap', '>= 0.5.7'
 
-gem 'puma', '>= 6.4.3'
+gem 'puma', '>= 6.5.0'
+
+gem 'csv'
 
 # ------------------------------------------------------------------ Deployment
 # Use Capistrano for deployment
@@ -175,10 +176,16 @@ group :development do
 
   # security
   gem 'brakeman', require: false
-  gem 'bundler-audit', require: false
-  gem 'ruby_audit', require: false
+  # required by brakeman
+  gem 'abbrev'
 
-  gem 'rubocop', require: false
+  gem 'bundler-audit', require: false
+  gem 'ruby_audit', '~> 3.0.0', require: false
+
+  gem 'rubocop', '1.79.0', require: false
+
+  # syntax highlighter for styles
+  gem 'rouge'
 end
 
 group :development, :test do
@@ -189,12 +196,11 @@ group :development, :test do
 end
 
 group :test do
-  gem 'database_cleaner'
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '~> 6.5'
   gem 'capybara', '~> 3.40'
   gem 'guard-rspec', require: false
-  gem 'selenium-webdriver', '~> 4.29'
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'selenium-webdriver', '~> 4.35'
+  gem 'shoulda-matchers', '~> 4.0.1'
   gem 'timecop'
 
   # Required by capybara
@@ -216,15 +222,17 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', github: 'dradis/dradis-plugins', branch: 'fix/missing-constant'
+gem 'dradis-plugins', '~> 5.0.0'
 
+# Built-in Engines
 gem 'dradis-api', path: 'engines/dradis-api'
+gem 'dradis-echo', path: 'engines/dradis-echo'
 
 # Import / export project data
-gem 'dradis-projects', '~> 4.16.0'
+gem 'dradis-projects', '~> 5.0.0'
 
 plugins_file = 'Gemfile.plugins'
-if File.exists?(plugins_file)
+if File.exist?(plugins_file)
   eval(IO.read(plugins_file), binding)
 end
 
@@ -232,34 +240,34 @@ end
 # effective.
 
 # ----------------------------------------------------------------- Calculators
-
-gem 'dradis-calculator_cvss', '~> 4.16.0'
-gem 'dradis-calculator_dread', '~> 4.16.0'
+gem 'dradis-calculator_cvss', '~> 5.0.0'
+gem 'dradis-calculator_dread', '~> 5.0.0'
+gem 'dradis-calculator_mitre', '~> 5.0.0'
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv_export', '~> 4.16.0'
-gem 'dradis-html_export', '~> 4.16.0'
+gem 'dradis-csv_export', '~> 5.0.0'
+gem 'dradis-html_export', '~> 5.0.0'
 
 # ---------------------------------------------------------------------- Import
-gem 'dradis-csv', '~> 4.16.1'
+gem 'dradis-csv', '~> 5.0.0'
 
 # ---------------------------------------------------------------------- Upload
-gem 'dradis-acunetix', '~> 4.16.0'
-gem 'dradis-brakeman', '~> 4.16.0'
-gem 'dradis-burp', '~> 4.16.0'
-gem 'dradis-coreimpact', '~> 4.16.0'
-gem 'dradis-metasploit', '~> 4.16.0'
-gem 'dradis-nessus', '~> 4.16.0'
-gem 'dradis-netsparker', '~> 4.16.0'
-gem 'dradis-nexpose', '~> 4.16.0'
-gem 'dradis-nikto', '~> 4.16.0'
-gem 'dradis-nipper', '~> 4.16.0'
-gem 'dradis-nmap', '~> 4.16.0'
-gem 'dradis-ntospider', '~> 4.16.0'
-gem 'dradis-openvas', '~> 4.16.0'
-gem 'dradis-pentera', '~> 4.16.0'
-gem 'dradis-qualys', '~> 4.16.0'
-gem 'dradis-saint', '~> 4.16.0'
-gem 'dradis-veracode', '~> 4.16.0'
-gem 'dradis-wpscan', '~> 4.16.0'
-gem 'dradis-zap', '~> 4.16.0'
+gem 'dradis-acunetix', '~> 5.0.0'
+gem 'dradis-brakeman', '~> 5.0.0'
+gem 'dradis-burp', '~> 5.0.0'
+gem 'dradis-coreimpact', '~> 5.0.0'
+gem 'dradis-metasploit', '~> 5.0.0'
+gem 'dradis-nessus', '~> 5.0.0'
+gem 'dradis-netsparker', '~> 5.0.0'
+gem 'dradis-nexpose', '~> 5.0.0'
+gem 'dradis-nikto', '~> 5.0.0'
+gem 'dradis-nipper', '~> 5.0.0'
+gem 'dradis-nmap', '~> 5.0.0'
+gem 'dradis-ntospider', '~> 5.0.0'
+gem 'dradis-openvas', '~> 5.0.0'
+gem 'dradis-pentera', github: 'dradis/dradis-pentera', branch: 'main'
+gem 'dradis-qualys', '~> 5.0.0'
+gem 'dradis-saint', '~> 5.0.0'
+gem 'dradis-veracode', '~> 5.0.0'
+gem 'dradis-wpscan', '~> 5.0.0'
+gem 'dradis-zap', '~> 5.0.0'

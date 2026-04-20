@@ -13,8 +13,8 @@ describe UserPreferences do
     expect(preferences.digest_frequency).to eq 'daily'
   end
 
-  context "#last_tour_XXX" do
-    context "invalid tour name" do
+  context '#last_tour_XXX' do
+    context 'invalid tour name' do
       it "raises an exception if the tour name isn't valid" do
         expect do
           subject.last_tour_rspec2
@@ -22,15 +22,15 @@ describe UserPreferences do
       end
     end
 
-    context "valid tour name" do
-      it "returns 0 for a fresh set of preferences for a valid tour" do
+    context 'valid tour name' do
+      it 'returns 0 for a fresh set of preferences for a valid tour' do
         expect do
           subject.last_first_sign_in
         end.not_to raise_error
         expect(subject.last_first_sign_in).to eq('0')
       end
 
-      it "returns the last tour version of XXX type that was visited for a valid tour" do
+      it 'returns the last tour version of XXX type that was visited for a valid tour' do
         subject.tours[:first_sign_in] = '1'
 
         expect do
@@ -41,8 +41,8 @@ describe UserPreferences do
     end
   end
 
-  context "#last_projects_show=" do
-    it "sets the new tour value" do
+  context '#last_projects_show=' do
+    it 'sets the new tour value' do
       expect do
         subject.last_projects_show = '2'
       end.not_to raise_error
@@ -52,14 +52,12 @@ describe UserPreferences do
   end
 
   context '#digest_frequency' do
-    it do
-      should validate_inclusion_of(:digest_frequency).
-        in_array(described_class::DIGEST_FREQUENCIES)
-    end
+    it 'validates the digest_frequency' do
+      preferences = UserPreferences.new(tour_first_sign_in: '1', digest_frequency: 'test')
+      expect(preferences.valid?(nil)).to_not be true
 
-    it 'does not accept values as symbols' do
-      should_not validate_inclusion_of(:digest_frequency).
-        in_array(described_class::DIGEST_FREQUENCIES.map(&:to_sym))
+      preferences = UserPreferences.new(tour_first_sign_in: '1', digest_frequency: 'instant')
+      expect(preferences.valid?(nil)).to be true
     end
   end
 

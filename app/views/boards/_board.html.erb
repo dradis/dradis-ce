@@ -43,11 +43,11 @@
                         <% if card.due_date %>
                           <% case (card.due_date - Date.today).to_i %>
                           <% when -Float::INFINITY..-1 %>
-                          <div class="badge-due-date badge bg-danger">
+                          <div class="badge bg-danger">
                             <% when 0 %>
-                            <div class="badge-due-date badge bg-warning">
+                            <div class="badge bg-warning">
                             <% else %>
-                              <div class="badge-due-date badge bg-success">
+                              <div class="badge bg-success">
                               <% end %>
                               <span><i class="fa-regular fa-clock"></i></span>
                               <span><%= card.due_date.strftime('%b %-d') %></span>

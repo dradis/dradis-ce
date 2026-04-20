@@ -1,7 +1,30 @@
 @import 'jquery.textile';
 
+//Assert form-actions and tag-input are accessible in fullscreen mode
+body form:has(.textile-wrap.textile-fullscreen) {
+  .form-actions.sticky {
+    left: 0;
+    padding: 1rem;
+    position: fixed;
+    right: 0;
+    z-index: 2001;
+  }
+
+  .tag-input {
+    bottom: 0.4rem;
+    position: fixed;
+    top: auto;
+    z-index: 2002;
+
+    @media (min-width: 991px) {
+      left: 50%;
+    }
+  }
+}
+
 .content-textile,
 .textile-preview {
+  background-color: var(--primary-bg);
   overflow-wrap: break-word;
   position: relative;
 
@@ -19,7 +42,7 @@
 
   img {
     max-width: 100%;
-    height: auto;
+    height: auto !important;
   }
 
   ol {
@@ -31,8 +54,8 @@
   }
 
   pre {
-    background-color: $secondary-bg;
-    border: 1px solid $border-color;
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--border-color);
     border-radius: 3px;
     margin: 0.75rem 0;
     padding: 10px;
@@ -56,11 +79,11 @@
     tbody {
       > tr:nth-child(odd) > td,
       > tr:nth-child(odd) > th {
-        background-color: #f9f9f9;
+        background-color: var(--secondary-bg);
       }
       tr:hover td,
       tr:hover th {
-        background-color: #f5f5f5;
+        background-color: var(--secondary-bg-strong);
       }
     }
 
@@ -75,7 +98,7 @@
       line-height: 20px;
       text-align: left;
       vertical-align: top;
-      border-top: 1px solid #ddd;
+      border-top: 1px solid var(--border-color);
     }
 
     th {
@@ -124,10 +147,7 @@
 }
 
 .textile-wrap {
-  background-color: #fff;
-  max-height: calc(100vh - 29rem);
-  overflow-x: hidden;
-  overflow-y: auto;
+  background-color: var(--primary-bg);
   word-break: break-word;
 
   &.textile-fullscreen {
@@ -172,72 +192,71 @@
     background: transparent;
     padding: 0;
 
+    .editor-field {
+      .textile {
+        border: 0;
+        border-right: 1px solid var(--border-color);
+        border-radius: 0;
+        box-shadow: none !important;
+        padding: 0.5rem 1.5rem 0.5rem 1rem;
+      }
+    }
+
     .textile-form {
       .add-field {
-        margin: 0.4rem 0.75rem;
+        margin: 1rem 0.75rem;
       }
 
       .textile-form-body {
-        background-color: $secondary-bg;
-        border: 1px solid $border-color;
-        border-radius: 5px;
+        background-color: var(--primary-bg);
+        @media (min-width: 992px) {
+          border-right: 1px solid var(--border-color);
+        }
       }
 
       .textile-form-field {
-        border-bottom: 1px solid transparent;
-        border-top: 1px solid transparent;
-        margin-bottom: -1px;
+        border-left: 4px solid transparent;
         position: relative;
+        transition: border 0.2s ease-in-out;
 
         .actions {
-          bottom: 0;
-          margin: 0 1rem;
+          top: 0;
           opacity: 0;
           padding: 0.5rem 0;
           position: absolute;
-          right: 0.5rem;
+          left: -1.25rem;
           transition: opacity 0.2s ease-in-out;
         }
 
         .editor-field {
-          margin: 0 1.5rem;
+          margin: 0;
 
           &.sticky-toolbar .editor-toolbar {
-            margin: 0 -1.5rem -1px -1.5rem;
             width: initial;
           }
         }
 
-        &:first-of-type:hover {
-          border-top-color: transparent;
-        }
-
         &:hover {
-          background-color: darken($secondary-bg, 2%);
-          border-bottom-color: $border-color;
-          border-top-color: $border-color;
+          border-color: $light;
 
           .actions {
             opacity: 1;
           }
         }
 
-        &:last-of-type:hover {
-          border-bottom-color: transparent;
-        }
-
-        textarea {
-          min-height: 34px;
-          resize: none;
-        }
-
         .textarea-container {
-          margin: 0 -1.6px 2.25rem -0.6px;
+          margin: 0 1rem;
+
+          textarea {
+            min-height: 34px;
+            resize: none;
+          }
         }
       }
     }
 
     .textile-preview {
+      background: var(--primary-bg);
       padding: 0;
       overflow: auto;
       height: 100%;
@@ -249,19 +268,21 @@
         justify-content: center;
 
         h5 {
-          color: $text-muted;
+          color: var(--text-muted);
           margin-bottom: 1.75rem;
         }
       }
 
       @include media-breakpoint-down(lg) {
+        border-top: 1px solid var(--border-color);
         margin-top: 2rem;
+        padding-top: 2rem;
       }
     }
   }
 
   ul.textile-toolbar {
-    background: #fff;
+    background: var(--primary-bg);
     border-bottom: 0px;
     margin-bottom: 1em !important;
 
@@ -269,17 +290,17 @@
       a {
         border-radius: 3px;
         border: 0px none;
-        color: $text-link;
+        color: var(--text-link);
 
         &:hover {
-          background: #fff;
+          background: var(--secondary-bg);
           border: 0px none;
-          color: $text-link-hover;
+          color: var(--text-link-hover);
         }
 
         &.active {
-          background: darken($grey-900, 10%);
-          color: #fff;
+          background: $primary;
+          color: $white;
         }
       }
     }

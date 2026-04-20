@@ -9,6 +9,14 @@ Rails.application.routes.draw do
 
   resources :comments
 
+  resources :inline_threads, only: [:index, :show, :create, :destroy], controller: 'inline_threads' do
+    resource :resolution, only: [:create, :destroy], controller: 'inline_threads/resolutions'
+    resources :comments, only: [:create], controller: 'inline_threads/comments'
+  end
+
+  # --------------------------------------------------------- User preferences
+  resource :preferences, only: [:update]
+
   # ------------------------------------------------------------ Project routes
   concern :multiple_destroy do
     collection do
@@ -123,10 +131,6 @@ Rails.application.routes.draw do
     get  '/upload'        => 'upload#index',  as: :upload_manager
     post '/upload'        => 'upload#create'
     post '/upload/parse'  => 'upload#parse'
-
-    if Rails.env.development?
-      get '/styles' => 'styles_hera#index'
-    end
   end
 
   resources :console, only: [] do
@@ -144,6 +148,7 @@ Rails.application.routes.draw do
   namespace :setup, only: [:index] do
     if defined?(Dradis::Pro)
     else
+      resource :analytics, only: [:new, :create]
       resource :password, only: [:new, :create]
     end
     resource :kit, only: [:new, :create]
@@ -157,9 +162,25 @@ Rails.application.routes.draw do
     post :preview
   end
 
+  if Rails.env.development?
+    get '/styles' => 'styles#index'
+  end
+
   if defined?(Dradis::Pro)
   else
+    # Static pages
+    get 'projects/1/addons/issuelib', to: 'static_pages#issuelib_index', as: :static_issuelib
+    get 'projects/1/addons/issuelib/import', to: 'static_pages#issuelib_import', as: :static_issuelib_import
+    get 'projects/1/addons/remediationtracker', to: 'static_pages#remediationtracker_index', as: :static_remediationtracker
+
     root to: 'setup/passwords#new'
+  end
+
+  ErrorsController::SUPPORTED_ERRORS.each do |status_name, status_code|
+    match "/#{status_code}",
+      to: "errors##{status_name}",
+      via: :all,
+      defaults: { status_code: status_code }
   end
 
   mount ActionCable.server => '/cable'

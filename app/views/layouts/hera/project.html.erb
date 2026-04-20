@@ -1,7 +1,6 @@
 <% content_for :body_class, 'has-sub-nav' %>
 
 <% content_for :modals do %>
-  <%= render 'layouts/hera/modals' %>
   <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
 
   <% if content_for?(:board_rename_modal) %>

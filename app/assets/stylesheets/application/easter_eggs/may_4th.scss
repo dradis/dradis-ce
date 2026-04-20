@@ -1,0 +1,22 @@
+body.unauthenticated:not(.contributors).may-4th {
+  @include easter-egg-theme(#222222);
+
+  &::after,
+  &::before {
+    content: '';
+    inset: 0;
+    position: fixed;
+    z-index: -1;
+  }
+
+  &::before {
+    background-image: image-url('may_4th/stars.png');
+  }
+
+  &::after {
+    background-image: image-url('may_4th/attack.png');
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-size: clamp(330px, 40vw, 550px);
+  }
+}

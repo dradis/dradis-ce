@@ -1,10 +1,12 @@
 class Comment < ApplicationRecord
+  include Eventable
   include Notifiable
 
   MENTION_PATTERN = /[a-z0-9][a-z0-9\-@\.]*/.freeze
 
   # -- Relationships --------------------------------------------------------
   belongs_to :commentable, polymorphic: true
+  belongs_to :inline_thread, optional: true
   belongs_to :user, optional: true
 
   # -- Callbacks ------------------------------------------------------------
@@ -34,6 +36,16 @@ class Comment < ApplicationRecord
 
   def create_subscription
     Subscription.subscribe(user: user, to: commentable) if user
+  end
+
+  def local_event_payload
+    {
+      content: self.content,
+      commentable: {
+        id: self.commentable.id,
+        title: self.commentable.title
+      }
+    }
   end
 
   def notify(action:, actor:, recipients:)
@@ -84,11 +96,13 @@ class Comment < ApplicationRecord
   end
 
   def to_xml(xml_builder, version: 3)
-    xml_builder.content do
-      xml_builder.cdata!(content)
+    xml_builder.comment do
+      xml_builder.content do
+        xml_builder.cdata!(content)
+      end
+      xml_builder.author(user&.email)
+      xml_builder.created_at(created_at.to_i)
     end
-    xml_builder.author(user&.email)
-    xml_builder.created_at(created_at.to_i)
   end
 
   private

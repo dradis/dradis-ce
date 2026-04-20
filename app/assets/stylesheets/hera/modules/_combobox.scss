@@ -1,5 +1,5 @@
 @mixin combobox-option {
-  color: $text-default;
+  color: var(--text-default);
   cursor: pointer;
   display: block;
   font-size: 0.9rem;
@@ -7,7 +7,7 @@
   pointer-events: auto;
 
   &.disabled {
-    background-color: $grey-200;
+    background-color: var(--secondary-bg-strong);
     cursor: not-allowed;
   }
 
@@ -30,7 +30,8 @@
     &:not(.selected) {
       &:hover,
       &:focus-visible {
-        background-color: darken($primary, 6%);
+        background-color: var(--secondary-bg);
+        color: var(--text-default) !important;
       }
     }
   }
@@ -44,7 +45,7 @@
   }
 
   & > .disabled {
-    background-color: $grey-200;
+    background-color: var(--secondary-bg-strong);
     pointer-events: none;
 
     .unselect-multi-option {
@@ -91,8 +92,8 @@
 }
 
 .combobox-menu {
-  background-color: $white;
-  border: 1px solid $border-color;
+  background-color: var(--primary-bg);
+  border: 1px solid var(--border-color);
   border-radius: $border-radius;
   box-shadow: 0 0 1rem 0 rgba(34, 34, 34, 0.1);
   display: none;
@@ -129,7 +130,7 @@
 }
 
 .combobox-optgroup {
-  color: $text-muted;
+  color: var(--text-muted);
   display: block;
   font-size: 0.8rem;
   pointer-events: none;

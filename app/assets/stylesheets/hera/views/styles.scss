@@ -1,6 +1,28 @@
-body.styles_hera {
+body.styles {
   button[data-behavior~='smooth-scroll'] {
     margin-bottom: 0.25rem;
+  }
+
+  .navbar-placeholder {
+    background-color: $brand-200;
+    border-bottom: 1px solid $brand-400;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.25rem 1.5rem;
+
+    a {
+      color: $brand-700;
+
+      &:focus,
+      &:hover {
+        color: $brand-900;
+      }
+    }
+
+    .logo {
+      height: 2.5rem;
+    }
   }
 
   .page-title {
@@ -16,32 +38,39 @@ body.styles_hera {
     position: relative;
 
     .style-code {
-      display: flex;
       background-color: #222;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fff;
       margin-bottom: 0;
       margin-top: 2rem;
-      font-size: 0.8rem;
 
-      code {
-        background-color: transparent;
-        color: #fff;
-        padding: 0;
+      .c,
+      .ch,
+      .cd,
+      .cm,
+      .cp,
+      .cpf,
+      .c1,
+      .cs {
+        color: #6e7781;
+      }
 
-        .an {
-          color: #9cdcfe;
-        }
+      .err {
+        color: #f6f8fa;
+        background-color: #82071e;
+      }
 
-        .av {
-          color: #ce9178;
-        }
+      .na {
+        color: #9cdcfe;
+      }
 
-        .ct {
-          color: #608b4e;
-        }
+      .nt {
+        color: #569cd6;
+      }
 
-        .et {
-          color: #569cd6;
-        }
+      .s {
+        color: #ce9178;
       }
     }
   }
@@ -66,8 +95,6 @@ body.styles_hera {
     }
 
     .table-wrapper {
-      width: 550px;
-
       .items-table {
         white-space: nowrap;
 
@@ -78,8 +105,23 @@ body.styles_hera {
       }
     }
 
-    ul:not(.pagination) {
-      list-style-type: disc;
+    ul {
+      &.icon-list {
+        -moz-column-count: 4;
+        -moz-column-gap: 20px;
+        -webkit-column-count: 4;
+        -webkit-column-gap: 20px;
+        column-count: 4;
+        column-gap: 20px;
+
+        i {
+          margin-right: 0.5rem;
+        }
+      }
+
+      &:not(.pagination) {
+        list-style-type: disc;
+      }
     }
   }
 
@@ -96,14 +138,14 @@ body.styles_hera {
       right: 0;
       padding: 0.3rem;
       display: inline-flex;
-      background-color: $primary-bg;
+      background-color: var(--primary-bg);
       border: 1px solid transparent;
       border-radius: 5px;
       transition: all 0.2s ease-in-out;
 
       &:hover {
-        background-color: $secondary-bg;
-        border: 1px solid $border-color;
+        background-color: var(--secondary-bg);
+        border: 1px solid var(--border-color);
       }
     }
   }

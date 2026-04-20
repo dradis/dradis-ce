@@ -1,6 +1,6 @@
 @mixin notification-list-item {
   position: relative;
-  border-bottom: 1px solid $main-nav-border;
+  border-bottom: 1px solid $brand-400;
   padding: 0.5rem 2rem 0.5rem 1rem;
   display: flex;
 
@@ -11,7 +11,7 @@
     z-index: 2;
 
     .time {
-      color: $text-muted;
+      color: var(--text-muted);
     }
   }
 
@@ -48,13 +48,31 @@
     position: absolute;
     top: 30px;
     right: 15px;
+    z-index: 2;
   }
 
   &.unread {
-    background-color: $light;
+    background-color: $brand-100;
+    color: $grey-900;
 
     .notification-icon {
       opacity: 0.15;
+    }
+
+    .time {
+      color: $grey-700;
+    }
+
+    .title {
+      a {
+        color: $brand-700;
+
+        &:active,
+        &:focus,
+        &:hover {
+          color: $brand-900;
+        }
+      }
     }
   }
 }
@@ -96,6 +114,10 @@
 
           .body {
             white-space: initial;
+
+            .time {
+              color: $grey-700;
+            }
           }
 
           &:last-child {
@@ -116,7 +138,7 @@
         padding: 0 1em;
         line-height: 2em;
         font-size: 0.8rem;
-        border-bottom: 1px solid $main-nav-border;
+        border-bottom: 1px solid $brand-400;
 
         a {
           &:active,
@@ -133,7 +155,7 @@
 
       .footer {
         line-height: 2em;
-        border-top: 1px solid $main-nav-border;
+        border-top: 1px solid $brand-400;
         font-size: 0.8rem;
       }
     }

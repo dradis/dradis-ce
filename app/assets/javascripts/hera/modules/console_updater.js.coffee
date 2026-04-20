@@ -1,5 +1,5 @@
 @ConsoleUpdater =
-  jobId: 0
+  jobId: ''
   parsing: false
 
   updateConsole: ->

@@ -1,6 +1,7 @@
 //= link application.css
-//= link setup/setup.css
+//= link errors.css
 //= link hera.css
+//= link setup/setup.css
 
 //= link legacy.application.js
 //= link hera.js

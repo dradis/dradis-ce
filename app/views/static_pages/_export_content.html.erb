@@ -1,0 +1,38 @@
+<div id="plugin-word" class="tab-pane fade" role="tabpanel">
+  <h4 class="header-underline">Choose a template</h4>
+  <p>
+    Templates are 100% customizable, based on your existing report format.
+  </p>
+
+  <p>
+    Keep multiple templates for different clients, teams, methodologies, or deliverable styles.
+  </p>
+
+  <%= render partial: 'static_pages/export_templates',
+    locals: {
+      labels: ['dradis_welcome_template', 'dradis_owasp_template', 'dradis_template-hipaa'],
+      exporter: 'word',
+      extension: 'docx',
+      url: 'https://dradis.com/pro/pages/reporting.html'
+    }
+  %>
+</div>
+
+<div id="plugin-excel" class="tab-pane fade" role="tabpanel">
+  <h4 class="header-underline">Choose a template</h4>
+  <p>
+    Create your own, or send us a sample and have our team create them for you.
+  </p>
+  <p>
+    You can load as many templates as you need.
+  </p>
+
+  <%= render partial: 'static_pages/export_templates',
+    locals: {
+      labels: ['dradis_template-excel-owasp', 'dradis_template-welcome'],
+      exporter: 'excel',
+      extension: 'xlsx',
+      url: 'https://dradis.com/pro/pages/excel.html'
+    }
+  %>
+</div>

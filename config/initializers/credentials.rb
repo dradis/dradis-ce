@@ -8,7 +8,7 @@ end
 content_path = Rails.application.config.credentials.content_path
 key_path = Rails.application.config.credentials.key_path
 
-if !content_path.exist? | content_path.zero?
+if !ENV.key?('SECRET_KEY_BASE_DUMMY') && (!content_path.exist? | content_path.zero?)
   warn "The file #{content_path} does not exists or is empty."
   warn "Generating a new file and writing to #{content_path}; this will invalidate the previous Rails sessions."
 
@@ -25,9 +25,13 @@ if !content_path.exist? | content_path.zero?
     secret_key_base: SecureRandom.hex(64)
   }.to_yaml
 
-  key = ActiveSupport::EncryptedConfiguration.generate_key
-  key_path.binwrite(key)
-  key_path.chmod 0600
+  # if master key is not set in env, create one
+  if !ENV.key?('RAILS_MASTER_KEY')
+    # the following can be removed when we drop support for VM instances, after which master key will always be an environment variable
+    key = ActiveSupport::EncryptedConfiguration.generate_key
+    key_path.binwrite(key)
+    key_path.chmod 0600
+  end
 
   enc_conf = ActiveSupport::EncryptedConfiguration.new(config_path: content_path, key_path: key_path, env_key: 'RAILS_MASTER_KEY', raise_if_missing_key: true)
   enc_conf.write(contents)

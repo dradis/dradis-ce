@@ -3,7 +3,8 @@
 }
 
 .dropdown-menu {
-  border: 1px solid $border-color;
+  background-color: var(--primary-bg);
+  border: 1px solid var(--border-color);
   box-shadow: 0 2px 3px 0 rgba(33, 55, 74, 0.2);
   font-size: 0.9rem;
   margin: 0;
@@ -14,15 +15,21 @@
 
   .dropdown-item {
     align-items: center;
-    color: $text-link;
+    color: var(--text-link);
     display: flex;
     transition: color 0s;
     font-weight: inherit;
 
     &:active,
     &:hover {
-      color: $text-link-hover;
-      background-color: $grey-100;
+      color: var(--text-link-hover);
+      background-color: var(--secondary-bg);
+    }
+
+    &.active {
+      background-color: var(--secondary-bg);
+      color: var(--text-default);
+      font-weight: 600;
     }
 
     i {
@@ -36,5 +43,9 @@
     label {
       margin-bottom: 0;
     }
+  }
+
+  .dropdown-item-text {
+    color: var(--text-default);
   }
 }

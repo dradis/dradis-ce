@@ -55,26 +55,6 @@ body.boards.index {
     padding: 0.5rem 0.75rem;
     transition: background-color 0.2s ease-in-out;
 
-    &.board-new {
-      background-color: darken($secondary-bg, 5%);
-      color: $text-default;
-      display: table-cell;
-      height: 5rem;
-      font-weight: 400;
-      text-align: center;
-      vertical-align: middle;
-      width: inherit;
-      transition: all 0.2s ease-in-out;
-
-      &:hover {
-        background-color: darken($secondary-bg, 10%);
-      }
-
-      @include media-breakpoint-down(lg) {
-        display: block;
-      }
-    }
-
     &:hover {
       background-color: darken($primary, 5%);
     }
@@ -102,7 +82,7 @@ body.boards.index {
 
 body.boards.show {
   .board {
-    background-color: lighten($primary-bg, 20%);
+    background-color: var(--primary-bg);
     display: flex;
     flex-direction: row;
     overflow-x: auto;
@@ -111,7 +91,7 @@ body.boards.show {
   }
 
   .card {
-    border: 1px solid $border-color;
+    border: 1px solid var(--border-color);
     border-radius: 3px;
     margin-bottom: 0.25rem;
     max-width: 300px;
@@ -141,13 +121,13 @@ body.boards.show {
     transition: all 0.2s ease-in-out;
 
     &:hover {
-      background-color: darken($secondary-bg, 5%);
+      background-color: var(--secondary-bg-subtle);
     }
   }
 
   .list {
-    background-color: $secondary-bg;
-    border: 1px solid $border-color;
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--border-color);
     border-radius: 3px;
     display: flex;
     flex-direction: column;
@@ -214,7 +194,7 @@ body.boards.show {
   }
 
   .sortable-placeholder {
-    background-color: darken($secondary-bg, 10%);
+    background-color: var(--secondary-bg-strong);
     border-radius: 3px;
     margin-bottom: 0.4rem;
   }
@@ -225,6 +205,18 @@ body.boards.show {
 
     a {
       cursor: grabbing;
+    }
+  }
+}
+
+body.cards.edit,
+body.cards.new {
+  .card_assignees {
+    border-top: 1px solid var(--border-color);
+    padding-top: 2rem;
+
+    @media (max-width: 991px) {
+      margin-top: 2rem;
     }
   }
 }

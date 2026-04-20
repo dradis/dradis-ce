@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+require 'yaml'
+
+# start each process defined in Procfile
+def init_server_processes
+  services = YAML.load_file('Procfile')
+
+  server_processes = services.map { |name, start_cmd| ServerProcess.new(name, start_cmd) }
+
+  server_processes.each(&:start)
+  server_processes.each(&:wait)
+end
+
+class ServerProcess
+  def initialize(name, start_cmd)
+    @name = name
+    @start_cmd = start_cmd
+  end
+
+  def start
+    puts "Starting #{@name}..."
+    @pid = Process.spawn(@start_cmd)
+  end
+
+  def wait
+    puts "Waiting for #{@name}..."
+    Process.wait(@pid)
+  end
+end
+
+init_server_processes

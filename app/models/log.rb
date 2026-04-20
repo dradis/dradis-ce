@@ -1,8 +1,12 @@
 class Log < ApplicationRecord
   after_initialize :set_uid
 
+  # The UUID assigned here is the authorization primitive for reading
+  # the log stream. It's returned only to the user that initiated the
+  # job; ConsoleController#status treats possession of the UUID as the
+  # authorization to read the associated records.
   def set_uid
-    self.uid ||= (Log.maximum(:uid) || 0) + 1
+    self.uid ||= SecureRandom.uuid
   end
 
   def write(trace = nil, &block)

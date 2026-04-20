@@ -250,26 +250,26 @@
         <hr/>
         <br/>
         <% end %>
-
-        <h2>Conclusions and Recommendations</h2>
-        <% content_service.all_content_blocks.each do |block| %>
-          <% if block.fields['Type'] == "Conclusions"%>
-            <%= markup(block.fields['Description'], liquid: true) %>
+        <% if defined?(Dradis::Pro) %>
+          <h2>Conclusions and Recommendations</h2>
+          <% content_service.all_content_blocks.each do |block| %>
+            <% if block.fields['Type'] == "Conclusions"%>
+              <%= markup(block.fields['Description'], liquid: true) %>
+            <% end %>
           <% end %>
-        <% end %>
-        <hr/>
-        <br/>
+          <hr/>
+          <br/>
 
-        <h2>Appendix</h2>
-        <% content_service.all_content_blocks.each do |block| %>
-          <% if block.fields['Type'] == "Appendix"%>
-            <h3><%= markup(block.fields['Title'], liquid: true) %></h3>
-            <%= markup(block.fields['Description'], liquid: true) %>
+          <h2>Appendix</h2>
+          <% content_service.all_content_blocks.each do |block| %>
+            <% if block.fields['Type'] == "Appendix"%>
+              <h3><%= markup(block.fields['Title'], liquid: true) %></h3>
+              <%= markup(block.fields['Description'], liquid: true) %>
+            <% end %>
           <% end %>
+          <hr/>
+          <br/>
         <% end %>
-        <hr/>
-        <br/>
-
       </div>
     </div>
   </div>

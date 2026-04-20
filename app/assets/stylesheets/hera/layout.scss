@@ -1,3 +1,7 @@
+:root {
+  --main-sidebar-width: #{$sidebar-width};
+}
+
 body:not(.unauthenticated) {
   font-size: 0.95rem;
 
@@ -10,6 +14,7 @@ body:not(.unauthenticated) {
       grid-template-rows: calc(#{$navbar-height} * 2) 1fr;
     }
   }
+
   &:not(.has-sub-nav) {
     @media (min-width: 992px) {
       grid-template-rows: #{$navbar-height} 1fr;
@@ -27,13 +32,18 @@ body:not(.unauthenticated) {
 }
 
 .content-container {
-  background-color: $primary-bg;
-  border: 1px solid $border-color;
+  background-color: var(--primary-bg);
+  border: 1px solid var(--border-color);
   border-radius: 5px;
   margin-bottom: $margin;
   padding: $padding;
   position: relative;
   outline: none;
+
+  &:has(> :last-child.form-actions.sticky),
+  &:has(> :last-child .form-actions.sticky) {
+    padding-bottom: 0;
+  }
 
   .alert {
     margin: 1rem 0;
@@ -57,17 +67,15 @@ body:not(.unauthenticated) {
       )
       .view-content {
       width: calc(
-        100vw -
-          (
-            #{$sidebar-width} + (#{$sidebar-width} * #{$sidebar-width-multiplier})
-          )
+        100vw - var(--main-sidebar-width) -
+          (#{$sidebar-width} * #{$sidebar-width-multiplier})
       );
     }
 
     // main sidebar is expanded, secondary sidebar is not rendered
     &:has(.main-sidebar.sidebar-expanded):not(:has(.secondary-sidebar))
       .view-content {
-      width: calc(100vw - #{$sidebar-width});
+      width: calc(100vw - var(--main-sidebar-width));
     }
 
     // main sidebar is expanded, secondary sidebar is collapsed
@@ -75,7 +83,9 @@ body:not(.unauthenticated) {
         :has(.secondary-sidebar.sidebar-expanded)
       )
       .view-content {
-      width: calc(100vw - #{$sidebar-width} - #{$sidebar-width-collapsed});
+      width: calc(
+        100vw - var(--main-sidebar-width) - #{$sidebar-width-collapsed}
+      );
     }
 
     // secondary sidebar is expanded, main sidebar is not rendered
@@ -98,9 +108,10 @@ body:not(.unauthenticated) {
 
 footer {
   background-color: $brand-100;
-  border-top: 1px solid $main-nav-border;
+  border-top: 1px solid $brand-300;
+  color: $grey-900;
   cursor: default;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   padding: 0.5rem;
   text-align: center;
 }
@@ -110,12 +121,12 @@ header {
 }
 
 hr {
-  border-bottom: solid 2px rgba(0, 0, 0, 0.25);
+  border-bottom: solid 2px var(--border-color);
   border-top: 0;
   margin: 1rem 0;
 
   &.small {
-    border-bottom: solid 5px rgba(0, 0, 0, 0.25);
+    border-bottom: solid 5px var(--border-color);
     margin-left: 0;
     width: 75px;
   }

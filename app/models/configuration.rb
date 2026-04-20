@@ -14,10 +14,6 @@ class Configuration < ApplicationRecord
 
   # -- Class Methods --------------------------------------------------------
   # --------------------------------------------------------------- Misc admin:
-  def self.mail_host
-    create_with(value: 'dradis-framework.dev')
-      .find_or_create_by(name: 'admin:mail_host').value
-  end
 
   def self.max_deleted_inline
     create_with(value: 15)
@@ -39,13 +35,14 @@ class Configuration < ApplicationRecord
       .find_or_create_by(name: 'admin:signups_enabled').value.to_i == 1
   end
 
+  def self.usage_sharing_enabled?
+    create_with(value: 0)
+      .find_or_create_by(name: 'admin:usage_sharing').value.to_i == 1
+  end
 
   # --------------------------------------------------------------- admin:paths
-  # In CE ./templates/ is always a folder (created by bin/setup) but in Pro
-  # it can be a symlink (if we're in Production). We use .realdirpath to
-  # ensure we're using the "shared" folder (that's the target of the link).
   def self.paths_templates
-    @@paths_templates ||= Rails.root.join('templates').realdirpath
+    @@paths_templates ||= Rails.root.join('storage', 'templates')
   end
 
   def self.paths_templates_methodologies
@@ -73,12 +70,11 @@ class Configuration < ApplicationRecord
       .find_or_create_by(name: 'admin:paths:templates:reports').value
   end
 
-
   # ------------------------------------------------------------- admin:plugins
 
   # This setting is used by the plugins as the root of all the content the add.
   def self.plugin_parent_node
-    create_with(value: 'plugin.output')
+    create_with(value: 'Scanner output')
       .find_or_create_by(name: 'admin:plugins:parent_node').value
   end
 

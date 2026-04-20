@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+  data-theme="<%= current_user.preferences.theme %>"
+  data-controller="theme"
+  data-theme-preferences-path-value="<%= main_app.preferences_path %>">
+  
   <head>
     <title><%= page_title %></title>
     <meta charset="utf-8">
@@ -8,6 +12,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="current-user-id" content="<%= current_user.id %>">
+    <meta name="integrations" content="<%= Dradis::Plugins::with_feature(:addon) %>">
     <% if flash.any? %>
       <% # when flash messages present, disable turbolinks cache to avoid
         # the message appear and disappear in the next page load %>
@@ -28,6 +33,9 @@
     <%= csrf_meta_tag %>
     <%= csp_meta_tag %>
     <%= javascript_importmap_tags %>
+    <% cache [:analytics, ::Configuration.usage_sharing_enabled?] do %>
+      <%= render 'layouts/plausible' if ::Configuration.usage_sharing_enabled? %>
+    <% end %>
   </head>
 
   <%= 
@@ -40,8 +48,12 @@
     ) do %>
 
     <header class="sticky-top">
-      <%= render 'layouts/hera/navbar/main_nav' %>
-      <%= yield(:sub_nav) if content_for?(:sub_nav) %>
+      <% if controller_path == 'styles' %>
+        <%= render partial: 'styles/header' %>
+      <% else %>
+        <%= render 'layouts/hera/navbar/main_nav' %>
+        <%= yield(:sub_nav) if content_for?(:sub_nav) %>
+      <% end %>
     </header>
 
     <div class="content-grid">
@@ -52,7 +64,7 @@
         <main class="container-fluid">
           <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
           <%= render 'layouts/hera/noscript' %>
-          <%= render "layouts/hera/project_teaser" unless defined?(Dradis::Pro) %>
+          <%= render 'layouts/hera/project_teaser' unless defined?(Dradis::Pro) %>
           <%= flash_messages %>
           <%= content_for?(:content) ? yield(:content) : yield %>
         </main>
@@ -67,6 +79,8 @@
 
     <!-- All modals go here -->
     <%= yield(:modals) if content_for?(:modals) %>
+    
+    <%= render 'layouts/hera/try_pro' %>
 
     <%= render 'console/console' %>
     <!-- End of modals -->

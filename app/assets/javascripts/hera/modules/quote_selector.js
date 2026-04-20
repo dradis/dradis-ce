@@ -130,6 +130,8 @@ class QuoteSelector {
       affix = editor.affixesLibrary('quote', selectionText);
       editor.injectSyntax(affix);
 
+      editor.$target[0].scrollIntoView({ behavior: 'smooth' });
+
       that.clear();
     });
   }

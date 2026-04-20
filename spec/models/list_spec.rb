@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe List do
   it { should belong_to(:board).touch(true) }
-  it { should belong_to(:previous_list).with_foreign_key(:previous_id) }
+  it { should belong_to(:previous_list).with_foreign_key(:previous_id).optional }
   it { should have_many(:cards).dependent(:destroy) }
 
   it { should validate_presence_of(:board) }

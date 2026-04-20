@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%= stylesheet_link_tag 'errors', media: 'all', data: { turbo_track: true } %>
+
+    <title>
+      <%= content_for?(:title) ? yield(:title) : 'Error' %>
+    </title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <meta name="robots" content="noindex, nofollow" />
+
+  </head>
+
+  <body class="<%= controller_name %> <%= action_name %>">
+    <main>
+      <article>
+        <div class="error-content">
+          <%= yield %>
+        </div>
+        <a class="btn" href="/">Back to the ship</a>
+      </article>
+    </main>
+    <% if @exception %>
+      <div class="error">
+        <div class="error-header">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <div>
+            <p><strong><%= @exception.class %></strong></p>
+            <p class="font-mono"><%= @exception.message %></p>
+          </div>
+        </div>
+
+        <pre><code><%= @exception.backtrace.join("\n\n") %></code></pre>
+      </div>
+    <% end %>
+  </body>
+</html>
