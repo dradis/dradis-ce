@@ -181,7 +181,7 @@ Stylesheets shared across multiple layouts go in `app/assets/stylesheets/shared/
 - **No ID selectors** — they add unnecessary specificity. Use classes.
 - **No inline `style` attributes** on HTML elements.
 - **Avoid `!important`** — revisit the CSS specificity instead.
-- **Use relative units** (`rem`, `em`, `ch`, etc.) — avoid `px`.
+- **Use relative units** (`rem`, `em`, `ch`, etc.) — avoid `px`. Exception: `px` is acceptable for borders and other fixed-size structural properties.
 - **Sort selectors alphabetically** within a file (where it doesn't break the cascade).
 - **Sort declarations alphabetically** within each rule block.
 - **Use SASS asset helpers** (`image-url()`, `font-url()`), not plain `url()`.
