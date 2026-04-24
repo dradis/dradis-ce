@@ -10,6 +10,33 @@ describe 'upload requests' do
 
   after { FileUtils.rm_rf(Attachment.pwd.join(@uploads_node.id.to_s)) }
 
+  describe 'POST #create' do
+    let(:file) { fixture_file_upload(Rails.root.join('spec', 'fixtures', 'files', 'rails.png'), 'image/png') }
+    let(:uploader) { 'Dradis::Plugins::Projects::Upload::Template' }
+    let(:state) { Issue.states.keys.first }
+
+    it 'returns JSON with item_id and attachment when requested' do
+      post project_upload_manager_path(@project),
+           params: { file: file, uploader: uploader, state: state },
+           headers: { 'Accept' => 'application/json' }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.content_type).to include('application/json')
+
+      json = response.parsed_body
+      expect(json['item_id']).to be_a(String)
+      expect(json['attachment']).to be_a(String)
+    end
+
+    it 'still renders the JS response for legacy requests' do
+      post project_upload_manager_path(@project),
+           params: { file: file, uploader: uploader, state: state, format: :js }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.content_type).to include('text/javascript')
+    end
+  end
+
   describe 'POST #parse' do
     let(:uploader) { 'Dradis::Plugins::Projects::Upload::Template' }
     let(:state) { nil }
