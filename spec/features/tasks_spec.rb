@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'My Tasks' do
+describe 'My Cards' do
   subject { page }
 
   it 'should require authenticated users' do
@@ -22,12 +22,23 @@ describe 'My Tasks' do
     describe 'in a project' do
       context 'with assigned tasks' do
         it 'renders the user\'s assigned tasks in a dataTable', js: true do
-          @card.assignees = [User.first]
+          @card.assignees = [current_user]
           @card.save
 
           visit project_tasks_path(current_project)
           expect(page).to have_selector('table.dataTable')
           expect(page).to have_selector('td a', text: @card.name)
+        end
+      end
+
+      context 'with tasks assigned to another user' do
+        it 'does not render cards assigned to other users' do
+          other_user = create(:user)
+          @card.assignees = [other_user]
+          @card.save
+
+          visit project_tasks_path(current_project)
+          expect(page).not_to have_selector('td a', text: @card.name)
         end
       end
 
