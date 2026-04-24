@@ -58,12 +58,9 @@
 //= require hera/modules/search
 //= require hera/modules/sidebar
 //= require hera/modules/try_pro
-//= require hera/modules/uploads
-
 //= require hera/pages/activities
 //= require hera/pages/boards
 //= require hera/pages/issues
 //= require hera/pages/nodes/new_form
 //= require hera/pages/projects
 //= require hera/pages/qa
-//= require hera/pages/upload

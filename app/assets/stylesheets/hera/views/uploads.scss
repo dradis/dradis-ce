@@ -1,15 +1,38 @@
 body.upload {
-  .progress-bar {
-    position: relative;
+  .upload-console-body {
+    font-family: monospace;
+    max-height: 24rem;
+    overflow-y: auto;
+  }
 
-    .percent {
-      position: absolute;
-      display: inline-block;
-      text-align: center;
-      width: 30px;
-      top: 0px;
-      left: calc((100% / 2) - 15px);
-      color: transparent;
+  .upload-drop-zone {
+    border: 2px dashed $primary;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    padding: 2rem;
+    text-align: center;
+    transition: background-color 0.2s;
+
+    &--active {
+      background-color: rgba($primary, 0.08);
     }
+  }
+
+  .upload-row {
+    border: 1px solid;
+    border-radius: 0.375rem;
+    padding: 0.75rem;
+  }
+
+  .upload-row-filename {
+    max-width: 14rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .upload-row-tool-select {
+    flex-shrink: 0;
+    width: auto;
   }
 }

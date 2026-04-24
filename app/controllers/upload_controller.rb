@@ -28,6 +28,11 @@ class UploadController < AuthenticatedController
     @success = true
     @item_id = Log.new.uid
     flash.now[:notice] = "Successfully uploaded #{ filename }"
+
+    respond_to do |format|
+      format.js
+      format.json
+    end
   end
 
   def parse
