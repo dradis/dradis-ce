@@ -23,6 +23,10 @@ export default class extends Controller {
     }
   }
 
+  consoleComplete() {
+    this.statusLabelTarget.textContent = 'Done!'
+  }
+
   openConsole() {
     new window.bootstrap.Modal(this.consoleModalTarget).show()
   }

@@ -50,6 +50,8 @@ export default class extends Controller {
 
     if (data.working) {
       this.pollTimer = setTimeout(() => this.poll(), 2000)
+    } else {
+      this.dispatch('complete', { bubbles: true })
     }
   }
 }
