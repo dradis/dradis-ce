@@ -15,56 +15,61 @@
   <div class="col-lg-6 col-xl-5 mb-4">
     <div class="content-container mb-0 h-100">
       <h4 class="header-underline">Upload Output Files</h4>
-      <p class="mt-4">Use the form below to upload output files from other tools.</p>
 
-      <div class="mt-4">
-        <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, id: 'new_upload', data: { parse_url: project_upload_parse_path(current_project) } do %>
-          <div class="mb-5 mt-4 pt-2">
-            <%= label_tag :uploader do %>
-              <h5>1. Tool you are uploading output from</h5>
-            <% end %>
-            <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { class: 'form-select', data: { behavior: 'tool-select' } } %>
-          </div>
-          <div class="mb-5">
-            <%= label_tag :state do %>
-              <h5>2. State of uploaded records</h5>
-            <% end %>
-            <%= select_tag 'state', options_for_select(Issue.states.map { |s, id| [s.humanize, s] }), { class: 'form-select state-select', data: { behavior: 'state-select' } } %>
-          </div>
-          <div class="mb-4">
-            <%= label_tag :file do %>
-              <h5>3. Upload tool output file</h5>
-            <% end %>
-            <div>
-              <label class="visually-hidden" data-behavior="file-label">Choose file</label>
-              <%= file_field_tag 'file', class: 'form-control' %>
-              <%= hidden_field_tag 'item_id' %>
-              <%= hidden_field_tag 'attachment' %>
-              <%= hidden_field_tag 'format', 'js' %>
-            </div>
-          </div>
-        <% end %>
+      <div class="mt-4"
+           data-controller="upload-manager"
+           data-upload-manager-upload-url-value="<%= project_upload_manager_path(current_project) %>"
+           data-upload-manager-parse-url-value="<%= project_upload_parse_path(current_project) %>"
+           data-action="upload-file:changed->upload-manager#rowChanged upload-file:removed->upload-manager#rowRemoved">
 
-        <p>Upload progress:</p>
-        <div class="progress mb-2">
-          <div class="progress-bar progress-bar-striped">
-            <div class="percent">0%</div>
-          </div>
+        <div class="upload-drop-zone mb-4"
+             data-upload-manager-target="dropZone"
+             data-action="click->upload-manager#openFilePicker drop->upload-manager#drop dragover->upload-manager#dragOver dragleave->upload-manager#dragLeave">
+          <p class="mb-1"><strong>Drop files here</strong> or click to browse</p>
+          <p class="text-muted small mb-0">Tool is auto-detected per file. You can override per row.</p>
         </div>
 
+        <input type="file" multiple class="d-none"
+               data-upload-manager-target="fileInput"
+               data-action="change->upload-manager#filesSelected">
+
+        <div class="mb-4">
+          <%= label_tag :state do %>
+            <h5>State of uploaded records</h5>
+          <% end %>
+          <%= select_tag 'state',
+                options_for_select(Issue.states.map { |s, _id| [s.humanize, s] }),
+                class: 'form-select',
+                data: { 'upload-manager-target': 'stateSelect' } %>
+        </div>
+
+        <div data-upload-manager-target="stagingArea" class="upload-staging-area mb-3"></div>
+
+        <template data-upload-manager-target="rowTemplate">
+          <%= render 'row', uploaders: @uploaders %>
+        </template>
+
+        <button class="btn btn-primary" disabled
+                data-upload-manager-target="uploadButton"
+                data-action="click->upload-manager#upload">
+          Upload
+        </button>
       </div>
     </div>
   </div>
 
   <div class="col-lg-6 col-xl-7 mb-4">
     <div class="content-container mb-0 h-100">
-      <h4 class="header-underline">Output console</h4>
-      <div id="status"></div>
-      <%= content_tag :div, id: 'result', style: 'display:none', data: { url: status_console_index_path }  do %>
-        <div><strong>Filename</strong>: <span id="filename"></span> <span id="spinner"><%= image_tag 'loading.gif', style: "margin:0;", alt: 'loading spinner' %></span></div>
-        <div><strong>Size</strong>: <span id="filesize"></span></div>
-        <div id="console" class="mx-0 mb-0"></div>
-      <% end %>
+      <h4 class="header-underline">Available plugins</h4>
+      <ul class="mt-3 ps-3">
+        <% @uploaders.each do |uploader| %>
+          <li><%= uploader.name %></li>
+        <% end %>
+      </ul>
     </div>
   </div>
 </div>
+
+<% Dradis::Plugins.with_feature(:upload).flat_map { |e| e.try(:upload_detectors) || [] }.each do |detector_id| %>
+  <script type="module">import "<%= detector_id %>"</script>
+<% end %>

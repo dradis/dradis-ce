@@ -8,4 +8,5 @@ pin '@hotwired/stimulus-loading', to: 'stimulus-loading.js'
 pin 'datatables'
 pin 'stupidtable'
 
+pin 'upload_detector_registry'
 pin_all_from 'app/javascript/controllers', under: 'controllers'

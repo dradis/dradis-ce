@@ -1,0 +1,54 @@
+<div class="upload-row mb-3" data-controller="upload-file">
+  <div class="d-flex align-items-center gap-3 mb-2 flex-wrap">
+    <span class="upload-row-filename fw-semibold"
+          data-upload-file-target="filename"></span>
+
+    <select class="form-select form-select-sm upload-row-tool-select"
+            data-upload-file-target="toolSelect"
+            data-action="change->upload-file#toolChanged">
+      <option value="">Select a tool...</option>
+      <% uploaders.each do |uploader| %>
+        <option value="<%= uploader.name %>"><%= uploader.name %></option>
+      <% end %>
+    </select>
+
+    <span class="text-muted small"
+          data-upload-file-target="statusLabel"></span>
+
+    <button class="btn btn-sm btn-outline-secondary d-none"
+            data-upload-file-target="consoleButton"
+            data-action="click->upload-file#openConsole">
+      View console
+    </button>
+
+    <button class="btn btn-sm btn-outline-danger"
+            data-action="click->upload-file#remove">
+      Remove
+    </button>
+  </div>
+
+  <div class="progress d-none mb-1"
+       data-upload-file-target="progressContainer">
+    <div class="progress-bar" role="progressbar" style="width: 0%"
+         data-upload-file-target="progressBar">
+      <span data-upload-file-target="progressPercent">0%</span>
+    </div>
+  </div>
+
+  <div class="modal fade" tabindex="-1"
+       data-controller="upload-console"
+       data-upload-console-status-url-value="<%= status_console_index_path %>"
+       data-upload-file-target="consoleModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Upload console</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body upload-console-body">
+          <div data-upload-console-target="console"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
