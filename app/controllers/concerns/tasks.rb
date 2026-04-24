@@ -7,7 +7,8 @@ module Tasks
       .where(boards: { id: current_project.boards })
       .joins(:assignees)
       .where(users: { id: current_user.id })
-      .includes(:assignees, list: :board)
+      .preload(:assignees)
+      .includes(list: :board)
       .sort_by { |card| [card.due_date.nil? ? 1 : 0, card.due_date] }
   end
 end
