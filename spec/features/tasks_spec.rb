@@ -22,7 +22,7 @@ describe 'My Cards' do
     describe 'in a project' do
       context 'with assigned tasks' do
         it 'renders the user\'s assigned tasks in a dataTable', js: true do
-          @card.assignees = [current_user]
+          @card.assignees = [@logged_in_as]
           @card.save
 
           visit project_tasks_path(current_project)

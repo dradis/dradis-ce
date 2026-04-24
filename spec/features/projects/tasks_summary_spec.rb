@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Tasks Summary', js: true do
+describe 'Tasks Summary' do
   before do
     login_to_project_as_user
 
@@ -10,7 +10,7 @@ describe 'Tasks Summary', js: true do
   end
 
   it 'renders the My Cards widget when cards are assigned to the user' do
-    @card.assignees = [current_user]
+    @card.assignees = [@logged_in_as]
     @card.save
 
     visit project_path(current_project)
