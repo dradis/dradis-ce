@@ -19,6 +19,7 @@
         <tr id="evidence-<%= evidence.id %>">
           <td class="select-checkbox" data-behavior="select-checkbox"></td>
           <% @all_columns.each do |column| %>
+            <% data_attrs = {} %>
             <%
               sort, display =
               case column
@@ -31,10 +32,14 @@
               when 'Updated'
                 [evidence.updated_at.to_i, local_time_ago(evidence.updated_at)]
               else
-                [evidence.fields.fetch(column, ''), markup(evidence.fields.fetch(column, ''))]
+                field_content = evidence.fields.fetch(column, '')
+                data_attrs[:behavior] = 'liquid-async'
+                data_attrs[:path]     = preview_project_issue_evidence_path(current_project, @issue, evidence)
+                data_attrs[:content]  = field_content
+                [field_content, field_content]
               end
             %>
-            <td data-sort="<%= sort %>"><%= display %></td>
+            <%= content_tag :td, display, data: data_attrs.merge({ sort: sort }) %>
           <% end  %>
           <td class="column-actions">
             <%= link_to edit_project_node_evidence_path(current_project, node, evidence, return_to: :issue) do %>
