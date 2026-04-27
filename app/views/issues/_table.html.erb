@@ -55,7 +55,7 @@
                   data_attrs[:behavior] = class_names(data_attrs[:behavior], 'liquid-async')
                   data_attrs[:path]     = preview_project_issue_path(current_project, issue)
                   data_attrs[:content]  = field_content
-                  [field_content, field_content]
+                  [field_content, spinner_tag(inline: true, spinner_class: 'spinner-border-sm text-primary')]
                 end
               %>
               <%= content_tag :td,

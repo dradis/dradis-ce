@@ -55,7 +55,7 @@
                 data_attrs[:behavior] = 'liquid-async'
                 data_attrs[:path]     = preview_path
                 data_attrs[:content]  = field_content
-                [field_content, field_content]
+                [field_content, spinner_tag(inline: true, spinner_class: 'spinner-border-sm text-primary')]
               end
               %>
               <%= content_tag :td, display, data: data_attrs.merge({ sort: sort }) %>
