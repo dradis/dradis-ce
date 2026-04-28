@@ -7,7 +7,7 @@
       <%= link_to 'All issues', project_issues_path(current_project) %>
     </li>
     <li class="breadcrumb-item active">
-      <%= (@issue.title? ? @issue.title : "Issue ##{@issue.id}")%>
+      <%= (@issue.title? ? @issue.title(liquid_assigns: liquid_assigns) : "Issue ##{@issue.id}")%>
     </li>
   </ol>
 </nav>
