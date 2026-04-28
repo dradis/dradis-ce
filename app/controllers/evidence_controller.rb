@@ -111,6 +111,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def liquid_resource_assigns
+    return {} unless @evidence
     {
       'evidence' => EvidenceDrop.new(@evidence),
       'node' => NodeDrop.new(@evidence.node)
