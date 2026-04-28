@@ -38,6 +38,7 @@ v5.0.0 (March 2026)
   - Echo: Add configurable, reusable prompts for Issues
   - Forms: Improve visibility of form actions
   - Layout: Add light/dark/auto theme toggle to support dark mode
+  - Liquid: evaluate Liquid content before rendering all issues/evidence tables
   - Nodes:
     - Add more types and icons
     - Rename upload and parent node types and add distinguishing icons
@@ -65,6 +66,7 @@ v5.0.0 (March 2026)
   - Upgraded gems:
     - bcrypt, nokogiri, rack, rails, tilt
   - Bugs fixes:
+    - Issues: render Liquid content in the issue title throughout the app
     - Nodes: Display error message and preserve input on properties update
     - Notifications: Ensure correct link for note and issue comments
   - REST/JSON API enhancements:
