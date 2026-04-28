@@ -3,6 +3,7 @@ module LiquidEnabledResource
 
   included do
     helper_method :liquid_assigns
+    helper_method :liquid_title
   end
 
   def liquid_assigns
@@ -12,6 +13,11 @@ module LiquidEnabledResource
   # To be overwritten by each controller
   def liquid_resource_assigns
     {}
+  end
+
+  def liquid_title(record)
+    return record.title unless record.title?
+    HTML::Pipeline::Dradis::LiquidFilter.call(record.title, liquid_assigns: liquid_assigns).strip
   end
 
   def preview
