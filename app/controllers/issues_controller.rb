@@ -127,6 +127,7 @@ class IssuesController < AuthenticatedController
   private
 
   def liquid_resource_assigns
+    return {} unless @issue
     { 'issue' => IssueDrop.new(@issue) }
   end
 
