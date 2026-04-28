@@ -26,6 +26,7 @@
           <tr id="issue-<%= issue.id %>" data-tag-url="<%= project_issue_path(current_project, issue) %>">
             <td class="select-checkbox" data-behavior="select-checkbox"></td>
             <% @all_columns.each do |column| %>
+              <% data_attrs = { behavior: class_names(tag: column == 'Tags') } %>
               <% sort, display =
                 case column
                 when 'Title'
@@ -50,16 +51,17 @@
                 when 'Updated'
                   [issue.updated_at.to_i, local_time_ago(issue.updated_at)]
                 else
-                  [issue.fields.fetch(column, ''), markup(issue.fields.fetch(column, ''))]
+                  field_content = issue.fields.fetch(column, '')
+                  data_attrs[:behavior] = class_names(data_attrs[:behavior], 'liquid-async')
+                  data_attrs[:path]     = preview_project_issue_path(current_project, issue)
+                  data_attrs[:content]  = field_content
+                  [field_content, spinner_tag(inline: true, spinner_class: 'spinner-border-sm text-primary')]
                 end
               %>
               <%= content_tag :td,
                   display,
                   class: class_names('text-break-spaces': column == 'Affected'),
-                  data: {
-                    behavior: class_names(tag: column == 'Tags'),
-                    sort: sort
-                  }
+                  data: data_attrs.merge({ sort: sort })
               %>
             <% end %>
             <td class="column-actions">
