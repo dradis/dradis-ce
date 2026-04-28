@@ -5,6 +5,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
+    - Issues: render Liquid content in the issue title throughout the app
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
