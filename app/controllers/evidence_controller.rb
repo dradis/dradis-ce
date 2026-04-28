@@ -111,6 +111,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def liquid_resource_assigns
+    return {} unless @evidence
     {
       'evidence' => EvidenceDrop.new(@evidence),
       'node' => NodeDrop.new(@evidence.node)
@@ -136,7 +137,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def set_auto_save_key
-    @auto_save_key =  if @evidence&.persisted?
+    @auto_save_key = if @evidence&.persisted?
       "evidence-#{@evidence.id}"
     elsif params[:template]
       "node-#{@node.id}-evidence-#{params[:template]}"

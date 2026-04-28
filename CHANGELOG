@@ -5,6 +5,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
+    - Issues: render Liquid content in the issue title throughout the app
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
@@ -38,6 +39,7 @@ v5.0.0 (March 2026)
   - Echo: Add configurable, reusable prompts for Issues
   - Forms: Improve visibility of form actions
   - Layout: Add light/dark/auto theme toggle to support dark mode
+  - Liquid: evaluate Liquid content before rendering all issues/evidence tables
   - Nodes:
     - Add more types and icons
     - Rename upload and parent node types and add distinguishing icons
