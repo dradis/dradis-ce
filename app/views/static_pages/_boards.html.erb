@@ -1,0 +1,36 @@
+<div class="tab-pane" id="methodology-tab">
+  <h4 class="header-underline">Methodology
+    <span class="actions pt-1">
+      <div class="action">
+        <a 
+          class="js-try-pro nav-link" 
+          href="javascript:void(0)" 
+          data-term="node-boards" 
+          data-url="https://dradis.com/pro/pages/consistency.html">
+          <i class="fa-solid fa-plus me-1"></i>New Methodology
+        </a>
+      </div>
+    </span>
+  </h4>
+  <div class="empty-state">
+    <div class="empty-state-icon">
+      <%= image_tag "icons/#{rand(9)}.svg" %>
+    </div>
+    <div class="empty-state-body">
+      <div class="container">
+        <h4 class="empty-state-title">You don't have any node-level methodologies yet</h4>
+        <p class="empty-state-body-text">Attach testing checklists to any node, and track coverage in real-time across your team. Make sure nothing gets missed, no matter how complex the assessment.</p>
+        <div class="empty-state-actions">
+          <a
+            class="btn btn-primary js-try-pro nav-link"
+            href="javascript:void(0)"
+            data-term="node-boards"
+            data-url="https://dradis.com/pro/pages/consistency.html">
+            <i class="fa-solid fa-plus me-1"></i>New Methodology
+          </a>
+          <%= link_to 'More about node-level methodologies', 'https://dradis.com/support/guides/projects/methodologies.html#node', class: 'empty-state-docs-link', target: '_blank' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
