@@ -1,0 +1,129 @@
+<% content_for :title, 'Projects' %>
+
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">Projects</li>
+  </ol>
+<% end %>
+
+<% content_for :sidebar do %>
+  <hr>
+  <div class="header">
+    <div class="header-inner">
+      <h5 class="header-name">Projects Tips</h5>
+      <div class="options">
+        <%= link_to '#project-page-tips', data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle update state</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div id="project-page-tips" class="page-tips show collapse">
+    <div class="bg-info">
+      <p>With Dradis Pro you can manage multiple projects:</p>
+      <ul class="fa-ul">
+        <li>
+          <p><i class="fa-solid fa-li fa-check text-mint"></i> Create a separate project for each security assessment</p>
+        </li>
+        <li>
+          <p><i class="fa-solid fa-li fa-check text-mint"></i> Assign team members and define who can participate</p>
+        </li>
+        <li>
+          <p><i class="fa-solid fa-li fa-check text-mint"></i> Archive completed projects to keep your workspace tidy</p>
+        </li>
+        <li>
+          <p><i class="fa-solid fa-li fa-check text-mint"></i> Track active projects with last-updated highlights</p>
+        </li>
+      </ul>
+      <p class="text-end card-link">More about <a href="https://dradis.com/support/guides/projects/" target="_blank">projects</a>.</p>
+    </div>
+  </div>
+<% end %>
+
+<div class="row d-flex align-items-start justify-content-between">
+  <div class="col-12 col-md-9">
+    <h1>Manage your projects</h1>
+    <h2 class="mb-3">Centralize security assessments and keep up with the progress of each engagement</h2>
+  </div>
+
+  <div class="col-12 col-md-3 d-flex justify-content-start justify-content-md-end mb-4 mb-md-0">
+    <a
+      href="javascript:void(0)"
+      class="btn btn-primary btn-lg js-try-pro"
+      data-term="projects"
+      data-url="https://dradis.com/pro/pages/projects.html">
+      <i class="fa-solid fa-plus me-1"></i>New Project
+    </a>
+  </div>
+</div>
+
+<div class="row fastlive-list" data-behavior="fastlive-list">
+  <% @projects.each do |project| %>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body active-project">
+          <div data-behavior="match-height">
+            <div class="project-card-header">
+              <div class="d-flex justify-content-between align-items-center">
+                <%= link_to project.name, project_path(project), class: 'h5 project-link text-truncate', title: project.name %>
+              </div>
+            </div>
+
+            <div class="metrics d-flex justify-content-between">
+              <p><i class="fa-solid fa-bug fa-fw me-1"></i><%= pluralize(project.issues.size, 'Issue') %></p>
+              <p><i class="fa-solid fa-flag fa-fw me-1"></i><%= project.evidence.size %> Evidence</p>
+              <p><i class="fa-solid fa-sitemap fa-fw me-1"></i><%= pluralize(project.nodes.in_tree.size, 'Node') %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<hr class="mt-0">
+
+<div class="card">
+  <div class="card-body">
+    <table class="table table-striped m-0"
+      data-behavior="dradis-datatable"
+      data-default-columns='["Name", "Issues", "Evidence", "Nodes"]'
+      data-local-storage-key='ce.projects_datatable'>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Issues</th>
+          <th>Evidence</th>
+          <th>Nodes</th>
+          <th class="no-sort"><span class="visually-hidden">Actions</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @projects.each do |project| %>
+          <tr>
+            <td class="align-middle"><%= link_to project.name, project_path(project) %></td>
+            <td class="align-middle"><%= project.issues.size %></td>
+            <td class="align-middle"><%= project.evidence.size %></td>
+            <td class="align-middle"><%= project.nodes.in_tree.size %></td>
+            <td class="column-actions text-nowrap">
+              <a
+                href="javascript:void(0)"
+                class="btn btn-xs btn-warning js-try-pro"
+                data-term="projects"
+                data-url="https://dradis.com/pro/pages/projects.html">
+                <i class="fa-solid fa-pencil"></i> Edit
+              </a>
+              <a
+                href="javascript:void(0)"
+                class="btn btn-xs btn-secondary js-try-pro"
+                data-term="projects"
+                data-url="https://dradis.com/pro/pages/projects.html">
+                <i class="fa-solid fa-copy"></i> Duplicate
+              </a>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
