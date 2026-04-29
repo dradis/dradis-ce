@@ -2,6 +2,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Mail: add support for SMTP configuration via environment variables for Docker deployments; smtp.yml remains supported for VM deployments during the deprecation transition
+  - Show don't gate: Node-level Methodologies
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
