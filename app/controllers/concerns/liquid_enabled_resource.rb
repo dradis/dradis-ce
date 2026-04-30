@@ -2,11 +2,19 @@ module LiquidEnabledResource
   extend ActiveSupport::Concern
 
   included do
+    around_action :with_liquid_render_context
     helper_method :liquid_assigns
   end
 
   def liquid_assigns
     @liquid_assigns ||= default_liquid_assigns.merge!(liquid_resource_assigns)
+  end
+
+  def with_liquid_render_context
+    LiquidRenderContext.set(-> { liquid_assigns })
+    yield
+  ensure
+    LiquidRenderContext.clear
   end
 
   # To be overwritten by each controller
