@@ -19,6 +19,20 @@
       <%= link_to(project_board_list_card_revisions_path(current_project, @board, @list, @card), class: 'dropdown-item') do %>
         <i class="fa-solid fa-history fa-fw"></i> View History
       <% end %>
+      <% other_lists = @board.ordered_lists.reject { |l| l.id == @list.id } %>
+      <% if other_lists.any? %>
+        <div class="dropdown-divider"></div>
+        <span class="dropdown-item dots-dropdown-header" tabindex="-1">Move to list</span>
+        <% other_lists.each do |list| %>
+          <%= link_to(
+            move_to_list_project_board_list_card_path(current_project, @board, @list, @card, new_list_id: list.id),
+            method: :post,
+            class: 'dropdown-item'
+          ) do %>
+            <%= list.name %>
+          <% end %>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </div>
