@@ -67,6 +67,16 @@
             <p><i class="fa-solid fa-sitemap fa-fw me-1"></i><%= pluralize(project.nodes.in_tree.size, 'Node') %></p>
           </div>
 
+          <div class="avatars">
+            <% avatar_limit = 10 %>
+            <% project.authors.limit(avatar_limit).each do |user| %>
+              <%= avatar_image(user, size: 40) %>
+            <% end %>
+            <% if project.authors.size > avatar_limit %>
+              <span class="more-gravatars">+<%= project.authors.size - avatar_limit %></span>
+            <% end %>
+          </div>
+
           <div class="divider divider-lg">
             <span class="divider-label">Methodology Progress</span>
           </div>

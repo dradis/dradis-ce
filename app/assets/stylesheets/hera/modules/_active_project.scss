@@ -1,4 +1,37 @@
 .active-project {
+  .avatars {
+    --offset: -0.75rem;
+    --size: 40px;
+    display: flex;
+    margin-top: 1rem;
+    white-space: nowrap;
+
+    .gravatar {
+      display: inline-block;
+
+      img {
+        border: 3px solid var(--primary-bg);
+      }
+
+      &:not(:first-child) {
+        margin-left: var(--offset);
+      }
+    }
+
+    .more-gravatars {
+      align-items: center;
+      background-color: var(--secondary-bg);
+      border: 3px solid $white;
+      border-radius: 50%;
+      display: flex;
+      font-size: 85%;
+      height: var(--size);
+      justify-content: center;
+      margin-left: var(--offset);
+      width: var(--size);
+    }
+  }
+
   .board-progress {
     margin-top: 1rem;
 
