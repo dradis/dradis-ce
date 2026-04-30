@@ -49,9 +49,11 @@ module HasFields
         return raw unless ctx
 
         @_rendered_fields ||= raw.transform_values do |v|
-          Liquid::Template.parse(v.to_s).render(ctx, strict_variables: true, strict_filters: true).strip
-        rescue StandardError
-          v
+          begin
+            Liquid::Template.parse(v.to_s).render(ctx, filters: [], strict_filters: true, strict_variables: true).strip
+          rescue Liquid::Error
+            v
+          end
         end
       end
 
