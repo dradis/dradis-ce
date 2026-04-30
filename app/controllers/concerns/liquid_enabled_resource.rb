@@ -10,13 +10,6 @@ module LiquidEnabledResource
     @liquid_assigns ||= default_liquid_assigns.merge!(liquid_resource_assigns)
   end
 
-  def with_liquid_render_context
-    LiquidRenderContext.set(-> { liquid_assigns })
-    yield
-  ensure
-    LiquidRenderContext.clear
-  end
-
   # To be overwritten by each controller
   def liquid_resource_assigns
     {}
@@ -25,6 +18,13 @@ module LiquidEnabledResource
   def preview
     @text = params[:text]
     render 'markup/preview', layout: false
+  end
+
+  def with_liquid_render_context
+    LiquidRenderContext.set(-> { liquid_assigns })
+    yield
+  ensure
+    LiquidRenderContext.clear
   end
 
   private
