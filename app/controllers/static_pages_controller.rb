@@ -2,8 +2,6 @@ class StaticPagesController < AuthenticatedController
   before_action :set_entries, only: [:issuelib_index, :issuelib_import]
   before_action :set_tickets, only: [:remediationtracker_index]
 
-  skip_before_action :set_nodes, :set_project, only: [:projects_index]
-
   def issuelib_index; end
 
   def issuelib_import
