@@ -1,0 +1,144 @@
+.active-project {
+  .avatars {
+    --offset: -0.75rem;
+    --size: 40px;
+    display: flex;
+    margin-top: 1rem;
+    white-space: nowrap;
+
+    .gravatar {
+      display: inline-block;
+
+      img {
+        border: 3px solid var(--primary-bg);
+      }
+
+      &:not(:first-child) {
+        margin-left: var(--offset);
+      }
+    }
+
+    .more-gravatars {
+      align-items: center;
+      background-color: var(--secondary-bg);
+      border: 3px solid $white;
+      border-radius: 50%;
+      display: flex;
+      font-size: 85%;
+      height: var(--size);
+      justify-content: center;
+      margin-left: var(--offset);
+      width: var(--size);
+    }
+  }
+
+  .board-progress {
+    margin-top: 1rem;
+
+    .board-name {
+      font-size: 85%;
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  .donuts {
+    /* Colors from d3.js to match board progress bars */
+    --draft-color: #ff99a8;
+    --published-color: #84d784;
+    --review-color: #ffc700;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 1.5rem;
+
+    .color-swatch {
+      aspect-ratio: 1;
+      border-radius: $border-radius;
+      width: 1rem;
+    }
+
+    .donut-chart-container {
+      aspect-ratio: 1;
+      background: conic-gradient(
+        var(--draft-color) 0% var(--draft),
+        var(--review-color) var(--draft) calc(var(--draft) + var(--review)),
+        var(--published-color) calc(var(--draft) + var(--review)) 100%
+      );
+      border-radius: 50%;
+      position: relative;
+      width: 5rem;
+
+      &.empty {
+        border: 1px solid var(--border-color);
+      }
+
+      &.locked {
+        background: var(--secondary-bg-strong);
+        border: none;
+      }
+    }
+
+    .donut-details {
+      font-size: 0.875em;
+      list-style: none;
+      margin-bottom: 0;
+      padding-left: 0;
+
+      & > li {
+        white-space: nowrap;
+
+        &:nth-child(1) {
+          .color-swatch {
+            background-color: var(--draft-color);
+          }
+        }
+
+        &:nth-child(2) {
+          .color-swatch {
+            background-color: var(--review-color);
+          }
+        }
+
+        &:nth-child(3) {
+          .color-swatch {
+            background-color: var(--published-color);
+          }
+        }
+      }
+
+      &.locked {
+        & > li .color-swatch {
+          background-color: var(--secondary-bg-strong);
+        }
+      }
+    }
+  }
+
+  .metrics {
+    font-size: 85%;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .progress.empty {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+
+    .progress-bar {
+      background-color: transparent;
+      width: 100%;
+    }
+  }
+
+  .project-card-header {
+    display: flex;
+    flex-direction: column;
+
+    .project-link {
+      overflow: hidden;
+    }
+  }
+}
