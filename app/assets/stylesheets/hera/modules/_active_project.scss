@@ -73,7 +73,7 @@
         border: 1px solid var(--border-color);
       }
 
-      &.locked {
+      &.pro-only {
         background: var(--secondary-bg-strong);
         border: none;
       }
@@ -107,7 +107,7 @@
         }
       }
 
-      &.locked {
+      &.pro-only {
         & > li .color-swatch {
           background-color: var(--secondary-bg-strong);
         }
