@@ -51,155 +51,154 @@
 </div>
 
 <div class="row mb-4">
-  <% @projects.each do |project| %>
-    <div class="col-lg-6">
-      <div class="card">
-        <div class="card-body active-project">
-          <div class="project-card-header">
-            <div class="d-flex justify-content-between align-items-center">
-              <%= link_to project.name, project_path(project), class: 'h5 project-link text-truncate', title: project.name %>
-            </div>
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body active-project">
+        <div class="project-card-header">
+          <div class="d-flex justify-content-between align-items-center">
+            <%= link_to @project.name, project_path(@project), class: 'h5 project-link text-truncate', title: @project.name %>
           </div>
+        </div>
 
-          <div class="metrics d-flex justify-content-between">
-            <p><i class="fa-solid fa-bug fa-fw me-1"></i><%= pluralize(project.issues.size, 'Issue') %></p>
-            <p><i class="fa-solid fa-flag fa-fw me-1"></i><%= project.evidence.size %> Evidence</p>
-            <p><i class="fa-solid fa-sitemap fa-fw me-1"></i><%= pluralize(project.nodes.in_tree.size, 'Node') %></p>
-          </div>
+        <div class="metrics d-flex justify-content-between">
+          <p><i class="fa-solid fa-bug fa-fw me-1"></i><%= pluralize(@project.issues.size, 'Issue') %></p>
+          <p><i class="fa-solid fa-flag fa-fw me-1"></i><%= @project.evidence.size %> Evidence</p>
+          <p><i class="fa-solid fa-sitemap fa-fw me-1"></i><%= pluralize(@project.nodes.in_tree.size, 'Node') %></p>
+        </div>
 
-          <div class="avatars">
-            <% avatar_limit = 10 %>
-            <% project.authors.limit(avatar_limit).each do |user| %>
-              <%= avatar_image(user, size: 40) %>
-            <% end %>
-            <% if project.authors.size > avatar_limit %>
-              <span class="more-gravatars">+<%= project.authors.size - avatar_limit %></span>
-            <% end %>
-          </div>
+        <div class="avatars">
+          <% avatar_limit = 10 %>
+          <% @project.authors.limit(avatar_limit).each do |user| %>
+            <%= avatar_image(user, size: 40) %>
+          <% end %>
+          <% if @project.authors.size > avatar_limit %>
+            <span class="more-gravatars">+<%= @project.authors.size - avatar_limit %></span>
+          <% end %>
+        </div>
 
-          <div class="divider divider-lg">
-            <span class="divider-label">Methodology Progress</span>
-          </div>
-          <div class="mb-4 pb-2">
-            <% if project.boards.any? %>
-              <% board = project.boards.order(:updated_at).last %>
-              <div class="board-progress" data-behavior="board-progress">
-                <div class="d-flex justify-content-between">
-                  <%= link_to project_board_path(project, board), class: 'd-flex overflow-hidden align-items-center' do %>
-                    <i class="fa-brands fa-trello fa-fw small pb-1 me-1"></i><span class="board-name text-truncate" title="<%= board.name %>"><%= board.name %></span>
-                  <% end %>
-                  <%= link_to 'View all', project_boards_path(project), class: 'd-flex small text-nowrap' %>
-                </div>
-                <% card_count = board.cards.size %>
-                <div class="progress">
-                  <% board.lists.each do |list| %>
-                    <% bar_width = card_count > 0 ? (list.cards.size.to_f / card_count.to_f) * 100 : 0 %>
-                    <div
-                      class="progress-bar"
-                      data-behavior="list-progress"
-                      data-bs-toggle="tooltip"
-                      title='<%= "#{list.name} (#{list.cards.size} #{'card'.pluralize(list.cards.size)})" %>'
-                      role="progressbar"
-                      style="width: <%= bar_width %>%"
-                      aria-valuenow="<%= bar_width %>"
-                      aria-valuemin="0"
-                      aria-valuemax="100">
-                    </div>
-                  <% end %>
-                </div>
-              </div>
-            <% else %>
-              <div class="board-progress" data-behavior="board-progress">
-                <%= link_to project_boards_path(project), class: 'd-flex overflow-hidden align-items-center' do %>
-                  <i class="fa-brands fa-trello fa-fw small pb-1 me-1"></i><span class="board-name text-truncate" title="Methodologies">Methodologies</span>
+        <div class="divider divider-lg">
+          <span class="divider-label">Methodology Progress</span>
+        </div>
+        <% board = @project.boards.order(:updated_at).last %>
+        <div class="mb-4 pb-2">
+          <% if board %>
+            <% board_lists = board.lists.includes(:cards) %>
+            <% card_count = board_lists.sum { |l| l.cards.size } %>
+            <div class="board-progress" data-behavior="board-progress">
+              <div class="d-flex justify-content-between">
+                <%= link_to project_board_path(@project, board), class: 'd-flex overflow-hidden align-items-center' do %>
+                  <i class="fa-brands fa-trello fa-fw small pb-1 me-1"></i><span class="board-name text-truncate" title="<%= board.name %>"><%= board.name %></span>
                 <% end %>
-                <div class="progress empty">
-                  <div class="progress-bar" role="progressbar"></div>
-                </div>
+                <%= link_to 'View all', project_boards_path(@project), class: 'd-flex small text-nowrap' %>
               </div>
-            <% end %>
-          </div>
-
-          <div class="divider divider-lg">
-            <span class="divider-label">Quality Assurance</span>
-          </div>
-          <div class="donuts">
-            <div>
-              <%= link_to project_issues_path(project), class: 'small mb-2 d-block' do %>
-                <i class="fa-solid fa-bug fa-fw"></i> Issues
+              <div class="progress">
+                <% board_lists.each do |list| %>
+                  <% bar_width = card_count > 0 ? (list.cards.size.to_f / card_count.to_f) * 100 : 0 %>
+                  <div
+                    class="progress-bar"
+                    data-behavior="list-progress"
+                    data-bs-toggle="tooltip"
+                    title='<%= "#{list.name} (#{list.cards.size} #{'card'.pluralize(list.cards.size)})" %>'
+                    role="progressbar"
+                    style="width: <%= bar_width %>%"
+                    aria-valuenow="<%= bar_width %>"
+                    aria-valuemin="0"
+                    aria-valuemax="100">
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+            <div class="board-progress" data-behavior="board-progress">
+              <%= link_to project_boards_path(@project), class: 'd-flex overflow-hidden align-items-center' do %>
+                <i class="fa-brands fa-trello fa-fw small pb-1 me-1"></i><span class="board-name text-truncate" title="Methodologies">Methodologies</span>
               <% end %>
-              <div class="d-flex gap-3 align-items-center">
-                <% issue_total = project.issues.size.to_f %>
-                <div class="donut-chart-container <%= issue_total.zero? ? 'empty' : '' %>"
-                  style="--draft: <%= issue_total > 0 ? (project.issues.draft.size / issue_total) * 100 : 0 %>%;
-                    --review: <%= issue_total > 0 ? (project.issues.ready_for_review.size / issue_total) * 100 : 0 %>%;
-                    --published: <%= issue_total > 0 ? (project.issues.published.size / issue_total) * 100 : 0 %>%;">
-                </div>
-                <ul class="donut-details">
-                  <li class="d-flex align-items-center gap-1 small">
-                    <div class="color-swatch"></div>
-                    <%= project.issues.draft.size %>/<%= project.issues.size %> Draft
-                  </li>
-                  <li class="d-flex align-items-center gap-1 small">
-                    <div class="color-swatch"></div>
-                    <%= project.issues.ready_for_review.size %>/<%= project.issues.size %> Review
-                  </li>
-                  <li class="d-flex align-items-center gap-1 small">
-                    <div class="color-swatch"></div>
-                    <%= project.issues.published.size %>/<%= project.issues.size %> Published
-                  </li>
-                </ul>
+              <div class="progress empty">
+                <div class="progress-bar" role="progressbar"></div>
               </div>
             </div>
-            <div>
-              <a href="javascript:void(0)" class="small mb-2 d-block js-try-pro" data-term="projects" data-url="https://dradis.com/pro/pages/projects.html">
-                <i class="fa-solid fa-file-lines fa-fw"></i> Content Blocks
-              </a>
-              <div class="d-flex gap-3 align-items-center">
-                <div class="donut-chart-container locked"></div>
-                <ul class="donut-details locked">
-                  <li class="d-flex align-items-center gap-1 small">
-                    <div class="color-swatch"></div>
-                    0/0 Draft
-                  </li>
-                  <li class="d-flex align-items-center gap-1 small">
-                    <div class="color-swatch"></div>
-                    0/0 Review
-                  </li>
-                  <li class="d-flex align-items-center gap-1 small">
-                    <div class="color-swatch"></div>
-                    0/0 Published
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          <% end %>
+        </div>
 
-          <div class="text-center">
-            <hr>
-            <a href="javascript:void(0)" class="btn btn-sm btn-warning js-try-pro" data-term="projects" data-url="https://dradis.com/pro/pages/projects.html">
-              <i class="fa-solid fa-pencil"></i> Edit
-            </a>
-            <a href="javascript:void(0)" class="btn btn-sm btn-secondary js-try-pro" data-term="projects" data-url="https://dradis.com/pro/pages/projects.html">
-              <i class="fa-solid fa-copy"></i> Duplicate
-            </a>
-            <a href="javascript:void(0)" class="btn btn-sm btn-secondary js-try-pro" data-term="projects" data-url="https://dradis.com/pro/pages/projects.html">
-              <i class="fa-solid fa-box-archive"></i> Archive
-            </a>
-            <a href="javascript:void(0)" class="btn btn-sm btn-danger js-try-pro" data-term="projects" data-url="https://dradis.com/pro/pages/projects.html">
-              <i class="fa-solid fa-trash"></i> Trash
-            </a>
+        <div class="divider divider-lg">
+          <span class="divider-label">Quality Assurance</span>
+        </div>
+        <div class="donuts">
+          <div>
+            <%= link_to project_issues_path(@project), class: 'small mb-2 d-block' do %>
+              <i class="fa-solid fa-bug fa-fw"></i> Issues
+            <% end %>
+            <div class="d-flex gap-3 align-items-center">
+              <% issue_total = @project.issues.size.to_f %>
+              <div class="donut-chart-container <%= issue_total.zero? ? 'empty' : '' %>"
+                style="--draft: <%= issue_total > 0 ? (@project.issues.draft.size / issue_total) * 100 : 0 %>%;
+                  --review: <%= issue_total > 0 ? (@project.issues.ready_for_review.size / issue_total) * 100 : 0 %>%;
+                  --published: <%= issue_total > 0 ? (@project.issues.published.size / issue_total) * 100 : 0 %>%;">
+              </div>
+              <ul class="donut-details">
+                <li class="d-flex align-items-center gap-1 small">
+                  <div class="color-swatch"></div>
+                  <%= @project.issues.draft.size %>/<%= @project.issues.size %> Draft
+                </li>
+                <li class="d-flex align-items-center gap-1 small">
+                  <div class="color-swatch"></div>
+                  <%= @project.issues.ready_for_review.size %>/<%= @project.issues.size %> Review
+                </li>
+                <li class="d-flex align-items-center gap-1 small">
+                  <div class="color-swatch"></div>
+                  <%= @project.issues.published.size %>/<%= @project.issues.size %> Published
+                </li>
+              </ul>
+            </div>
           </div>
+          <div>
+            <a href="javascript:void(0)" class="small mb-2 d-block js-try-pro" data-term="projects" data-url="https://dradis.com/pro/pages/projects.html">
+              <i class="fa-solid fa-file-lines fa-fw"></i> Content Blocks
+            </a>
+            <div class="d-flex gap-3 align-items-center">
+              <div class="donut-chart-container locked"></div>
+              <ul class="donut-details locked">
+                <li class="d-flex align-items-center gap-1 small">
+                  <div class="color-swatch"></div>
+                  0/0 Draft
+                </li>
+                <li class="d-flex align-items-center gap-1 small">
+                  <div class="color-swatch"></div>
+                  0/0 Review
+                </li>
+                <li class="d-flex align-items-center gap-1 small">
+                  <div class="color-swatch"></div>
+                  0/0 Published
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <hr>
+          <a href="javascript:void(0)" class="btn btn-sm btn-warning js-try-pro" data-term="projects" data-url="https://dradis.com/pro/pages/projects.html">
+            <i class="fa-solid fa-pencil"></i> Edit
+          </a>
+          <a href="javascript:void(0)" class="btn btn-sm btn-secondary js-try-pro" data-term="projects" data-url="https://dradis.com/pro/pages/projects.html">
+            <i class="fa-solid fa-copy"></i> Duplicate
+          </a>
+          <a href="javascript:void(0)" class="btn btn-sm btn-secondary js-try-pro" data-term="projects" data-url="https://dradis.com/pro/pages/projects.html">
+            <i class="fa-solid fa-box-archive"></i> Archive
+          </a>
+          <a href="javascript:void(0)" class="btn btn-sm btn-danger js-try-pro" data-term="projects" data-url="https://dradis.com/pro/pages/projects.html">
+            <i class="fa-solid fa-trash"></i> Trash
+          </a>
         </div>
       </div>
     </div>
-  <% end %>
+  </div>
 </div>
 
 <hr class="mt-0">
 
 <ul class="nav nav-tabs">
-  <li class="nav-item"><a href="#current" class="nav-link active" data-bs-toggle="tab">Current (<%= @projects.size %>)</a></li>
+  <li class="nav-item"><a href="#current" class="nav-link active" data-bs-toggle="tab">Current (1)</a></li>
   <li class="nav-item"><a href="javascript:void(0)" class="nav-link js-try-pro" data-term="projects" data-url="https://dradis.com/pro/pages/projects.html">Archived</a></li>
 </ul>
 
@@ -221,44 +220,42 @@
             </tr>
           </thead>
           <tbody>
-            <% @projects.each do |project| %>
-              <tr>
-                <td class="align-middle"><%= link_to project.name, project_path(project) %></td>
-                <td class="align-middle"><%= project.issues.size %></td>
-                <td class="align-middle"><%= project.evidence.size %></td>
-                <td class="align-middle"><%= project.nodes.in_tree.size %></td>
-                <td class="column-actions text-nowrap">
-                  <a
-                    href="javascript:void(0)"
-                    class="btn btn-xs btn-warning js-try-pro"
-                    data-term="projects"
-                    data-url="https://dradis.com/pro/pages/projects.html">
-                    <i class="fa-solid fa-pencil"></i> Edit
-                  </a>
-                  <a
-                    href="javascript:void(0)"
-                    class="btn btn-xs btn-secondary js-try-pro"
-                    data-term="projects"
-                    data-url="https://dradis.com/pro/pages/projects.html">
-                    <i class="fa-solid fa-copy"></i> Duplicate
-                  </a>
-                  <a
-                    href="javascript:void(0)"
-                    class="btn btn-xs btn-secondary js-try-pro"
-                    data-term="projects"
-                    data-url="https://dradis.com/pro/pages/projects.html">
-                    <i class="fa-solid fa-box-archive"></i> Archive
-                  </a>
-                  <a
-                    href="javascript:void(0)"
-                    class="btn btn-xs btn-danger js-try-pro"
-                    data-term="projects"
-                    data-url="https://dradis.com/pro/pages/projects.html">
-                    <i class="fa-solid fa-trash"></i> Trash
-                  </a>
-                </td>
-              </tr>
-            <% end %>
+            <tr>
+              <td class="align-middle"><%= link_to @project.name, project_path(@project) %></td>
+              <td class="align-middle"><%= @project.issues.size %></td>
+              <td class="align-middle"><%= @project.evidence.size %></td>
+              <td class="align-middle"><%= @project.nodes.in_tree.size %></td>
+              <td class="column-actions text-nowrap">
+                <a
+                  href="javascript:void(0)"
+                  class="btn btn-xs btn-warning js-try-pro"
+                  data-term="projects"
+                  data-url="https://dradis.com/pro/pages/projects.html">
+                  <i class="fa-solid fa-pencil"></i> Edit
+                </a>
+                <a
+                  href="javascript:void(0)"
+                  class="btn btn-xs btn-secondary js-try-pro"
+                  data-term="projects"
+                  data-url="https://dradis.com/pro/pages/projects.html">
+                  <i class="fa-solid fa-copy"></i> Duplicate
+                </a>
+                <a
+                  href="javascript:void(0)"
+                  class="btn btn-xs btn-secondary js-try-pro"
+                  data-term="projects"
+                  data-url="https://dradis.com/pro/pages/projects.html">
+                  <i class="fa-solid fa-box-archive"></i> Archive
+                </a>
+                <a
+                  href="javascript:void(0)"
+                  class="btn btn-xs btn-danger js-try-pro"
+                  data-term="projects"
+                  data-url="https://dradis.com/pro/pages/projects.html">
+                  <i class="fa-solid fa-trash"></i> Trash
+                </a>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>

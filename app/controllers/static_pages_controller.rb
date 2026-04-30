@@ -13,7 +13,7 @@ class StaticPagesController < AuthenticatedController
   end
 
   def projects_index
-    @projects = Project.all
+    @project = Project.all.first
     render layout: 'hera'
   end
 
