@@ -1,5 +1,4 @@
 class MarkupController < AuthenticatedController
-  include LiquidEnabledResource
   layout false
 
   # Returns the markup cheatsheet that is used by the jQuery.Textile plugin Help

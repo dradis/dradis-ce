@@ -35,12 +35,32 @@ module HasFields
     # If the given field format does not conform to the expected syntax, an
     # empty Hash is returned.
     def dradis_has_fields_for(container_field)
-      define_method :fields do
+      define_method :raw_fields do
         if raw_content = self.send(container_field)
           local_fields.merge(FieldParser.source_to_fields(raw_content))
-        else # if the container field is empty, just return an empty hash:
+        else
           {}
         end
+      end
+
+      define_method :fields do
+        raw = raw_fields
+        return raw unless LiquidRenderContext.current
+        return @_rendered_fields if @_rendered_fields
+
+        # Guard against reentrancy: a Drop accessing this record's fields during
+        # LiquidFilter evaluation would loop infinitely. While rendering is in progress, return raw values to break the cycle.
+        # ensure is scoped to the begin block below, not the method — an ensure on
+        # the method fires on all return paths and would clear the flag prematurely.
+        return raw if @_rendering_fields
+
+        @_rendering_fields = true
+        begin
+          @_rendered_fields = raw.transform_values { |v| LiquidRenderContext.render(v) }
+        ensure
+          @_rendering_fields = false
+        end
+        @_rendered_fields
       end
 
       # Setting fields using model.fields["field_name"] = "value" currently
@@ -59,16 +79,16 @@ module HasFields
       #   evidence.set_field "Foo", "Buzz"
       #
       define_method :set_field do |field, value|
-        # Don't use 'fields' as a local variable name or it conflicts with the
-        # #fields getter method
-        updated_fields = fields
+        @_rendered_fields = nil
+        updated_fields = raw_fields
         updated_fields[field] = value
         self.update_container(container_field, updated_fields)
       end
 
       # Completely removes the field (field header and value) from the content
       define_method :delete_field do |field|
-        updated_fields = fields
+        @_rendered_fields = nil
+        updated_fields = raw_fields
         updated_fields.except!(field)
         self.update_container(container_field, updated_fields)
       end

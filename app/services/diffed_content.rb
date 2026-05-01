@@ -23,12 +23,12 @@ class DiffedContent
   def unsynced_fields
     @unsynced_fields ||=
       begin
-        fields = @source.fields.except(*EXCLUDED_FIELDS).keys |
-          @target.fields.except(*EXCLUDED_FIELDS).keys
+        fields = @source.raw_fields.except(*EXCLUDED_FIELDS).keys |
+          @target.raw_fields.except(*EXCLUDED_FIELDS).keys
 
         fields.filter_map do |field|
-          source_value = source.fields[field] || ''
-          target_value = target.fields[field] || ''
+          source_value = source.raw_fields[field] || ''
+          target_value = target.raw_fields[field] || ''
 
           if source_value != target_value
             [field, diff_by_word(source_value, target_value)]
@@ -64,17 +64,17 @@ class DiffedContent
   # 2) If the source record is missing the field, delete the field in the
   #   target record
   def content_with_updated_field_from_target(field:, source:, target:)
-    source_fields = source.fields.keys
+    source_fields = source.raw_fields.keys
     source_index = source_fields.excluding(*EXCLUDED_FIELDS).index(field)
 
     # Case 1)
     if source_fields.include?(field)
       # Case 1.1)
-      if target.fields.keys.include?(field)
-        target.set_field(field, source.fields[field])
+      if target.raw_fields.keys.include?(field)
+        target.set_field(field, source.raw_fields[field])
       # Case 1.2)
       else
-        updated_fields = target.fields.to_a.insert(source_index, [field, source.fields[field]])
+        updated_fields = target.raw_fields.to_a.insert(source_index, [field, source.raw_fields[field]])
         FieldParser.fields_hash_to_source(updated_fields.compact)
       end
     # Case 2)
@@ -89,7 +89,7 @@ class DiffedContent
   end
 
   def normalize_content(record)
-    fields = record.fields.except(*EXCLUDED_FIELDS)
+    fields = record.raw_fields.except(*EXCLUDED_FIELDS)
 
     record.content =
       fields.map do |field, value|

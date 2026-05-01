@@ -2,7 +2,6 @@ class EvidenceController < NestedNodeResourceController
   include AttachmentsCopier
   include ConflictResolver
   include EvidenceHelper
-  include LiquidEnabledResource
   include Mentioned
   include MultipleDestroy
   include NodesSidebar
@@ -136,7 +135,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def set_auto_save_key
-    @auto_save_key =  if @evidence&.persisted?
+    @auto_save_key = if @evidence&.persisted?
       "evidence-#{@evidence.id}"
     elsif params[:template]
       "node-#{@node.id}-evidence-#{params[:template]}"

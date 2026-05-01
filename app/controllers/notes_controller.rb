@@ -3,7 +3,6 @@
 class NotesController < NestedNodeResourceController
   include AttachmentsCopier
   include ConflictResolver
-  include LiquidEnabledResource
   include Mentioned
   include MultipleDestroy
   include NodesSidebar
