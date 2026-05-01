@@ -1,6 +1,8 @@
 module ProjectScoped
   extend ActiveSupport::Concern
 
+  include LiquidEnabledResource
+
   included do
     before_action :set_project
     before_action :set_nodes

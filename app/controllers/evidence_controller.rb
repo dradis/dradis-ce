@@ -2,7 +2,6 @@ class EvidenceController < NestedNodeResourceController
   include AttachmentsCopier
   include ConflictResolver
   include EvidenceHelper
-  include LiquidEnabledResource
   include Mentioned
   include MultipleDestroy
   include NodesSidebar

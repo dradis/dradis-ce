@@ -1,6 +1,5 @@
 class QA::IssuesController < AuthenticatedController
   include ActivityTracking
-  include LiquidEnabledResource
   include Mentioned
   include ProjectScoped
   include Publishable

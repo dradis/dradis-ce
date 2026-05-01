@@ -45,16 +45,17 @@ module HasFields
 
       define_method :fields do
         raw = raw_fields
-        ctx = LiquidRenderContext.current
-        return raw unless ctx
+        return raw unless LiquidRenderContext.current
+        return @_rendered_fields if @_rendered_fields
+        return raw if @_rendering_fields
 
-        @_rendered_fields ||= raw.transform_values do |v|
-          begin
-            Liquid::Template.parse(v.to_s).render(ctx, filters: [], strict_filters: true, strict_variables: true).strip
-          rescue Liquid::Error
-            v
-          end
+        @_rendering_fields = true
+        begin
+          @_rendered_fields = raw.transform_values { |v| LiquidRenderContext.render(v) }
+        ensure
+          @_rendering_fields = false
         end
+        @_rendered_fields
       end
 
       # Setting fields using model.fields["field_name"] = "value" currently

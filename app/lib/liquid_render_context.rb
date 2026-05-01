@@ -7,6 +7,15 @@ module LiquidRenderContext
     Thread.current[:liquid_render_context]&.call
   end
 
+  def self.render(value)
+    assigns = current
+    return value unless assigns
+
+    HTML::Pipeline::Dradis::LiquidFilter.call(value, liquid_assigns: assigns)
+  rescue Liquid::Error
+    value
+  end
+
   def self.set(assigns_provider)
     Thread.current[:liquid_render_context] = assigns_provider
   end
