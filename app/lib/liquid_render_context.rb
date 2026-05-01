@@ -16,7 +16,7 @@ module LiquidRenderContext
     value
   end
 
-  def self.set(assigns_provider)
-    Thread.current[:liquid_render_context] = assigns_provider
+  def self.set(assigns)
+    Thread.current[:liquid_render_context] = assigns
   end
 end

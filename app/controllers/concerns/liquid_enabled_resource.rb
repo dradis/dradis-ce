@@ -2,7 +2,7 @@ module LiquidEnabledResource
   extend ActiveSupport::Concern
 
   included do
-    around_action :with_liquid_render_context
+    around_action :liquid_render_context
     helper_method :liquid_assigns
   end
 
@@ -20,7 +20,12 @@ module LiquidEnabledResource
     render 'markup/preview', layout: false
   end
 
-  def with_liquid_render_context
+  # Makes Liquid assigns available to HasFields#fields for the duration of the request,
+  # so field values are rendered as Liquid templates. 
+  # `around_action` ensures cleanup via ensure even when the action raises
+  # The proc defers liquid_assigns evaluation until first use, after all before_actions
+  # have run and liquid_resource_assigns has had a chance to merge in resource-specific assigns.
+  def liquid_render_context
     LiquidRenderContext.set(-> { liquid_assigns })
     yield
   ensure

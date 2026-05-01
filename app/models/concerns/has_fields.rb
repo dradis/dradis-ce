@@ -47,6 +47,11 @@ module HasFields
         raw = raw_fields
         return raw unless LiquidRenderContext.current
         return @_rendered_fields if @_rendered_fields
+
+        # Guard against reentrancy: a Drop accessing this record's fields during
+        # LiquidFilter evaluation would loop infinitely. While rendering is in progress, return raw values to break the cycle.
+        # ensure is scoped to the begin block below, not the method — an ensure on
+        # the method fires on all return paths and would clear the flag prematurely.
         return raw if @_rendering_fields
 
         @_rendering_fields = true
