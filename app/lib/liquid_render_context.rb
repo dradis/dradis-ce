@@ -17,6 +17,6 @@ module LiquidRenderContext
   end
 
   def self.set(assigns)
-    Thread.current[:liquid_render_context] = assigns
+    Thread.current[:liquid_render_context] = assigns.respond_to?(:call) ? assigns : -> { assigns }
   end
 end

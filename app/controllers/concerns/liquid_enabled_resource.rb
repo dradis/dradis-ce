@@ -7,7 +7,13 @@ module LiquidEnabledResource
   end
 
   def liquid_assigns
-    @liquid_assigns ||= default_liquid_assigns.merge!(liquid_resource_assigns)
+    # allows liquid_resource_assigns to be set even without project-level assigns
+    @liquid_assigns ||= begin
+      base = default_liquid_assigns
+      extra = liquid_resource_assigns
+      return nil if base.nil? && extra.empty?
+      (base || {}).merge!(extra)
+    end
   end
 
   # To be overwritten by each controller
@@ -35,11 +41,7 @@ module LiquidEnabledResource
   private
 
   def default_liquid_assigns
-    if params[:project_id]
-      project_assigns
-    else
-      {}
-    end
+    project_assigns if params[:project_id]
   end
 
   def project_assigns
