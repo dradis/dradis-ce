@@ -2,6 +2,8 @@ module Dradis::CE::API
   class APIController < ApplicationController
     after_action :skip_set_cookies_header
 
+    skip_around_action :liquid_render_context
+
     before_action :api_authentication_required
     before_action :json_required, only: [:create, :update]
     before_action :set_paper_trail_whodunnit
