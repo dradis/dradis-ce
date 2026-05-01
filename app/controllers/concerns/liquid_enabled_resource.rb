@@ -21,7 +21,7 @@ module LiquidEnabledResource
   end
 
   # Makes Liquid assigns available to HasFields#fields for the duration of the request,
-  # so field values are rendered as Liquid templates. 
+  # so field values are rendered as Liquid templates.
   # `around_action` ensures cleanup via ensure even when the action raises
   # The proc defers liquid_assigns evaluation until first use, after all before_actions
   # have run and liquid_resource_assigns has had a chance to merge in resource-specific assigns.
