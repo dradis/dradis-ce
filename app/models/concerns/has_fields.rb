@@ -30,45 +30,46 @@ module HasFields
   end
 
   module ClassMethods
-    # Method for models to define which attribute is to be converted to fields.
-    #
-    # If the given field format does not conform to the expected syntax, an
-    # empty Hash is returned.
     def dradis_has_fields_for(container_field)
-      define_method :fields do
+      rendered_field = :"rendered_#{container_field}"
+
+      # Always returns raw (unrendered) field values.
+      define_method :raw_fields do
         if raw_content = self.send(container_field)
           local_fields.merge(FieldParser.source_to_fields(raw_content))
-        else # if the container field is empty, just return an empty hash:
+        else
           {}
         end
       end
 
-      # Setting fields using model.fields["field_name"] = "value" currently
-      # doesn't work (the hash in local memory will change, but the underlying
-      # attribute in the ActiveRecord model won't be affected). So the
-      # following code won't do what you might expect:
-      #
-      #   evidence = Evidence.find(1)
-      #   evidence.content = "#[Foo]#\nBar"
-      #   evidence.fields["Foo"] = "Buzz"
-      #   evidence.save!
-      #   evidence.reload.content # => "#[Foo]#\nBar" # Oh noes! It hasn't changed
-      #
-      # So use set_field instead:
-      #
-      #   evidence.set_field "Foo", "Buzz"
-      #
+      # Returns Liquid-rendered field values. If a rendered cache exists,
+      # returns it directly. If not, renders lazily using the record's
+      # project context, writes the result to the cache, and returns it.
+      define_method :fields do
+        @fields ||= if (cached = self.send(rendered_field)).present?
+          local_fields.merge(FieldParser.source_to_fields(cached))
+        else
+          assigns = LiquidCachedAssigns.new(project: node.project)
+
+          rendered = raw_fields.transform_values do |value|
+            HTML::Pipeline::Dradis::LiquidFilter.call(value, liquid_assigns: assigns)
+          rescue Liquid::Error
+            value
+          end
+
+          update_column(rendered_field, FieldParser.fields_hash_to_source(rendered))
+          local_fields.merge(FieldParser.source_to_fields(self.send(rendered_field)))
+        end
+      end
+
       define_method :set_field do |field, value|
-        # Don't use 'fields' as a local variable name or it conflicts with the
-        # #fields getter method
-        updated_fields = fields
+        updated_fields = raw_fields
         updated_fields[field] = value
         self.update_container(container_field, updated_fields)
       end
 
-      # Completely removes the field (field header and value) from the content
       define_method :delete_field do |field|
-        updated_fields = fields
+        updated_fields = raw_fields
         updated_fields.except!(field)
         self.update_container(container_field, updated_fields)
       end

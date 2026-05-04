@@ -51,6 +51,9 @@ class Note < ApplicationRecord
   delegate :project, :project=, to: :node
 
   # -- Callbacks ------------------------------------------------------------
+  before_save { self[:rendered_text] = nil }
+  after_touch  { update_column(:rendered_text, nil) }
+
   # FIXME - ISSUE/NOTE INHERITANCE
   # `has_many :comments, dependent: :destroy` and
   # `has_many :subscriptions, dependent: :destroy`
