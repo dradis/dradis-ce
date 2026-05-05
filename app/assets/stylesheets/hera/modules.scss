@@ -1,3 +1,4 @@
+@import 'hera/modules/active_project';
 @import 'hera/modules/attachments';
 @import 'hera/modules/buttons';
 @import 'hera/modules/colors';
@@ -306,6 +307,12 @@
 }
 
 .nav-tabs {
+  & + .card {
+    border-top: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
   .nav-link {
     &.active {
       background-color: var(--primary-bg);

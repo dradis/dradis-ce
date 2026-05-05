@@ -38,7 +38,7 @@ Rails.application.routes.draw do
 
   resources :notifications, only: [:index, :update]
 
-  resources :projects, only: [:index, :show] do
+  resources :projects, only: [:show] do
     resources :activities, only: [:index] do
       collection do
         get :poll, constraints: { format: /js/ }
@@ -167,6 +167,7 @@ Rails.application.routes.draw do
   if defined?(Dradis::Pro)
   else
     # Static pages
+    get '/projects', to: 'static_pages#projects_index', as: :projects
     get 'projects/1/addons/issuelib', to: 'static_pages#issuelib_index', as: :static_issuelib
     get 'projects/1/addons/issuelib/import', to: 'static_pages#issuelib_import', as: :static_issuelib_import
     get 'projects/1/addons/remediationtracker', to: 'static_pages#remediationtracker_index', as: :static_remediationtracker
