@@ -1,5 +1,14 @@
 :root {
   --main-sidebar-width: #{$sidebar-width};
+  --sticky-header-height: #{$navbar-height};
+}
+
+body.has-sub-nav {
+  --sticky-header-height: calc(#{$navbar-height} * 2);
+
+  @include media-breakpoint-down(lg) {
+    --sticky-header-height: #{$navbar-height};
+  }
 }
 
 body:not(.unauthenticated) {

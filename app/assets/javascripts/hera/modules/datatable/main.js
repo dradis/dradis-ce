@@ -111,12 +111,21 @@ class DradisDatatable {
         },
       ],
       dom:
-        "<'row'<'col-sm-6'B>\
+        "<'row sticky-toolbar'<'col-sm-6'B>\
         <'col-sm-6'f>>" +
         "<'row'<'col-lg-12'tr>>" +
         "<'dataTables_footer_content'lip>",
       initComplete: function (settings) {
         settings.oInstance.wrap("<div class='table-wrapper'></div>");
+
+        var wrapper = settings.oInstance.closest('.dataTables_wrapper')[0];
+        var toolbar = wrapper.querySelector('.sticky-toolbar');
+        var sentinel = document.createElement('div');
+        toolbar.before(sentinel);
+
+        new IntersectionObserver(function (entries) {
+          toolbar.classList.toggle('is-sticky', !entries[0].isIntersecting);
+        }).observe(sentinel);
       },
       lengthMenu: [
         [25, 50, 100, -1],
