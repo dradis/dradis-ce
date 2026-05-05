@@ -57,6 +57,12 @@
         <div class="project-card-header">
           <div class="d-flex justify-content-between align-items-center">
             <%= link_to @project.name, project_path(@project), class: 'h5 project-link text-truncate', title: @project.name %>
+
+            <div class="d-flex align-items-center justify-content-end">
+              <%= render_view_hooks 'projects/badge', locals: { project: @project } %>
+              <span class="badge state-badge badge-outline-info text-truncate ms-2 mb-2">In Progress</span>
+              <span class="badge badge-outline-lavender text-truncate ms-2 mb-2"><%= current_user.name %></span>
+            </div>
           </div>
         </div>
 
