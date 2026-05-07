@@ -31,6 +31,9 @@
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
+v5.0.1 (April 2026)
+  - Version bump to align with Pro
+
 v5.0.0 (March 2026)
   - Activities: Remove ActivityTracking for Issues and use EventPublisher
   - Docker:

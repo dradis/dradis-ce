@@ -9,13 +9,13 @@ GIT
 PATH
   remote: engines/dradis-api
   specs:
-    dradis-api (5.0.0)
+    dradis-api (5.0.1)
       jbuilder
 
 PATH
   remote: engines/dradis-echo
   specs:
-    dradis-echo (5.0.0)
+    dradis-echo (5.0.1)
       dradis-plugins (>= 4.0)
       liquid
       ollama-ai (~> 1.3.0)
