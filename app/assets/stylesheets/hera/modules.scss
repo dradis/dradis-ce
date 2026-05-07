@@ -198,10 +198,6 @@
     margin-left: auto;
 
     .action {
-      &:not(:first-child)::before {
-        content: '-';
-      }
-
       &:first-child {
         margin-left: auto;
       }
