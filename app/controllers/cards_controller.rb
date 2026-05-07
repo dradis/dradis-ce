@@ -1,6 +1,7 @@
 class CardsController < AuthenticatedController
   include ActivityTracking
   include ContentFromTemplate
+  include EventPublisher
   include Mentioned
   include NotificationsReader
   include ProjectScoped
@@ -55,6 +56,11 @@ class CardsController < AuthenticatedController
   def move_to_list
     target_list = @board.lists.find(params[:new_list_id])
 
+    if target_list.id == @card.list_id
+      redirect_to [current_project, @board, @list, @card], alert: 'Task is already in that list.'
+      return
+    end
+
     Card.transaction do
       # Repair the source list chain before changing list_id,
       # since next_card scopes to self.list
@@ -64,10 +70,10 @@ class CardsController < AuthenticatedController
 
       @card.list_id = target_list.id
       @card.previous_id = target_list.last_card&.id
-      @card.save
+      @card.save!
     end
 
-    track_updated(@card)
+    publish_event('card.updated', @card.to_event_payload)
     redirect_to [current_project, @board, target_list, @card], notice: 'Task moved.'
   end
 

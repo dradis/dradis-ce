@@ -48,12 +48,55 @@ describe 'cards#move_to_list' do
 
   it 'creates an activity' do
     expect { submit }.to have_enqueued_job(ActivityTrackingJob).with(
-      action: 'update',
+      action: 'move_to_list',
       project_id: current_project.id,
       trackable_id: card_b.id,
       trackable_type: 'Card',
       user_id: @logged_in_as.id
     )
+  end
+
+  context 'when moving the first card in the source list' do
+    let(:submit) do
+      post move_to_list_project_board_list_card_path(current_project, board, source_list, card_a),
+        params: { new_list_id: target_list.id }
+    end
+
+    it 'promotes the next card to list head' do
+      submit
+      expect(card_b.reload.previous_id).to be_nil
+    end
+  end
+
+  context 'when moving the last card in the source list' do
+    let(:submit) do
+      post move_to_list_project_board_list_card_path(current_project, board, source_list, card_c),
+        params: { new_list_id: target_list.id }
+    end
+
+    it 'leaves the remaining chain intact' do
+      submit
+      expect(card_b.reload.previous_id).to eq(card_a.id)
+    end
+  end
+
+  context 'when the target list is the same as the source list' do
+    let(:submit) do
+      post move_to_list_project_board_list_card_path(current_project, board, source_list, card_c),
+        params: { new_list_id: source_list.id }
+    end
+
+    it 'does not change the card' do
+      original_previous_id = card_c.previous_id
+      submit
+      expect(card_c.reload.previous_id).to eq(original_previous_id)
+    end
+
+    it 'redirects with an alert' do
+      submit
+      expect(response).to redirect_to(project_board_list_card_path(current_project, board, source_list, card_c))
+      expect(flash[:alert]).to eq('Task is already in that list.')
+    end
   end
 
   context 'when the target list is empty' do
