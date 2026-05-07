@@ -109,11 +109,8 @@ div.dataTables_wrapper {
       th {
         background-color: var(--primary-bg);
         box-shadow: 8px 5px 10px 0px rgba(82, 63, 105, 0.08);
-        position: sticky !important;
-        top: 0;
         vertical-align: middle;
         white-space: nowrap;
-        z-index: 1;
 
         &:last-of-type {
           clip-path: inset(0px 0px -20px -1px);
@@ -171,6 +168,19 @@ div.dataTables_wrapper {
           visibility: visible;
         }
       }
+    }
+  }
+
+  .sticky-toolbar {
+    background-color: var(--primary-bg);
+    margin-bottom: 0.5rem;
+    padding: 1rem 0;
+    position: sticky;
+    top: var(--sticky-header-height);
+    z-index: 2;
+
+    &.is-sticky {
+      border-bottom: 1px solid var(--border-color);
     }
   }
 
@@ -240,7 +250,6 @@ div.dataTables_wrapper {
   }
 
   .dataTables_filter {
-    margin-bottom: 1rem;
     text-align: left;
 
     input:focus {
