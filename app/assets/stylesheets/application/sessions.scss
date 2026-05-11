@@ -60,7 +60,7 @@ body.unauthenticated {
   }
 
   .error-text {
-    color: red;
+    color: var(--text-error);
     font-size: 80%;
   }
 
