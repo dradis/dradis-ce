@@ -18,6 +18,7 @@ class CardsController < AuthenticatedController
   layout 'cards'
 
   def show
+    @other_lists = @board.ordered_lists.reject { |l| l.id == @list.id }
     render layout: !request.xhr?
   end
 
