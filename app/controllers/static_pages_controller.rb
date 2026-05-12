@@ -1,6 +1,4 @@
 class StaticPagesController < AuthenticatedController
-  include ProjectScoped
-
   before_action :set_entries, only: [:issuelib_index, :issuelib_import]
   before_action :set_tickets, only: [:remediationtracker_index]
 
