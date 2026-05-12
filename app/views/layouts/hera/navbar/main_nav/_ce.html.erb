@@ -2,7 +2,7 @@
 
 <% cache(['navbar-left', Dradis::Plugins.with_feature(:addon)]) do %>
   <li class="nav-item">
-    <%= link_to projects_path, class: 'nav-link' do %>
+    <%= link_to main_app.static_projects_path, class: 'nav-link' do %>
       <span>Projects</span>
     <% end %>
   </li>
