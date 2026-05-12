@@ -68,7 +68,7 @@
         <div class="metrics d-flex justify-content-between">
           <p><i class="fa-solid fa-bug fa-fw me-1"></i><%= pluralize(@project.issues.size, 'Issue') %></p>
           <p><i class="fa-solid fa-flag fa-fw me-1"></i><%= @project.evidence.size %> Evidence</p>
-          <p><i class="fa-solid fa-sitemap fa-fw me-1"></i><%= pluralize(@project.nodes.in_tree.size, 'Node') %></p>
+          <p><i class="fa-solid fa-sitemap fa-fw me-1"></i><%= pluralize(@project.nodes.user_nodes.size, 'Node') %></p>
         </div>
 
         <div class="avatars">
@@ -229,7 +229,7 @@
               <td class="align-middle"><%= link_to @project.name, project_path(@project) %></td>
               <td class="align-middle"><%= @project.issues.size %></td>
               <td class="align-middle"><%= @project.evidence.size %></td>
-              <td class="align-middle"><%= @project.nodes.in_tree.size %></td>
+              <td class="align-middle"><%= @project.nodes.user_nodes.size %></td>
               <td class="column-actions text-nowrap">
                 <a
                   href="javascript:void(0)"
