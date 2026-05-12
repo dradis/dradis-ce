@@ -83,6 +83,8 @@ class ActivityPresenter < BasePresenter
     case activity.action
     when 'destroy'
       'deleted'
+    when 'move_to_list'
+      'moved'
     when 'state_change'
       'updated'
     else
