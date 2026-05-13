@@ -91,7 +91,7 @@ gem 'bcrypt', '3.1.22'
 gem 'json', '2.3.0'
 
 # XML manipulation
-gem 'nokogiri', '>= 1.18.9'
+gem 'nokogiri', '>= 1.19.3'
 
 # MySQL backend
 # gem 'mysql2', '~> 0.5.6'
@@ -265,7 +265,7 @@ gem 'dradis-nipper', '~> 5.0.0'
 gem 'dradis-nmap', '~> 5.0.0'
 gem 'dradis-ntospider', '~> 5.0.0'
 gem 'dradis-openvas', '~> 5.0.0'
-gem 'dradis-pentera', github: 'dradis/dradis-pentera', branch: 'main'
+gem 'dradis-pentera', '~> 5.0.0'
 gem 'dradis-qualys', '~> 5.0.0'
 gem 'dradis-saint', '~> 5.0.0'
 gem 'dradis-veracode', '~> 5.0.0'

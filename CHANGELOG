@@ -1,5 +1,8 @@
 v5.0.2 (May 2026)
+  - Update the Gemfile to use rubygems for dradis-pentera
   - Version bump to align with Pro
+  - Upgraded gems:
+    - addressable, nokogiri, rack
 
 v5.0.1 (April 2026)
   - Version bump to align with Pro
