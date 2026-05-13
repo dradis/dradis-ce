@@ -123,9 +123,10 @@ class DradisDatatable {
         var sentinel = document.createElement('div');
         toolbar.before(sentinel);
 
-        new IntersectionObserver(function (entries) {
+        that.stickyObserver = new IntersectionObserver(function (entries) {
           toolbar.classList.toggle('is-sticky', !entries[0].isIntersecting);
-        }).observe(sentinel);
+        });
+        that.stickyObserver.observe(sentinel);
       },
       lengthMenu: [
         [25, 50, 100, -1],
@@ -303,6 +304,7 @@ class DradisDatatable {
     var that = this;
 
     document.addEventListener('turbo:before-cache', function () {
+      if (that.stickyObserver) that.stickyObserver.disconnect();
       that.dataTable.destroy();
     });
   }
