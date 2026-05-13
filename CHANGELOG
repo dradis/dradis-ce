@@ -1,6 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
+  - Show don't gate: add custom project properties teaser to the project overview
   - Mail: add support for SMTP configuration via environment variables for Docker deployments; smtp.yml remains supported for VM deployments during the deprecation transition
   - Upgraded gems:
     - addressable, nokogiri, rack
