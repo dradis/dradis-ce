@@ -27,7 +27,7 @@ class StaticPagesController < AuthenticatedController
         team:       'Galactica',
         theme:      'Athena',
         created_at: Date.today - 3.months,
-        updated_at: Activity.maximum(:created_at) || Date.today
+        updated_at: @project.activities.maximum(:created_at) || Date.today
       }
     ] + gateway_projects
   end
