@@ -1,21 +1,13 @@
-GIT
-  remote: https://github.com/dradis/dradis-pentera.git
-  revision: f24a97da349f2387ccac8f99cd6436b98ccfeb38
-  branch: main
-  specs:
-    dradis-pentera (5.0.0)
-      dradis-plugins (>= 4.0)
-
 PATH
   remote: engines/dradis-api
   specs:
-    dradis-api (5.0.1)
+    dradis-api (5.0.2)
       jbuilder
 
 PATH
   remote: engines/dradis-echo
   specs:
-    dradis-echo (5.0.1)
+    dradis-echo (5.0.2)
       dradis-plugins (>= 4.0)
       liquid
       ollama-ai (~> 1.3.0)
@@ -196,6 +188,8 @@ GEM
     dradis-ntospider (5.0.0)
       dradis-plugins (>= 4.0)
     dradis-openvas (5.0.0)
+      dradis-plugins (>= 4.0)
+    dradis-pentera (5.0.0)
       dradis-plugins (>= 4.0)
     dradis-plugins (5.0.0)
     dradis-projects (5.0.0)
@@ -648,7 +642,7 @@ DEPENDENCIES
   dradis-nmap (~> 5.0.0)
   dradis-ntospider (~> 5.0.0)
   dradis-openvas (~> 5.0.0)
-  dradis-pentera!
+  dradis-pentera (~> 5.0.0)
   dradis-plugins (~> 5.0.0)
   dradis-projects (~> 5.0.0)
   dradis-qualys (~> 5.0.0)
