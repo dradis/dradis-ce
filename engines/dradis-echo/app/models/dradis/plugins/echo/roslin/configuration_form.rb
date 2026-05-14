@@ -4,27 +4,21 @@ module Dradis::Plugins::Echo
       attribute :issue_interaction_enabled, :boolean
       attribute :issue_interaction_model
       attribute :issue_interaction_provider_id
-      attribute :language_tool_enabled, :boolean
-      attribute :language_tool_address
 
       def self.components
         [
           Roslin,
-          Roslin::IssueInteraction,
-          Roslin::LanguageTool
+          Roslin::IssueInteraction
         ]
       end
 
       validates :issue_interaction_provider_id, presence: true, if: :issue_interaction_enabled
-      validates :language_tool_address, presence: true, if: :language_tool_enabled
 
       def self.permitted_params
         super + [
           :issue_interaction_enabled,
           :issue_interaction_model,
-          :issue_interaction_provider_id,
-          :language_tool_address,
-          :language_tool_enabled
+          :issue_interaction_provider_id
         ]
       end
 
