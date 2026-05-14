@@ -8,17 +8,17 @@ class DradisDatatable {
     this.localStorageKey = this.$table.data('local-storage-key');
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
 
-    var defaultColumns = this.$table.data('default-columns') || [];
+    const defaultColumns = this.$table.data('default-columns') || [];
     this.defaultColumns = defaultColumns.concat(['Select', 'Actions']);
 
     this.init();
   }
 
   init() {
-    var that = this;
+    const that = this;
 
     // Disable ability to toggle column visibility that has data-column-visible="false"
-    var columnVisibleIndexes = [];
+    const columnVisibleIndexes = [];
     this.tableHeaders.forEach(function (column, index) {
       if (column.dataset.columnVisible != 'false') {
         columnVisibleIndexes.push(index);
@@ -26,10 +26,10 @@ class DradisDatatable {
     });
 
     // Only show default columns on first load
-    var hiddenColumnIndexes = [];
+    const hiddenColumnIndexes = [];
     if (localStorage.getItem(this.localStorageKey) === null) {
       this.tableHeaders.forEach(function (column, index) {
-        var columnName = column.textContent.trim();
+        const columnName = column.textContent.trim();
 
         if (!that.defaultColumns.includes(columnName)) {
           hiddenColumnIndexes.push(index);
@@ -118,9 +118,9 @@ class DradisDatatable {
       initComplete: function (settings) {
         settings.oInstance.wrap("<div class='table-wrapper'></div>");
 
-        var wrapper = settings.oInstance.closest('.dataTables_wrapper')[0];
-        var toolbar = wrapper.querySelector('.sticky-toolbar');
-        var sentinel = document.createElement('div');
+        const wrapper = settings.oInstance.closest('.dataTables_wrapper')[0];
+        const toolbar = wrapper.querySelector('.sticky-toolbar');
+        const sentinel = document.createElement('div');
         toolbar.before(sentinel);
 
         that.stickyObserver = new IntersectionObserver(function (entries) {
@@ -185,7 +185,7 @@ class DradisDatatable {
       //   ]
       // }
       stateSaveCallback: function (_settings, savedStateData) {
-        var newSavedStateData =
+        const newSavedStateData =
           that.addTableHeadersToSavedStateData(savedStateData);
         localStorage.setItem(
           that.localStorageKey,
@@ -219,7 +219,7 @@ class DradisDatatable {
       // To prevent a reset from happening, we just have to ensure that the number of columns on the page
       // matches the length of columns array in the saved state object.
       stateLoadCallback: function (_settings) {
-        var localStorageData = JSON.parse(
+        const localStorageData = JSON.parse(
           localStorage.getItem(that.localStorageKey)
         );
 
@@ -265,7 +265,7 @@ class DradisDatatable {
   }
 
   toggleLoadingState(rows, isLoading) {
-    var buttons = this.dataTable
+    const buttons = this.dataTable
       .buttons('[data-behavior~=table-action]')
       .nodes();
 
@@ -289,7 +289,7 @@ class DradisDatatable {
   }
 
   rowIds(rows) {
-    var ids = rows
+    const ids = rows
       .ids()
       .toArray()
       .map(function (id) {
@@ -301,7 +301,7 @@ class DradisDatatable {
   }
 
   unbindDataTable() {
-    var that = this;
+    const that = this;
 
     document.addEventListener('turbo:before-cache', function () {
       if (that.stickyObserver) that.stickyObserver.disconnect();
@@ -322,7 +322,7 @@ class DradisDatatable {
   // Old columns are automatically removed, because we are iterating the columns
   // on the page, and not columns inside the saved state object.
   rebuildSavedStateColumnsFromLocalStorage(localStorageData) {
-    var containsHeader = localStorageData.columns.some(function (column) {
+    const containsHeader = localStorageData.columns.some(function (column) {
       return 'header' in column;
     });
 
@@ -332,12 +332,12 @@ class DradisDatatable {
       return localStorageData;
     }
 
-    var newColumns = [];
+    const newColumns = [];
 
     this.tableHeaders.forEach(function (th, _index) {
-      var columnData = { visible: false };
+      let columnData = { visible: false };
 
-      var column = localStorageData.columns.find(function (column) {
+      const column = localStorageData.columns.find(function (column) {
         if (column.header == th.textContent) {
           columnData = column;
           return true;
