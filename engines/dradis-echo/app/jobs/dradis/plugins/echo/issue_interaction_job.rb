@@ -1,10 +1,9 @@
 module Dradis::Plugins::Echo
-  class EchoJob < ApplicationJob
+  class IssueInteractionJob < ApplicationJob
     queue_as :dradis_project
 
     def perform(prompt:, interaction_id:, response_id:)
       Rails.logger.info("🎬 #{prompt}")
-      Rails.logger.info("🔚 #{prompt}")
 
       @spinner_shown = true
       begin

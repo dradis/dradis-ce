@@ -1,5 +1,5 @@
 module Dradis::Plugins::Echo
-  class Projects::PromptsController < AuthenticatedController
+  class Projects::InteractionsController < AuthenticatedController
     include ProjectScoped
     layout false
 
@@ -23,7 +23,7 @@ module Dradis::Plugins::Echo
     end
 
     def create
-      EchoJob.perform_later(
+      IssueInteractionJob.perform_later(
         prompt: params[:prompt],
         interaction_id: params[:interaction_id],
         response_id: params[:response_id]
