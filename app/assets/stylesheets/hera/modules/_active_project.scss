@@ -16,15 +16,6 @@
     }
   }
 
-  .progress {
-    background-color: var(--primary-bg);
-    border-radius: 0;
-
-    span {
-      width: 10rem;
-    }
-  }
-
   .progress.empty {
     background-color: transparent;
     border: 1px solid var(--border-color);
