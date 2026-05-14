@@ -1,3 +1,4 @@
+@import 'hera/modules/active_project';
 @import 'hera/modules/attachments';
 @import 'hera/modules/buttons';
 @import 'hera/modules/colors';
@@ -113,6 +114,10 @@
 .card {
   background-color: var(--primary-bg);
   border-color: var(--border-color);
+
+  .card-title {
+    margin-bottom: 0;
+  }
 }
 
 .card.border-bottom {

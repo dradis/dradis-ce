@@ -1,0 +1,50 @@
+.active-project {
+  .board-progress {
+    margin-top: 1rem;
+
+    .board-name {
+      font-size: 85%;
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  .metrics {
+    font-size: 85%;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .progress {
+    background-color: var(--primary-bg);
+    border-radius: 0;
+
+    span {
+      width: 10rem;
+    }
+  }
+
+  .progress.empty {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+
+    .progress-bar {
+      background-color: transparent;
+      width: 100%;
+    }
+  }
+
+  .project-card-header {
+    display: flex;
+    flex-direction: column;
+
+    .badge.text-truncate {
+      max-width: 9rem;
+    }
+
+    .project-link {
+      overflow: hidden;
+    }
+  }
+}
