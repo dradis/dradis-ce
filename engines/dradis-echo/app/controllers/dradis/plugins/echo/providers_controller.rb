@@ -4,8 +4,8 @@ module Dradis::Plugins::Echo
     before_action :set_provider, only: [:edit, :update, :destroy]
 
     def new
-      type = params[:type].presence_in(Provider::ALLOWED_TYPES) || 'Ollama'
-      @provider = "Dradis::Plugins::Echo::Provider::#{type}".constantize.new
+      type = Provider.subclasses.find { |c| c.name.demodulize == params[:type] } || Provider::Ollama
+      @provider = type.new
     end
 
     def create
