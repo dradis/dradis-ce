@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'static_pages' do
+  before { skip 'CE only' if defined?(Dradis::Pro) }
   before { login_to_project_as_user }
 
   describe 'GET /projects/1/addons/gateway' do

@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe StaticPagesHelper do
+  before { skip 'CE only' if defined?(Dradis::Pro) }
+
   let(:project)  { Project.new }
   let(:issuelib) { project.issue_library }
 
