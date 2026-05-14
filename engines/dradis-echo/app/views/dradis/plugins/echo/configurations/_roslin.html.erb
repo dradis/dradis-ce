@@ -38,5 +38,23 @@
       </div>
     </div>
 
+    <hr>
+
+    <%# LanguageTool %>
+    <div class="d-flex align-items-start justify-content-between mb-3">
+      <div>
+        <h6 class="mb-1">LanguageTool</h6>
+        <p class="text-body-secondary small mb-0">Open-source grammar and style checker. Requires a running LanguageTool instance.</p>
+      </div>
+      <div class="form-check form-switch ms-4 flex-shrink-0">
+        <%= f.check_box :language_tool_enabled, class: 'form-check-input', role: 'switch' %>
+      </div>
+    </div>
+    <div class="row g-3 mb-3 ps-3 border-start">
+      <div class="col-md-6">
+        <%= f.label :language_tool_address, 'Address', class: 'form-label' %>
+        <%= f.text_field :language_tool_address, class: 'form-control' %>
+      </div>
+    </div>
   </div>
 </div>
