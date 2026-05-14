@@ -2,43 +2,54 @@ module Dradis::Plugins::Echo
   class ConfigurationForm
     include ActiveModel::Model
 
-    attr_accessor :roslin_ollama_address, :roslin_ollama_model
+    def self.agents
+      [Roslin]
+    end
 
-    validates :roslin_ollama_address,
-      allow_blank: false,
-      presence: true,
-      format: { with: URI.regexp(['http', 'https']), message: 'needs to be a valid URL' }
-    validates :roslin_ollama_model,
-      allow_blank: false,
-      presence: true
+    # For each agent, define a getter and setter so the view can use fields_for
+    # and the controller can mass-assign nested params in a single submitted form.
+    # The setter handles two callers:
+    #   - from_storage: passes an already-built ConfigurationForm, stored as-is
+    #   - controller params: passes a raw hash, wrapped in ConfigurationForm.new
+    agents.each do |agent|
+      attr_reader agent.form_key
+
+      define_method(:"#{agent.form_key}=") do |attrs|
+        form_class = agent::ConfigurationForm
+        instance_variable_set(:"@#{agent.form_key}", attrs.is_a?(form_class) ? attrs : form_class.new(attrs || {}))
+      end
+    end
 
     def self.from_storage
       instance = new
-      [:roslin_ollama_address, :roslin_ollama_model].each do |setting|
-        instance.send("#{setting}=", Engine.settings.send(setting))
+      agents.each do |agent|
+        instance.public_send(:"#{agent.form_key}=", agent::ConfigurationForm.from_storage)
       end
       instance
     end
 
-    def save
-      if valid?
-        save_settings
-      else
-        false
-      end
-    end
+    validate :agent_forms_valid
 
-    def configured?
-      @configured ||= !Engine.settings.is_default?(:roslin_ollama_model, roslin_ollama_model)
+    def save
+      return false unless valid?
+
+      self.class.agents.each do |agent|
+        public_send(agent.form_key).save
+      end
+      true
     end
 
     private
 
-    def save_settings
-      [:roslin_ollama_address, :roslin_ollama_model].each do |setting|
-        Engine.settings.send("#{setting}=", send(setting))
+    def agent_forms_valid
+      self.class.agents.each do |agent|
+        sub_form = public_send(agent.form_key)
+        next if sub_form.valid?
+
+        sub_form.errors.each do |error|
+          errors.add(agent.form_key, error.message)
+        end
       end
-      Engine.settings.save
     end
   end
 end

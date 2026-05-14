@@ -1,0 +1,50 @@
+<div class="card mb-4">
+  <div class="card-body">
+    <div class="d-flex align-items-start justify-content-between mb-1">
+      <div>
+        <h5 class="card-title mb-1">Provider</h5>
+        <p class="text-body-secondary mb-0">Manage your provider configurations. Each feature can be assigned its own provider below.</p>
+      </div>
+      <div class="dropdown">
+        <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+          Add provider
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><%= link_to 'Anthropic', new_provider_path(type: 'Anthropic'), class: 'dropdown-item' %></li>
+          <li><%= link_to 'Ollama', new_provider_path(type: 'Ollama'), class: 'dropdown-item' %></li>
+          <li><%= link_to 'OpenAI', new_provider_path(type: 'OpenAI'), class: 'dropdown-item' %></li>
+        </ul>
+      </div>
+    </div>
+
+    <hr>
+
+    <% if providers.any? %>
+      <% providers.each do |provider| %>
+        <div class="d-flex align-items-center justify-content-between py-2 border-bottom">
+          <div>
+            <div class="fw-semibold"><%= provider.name %></div>
+            <div class="text-body-secondary small">
+              <%= provider.class.name.demodulize %>
+              &middot; Model: <span class="font-monospace"><%= provider.model %></span>
+              <% if provider.address.present? %>
+                &middot; Address: <span class="font-monospace"><%= provider.address %></span>
+              <% end %>
+              <% if provider.api_key.present? %>
+                &middot; API Key: <span class="font-monospace">(set)</span>
+              <% end %>
+            </div>
+          </div>
+          <div class="d-flex gap-2">
+            <%= link_to 'Edit', edit_provider_path(provider), class: 'btn btn-outline-secondary btn-sm' %>
+            <%= button_to 'Remove', provider_path(provider), method: :delete,
+                class: 'btn btn-outline-danger btn-sm',
+                form: { data: { turbo_confirm: "Remove #{provider.name}?" } } %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-body-secondary mb-0">No providers configured. Add one to get started.</p>
+    <% end %>
+  </div>
+</div>

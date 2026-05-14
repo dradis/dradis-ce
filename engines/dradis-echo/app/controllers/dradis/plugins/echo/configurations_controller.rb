@@ -1,6 +1,7 @@
 module Dradis::Plugins::Echo
   class ConfigurationsController < ApplicationController
     before_action :admin_required, if: -> { defined?(Dradis::Pro) }
+    before_action :set_providers, only: [:index, :update]
 
     def index
       @configuration_form = ConfigurationForm.from_storage
@@ -27,7 +28,16 @@ module Dradis::Plugins::Echo
     end
 
     def configuration_params
-      params.require(:configuration_form).permit(:roslin_ollama_address, :roslin_ollama_model)
+      # each agent injects its own permitted params, ie:
+      # { roslin: [:enabled, :provider_id, :issue_interaction_enabled, ...] }
+      permitted = ConfigurationForm.agents.each_with_object({}) do |agent, permitted_params|
+        permitted_params[agent.form_key.to_sym] = agent::ConfigurationForm.permitted_params
+      end
+      params.require(:configuration_form).permit(permitted)
+    end
+
+    def set_providers
+      @providers = Provider.all.order(:type)
     end
   end
 end
