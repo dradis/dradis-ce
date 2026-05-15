@@ -5,7 +5,7 @@ Dradis::Plugins::Echo::Engine.routes.draw do
     end
 
     resources :projects, only: [] do
-      resources :prompts, only: [:index, :show, :create], module: :projects do
+      resources :interactions, only: [:index, :show, :create], module: :projects do
         get :preview, on: :member
       end
     end
