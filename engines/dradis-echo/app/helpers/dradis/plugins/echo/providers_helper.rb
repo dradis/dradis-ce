@@ -1,10 +1,10 @@
 module Dradis::Plugins::Echo
   module ProvidersHelper
     PROVIDER_ICONS = {
-      'Anthropic'    => 'dradis/plugins/echo/anthropic.svg',
+      'Anthropic' => 'dradis/plugins/echo/anthropic.svg',
       'Google' => 'dradis/plugins/echo/google.svg',
-      'Ollama'       => 'dradis/plugins/echo/ollama.svg',
-      'OpenAI'       => 'dradis/plugins/echo/openai.svg'
+      'Ollama' => 'dradis/plugins/echo/ollama.svg',
+      'OpenAI' => 'dradis/plugins/echo/openai.svg'
     }.freeze
 
     def provider_icon_path(provider)
