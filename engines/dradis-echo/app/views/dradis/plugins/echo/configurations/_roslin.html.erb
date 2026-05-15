@@ -21,6 +21,7 @@
             <%= f.check_box :issue_interaction_enabled,
                   class: 'form-check-input',
                   role: 'switch',
+                  disabled: @providers.none?,
                   data: { tool_switch: '', action: 'change->dradis--plugins--echo--agent#toggle' } %>
           </div>
           <div>

@@ -30,8 +30,10 @@ module Dradis::Plugins::Echo
 
       def self.save_configuration(form)
         settings.enabled = form.issue_interaction_enabled
-        settings.model = form.issue_interaction_model
-        settings.provider_id = form.issue_interaction_provider_id
+        if form.issue_interaction_enabled
+          settings.model = form.issue_interaction_model
+          settings.provider_id = form.issue_interaction_provider_id
+        end
         settings.save
       end
     end
