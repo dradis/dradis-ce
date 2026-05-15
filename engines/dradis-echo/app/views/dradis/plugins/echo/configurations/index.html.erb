@@ -12,10 +12,6 @@
   </ol>
 <% end %>
 
-<p class="text-body-secondary mb-4">AI settings apply to everyone using AI tools and features in your account.</p>
-
-<%= render 'dradis/plugins/echo/configurations/provider', providers: @providers %>
-
 <%= form_with model: @configuration_form, url: configurations_path, method: :patch do |f| %>
   <% @configuration_form.class.agents.each do |agent| %>
     <%= f.fields_for agent.form_key do |cf| %>
