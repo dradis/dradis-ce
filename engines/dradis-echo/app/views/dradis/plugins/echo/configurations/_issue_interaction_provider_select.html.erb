@@ -1,0 +1,13 @@
+<div id="issue-interaction-provider-select">
+  <select name="configuration_form[roslin][issue_interaction_provider_id]"
+          id="configuration_form_roslin_issue_interaction_provider_id"
+          class="form-select">
+    <option value="">Select a provider</option>
+    <% Dradis::Plugins::Echo::Provider.all.order(:type).each do |p| %>
+      <option value="<%= p.id %>"
+              <%= 'selected' if Dradis::Plugins::Echo::Roslin::IssueInteraction.settings.provider_id.to_s == p.id.to_s %>>
+        <%= p.name %>
+      </option>
+    <% end %>
+  </select>
+</div>
