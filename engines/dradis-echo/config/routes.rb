@@ -1,6 +1,6 @@
 Dradis::Plugins::Echo::Engine.routes.draw do
   scope '/addons/echo' do
-    resources :providers, except: [:index, :show]
+    resources :providers, except: [:show]
 
     resources :configurations, only: [:index] do
       patch :update, on: :collection

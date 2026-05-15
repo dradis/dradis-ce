@@ -3,41 +3,52 @@ module Dradis::Plugins::Echo
     before_action :admin_required, if: -> { defined?(Dradis::Pro) }
     before_action :set_provider, only: [:edit, :update, :destroy]
 
+    helper Dradis::Plugins::Echo::ProvidersHelper
+
+    def index
+      @providers = Provider.all.order(:type)
+    end
+
     def new
-      type = Provider::ALLOWED_TYPES.find { |t| t == params[:type] } || 'Ollama'
-      @provider = "Dradis::Plugins::Echo::Provider::#{type}".constantize.new
+      type_name = params[:type].presence_in(Provider::ALLOWED_TYPES) || 'Ollama'
+      @provider = "Dradis::Plugins::Echo::Provider::#{type_name}".constantize.new
     end
 
     def create
-      @provider = Provider.new(provider_params)
+      attrs = provider_params
+      type_short = attrs[:type].presence_in(Provider::ALLOWED_TYPES)
+      attrs = attrs.merge(type: "Dradis::Plugins::Echo::Provider::#{type_short}") if type_short
+      @provider = Provider.new(attrs)
 
       if @provider.save
-        redirect_to configurations_path, notice: "#{@provider.name} added."
+        redirect_to providers_path, notice: "#{@provider.name} added."
       else
         render :new, status: :unprocessable_entity
       end
     end
 
-    def edit;end
+    def edit; end
 
     def update
       attrs = provider_params.except(:type)
-      # remove from params so it's not overwritten if left blank
       attrs.delete(:api_key) if attrs[:api_key].blank?
 
       if @provider.update(attrs)
-        redirect_to configurations_path, notice: "#{@provider.name} updated."
+        redirect_to providers_path, notice: "#{@provider.name} updated."
       else
         render :edit, status: :unprocessable_entity
       end
     end
 
     def destroy
-      if @provider.destroy
-        redirect_to configurations_path, notice: 'Provider removed.'
-      else
-        redirect_to configurations_path, notice: "Error removing provider: #{@provider.errors.full_messages.join('; ')}"
+      if helpers.provider_in_use?(@provider)
+        redirect_to providers_path, alert: "#{@provider.name} is in use and cannot be deleted."
+        return
       end
+
+      name = @provider.name
+      @provider.destroy
+      redirect_to providers_path, notice: "#{name} removed."
     end
 
     private

@@ -1,4 +1,4 @@
-<% content_for :title, "Edit #{@provider.name}" %>
+<% content_for :title, 'Edit Provider' %>
 
 <% content_for :breadcrumbs do %>
   <ol class="breadcrumb">
@@ -8,9 +8,12 @@
     <% else %>
       <li class="breadcrumb-item"><%= link_to Project.new.name, main_app.project_path(1) %></li>
     <% end %>
-    <li class="breadcrumb-item"><%= link_to 'Echo Configuration', configurations_path %></li>
-    <li class="breadcrumb-item active"><%= @provider.name %></li>
+    <li class="breadcrumb-item"><%= link_to 'Providers', providers_path %></li>
+    <li class="breadcrumb-item active">Edit Provider</li>
   </ol>
 <% end %>
 
-<%= render 'form', provider: @provider %>
+<div class="content-container">
+  <h4 class="header-underline">Edit Provider</h4>
+  <%= render 'form', provider: @provider %>
+</div>

@@ -1,24 +1,57 @@
-<div class="card">
-  <div class="card-body">
-    <h5 class="card-title mb-4"><%= provider.class.name.demodulize %></h5>
+<%= form_with model: provider, scope: :provider,
+      url: provider.new_record? ? providers_path : provider_path(provider) do |f| %>
 
-    <%= form_with model: provider,
-        url: provider.new_record? ? providers_path : provider_path(provider) do |f| %>
-      <%= f.hidden_field :type %>
+  <% if provider.errors.any? %>
+    <div class="alert alert-danger">
+      <ul class="mb-0">
+        <% provider.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-      <div class="row g-3 mb-4">
-        <div class="col-md-6">
-          <%= f.label :name, class: 'form-label' %>
-          <%= f.text_field :name, class: 'form-control' %>
-        </div>
+  <% if provider.new_record? %>
+    <div data-controller="dradis--plugins--echo--provider-type"
+         data-dradis--plugins--echo--provider-type-new-path-value="<%= new_provider_path %>">
+      <div class="mb-3">
+        <%= f.label :type, 'Type', class: 'form-label' %>
+        <%= f.select :type,
+              [['Anthropic', 'Anthropic'], ['Ollama', 'Ollama'], ['OpenAI', 'OpenAI']],
+              { selected: provider.class.name.demodulize },
+              class: 'form-select' %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :name, class: 'form-label' %>
+        <%= f.text_field :name, class: 'form-control', required: true %>
       </div>
 
       <%= render "dradis/plugins/echo/providers/#{provider.class.name.demodulize.underscore}_fields", f: f, provider: provider %>
 
       <div class="form-actions">
-        <%= f.submit class: 'btn btn-primary' %>
-        <%= link_to 'Cancel', configurations_path, class: 'btn btn-secondary' %>
+        <%= f.submit 'Add Provider', class: 'btn btn-primary' %>
+        <%= link_to 'Cancel', providers_path, class: 'cancel-link' %>
       </div>
-    <% end %>
-  </div>
-</div>
+    </div>
+
+  <% else %>
+    <%= f.hidden_field :type %>
+
+    <div class="mb-3">
+      <span class="badge bg-secondary"><%= provider.class.name.demodulize %></span>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :name, class: 'form-label' %>
+      <%= f.text_field :name, class: 'form-control', required: true %>
+    </div>
+
+    <%= render "dradis/plugins/echo/providers/#{provider.class.name.demodulize.underscore}_fields", f: f, provider: provider %>
+
+    <div class="form-actions">
+      <%= f.submit 'Update Provider', class: 'btn btn-primary' %>
+      <%= link_to 'Cancel', providers_path, class: 'cancel-link' %>
+    </div>
+  <% end %>
+
+<% end %>
