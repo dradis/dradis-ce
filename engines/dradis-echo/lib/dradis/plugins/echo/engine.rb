@@ -15,7 +15,10 @@ module Dradis::Plugins::Echo
     initializer 'echo.asset_precompile_paths' do |app|
       app.config.assets.paths << root.join('app/javascript')
       app.config.assets.precompile += [
-        'dradis/plugins/echo/manifests/hera.js'
+        'dradis/plugins/echo/manifests/hera.js',
+        'dradis/plugins/echo/anthropic.svg',
+        'dradis/plugins/echo/ollama.svg',
+        'dradis/plugins/echo/openai.svg'
       ]
     end
 
