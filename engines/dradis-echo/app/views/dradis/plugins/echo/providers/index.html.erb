@@ -7,6 +7,30 @@
   </ol>
 <% end %>
 
+<%= content_for :sidebar do %>
+  <div class="header">
+    <div class="header-inner">
+      <h5 class="header-name">About Providers</h5>
+      <div class="options">
+        <%= link_to '#providers-tips', data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle Providers Tips</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div id="providers-tips" class="collapse show">
+    <div class="alert alert-primary mt-0">
+      <p>
+        Providers connect Echo to your LLM service. Configure connections to OpenAI, Anthropic, or a self-hosted Ollama instance, then assign them to agents in the Configuration section.
+      </p>
+      <p class="text-end card-link mb-0">
+        More about
+        <%= link_to 'Providers', 'https://dradis.com/support/guides/echo/providers.html', target: '_blank' %>
+      </p>
+    </div>
+  </div>
+<% end %>
+
 <div class="content-container">
   <h4 class="header-underline">Providers
     <% if @providers.any? %>
