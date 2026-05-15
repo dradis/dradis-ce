@@ -12,19 +12,19 @@
       </div>
       <div class="provider-details mt-1">
         <% if provider.model.present? %>
-          <span class="provider-detail">
+          <span>
             <span class="provider-detail-label">Model</span>
             <code class="provider-detail-value"><%= provider.model %></code>
           </span>
         <% end %>
         <% if provider.respond_to?(:address) && provider.address.present? %>
-          <span class="provider-detail">
+          <span>
             <span class="provider-detail-label">Address</span>
             <code class="provider-detail-value"><%= provider.address %></code>
           </span>
         <% end %>
         <% if provider.respond_to?(:api_key) && provider.api_key.present? %>
-          <span class="provider-detail">
+          <span>
             <span class="provider-detail-label">API Key</span>
             <code class="provider-detail-value">(set)</code>
           </span>
