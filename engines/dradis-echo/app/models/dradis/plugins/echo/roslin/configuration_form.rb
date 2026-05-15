@@ -12,7 +12,11 @@ module Dradis::Plugins::Echo
         ]
       end
 
-      validates :issue_interaction_provider_id, presence: true, if: :issue_interaction_enabled
+      validates :issue_interaction_provider_id, presence: { message: 'must be selected to enable Issue Interaction' }, if: :issue_interaction_enabled
+
+      def self.human_attribute_name(attr, options = {})
+        attr.to_sym == :issue_interaction_provider_id ? 'Provider' : super
+      end
 
       def self.permitted_params
         super + [

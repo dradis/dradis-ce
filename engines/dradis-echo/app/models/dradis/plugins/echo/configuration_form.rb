@@ -47,7 +47,7 @@ module Dradis::Plugins::Echo
         next if sub_form.valid?
 
         sub_form.errors.each do |error|
-          errors.add(agent.form_key, error.message)
+          errors.add(:base, error.full_message)
         end
       end
     end

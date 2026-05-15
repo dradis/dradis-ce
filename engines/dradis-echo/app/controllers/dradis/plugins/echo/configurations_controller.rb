@@ -13,7 +13,7 @@ module Dradis::Plugins::Echo
       if @configuration_form.save
         redirect_to configurations_path, notice: 'Updated configuration successfully'
       else
-        flash[:alert] = 'Invalid settings'
+        flash.now[:alert] = @configuration_form.errors.full_messages.to_sentence
         render action: :index
       end
     end
