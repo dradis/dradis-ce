@@ -18,8 +18,15 @@ module Dradis::Plugins::Echo
     def create
       attrs = provider_params
       type_short = attrs[:type].presence_in(Provider::ALLOWED_TYPES)
-      attrs = attrs.merge(type: "Dradis::Plugins::Echo::Provider::#{type_short}") if type_short
-      @provider = Provider.new(attrs)
+
+      unless type_short
+        flash.now[:alert] = 'Invalid provider type.'
+        @provider = Provider::Ollama.new(attrs.except(:type))
+        render :new, status: :unprocessable_entity
+        return
+      end
+
+      @provider = Provider.new(attrs.merge(type: "Dradis::Plugins::Echo::Provider::#{type_short}"))
 
       if @provider.save
         redirect_to providers_path, notice: "#{@provider.name} added."
@@ -49,8 +56,11 @@ module Dradis::Plugins::Echo
       end
 
       name = @provider.name
-      @provider.destroy
-      redirect_to providers_path, notice: "#{name} removed."
+      if @provider.destroy
+        redirect_to providers_path, notice: "#{name} removed."
+      else
+        redirect_to providers_path, alert: "#{name} could not be removed."
+      end
     end
 
     private
