@@ -20,3 +20,7 @@ module Dradis::Plugins::Echo
     end
   end
 end
+
+require_relative 'provider/anthropic'
+require_relative 'provider/ollama'
+require_relative 'provider/open_ai'
