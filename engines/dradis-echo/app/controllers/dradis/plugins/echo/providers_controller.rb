@@ -11,7 +11,8 @@ module Dradis::Plugins::Echo
 
     def new
       type_name = params[:type].presence_in(Provider::ALLOWED_TYPES) || 'Ollama'
-      @provider = "Dradis::Plugins::Echo::Provider::#{type_name}".constantize.new
+      klass = Provider.subclasses.find { |c| c.name.demodulize == type_name } || Provider::Ollama
+      @provider = klass.new
     end
 
     def create
