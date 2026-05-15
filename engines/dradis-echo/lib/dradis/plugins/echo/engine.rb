@@ -17,6 +17,7 @@ module Dradis::Plugins::Echo
       app.config.assets.precompile += [
         'dradis/plugins/echo/manifests/hera.js',
         'dradis/plugins/echo/anthropic.svg',
+        'dradis/plugins/echo/google.svg',
         'dradis/plugins/echo/ollama.svg',
         'dradis/plugins/echo/openai.svg'
       ]

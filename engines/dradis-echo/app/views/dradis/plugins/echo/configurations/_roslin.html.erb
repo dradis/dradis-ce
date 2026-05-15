@@ -34,7 +34,7 @@
             <div class="row g-3">
               <div class="col-lg-6">
                 <%= f.label :issue_interaction_provider_id, 'Provider', class: 'form-label' %>
-                <%= render 'dradis/plugins/echo/configurations/issue_interaction_provider_select' %>
+                <%= render 'dradis/plugins/echo/configurations/issue_interaction_provider_select', f: f %>
               </div>
               <div class="col-lg-6">
                 <%= f.label :issue_interaction_model, 'Model override', class: 'form-label' %>

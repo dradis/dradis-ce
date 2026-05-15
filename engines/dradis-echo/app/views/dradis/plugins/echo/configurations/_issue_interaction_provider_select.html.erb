@@ -1,9 +1,6 @@
 <div id="issue-interaction-provider-select">
-  <%= select_tag 'configuration_form[roslin][issue_interaction_provider_id]',
-        options_for_select(
-          Dradis::Plugins::Echo::Provider.all.order(:type).map { |p| [p.name, p.id] },
-          Dradis::Plugins::Echo::Roslin::IssueInteraction.settings.provider_id.to_s
-        ),
-        class: 'form-select',
-        include_blank: 'Select a provider' %>
+  <%= f.select :issue_interaction_provider_id,
+        Dradis::Plugins::Echo::Provider.all.order(:type).map { |p| [p.name, p.id] },
+        { include_blank: 'Select a provider' },
+        class: 'form-select' %>
 </div>
