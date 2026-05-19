@@ -103,5 +103,46 @@ module Dradis::Plugins::Echo
     def end_of_stream_marker
       nil
     end
+
+    # Makes a POST request and parses an NDJSON response line by line, calling
+    # the block with each extracted text chunk. Used by providers whose streaming
+    # format is newline-delimited JSON rather than SSE (e.g. Ollama's native API).
+    # Subclasses must implement #extract_text and #end_of_stream?(parsed).
+    def parse_ndjson_response(uri, headers:, body:, &block)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = uri.scheme == 'https'
+      http.read_timeout = READ_TIMEOUT
+
+      request = Net::HTTP::Post.new(uri)
+      request['Content-Type'] = 'application/json'
+      headers.each { |k, v| request[k] = v }
+      request.body = JSON.generate(body)
+
+      buffer = +''
+
+      http.request(request) do |response|
+        raise "#{self.class.name} API error (#{response.code}): #{response.body}" unless response.is_a?(Net::HTTPSuccess)
+
+        response.read_body do |chunk|
+          buffer << chunk
+          while (line_end = buffer.index("\n"))
+            line = buffer.slice!(0, line_end + 1).strip
+            next if line.empty?
+
+            parsed = JSON.parse(line) rescue next
+            break if end_of_stream?(parsed)
+
+            text = extract_text(parsed)
+            block.call(text) if text.present? && block
+          end
+        end
+      end
+    end
+
+    # Returns true when the NDJSON stream is complete. Override in subclasses
+    # that use #parse_ndjson_response.
+    def end_of_stream?(_parsed)
+      false
+    end
   end
 end
