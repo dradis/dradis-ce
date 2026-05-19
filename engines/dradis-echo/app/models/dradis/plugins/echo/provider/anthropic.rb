@@ -1,42 +1,32 @@
 module Dradis::Plugins::Echo
   class Provider::Anthropic < Provider
-    include Provider::HttpStreaming
-
+    API_VERSION = '2023-06-01'.freeze
     DEFAULT_MAX_TOKENS = 4096
     ENDPOINT = 'https://api.anthropic.com/v1/messages'.freeze
-    API_VERSION = '2023-06-01'.freeze
 
     validates :api_key, presence: true
 
-    def generate(prompt:, model: nil, &block)
-      resolved_model = model.presence || self.model
-      uri = URI(ENDPOINT)
+    private
 
-      headers = {
-        'x-api-key'         => api_key,
-        'anthropic-version' => API_VERSION
-      }
-      body = {
-        model: resolved_model,
-        max_tokens: DEFAULT_MAX_TOKENS,
-        messages: [{ role: 'user', content: prompt }],
-        stream: true
-      }
-
-      buffer = block ? nil : +''
-
-      parse_sse_response(uri, headers: headers, body: body) do |text|
-        if block
-          block.call(text)
-        else
-          buffer << text
-        end
-      end
-
-      buffer
+    def build_uri(_model)
+      URI(ENDPOINT)
     end
 
-    private
+    def build_headers
+      {
+        'anthropic-version' => API_VERSION,
+        'x-api-key'         => api_key
+      }
+    end
+
+    def build_body(prompt:, model:)
+      {
+        max_tokens: DEFAULT_MAX_TOKENS,
+        messages: [{ role: 'user', content: prompt }],
+        model: model,
+        stream: true
+      }
+    end
 
     # Anthropic sends several SSE event types; only content_block_delta carries text:
     #   {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"Hello"}}
