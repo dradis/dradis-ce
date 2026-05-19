@@ -4,7 +4,38 @@ require 'uri'
 
 module Dradis::Plugins::Echo
   module Provider::HttpStreaming
+    extend ActiveSupport::Concern
+
     READ_TIMEOUT = 120
+
+    # Sends prompt to the provider and returns the response.
+    #
+    # With a block: yields each text chunk as it arrives, enabling streaming UX
+    # (e.g. IssueInteractionJob broadcasts each chunk to the browser via Turbo).
+    #
+    # Without a block: accumulates all chunks and returns the complete response
+    # as a string once the API finishes, for use outside a streaming context.
+    #
+    # Subclasses must implement: #build_uri, #build_headers, #build_body,
+    # #extract_text. Optionally override #end_of_stream_marker.
+    def generate(prompt:, model: nil, &block)
+      resolved_model = model.presence || self.model
+      uri = build_uri(resolved_model)
+      headers = build_headers
+      body = build_body(prompt: prompt, model: resolved_model)
+
+      buffer = block ? nil : +''
+
+      parse_sse_response(uri, headers: headers, body: body) do |text|
+        if block
+          block.call(text)
+        else
+          buffer << text
+        end
+      end
+
+      buffer
+    end
 
     private
 
@@ -42,6 +73,22 @@ module Dradis::Plugins::Echo
           end
         end
       end
+    end
+
+    # Returns the URI for the provider's API endpoint.
+    # Receives the resolved model name (provider default or caller override).
+    def build_uri(_model)
+      raise NotImplementedError, "#{self.class.name} must implement #build_uri"
+    end
+
+    # Returns a hash of HTTP headers for authentication and API versioning.
+    def build_headers
+      raise NotImplementedError, "#{self.class.name} must implement #build_headers"
+    end
+
+    # Returns the request body hash for the provider's API.
+    def build_body(prompt:, model:)
+      raise NotImplementedError, "#{self.class.name} must implement #build_body"
     end
 
     # Extracts the text chunk from a parsed SSE event object.
