@@ -24,6 +24,9 @@ describe 'Echo Providers', js: true do
 
     it 'shows errors for invalid input' do
       visit echo.new_provider_path
+      fill_in 'Name', with: ' '
+      fill_in 'Address', with: 'http://localhost:11434'
+      fill_in 'Model', with: 'qwen2.5:14b'
       click_button 'Add Provider'
       expect(page).to have_content("can't be blank")
     end
@@ -41,7 +44,7 @@ describe 'Echo Providers', js: true do
 
     it 'shows errors for invalid input' do
       visit echo.edit_provider_path(provider)
-      fill_in 'Name', with: ''
+      fill_in 'Name', with: ' '
       click_button 'Update Provider'
       expect(page).to have_content("can't be blank")
     end
@@ -52,7 +55,7 @@ describe 'Echo Providers', js: true do
       provider = create(:provider)
       visit echo.providers_path
       click_button 'Delete'
-      expect(page).not_to have_css('.provider-row', text: provider.name)
+      expect(page).to have_content("#{provider.name} removed.")
     end
   end
 end
