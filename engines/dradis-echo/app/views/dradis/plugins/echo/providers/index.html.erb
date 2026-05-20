@@ -35,9 +35,16 @@
   <h4 class="header-underline">Providers
     <% if @providers.any? %>
       <span class="actions pt-1">
-        <%= link_to new_provider_path do %>
-          <i class="fa-solid fa-plus me-1"></i>New Provider
-        <% end %>
+        <div class="dropdown">
+          <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+            <i class="fa-solid fa-plus me-1"></i>New Provider<span class="visually-hidden">Toggle new provider menu</span>
+          </a>
+          <div class="dropdown-menu">
+            <% Dradis::Plugins::Echo::Provider::ALLOWED_TYPES.each do |type| %>
+              <%= link_to type, new_provider_path(type: type), class: 'dropdown-item' %>
+            <% end %>
+          </div>
+        </div>
       </span>
     <% end %>
   </h4>

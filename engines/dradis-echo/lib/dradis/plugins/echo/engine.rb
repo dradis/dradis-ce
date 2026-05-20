@@ -19,7 +19,6 @@ module Dradis::Plugins::Echo
         'dradis/plugins/echo/anthropic.svg',
         'dradis/plugins/echo/gemini.svg',
         'dradis/plugins/echo/ollama.svg',
-        'dradis/plugins/echo/open_ai.svg',
         'dradis/plugins/echo/openai.svg'
       ]
     end

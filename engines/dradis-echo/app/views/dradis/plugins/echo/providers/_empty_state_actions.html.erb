@@ -1,3 +1,10 @@
-<%= link_to new_provider_path, class: 'btn btn-primary mb-2' do %>
-  <i class="fa-solid fa-plus"></i> New Provider
-<% end %>
+<div class="dropdown">
+  <a href="#" class="btn btn-primary mb-2 dropdown-toggle" data-bs-toggle="dropdown">
+    <i class="fa-solid fa-plus"></i> New Provider<span class="visually-hidden">Toggle new provider menu</span>
+  </a>
+  <div class="dropdown-menu">
+    <% Dradis::Plugins::Echo::Provider::ALLOWED_TYPES.each do |type| %>
+      <%= link_to type, new_provider_path(type: type), class: 'dropdown-item' %>
+    <% end %>
+  </div>
+</div>

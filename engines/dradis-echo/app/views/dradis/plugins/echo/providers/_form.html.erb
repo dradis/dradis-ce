@@ -12,30 +12,22 @@
   <% end %>
 
   <% if provider.new_record? %>
-    <div data-controller="dradis--plugins--echo--provider-type">
-      <div class="mb-3">
-        <%= f.label :type, 'Type', class: 'form-label' %>
-        <%= f.select :type,
-              Dradis::Plugins::Echo::Provider::ALLOWED_TYPES.map { |t| [t, t] },
-              { selected: provider.type_name },
-              class: 'form-select',
-              data: { action: 'change->dradis--plugins--echo--provider-type#switch' } %>
-      </div>
-      <div class="mb-3">
-        <%= f.label :name, class: 'form-label' %>
-        <%= f.text_field :name, class: 'form-control', required: true %>
-      </div>
+    <%= f.hidden_field :type, value: provider.type_name %>
 
-      <% Dradis::Plugins::Echo::Provider::ALLOWED_TYPES.each do |type| %>
-        <div data-provider-fields="<%= type %>">
-          <%= render "dradis/plugins/echo/providers/#{type.underscore}_fields", f: f, provider: provider %>
-        </div>
-      <% end %>
+    <div class="mb-3">
+      <span class="badge bg-secondary"><%= provider.type_name %></span>
+    </div>
 
-      <div class="form-actions">
-        <%= f.submit 'Add Provider', class: 'btn btn-primary' %>
-        or <%= link_to 'Cancel', providers_path %>
-      </div>
+    <div class="mb-3">
+      <%= f.label :name, class: 'form-label' %>
+      <%= f.text_field :name, class: 'form-control', required: true %>
+    </div>
+
+    <%= render "dradis/plugins/echo/providers/#{provider.partial_name}_fields", f: f, provider: provider %>
+
+    <div class="form-actions">
+      <%= f.submit 'Add Provider', class: 'btn btn-primary' %>
+      or <%= link_to 'Cancel', providers_path %>
     </div>
 
   <% else %>
