@@ -20,6 +20,18 @@
   }
 }
 
+// Grammar/style suggestion highlights
+.grammar-suggestion-highlight {
+  background-color: rgba($lavender-dark, 0.15);
+  border-bottom: 2px solid rgba($lavender-dark, 0.5);
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: rgba($lavender-dark, 0.3);
+  }
+}
+
 // Inline comment selection button (follows .selection-quote-button pattern)
 .inline-comment-button {
   align-items: center;

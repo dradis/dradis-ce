@@ -21,6 +21,8 @@
 //= require hera/modules/console_updater
 //= require hera/modules/differ
 //= require hera/modules/editor_toolbar
+//= require hera/modules/grammar_highlighter
+//= require hera/modules/grammar_check
 //= require hera/modules/quote_selector
 //= require hera/modules/inline_thread_utils
 //= require hera/modules/inline_thread_selector

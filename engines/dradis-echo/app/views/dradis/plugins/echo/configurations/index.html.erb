@@ -18,7 +18,7 @@
 
 <%= form_with model: @configuration_form, url: configurations_path, method: :patch do |f| %>
   <% @configuration_form.class.agents.each do |agent| %>
-    <%= f.fields_for agent.form_key do |cf| %>
+    <%= f.fields_for agent.form_key, @configuration_form.public_send(agent.form_key) do |cf| %>
       <%= render "dradis/plugins/echo/configurations/#{agent.name.demodulize.underscore}", f: cf, providers: @providers %>
     <% end %>
   <% end %>
