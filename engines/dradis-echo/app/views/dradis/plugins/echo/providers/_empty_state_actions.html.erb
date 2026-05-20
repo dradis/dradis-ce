@@ -3,7 +3,7 @@
     <i class="fa-solid fa-plus"></i> New Provider<span class="visually-hidden">Toggle new provider menu</span>
   </a>
   <div class="dropdown-menu">
-    <% Dradis::Plugins::Echo::Provider::ALLOWED_TYPES.each do |type| %>
+    <% Dradis::Plugins::Echo::Provider::ALLOWED_TYPES.sort.each do |type| %>
       <%= link_to type, new_provider_path(type: type), class: 'dropdown-item' %>
     <% end %>
   </div>

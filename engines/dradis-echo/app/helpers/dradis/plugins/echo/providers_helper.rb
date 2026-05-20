@@ -11,10 +11,6 @@ module Dradis::Plugins::Echo
       PROVIDER_ICONS.fetch(provider.type_name, 'dradis/plugins/echo/ollama.svg')
     end
 
-    def provider_in_use?(provider)
-      provider_used_by(provider).present?
-    end
-
     def provider_used_by(provider)
       usages = []
       if Roslin::IssueInteraction.settings.provider_id.to_s == provider.id.to_s

@@ -49,7 +49,7 @@ module Dradis::Plugins::Echo
     end
 
     def destroy
-      if helpers.provider_in_use?(@provider)
+      if @provider.in_use?
         usages = helpers.provider_used_by(@provider)
         redirect_to providers_path, alert: "#{@provider.name} is in use by #{usages} and cannot be deleted."
         return

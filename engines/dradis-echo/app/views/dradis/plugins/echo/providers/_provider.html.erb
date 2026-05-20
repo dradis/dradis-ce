@@ -36,7 +36,7 @@
     <%= link_to 'Edit', edit_provider_path(provider), class: 'btn btn-warning btn-sm' %>
     <%= button_to 'Delete', provider_path(provider), method: :delete,
           class: 'btn btn-danger btn-sm',
-          form: { data: { turbo_confirm: provider_in_use?(provider) ?
+          form: { data: { turbo_confirm: provider.in_use? ?
             "#{provider.name} is in use by #{provider_used_by(provider)} and cannot be deleted." :
             "Delete #{provider.name}?" } } %>
   </div>
