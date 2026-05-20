@@ -8,7 +8,8 @@ module Dradis::Plugins::Echo
     end
 
     def new
-      @provider = Provider::Ollama.new
+      type = Provider::ALLOWED_TYPES.find { |t| t == params[:type] } || 'Ollama'
+      @provider = "Dradis::Plugins::Echo::Provider::#{type}".constantize.new
     end
 
     def create
