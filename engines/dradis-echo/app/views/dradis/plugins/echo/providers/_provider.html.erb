@@ -1,0 +1,43 @@
+<div class="provider-row">
+  <div class="d-flex align-items-start gap-3">
+    <div class="provider-icon-wrap flex-shrink-0">
+      <%= image_tag "dradis/plugins/echo/#{provider.partial_name}.svg",
+            class: 'provider-icon',
+            alt: provider.type_name %>
+    </div>
+    <div>
+      <div class="d-flex align-items-center gap-2">
+        <span class="fw-semibold"><%= provider.name %></span>
+        <span class="badge bg-secondary"><%= provider.type_name %></span>
+      </div>
+      <div class="provider-details mt-1">
+        <% if provider.model.present? %>
+          <span>
+            <span class="provider-detail-label">Model</span>
+            <code class="provider-detail-value"><%= provider.model %></code>
+          </span>
+        <% end %>
+        <% if provider.address.present? %>
+          <span>
+            <span class="provider-detail-label">Address</span>
+            <code class="provider-detail-value"><%= provider.address %></code>
+          </span>
+        <% end %>
+        <% if provider.api_key.present? %>
+          <span>
+            <span class="provider-detail-label">API Key</span>
+            <code class="provider-detail-value">(set)</code>
+          </span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex gap-2 flex-shrink-0">
+    <%= link_to 'Edit', edit_provider_path(provider), class: 'btn btn-warning btn-sm' %>
+    <%= button_to 'Delete', provider_path(provider), method: :delete,
+          class: 'btn btn-danger btn-sm',
+          form: { data: { turbo_confirm: provider.in_use? ?
+            "#{provider.name} is in use and cannot be deleted." :
+            "Delete #{provider.name}?" } } %>
+  </div>
+</div>

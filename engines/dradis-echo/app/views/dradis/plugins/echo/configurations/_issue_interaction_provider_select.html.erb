@@ -1,0 +1,6 @@
+<div id="issue-interaction-provider-select">
+  <%= f.select :issue_interaction_provider_id,
+        Dradis::Plugins::Echo::Provider.all.order(:type).map { |p| [p.name, p.id] },
+        { include_blank: 'Select a provider' },
+        class: 'form-select' %>
+</div>

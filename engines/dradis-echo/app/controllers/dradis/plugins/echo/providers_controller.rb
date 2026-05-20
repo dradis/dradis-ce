@@ -3,22 +3,26 @@ module Dradis::Plugins::Echo
     before_action :admin_required, if: -> { defined?(Dradis::Pro) }
     before_action :set_provider, only: [:edit, :update, :destroy]
 
+    def index
+      @providers = Provider.all.order(:type)
+    end
+
     def new
-      type = Provider::ALLOWED_TYPES.find { |t| t == params[:type] } || 'Ollama'
-      @provider = "Dradis::Plugins::Echo::Provider::#{type}".constantize.new
+      @provider = Provider::Ollama.new
     end
 
     def create
-      @provider = Provider.new(provider_params)
+      type = Provider::ALLOWED_TYPES.find { |t| t == provider_params[:type] } || 'Ollama'
+      @provider = Provider.new(provider_params.merge(type: "Dradis::Plugins::Echo::Provider::#{type}"))
 
       if @provider.save
-        redirect_to configurations_path, notice: "#{@provider.name} added."
+        redirect_to providers_path, notice: "#{@provider.name} added."
       else
         render :new, status: :unprocessable_entity
       end
     end
 
-    def edit;end
+    def edit; end
 
     def update
       attrs = provider_params.except(:type)
@@ -26,17 +30,18 @@ module Dradis::Plugins::Echo
       attrs.delete(:api_key) if attrs[:api_key].blank?
 
       if @provider.update(attrs)
-        redirect_to configurations_path, notice: "#{@provider.name} updated."
+        redirect_to providers_path, notice: "#{@provider.name} updated."
       else
         render :edit, status: :unprocessable_entity
       end
     end
 
     def destroy
-      if @provider.destroy
-        redirect_to configurations_path, notice: 'Provider removed.'
+      if @provider.in_use?
+        redirect_to providers_path, alert: "#{@provider.name} is in use and cannot be deleted."
       else
-        redirect_to configurations_path, notice: "Error removing provider: #{@provider.errors.full_messages.join('; ')}"
+        @provider.destroy
+        redirect_to providers_path, notice: "#{@provider.name} removed."
       end
     end
 

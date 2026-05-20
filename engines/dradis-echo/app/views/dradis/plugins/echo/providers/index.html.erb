@@ -1,0 +1,56 @@
+<% content_for :title, 'Echo Providers' %>
+
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">Dradis Echo</li>
+    <li class="breadcrumb-item active">Providers</li>
+  </ol>
+<% end %>
+
+<%= content_for :sidebar do %>
+  <div class="header">
+    <div class="header-inner">
+      <h5 class="header-name">About Providers</h5>
+      <div class="options">
+        <%= link_to '#providers-tips', data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle Providers Tips</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div id="providers-tips" class="collapse show">
+    <div class="alert alert-primary mt-0">
+      <p>
+        Providers connect Echo to your LLM service. Configure connections to OpenAI, Anthropic, or a self-hosted Ollama instance, then assign them to agents in the Configuration section.
+      </p>
+      <p class="text-end card-link mb-0">
+        More about
+        <%= link_to 'Providers', 'https://dradis.com/support/guides/echo/providers.html', target: '_blank' %>
+      </p>
+    </div>
+  </div>
+<% end %>
+
+<div class="content-container">
+  <h4 class="header-underline">Providers
+    <% if @providers.any? %>
+      <span class="actions pt-1">
+        <%= link_to new_provider_path do %>
+          <i class="fa-solid fa-plus me-1"></i>New Provider
+        <% end %>
+      </span>
+    <% end %>
+  </h4>
+
+  <% if @providers.any? %>
+    <div class="provider-list">
+      <%= render partial: 'provider', collection: @providers %>
+    </div>
+  <% else %>
+    <%= render 'shared/empty_state',
+          actions_partial: 'dradis/plugins/echo/providers/empty_state_actions',
+          docs_link: 'https://dradis.com/support/guides/echo/providers.html',
+          name: 'provider',
+          text: 'Use providers to connect Echo to your LLM services. Configure connections to OpenAI, Anthropic, or a self-hosted Ollama instance to power your AI tools.' %>
+  <% end %>
+</div>
