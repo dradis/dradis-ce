@@ -12,8 +12,6 @@ module Dradis::Plugins::Echo
         ]
       end
 
-      validates :issue_interaction_provider_id, presence: true, if: :issue_interaction_enabled
-
       def self.permitted_params
         super + [
           :issue_interaction_enabled,
