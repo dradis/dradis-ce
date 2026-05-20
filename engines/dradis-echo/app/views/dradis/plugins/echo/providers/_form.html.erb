@@ -12,21 +12,25 @@
   <% end %>
 
   <% if provider.new_record? %>
-    <div data-controller="dradis--plugins--echo--provider-type"
-         data-dradis--plugins--echo--provider-type-new-path-value="<%= new_provider_path %>">
+    <div data-controller="dradis--plugins--echo--provider-type">
       <div class="mb-3">
         <%= f.label :type, 'Type', class: 'form-label' %>
         <%= f.select :type,
-              [['Anthropic', 'Anthropic'], ['Ollama', 'Ollama'], ['OpenAI', 'OpenAI']],
-              { selected: provider.class.name.demodulize },
-              class: 'form-select' %>
+              Dradis::Plugins::Echo::Provider::ALLOWED_TYPES.map { |t| [t, t] },
+              { selected: provider.type_name },
+              class: 'form-select',
+              data: { action: 'change->dradis--plugins--echo--provider-type#switch' } %>
       </div>
       <div class="mb-3">
         <%= f.label :name, class: 'form-label' %>
         <%= f.text_field :name, class: 'form-control', required: true %>
       </div>
 
-      <%= render "dradis/plugins/echo/providers/#{provider.class.name.demodulize.underscore}_fields", f: f, provider: provider %>
+      <% Dradis::Plugins::Echo::Provider::ALLOWED_TYPES.each do |type| %>
+        <div data-provider-fields="<%= type %>">
+          <%= render "dradis/plugins/echo/providers/#{type.underscore}_fields", f: f, provider: provider %>
+        </div>
+      <% end %>
 
       <div class="form-actions">
         <%= f.submit 'Add Provider', class: 'btn btn-primary' %>
@@ -38,7 +42,7 @@
     <%= f.hidden_field :type %>
 
     <div class="mb-3">
-      <span class="badge bg-secondary"><%= provider.class.name.demodulize %></span>
+      <span class="badge bg-secondary"><%= provider.type_name %></span>
     </div>
 
     <div class="mb-3">
@@ -46,7 +50,7 @@
       <%= f.text_field :name, class: 'form-control', required: true %>
     </div>
 
-    <%= render "dradis/plugins/echo/providers/#{provider.class.name.demodulize.underscore}_fields", f: f, provider: provider %>
+    <%= render "dradis/plugins/echo/providers/#{provider.partial_name}_fields", f: f, provider: provider %>
 
     <div class="form-actions">
       <%= f.submit 'Update Provider', class: 'btn btn-primary' %>

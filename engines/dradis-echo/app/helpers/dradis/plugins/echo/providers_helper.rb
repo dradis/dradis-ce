@@ -2,13 +2,13 @@ module Dradis::Plugins::Echo
   module ProvidersHelper
     PROVIDER_ICONS = {
       'Anthropic' => 'dradis/plugins/echo/anthropic.svg',
-      'Google' => 'dradis/plugins/echo/google.svg',
+      'Gemini' => 'dradis/plugins/echo/gemini.svg',
       'Ollama' => 'dradis/plugins/echo/ollama.svg',
       'OpenAI' => 'dradis/plugins/echo/openai.svg'
     }.freeze
 
     def provider_icon_path(provider)
-      PROVIDER_ICONS.fetch(provider.class.name.demodulize, 'dradis/plugins/echo/ollama.svg')
+      PROVIDER_ICONS.fetch(provider.type_name, 'dradis/plugins/echo/ollama.svg')
     end
 
     def provider_in_use?(provider)

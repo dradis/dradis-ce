@@ -1,17 +1,19 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-  static values = { newPath: String };
-
   connect() {
-    $(this.element).on('change.echo-provider-type', 'select', (event) => {
-      const url = new URL(this.newPathValue, window.location.origin);
-      url.searchParams.set('type', event.target.value);
-      window.location = url.toString();
-    });
+    this._switchFields($(this.element).find('select[name="provider[type]"]').val());
   }
 
-  disconnect() {
-    $(this.element).off('change.echo-provider-type');
+  switch(event) {
+    this._switchFields(event.target.value);
+  }
+
+  _switchFields(type) {
+    $(this.element).find('[data-provider-fields]').each((_, el) => {
+      const active = el.dataset.providerFields === type;
+      $(el).toggle(active);
+      $(el).find('input, select, textarea').prop('disabled', !active);
+    });
   }
 }

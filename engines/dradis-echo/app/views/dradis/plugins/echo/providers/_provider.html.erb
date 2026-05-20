@@ -3,12 +3,12 @@
     <div class="provider-icon-wrap flex-shrink-0">
       <%= image_tag provider_icon_path(provider),
             class: 'provider-icon',
-            alt: provider.class.name.demodulize %>
+            alt: provider.type_name %>
     </div>
     <div>
       <div class="d-flex align-items-center gap-2">
         <span class="fw-semibold"><%= provider.name %></span>
-        <span class="badge bg-secondary"><%= provider.class.name.demodulize %></span>
+        <span class="badge bg-secondary"><%= provider.type_name %></span>
       </div>
       <div class="provider-details mt-1">
         <% if provider.model.present? %>
