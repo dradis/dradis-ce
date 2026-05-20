@@ -1,4 +1,5 @@
 require 'rails_helper'
+require File.expand_path('../../../../factories/providers', __dir__)
 
 describe Dradis::Plugins::Echo::Provider do
   describe 'ALLOWED_TYPES' do
@@ -8,6 +9,7 @@ describe Dradis::Plugins::Echo::Provider do
   end
 
   describe 'validations' do
+    subject { build(:provider) }
     it { should validate_presence_of(:model) }
     it { should validate_presence_of(:name) }
   end
@@ -35,14 +37,14 @@ describe Dradis::Plugins::Echo::Provider do
     let(:provider) { create(:provider) }
 
     it 'returns true when the provider is assigned to an agent' do
-      allow(Dradis::Plugins::Echo::Roslin::IssueInteraction.settings)
-        .to receive(:provider_id).and_return(provider.id)
+      allow(Dradis::Plugins::Echo::Roslin::IssueInteraction)
+        .to receive(:settings).and_return(double(provider_id: provider.id))
       expect(provider.in_use?).to be true
     end
 
     it 'returns false when the provider is not assigned to any agent' do
-      allow(Dradis::Plugins::Echo::Roslin::IssueInteraction.settings)
-        .to receive(:provider_id).and_return(nil)
+      allow(Dradis::Plugins::Echo::Roslin::IssueInteraction)
+        .to receive(:settings).and_return(double(provider_id: nil))
       expect(provider.in_use?).to be false
     end
   end
