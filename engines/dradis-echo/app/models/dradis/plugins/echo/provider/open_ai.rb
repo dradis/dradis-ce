@@ -3,6 +3,9 @@ module Dradis::Plugins::Echo
     DEFAULT_ADDRESS = 'https://api.openai.com/v1/'.freeze
     END_OF_STREAM_MARKER = '[DONE]'.freeze
 
+    validates :address, allow_blank: true,
+                        format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]),
+                                  message: 'must be a valid HTTP(S) URL' }
     validates :api_key, presence: true
 
     private

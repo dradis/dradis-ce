@@ -14,6 +14,53 @@ describe Dradis::Plugins::Echo::Provider do
     it { should validate_presence_of(:name) }
   end
 
+  describe 'Ollama validations' do
+    subject { build(:provider) }
+
+    it { should validate_presence_of(:address) }
+
+    it 'rejects a non-URL address' do
+      subject.address = 'not a url'
+      expect(subject).not_to be_valid
+      expect(subject.errors[:address]).to include('must be a valid HTTP(S) URL')
+    end
+
+    it 'rejects an address without a scheme' do
+      subject.address = 'localhost:11434'
+      expect(subject).not_to be_valid
+    end
+
+    it 'accepts a valid HTTP address' do
+      subject.address = 'http://localhost:11434'
+      expect(subject).to be_valid
+    end
+
+    it 'accepts a valid HTTPS address' do
+      subject.address = 'https://ollama.example.com'
+      expect(subject).to be_valid
+    end
+  end
+
+  describe 'OpenAI validations' do
+    subject { build(:open_ai_provider) }
+
+    it 'rejects an invalid address when provided' do
+      subject.address = 'not a url'
+      expect(subject).not_to be_valid
+      expect(subject.errors[:address]).to include('must be a valid HTTP(S) URL')
+    end
+
+    it 'accepts a blank address (uses default endpoint)' do
+      subject.address = nil
+      expect(subject).to be_valid
+    end
+
+    it 'accepts a valid custom base URL' do
+      subject.address = 'https://openai.example.com/v1/'
+      expect(subject).to be_valid
+    end
+  end
+
   describe '#type_name' do
     it 'returns the demodulized class name' do
       provider = build(:provider)

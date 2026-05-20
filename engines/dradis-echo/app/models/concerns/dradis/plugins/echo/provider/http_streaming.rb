@@ -48,6 +48,7 @@ module Dradis::Plugins::Echo
       http.use_ssl = uri.scheme == 'https'
       http.open_timeout = 10
       http.read_timeout = READ_TIMEOUT
+      http.write_timeout = 10
 
       request = Net::HTTP::Post.new(uri)
       request['Content-Type'] = 'application/json'

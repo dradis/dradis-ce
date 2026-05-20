@@ -9,5 +9,17 @@ FactoryBot.define do
       api_key { 'sk-ant-test' }
       model { 'claude-sonnet-4-6' }
     end
+
+    factory :gemini_provider, class: 'Dradis::Plugins::Echo::Provider::Gemini' do
+      address { nil }
+      api_key { 'AIza-test' }
+      model { 'gemini-2.0-flash' }
+    end
+
+    factory :open_ai_provider, class: 'Dradis::Plugins::Echo::Provider::OpenAI' do
+      address { nil }
+      api_key { 'sk-test' }
+      model { 'gpt-4o' }
+    end
   end
 end

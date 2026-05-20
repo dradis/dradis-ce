@@ -44,7 +44,9 @@ module Dradis::Plugins::Echo
     def agent_forms_valid
       self.class.agents.each do |agent|
         sub_form = public_send(agent.form_key)
-        next if sub_form.valid?
+        # sub_form is nil when ConfigurationForm.new is called without attrs,
+        # because ActiveModel only calls the setter for keys present in the hash.
+        next if sub_form.nil? || sub_form.valid?
 
         sub_form.errors.each do |error|
           errors.add(agent.form_key, error.message)
