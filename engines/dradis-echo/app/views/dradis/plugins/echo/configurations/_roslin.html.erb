@@ -44,7 +44,16 @@
             </div>
           <% else %>
             <div class="alert alert-warning mb-0">
-              No providers configured. <%= link_to 'Add a provider', new_provider_path %> before enabling Issue Interaction.
+              No providers configured.
+              <div class="dropdown d-inline">
+                <a href="#" class="dropdown-toggle no-caret" data-bs-toggle="dropdown">Add a provider</a>
+                <div class="dropdown-menu">
+                  <% Dradis::Plugins::Echo::Provider::ALLOWED_TYPES.sort.each do |type| %>
+                    <%= link_to type, new_provider_path(type: type), class: 'dropdown-item' %>
+                  <% end %>
+                </div>
+              </div>
+              before enabling Issue Interaction.
             </div>
           <% end %>
         </div>
