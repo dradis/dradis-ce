@@ -46,6 +46,7 @@ module Dradis::Plugins::Echo
     def parse_sse_response(uri, headers:, body:, &block)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme == 'https'
+      http.open_timeout = 10
       http.read_timeout = READ_TIMEOUT
 
       request = Net::HTTP::Post.new(uri)

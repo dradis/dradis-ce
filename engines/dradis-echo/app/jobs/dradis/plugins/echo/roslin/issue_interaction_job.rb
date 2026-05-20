@@ -26,7 +26,7 @@ module Dradis::Plugins::Echo
         Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: 'messages', html: '<p>Done.</p>'
       rescue => e
         msg = '<div class="alert alert-danger m-0">'
-        msg << e.message
+        msg << ERB::Util.html_escape(e.message)
         msg << '</div>'
         Turbo::StreamsChannel.broadcast_update_to [interaction_id, 'prompts'], target: response_id, html: msg
       end

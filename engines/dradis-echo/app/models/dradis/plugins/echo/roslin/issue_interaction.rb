@@ -15,7 +15,8 @@ module Dradis::Plugins::Echo
       end
 
       def self.provider
-        Provider.find(settings.provider_id)
+        Provider.find_by(id: settings.provider_id) ||
+          raise('No provider configured for Issue Interaction. Ask an admin to assign one in Echo Configuration.')
       end
 
       def self.enabled?
