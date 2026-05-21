@@ -131,3 +131,5 @@ class GrammarHighlighter {
     return `${match.field_name}:${match.offset}:${match.length}`;
   }
 }
+
+window.GrammarHighlighter = GrammarHighlighter;

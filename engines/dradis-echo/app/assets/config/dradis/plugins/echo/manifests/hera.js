@@ -1,3 +1,4 @@
 //= link controllers/dradis/plugins/echo/configurations_controller.js
+//= link controllers/dradis/plugins/echo/grammar_controller.js
 //= link controllers/dradis/plugins/echo/prompt_controller.js
 //= link controllers/dradis/plugins/echo/prompt_selector_controller.js
