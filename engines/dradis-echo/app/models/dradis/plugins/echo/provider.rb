@@ -37,10 +37,6 @@ module Dradis::Plugins::Echo
       self.class.name.demodulize.underscore
     end
 
-    def in_use?
-      agents.exists?
-    end
-
     def requires_api_key?
       true
     end

@@ -36,7 +36,7 @@
     <%= link_to edit_provider_path(provider), class: 'btn btn-warning btn-sm' do %>
       <i class="fa-solid fa-pencil"></i> Edit
     <% end %>
-    <% if provider.in_use? %>
+    <% if provider.agents.exists? %>
       <span data-bs-toggle="tooltip" data-bs-title="<%= provider.name %> is in use and cannot be deleted.">
         <button class="btn btn-danger btn-sm" disabled>
           <i class="fa-solid fa-xmark"></i> Delete
