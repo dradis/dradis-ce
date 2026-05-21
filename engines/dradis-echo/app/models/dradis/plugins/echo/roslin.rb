@@ -6,7 +6,7 @@ module Dradis::Plugins::Echo
     addon_settings :'echo-roslin'
 
     def self.enabled?
-      settings.enabled
+      ActiveModel::Type::Boolean.new.cast(settings.enabled)
     end
 
     def self.load_configuration(form)

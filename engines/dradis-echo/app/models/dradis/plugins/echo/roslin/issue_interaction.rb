@@ -19,7 +19,7 @@ module Dradis::Plugins::Echo
       end
 
       def self.enabled?
-        Roslin.enabled? && settings.enabled
+        Roslin.enabled? && ActiveModel::Type::Boolean.new.cast(settings.enabled)
       end
 
       def self.load_configuration(form)

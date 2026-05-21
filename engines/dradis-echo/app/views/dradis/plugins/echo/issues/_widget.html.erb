@@ -1,55 +1,41 @@
-<% if Dradis::Plugins::Echo::Engine.settings.roslin_enabled %>
-
+<% if Dradis::Plugins::Echo::Roslin.enabled? %>
+  <% grammar_enabled = Dradis::Plugins::Echo::Roslin::LanguageTool.enabled? %>
+<% if grammar_enabled %>
+<div class="header"
+     data-controller="dradis--plugins--echo--grammar"
+     data-dradis--plugins--echo--grammar-commentable-type-value="<%= @issue.class %>"
+     data-dradis--plugins--echo--grammar-commentable-id-value="<%= @issue.id %>"
+     data-dradis--plugins--echo--grammar-grammar-check-url-value="<%= echo.project_grammar_check_path(current_project) %>"
+     data-dradis--plugins--echo--grammar-grammar-replacements-url-value="<%= echo.project_grammar_replacements_path(current_project) %>">
+<% else %>
 <div class="header">
-  <div class="header">
-    <div class="header-inner">
-      <h5 class="header-name">
-        Roslin
-        <i class="fa-solid ms-2 fa-info-circle"></i>
-      </h5>
-      <div class="options">
-        <a data-bs-toggle="collapse" data-behavior="collapse-collection" href="#roslin-widget">
-          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle Roslin Agent Widget</span>
-        </a>
-      </div>
+<% end %>
+  <div class="header-inner">
+    <h5 class="header-name">
+      <i class="fa-solid fa-robot fa-fw me-1"></i> Roslin
+    </h5>
+    <div class="options">
+      <a data-bs-toggle="collapse" data-behavior="collapse-collection" href="#roslin-widget-<%= @issue.id %>">
+        <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i>
+        <span class="visually-hidden">Toggle Roslin Widget</span>
+      </a>
     </div>
   </div>
-  <div class="collapse show" id="roslin-widget">
-    <p>
-      Here are some suggestions:
-    </p>
-    <p class="mb-2"><i class="fa-solid fa-chevron-right fa-fw"></i> Redundant phrase (pos: 512)</p>
-    <p class="mb-2"><i class="fa-solid fa-chevron-right fa-fw"></i> Spelling mistake (pos: 958)</p>
+  <div class="collapse show" id="roslin-widget-<%= @issue.id %>">
+    <% if grammar_enabled %>
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <button class="btn btn-sm btn-outline-secondary"
+                data-dradis--plugins--echo--grammar-target="checkButton"
+                data-action="click->dradis--plugins--echo--grammar#check">
+          Check
+        </button>
+        <button class="btn btn-sm btn-link text-muted p-0"
+                data-action="click->dradis--plugins--echo--grammar#clear">
+          Clear
+        </button>
+      </div>
+      <span class="small text-muted" data-dradis--plugins--echo--grammar-target="status"></span>
+    <% end %>
   </div>
 </div>
-
-<% elsif Dradis::Plugins::Echo::Engine.settings.roslin_teaser %>
-
-<div class="header">
-  <div class="header">
-    <div class="header-inner">
-      <h5 class="header-name">
-        Enable Roslin?
-        <i class="fa-solid ms-2 fa-triangle-exclamation"></i>
-      </h5>
-      <div class="options">
-        <a data-bs-toggle="collapse" data-behavior="collapse-collection" href="#roslin-teaser-widget">
-          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle Roslin Agent Widget</span>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="collapse show" id="roslin-teaser-widget">
-    <p>
-      Roslin is a multi-lingual agent that helps you identify style and grammar
-      issues.
-    </p>
-    <p class="mb-0">Do you want to enable it?</p>
-    <div>
-      <i class="fa-solid ms-2 fa-check" data-behavior="status-icon"></i> / <i class="fa-solid fa-times fa-fw" data-behavior="validation-result-icon"></i>
-    </div>
-    <p class="small">Learn more <a href="#">about Roslin</a>.</p>
-  </div>
-</div>
-
 <% end %>
