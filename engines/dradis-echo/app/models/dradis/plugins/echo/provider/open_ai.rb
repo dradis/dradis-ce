@@ -21,7 +21,7 @@ module Dradis::Plugins::Echo
     end
 
     def build_uri(_model)
-      URI.join(address, 'chat/completions')
+      URI.join(address.chomp('/') + '/', 'chat/completions')
     end
 
     def end_of_stream_marker
