@@ -7,7 +7,6 @@ FactoryBot.define do
 
     factory :system_agent do
       agent_type { :system }
-      name { 'Roslin' }
     end
   end
 end

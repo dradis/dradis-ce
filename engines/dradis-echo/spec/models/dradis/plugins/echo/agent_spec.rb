@@ -25,7 +25,7 @@ describe Dradis::Plugins::Echo::Agent do
 
   describe 'deletion protection' do
     it 'prevents destroying system agents' do
-      agent = described_class.find_by!(name: 'Roslin')
+      agent = create(:system_agent)
       expect(agent.destroy).to be false
       expect(described_class.exists?(agent.id)).to be true
     end

@@ -8,7 +8,7 @@ module Dradis::Plugins::Echo
     end
 
     def generate(prompt:, model: nil, &block)
-      resolved_model = model || self.model
+      resolved_model = model.presence || self.model
       buffer = block_given? ? nil : +''
 
       client.generate({ model: resolved_model, prompt: prompt }) do |event, _raw|

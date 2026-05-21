@@ -6,7 +6,7 @@ describe Dradis::Plugins::Echo::InteractionJob do
   let(:interaction_id) { 'project-1' }
   let(:response_id)    { 'response-1' }
   let(:prompt)         { 'Summarise this issue.' }
-  let(:agent)          { Dradis::Plugins::Echo::Agent.find_by!(name: 'Roslin') }
+  let(:agent)          { create(:system_agent) }
 
   def perform
     described_class.perform_now(
