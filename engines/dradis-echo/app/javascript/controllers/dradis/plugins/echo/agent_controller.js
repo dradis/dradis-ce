@@ -1,13 +1,13 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-  static targets = ['tool'];
+  static targets = ['agentSwitch', 'tool'];
 
   connect() { this.update(); }
   toggle() { this.update(); }
 
   update() {
-    const agentEnabled = this.agentSwitch?.checked ?? true;
+    const agentEnabled = this.hasAgentSwitchTarget ? this.agentSwitchTarget.checked : true;
 
     this.toolTargets.forEach((card) => {
       const toolSwitch = card.querySelector('[data-tool-switch]');
@@ -23,9 +23,5 @@ export default class extends Controller {
         });
       }
     });
-  }
-
-  get agentSwitch() {
-    return this.element.querySelector('[data-agent-switch]');
   }
 }
