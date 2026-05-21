@@ -9,8 +9,9 @@ module Dradis::Plugins::Echo
     before_destroy :prevent_system_deletion
 
     private
-      def prevent_system_deletion
-        throw(:abort) if system?
-      end
+
+    def prevent_system_deletion
+      throw(:abort) if system?
+    end
   end
 end

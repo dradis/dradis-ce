@@ -1,6 +1,7 @@
 class CreateAgents < ActiveRecord::Migration[8.0]
   def change
     create_table :dradis_plugins_echo_agents do |t|
+      # default: 1 maps to the :user enum value
       t.integer :agent_type, default: 1, null: false
       t.boolean :enabled, default: true, null: false
       t.string :model_override
@@ -14,37 +15,31 @@ class CreateAgents < ActiveRecord::Migration[8.0]
 
     reversible do |dir|
       dir.up do
-        roslin_enabled = config_value('echo-roslin', 'enabled') != 'false'
-        ii_provider_id = config_value('echo-roslin-issue-interaction', 'provider_id')
-        ii_model = config_value('echo-roslin-issue-interaction', 'model')
+        address = config_value('roslin_ollama_address') || Dradis::Plugins::Echo::Provider::Ollama::DEFAULT_ADDRESS
+        enabled = config_value('roslin_enabled') != 'false'
+        model = config_value('roslin_ollama_model') || Dradis::Plugins::Echo::Provider::Ollama::DEFAULT_MODEL
 
-        provider = if ii_provider_id.present?
-                     Dradis::Plugins::Echo::Provider.find_by(id: ii_provider_id)
-                   end
-
-        provider ||= Dradis::Plugins::Echo::Provider::Ollama.find_or_create_by!(
-          address: 'http://localhost:11434'
-        ) do |p|
-          p.model = 'qwen2.5:14b'
-          p.name = 'Ollama'
-        end
+        provider = Dradis::Plugins::Echo::Provider::Ollama.create!(
+          address: address,
+          model: model,
+          name: 'Ollama'
+        )
 
         Dradis::Plugins::Echo::Agent.create!(
           agent_type: :system,
-          enabled: roslin_enabled,
-          model_override: ii_model.presence,
+          enabled: enabled,
           name: 'Roslin',
           provider: provider
         )
 
-        Configuration.where('name LIKE ?', 'echo-roslin%').delete_all
+        Configuration.where('name LIKE ?', 'echo:roslin_%').delete_all
       end
     end
   end
 
   private
 
-  def config_value(namespace, key)
-    Configuration.find_by(name: "#{namespace}:#{key}")&.value
+  def config_value(key)
+    Configuration.find_by(name: "echo:#{key}")&.value
   end
 end

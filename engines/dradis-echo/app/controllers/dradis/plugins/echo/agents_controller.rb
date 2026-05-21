@@ -32,6 +32,7 @@ module Dradis::Plugins::Echo
     end
 
     def set_agent
+      params[:id] ||= Agents::Roslin.id
       @agent = Agent.find(params[:id])
     end
 
