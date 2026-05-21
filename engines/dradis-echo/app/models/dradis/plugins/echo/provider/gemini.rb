@@ -1,23 +1,24 @@
 module Dradis::Plugins::Echo
   class Provider::Gemini < Provider
-    BASE_URL = 'https://generativelanguage.googleapis.com/v1beta/models/'.freeze
+    include Provider::HttpStreaming
 
-    validates :api_key, presence: true
+    DEFAULT_ADDRESS = 'https://generativelanguage.googleapis.com/v1beta/models/'.freeze
+    DEFAULT_MODEL = 'gemini-2.0-flash'.freeze
 
     private
 
-    def build_uri(model)
-      URI("#{BASE_URL}#{model}:streamGenerateContent?alt=sse")
+    def build_body(prompt:, model:)
+      {
+        contents: [{ role: 'user', parts: [{ text: prompt }] }]
+      }
     end
 
     def build_headers
       { 'x-goog-api-key' => api_key }
     end
 
-    def build_body(prompt:, model:)
-      {
-        contents: [{ role: 'user', parts: [{ text: prompt }] }]
-      }
+    def build_uri(model)
+      URI("#{address}#{model}:streamGenerateContent?alt=sse")
     end
 
     # Gemini SSE envelope (with alt=sse query param):

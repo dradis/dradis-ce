@@ -3,7 +3,12 @@ require File.expand_path('../../../../../factories/providers', __dir__)
 
 describe Dradis::Plugins::Echo::Provider::Gemini do
   let(:provider) do
-    described_class.new(name: 'Test', model: 'gemini-2.0-flash', api_key: 'AIza-test')
+    described_class.new(
+      address: described_class::DEFAULT_ADDRESS,
+      api_key: 'AIza-test',
+      model: 'gemini-2.0-flash',
+      name: 'Test'
+    )
   end
 
   describe '#build_uri' do
@@ -11,6 +16,13 @@ describe Dradis::Plugins::Echo::Provider::Gemini do
       uri = provider.send(:build_uri, 'gemini-2.0-flash')
       expect(uri.to_s).to include('gemini-2.0-flash')
       expect(uri.query).to eq('alt=sse')
+    end
+
+    it 'uses a custom address when set' do
+      provider.address = 'https://gemini.proxy.example.com/v1beta/models/'
+      uri = provider.send(:build_uri, 'gemini-2.0-flash')
+      expect(uri.to_s).to include('gemini.proxy.example.com')
+      expect(uri.to_s).to include('gemini-2.0-flash')
     end
   end
 

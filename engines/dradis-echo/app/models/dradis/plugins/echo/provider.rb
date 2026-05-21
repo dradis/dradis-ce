@@ -1,7 +1,5 @@
 module Dradis::Plugins::Echo
   class Provider < ApplicationRecord
-    include Provider::HttpStreaming
-
     self.table_name = 'dradis_plugins_echo_providers'
 
     # Each subclass automatically adds itself when loaded, so
@@ -15,13 +13,21 @@ module Dradis::Plugins::Echo
 
     encrypts :api_key
 
+    validates :address, presence: true,
+                        format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]),
+                                  message: 'must be a valid HTTP(S) URL' }
+    validates :api_key, presence: true, if: :requires_api_key?
     validates :model, :name, presence: true
 
-    def type_name
-      self.class.name.demodulize
+    def self.default_address
+      self::DEFAULT_ADDRESS
     end
 
-    def partial_name
+    def self.default_model
+      self::DEFAULT_MODEL
+    end
+
+    def icon_name
       self.class.name.demodulize.underscore
     end
 
@@ -30,6 +36,14 @@ module Dradis::Plugins::Echo
     # and in_use? iterates over them instead of hardcoding.
     def in_use?
       Roslin::IssueInteraction.settings.provider_id.to_s == id.to_s
+    end
+
+    def requires_api_key?
+      true
+    end
+
+    def type_name
+      self.class.name.demodulize
     end
   end
 end

@@ -1,15 +1,21 @@
 module Dradis::Plugins::Echo
   class Provider::Anthropic < Provider
-    API_VERSION = '2023-06-01'.freeze
-    DEFAULT_MAX_TOKENS = 4096
-    ENDPOINT = 'https://api.anthropic.com/v1/messages'.freeze
+    include Provider::HttpStreaming
 
-    validates :api_key, presence: true
+    API_VERSION = '2023-06-01'.freeze
+    DEFAULT_ADDRESS = 'https://api.anthropic.com/v1/messages'.freeze
+    DEFAULT_MAX_TOKENS = 4096
+    DEFAULT_MODEL = 'claude-sonnet-4-6'.freeze
 
     private
 
-    def build_uri(_model)
-      URI(ENDPOINT)
+    def build_body(prompt:, model:)
+      {
+        max_tokens: DEFAULT_MAX_TOKENS,
+        messages: [{ role: 'user', content: prompt }],
+        model: model,
+        stream: true
+      }
     end
 
     def build_headers
@@ -19,13 +25,8 @@ module Dradis::Plugins::Echo
       }
     end
 
-    def build_body(prompt:, model:)
-      {
-        max_tokens: DEFAULT_MAX_TOKENS,
-        messages: [{ role: 'user', content: prompt }],
-        model: model,
-        stream: true
-      }
+    def build_uri(_model)
+      URI(address)
     end
 
     # Anthropic sends several SSE event types; only content_block_delta carries text:

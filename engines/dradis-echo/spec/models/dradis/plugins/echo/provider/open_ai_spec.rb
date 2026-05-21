@@ -3,11 +3,16 @@ require File.expand_path('../../../../../factories/providers', __dir__)
 
 describe Dradis::Plugins::Echo::Provider::OpenAI do
   let(:provider) do
-    described_class.new(name: 'Test', model: 'gpt-4o', api_key: 'sk-test')
+    described_class.new(
+      address: described_class::DEFAULT_ADDRESS,
+      api_key: 'sk-test',
+      model: 'gpt-4o',
+      name: 'Test'
+    )
   end
 
   describe '#build_uri' do
-    it 'uses the default endpoint when address is blank' do
+    it 'appends chat/completions to the address' do
       expect(provider.send(:build_uri, 'gpt-4o').to_s)
         .to eq("#{described_class::DEFAULT_ADDRESS}chat/completions")
     end

@@ -3,12 +3,23 @@ require File.expand_path('../../../../../factories/providers', __dir__)
 
 describe Dradis::Plugins::Echo::Provider::Anthropic do
   let(:provider) do
-    described_class.new(name: 'Test', model: 'claude-sonnet-4-6', api_key: 'sk-ant-test')
+    described_class.new(
+      address: described_class::DEFAULT_ADDRESS,
+      api_key: 'sk-ant-test',
+      model: 'claude-sonnet-4-6',
+      name: 'Test'
+    )
   end
 
   describe '#build_uri' do
-    it 'always returns the Anthropic messages endpoint' do
-      expect(provider.send(:build_uri, 'claude-sonnet-4-6').to_s).to eq(described_class::ENDPOINT)
+    it 'returns the configured address' do
+      expect(provider.send(:build_uri, 'claude-sonnet-4-6').to_s).to eq(described_class::DEFAULT_ADDRESS)
+    end
+
+    it 'uses a custom address when set' do
+      provider.address = 'https://anthropic.proxy.example.com/v1/messages'
+      expect(provider.send(:build_uri, 'claude-sonnet-4-6').to_s)
+        .to eq('https://anthropic.proxy.example.com/v1/messages')
     end
   end
 

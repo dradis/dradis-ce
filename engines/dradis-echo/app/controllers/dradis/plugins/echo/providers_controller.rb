@@ -9,7 +9,12 @@ module Dradis::Plugins::Echo
 
     def new
       type = Provider::ALLOWED_TYPES.find { |t| t == params[:type] } || 'Ollama'
-      @provider = "Dradis::Plugins::Echo::Provider::#{type}".constantize.new
+      klass = "Dradis::Plugins::Echo::Provider::#{type}".constantize
+      @provider = klass.new(
+        address: klass.default_address,
+        model: klass.default_model,
+        name: type
+      )
     end
 
     def create

@@ -16,7 +16,7 @@ describe 'Echo Providers', js: true do
     it 'adds a new provider' do
       visit echo.new_provider_path
       fill_in 'Name', with: 'My Ollama'
-      fill_in 'Address', with: 'http://localhost:11434'
+      fill_in 'API Base URL', with: 'http://localhost:11434'
       fill_in 'Model', with: 'qwen2.5:14b'
       click_button 'Add Provider'
       expect(page).to have_content('My Ollama added.')
@@ -25,7 +25,7 @@ describe 'Echo Providers', js: true do
     it 'shows errors for invalid input' do
       visit echo.new_provider_path
       fill_in 'Name', with: ' '
-      fill_in 'Address', with: 'http://localhost:11434'
+      fill_in 'API Base URL', with: 'http://localhost:11434'
       fill_in 'Model', with: 'qwen2.5:14b'
       click_button 'Add Provider'
       expect(page).to have_content("can't be blank")
