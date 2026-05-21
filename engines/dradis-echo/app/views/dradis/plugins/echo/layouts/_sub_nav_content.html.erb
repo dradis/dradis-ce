@@ -1,4 +1,10 @@
 <ul class="navbar-nav">
+  <%= content_tag :li, class: class_names('nav-item', active: controller_path.include?('echo/agents')) do %>
+    <%= link_to echo.agents_path, class: 'nav-link' do %>
+      <i class="fa-solid fa-robot me-1" title="Agents"></i>
+      <span>Agents</span>
+    <% end %>
+  <% end %>
   <%= content_tag :li, class: class_names('nav-item', active: controller_path.ends_with?('echo/prompts')) do %>
     <%= link_to echo.prompts_path, class: 'nav-link' do %>
       <i class="fa-solid fa-database me-1" title="Manage Prompts"></i>
@@ -9,12 +15,6 @@
     <%= link_to echo.providers_path, class: 'nav-link' do %>
       <i class="fa-solid fa-plug me-1" title="Providers"></i>
       <span>Providers</span>
-    <% end %>
-  <% end %>
-  <%= content_tag :li, class: class_names('nav-item', active: controller_path.include?('echo/agents')) do %>
-    <%= link_to echo.agents_path, class: 'nav-link' do %>
-      <i class="fa-solid fa-robot me-1" title="Agents"></i>
-      <span>Agents</span>
     <% end %>
   <% end %>
 </ul>
