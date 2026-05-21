@@ -3,7 +3,10 @@ require 'rails_helper'
 describe Dradis::Plugins::Echo::Provider::HttpStreaming do
   let(:provider) do
     Dradis::Plugins::Echo::Provider::Anthropic.new(
-      name: 'Test', model: 'claude-sonnet-4-6', api_key: 'sk-ant-test'
+      address: 'https://api.anthropic.com/v1/messages',
+      api_key: 'sk-ant-test',
+      model: 'claude-sonnet-4-6',
+      name: 'Test'
     )
   end
 

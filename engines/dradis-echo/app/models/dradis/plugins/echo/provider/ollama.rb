@@ -1,8 +1,11 @@
 module Dradis::Plugins::Echo
   class Provider::Ollama < Provider
-    validates :address, presence: true,
-                        format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]),
-                                  message: 'must be a valid HTTP(S) URL' }
+    DEFAULT_ADDRESS = 'http://localhost:11434'.freeze
+    DEFAULT_MODEL = 'qwen2.5:14b'.freeze
+
+    def requires_api_key?
+      false
+    end
 
     def generate(prompt:, model: nil, &block)
       resolved_model = model || self.model

@@ -10,14 +10,10 @@ describe Dradis::Plugins::Echo::Provider do
 
   describe 'validations' do
     subject { build(:provider) }
-    it { should validate_presence_of(:model) }
-    it { should validate_presence_of(:name) }
-  end
-
-  describe 'Ollama validations' do
-    subject { build(:provider) }
 
     it { should validate_presence_of(:address) }
+    it { should validate_presence_of(:model) }
+    it { should validate_presence_of(:name) }
 
     it 'rejects a non-URL address' do
       subject.address = 'not a url'
@@ -39,44 +35,56 @@ describe Dradis::Plugins::Echo::Provider do
       subject.address = 'https://ollama.example.com'
       expect(subject).to be_valid
     end
-  end
 
-  describe 'OpenAI validations' do
-    subject { build(:open_ai_provider) }
+    context 'api_key' do
+      it 'is required for providers that need one' do
+        provider = build(:anthropic_provider, api_key: nil)
+        expect(provider).not_to be_valid
+        expect(provider.errors[:api_key]).to include("can't be blank")
+      end
 
-    it 'rejects an invalid address when provided' do
-      subject.address = 'not a url'
-      expect(subject).not_to be_valid
-      expect(subject.errors[:address]).to include('must be a valid HTTP(S) URL')
-    end
-
-    it 'accepts a blank address (uses default endpoint)' do
-      subject.address = nil
-      expect(subject).to be_valid
-    end
-
-    it 'accepts a valid custom base URL' do
-      subject.address = 'https://openai.example.com/v1/'
-      expect(subject).to be_valid
+      it 'is not required for Ollama' do
+        provider = build(:provider, api_key: nil)
+        expect(provider).to be_valid
+      end
     end
   end
 
-  describe '#type_name' do
-    it 'returns the demodulized class name' do
+  describe '.default_address' do
+    it 'raises on the base class' do
+      expect { described_class.default_address }.to raise_error(NameError)
+    end
+
+    it 'returns the default for each subclass' do
+      expect(described_class::Ollama.default_address).to eq('http://localhost:11434')
+      expect(described_class::OpenAI.default_address).to eq('https://api.openai.com/v1/')
+      expect(described_class::Anthropic.default_address).to eq('https://api.anthropic.com/v1/messages')
+      expect(described_class::Gemini.default_address).to include('generativelanguage.googleapis.com')
+    end
+  end
+
+  describe '.default_model' do
+    it 'raises on the base class' do
+      expect { described_class.default_model }.to raise_error(NameError)
+    end
+
+    it 'returns the default for each subclass' do
+      expect(described_class::Ollama.default_model).to eq('qwen2.5:14b')
+      expect(described_class::OpenAI.default_model).to eq('gpt-4o')
+      expect(described_class::Anthropic.default_model).to eq('claude-sonnet-4-6')
+      expect(described_class::Gemini.default_model).to eq('gemini-2.0-flash')
+    end
+  end
+
+  describe '#icon_name' do
+    it 'returns the underscored class name' do
       provider = build(:provider)
-      expect(provider.type_name).to eq('Ollama')
-    end
-  end
-
-  describe '#partial_name' do
-    it 'returns the underscored class name for use in partial paths' do
-      provider = build(:provider)
-      expect(provider.partial_name).to eq('ollama')
+      expect(provider.icon_name).to eq('ollama')
     end
 
     it 'handles multi-word type names' do
       provider = Dradis::Plugins::Echo::Provider::OpenAI.new
-      expect(provider.partial_name).to eq('open_ai')
+      expect(provider.icon_name).to eq('open_ai')
     end
   end
 
@@ -93,6 +101,23 @@ describe Dradis::Plugins::Echo::Provider do
       allow(Dradis::Plugins::Echo::Roslin::IssueInteraction)
         .to receive(:settings).and_return(double(provider_id: nil))
       expect(provider.in_use?).to be false
+    end
+  end
+
+  describe '#requires_api_key?' do
+    it 'returns true by default' do
+      expect(build(:anthropic_provider).requires_api_key?).to be true
+    end
+
+    it 'returns false for Ollama' do
+      expect(build(:provider).requires_api_key?).to be false
+    end
+  end
+
+  describe '#type_name' do
+    it 'returns the demodulized class name' do
+      provider = build(:provider)
+      expect(provider.type_name).to eq('Ollama')
     end
   end
 end
