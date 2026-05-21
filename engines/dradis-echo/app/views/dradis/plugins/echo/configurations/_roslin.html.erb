@@ -1,7 +1,7 @@
-<div class="card mb-4" data-controller="dradis--plugins--echo--agent">
-  <div class="card-body">
+<div class="card border-0" data-controller="dradis--plugins--echo--agent">
+  <div class="card-body px-0">
     <div class="d-flex align-items-start gap-3 mb-1">
-      <div class="form-check form-switch mt-1 flex-shrink-0">
+      <div class="form-check form-switch flex-shrink-0">
         <%= f.check_box :enabled,
               class: 'form-check-input',
               role: 'switch',
@@ -13,10 +13,10 @@
       </div>
     </div>
 
-    <div class="card mb-0" data-dradis--plugins--echo--agent-target="tool">
+    <div class="card border-0 mb-0" data-dradis--plugins--echo--agent-target="tool">
       <div class="card-body">
         <div class="d-flex align-items-start gap-3 mb-3">
-          <div class="form-check form-switch mt-1 flex-shrink-0">
+          <div class="form-check form-switch flex-shrink-0">
             <%= f.check_box :issue_interaction_enabled,
                   class: 'form-check-input',
                   role: 'switch',
