@@ -58,7 +58,11 @@ module Dradis::Plugins::Echo
       buffer = +''
 
       http.request(request) do |response|
-        raise "#{self.class.name} API error (#{response.code}): #{response.body}" unless response.is_a?(Net::HTTPSuccess)
+        unless response.is_a?(Net::HTTPSuccess)
+          error_body = +''
+          response.read_body { |chunk| error_body << chunk }
+          raise "#{self.class.name} API error (#{response.code}): #{error_body}"
+        end
 
         response.read_body do |chunk|
           buffer << chunk
