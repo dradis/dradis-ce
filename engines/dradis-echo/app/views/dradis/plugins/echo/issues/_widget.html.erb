@@ -13,9 +13,9 @@
 </div>
 
 <div class="collapse show" id="roslin-widget">
-  <% unless Dradis::Plugins::Echo::Roslin.enabled? %>
+  <% unless Dradis::Plugins::Echo::Agents::Roslin.enabled? %>
     <div class="alert alert-primary mt-0">
-      <%= link_to 'Enable Roslin', configurations_path %> to get AI-powered suggestions for this issue.
+      <%= link_to 'Enable Roslin', agents_path %> to get AI-powered suggestions for this issue.
     </div>
   <% end %>
 </div>

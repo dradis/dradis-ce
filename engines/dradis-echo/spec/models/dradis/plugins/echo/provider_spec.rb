@@ -1,4 +1,5 @@
 require 'rails_helper'
+require File.expand_path('../../../../factories/agents', __dir__)
 require File.expand_path('../../../../factories/providers', __dir__)
 
 describe Dradis::Plugins::Echo::Provider do
@@ -88,18 +89,25 @@ describe Dradis::Plugins::Echo::Provider do
     end
   end
 
+  describe '#generate' do
+    it 'raises NotImplementedError on the base class' do
+      provider = build(:provider)
+      # Ollama overrides #generate, so test the base class directly
+      expect {
+        Dradis::Plugins::Echo::Provider.new.generate(prompt: 'test')
+      }.to raise_error(NotImplementedError)
+    end
+  end
+
   describe '#in_use?' do
     let(:provider) { create(:provider) }
 
     it 'returns true when the provider is assigned to an agent' do
-      allow(Dradis::Plugins::Echo::Roslin::IssueInteraction)
-        .to receive(:settings).and_return(double(provider_id: provider.id))
+      create(:agent, provider: provider)
       expect(provider.in_use?).to be true
     end
 
     it 'returns false when the provider is not assigned to any agent' do
-      allow(Dradis::Plugins::Echo::Roslin::IssueInteraction)
-        .to receive(:settings).and_return(double(provider_id: nil))
       expect(provider.in_use?).to be false
     end
   end

@@ -11,7 +11,7 @@ module Dradis::Plugins::Echo
     # Sends prompt to the provider and returns the response.
     #
     # With a block: yields each text chunk as it arrives, enabling streaming UX
-    # (e.g. IssueInteractionJob broadcasts each chunk to the browser via Turbo).
+    # (e.g. InteractionJob broadcasts each chunk to the browser via Turbo).
     #
     # Without a block: accumulates all chunks and returns the complete response
     # as a string once the API finishes, for use outside a streaming context.

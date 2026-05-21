@@ -52,10 +52,12 @@ describe 'Echo Providers', js: true do
 
   describe 'deleting a provider' do
     it 'removes the provider' do
-      provider = create(:provider)
+      provider = create(:provider, name: 'Deletable')
       visit echo.providers_path
-      click_button 'Delete'
-      expect(page).to have_content("#{provider.name} removed.")
+      within('.provider-row', text: 'Deletable') do
+        click_button 'Delete'
+      end
+      expect(page).to have_content('Deletable removed.')
     end
   end
 end

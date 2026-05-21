@@ -11,6 +11,8 @@ module Dradis::Plugins::Echo
       ALLOWED_TYPES << subclass.name.demodulize
     end
 
+    has_many :agents, dependent: :restrict_with_error
+
     encrypts :api_key
 
     validates :address, presence: true,
@@ -27,15 +29,16 @@ module Dradis::Plugins::Echo
       self::DEFAULT_MODEL
     end
 
+    def generate(prompt:, model: nil, &block)
+      raise NotImplementedError, "#{self.class.name} must implement #generate"
+    end
+
     def icon_name
       self.class.name.demodulize.underscore
     end
 
-    # When more agents exist, replace this with a registry pattern:
-    # each element registers itself via Provider.register_element(self)
-    # and in_use? iterates over them instead of hardcoding.
     def in_use?
-      Roslin::IssueInteraction.settings.provider_id.to_s == id.to_s
+      agents.exists?
     end
 
     def requires_api_key?

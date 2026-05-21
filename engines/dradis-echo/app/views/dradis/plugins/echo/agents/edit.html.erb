@@ -1,0 +1,14 @@
+<% content_for :title, "Edit #{@agent.name}" %>
+
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">Dradis Echo</li>
+    <li class="breadcrumb-item"><%= link_to 'Agents', agents_path %></li>
+    <li class="breadcrumb-item active">Edit <%= @agent.name %></li>
+  </ol>
+<% end %>
+
+<div class="content-container">
+  <h4 class="header-underline">Edit <%= @agent.name %></h4>
+  <%= render 'form', agent: @agent %>
+</div>

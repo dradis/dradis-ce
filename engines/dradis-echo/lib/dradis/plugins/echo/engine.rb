@@ -49,6 +49,20 @@ module Dradis::Plugins::Echo
       )
     end
 
+    config.after_initialize do
+      if Agent.table_exists? && Provider.table_exists?
+        provider = Provider::Ollama.find_or_create_by!(address: 'http://localhost:11434') do |p|
+          p.model = 'qwen2.5:14b'
+          p.name = 'Ollama'
+        end
+
+        Agent.find_or_create_by!(name: 'Roslin') do |a|
+          a.agent_type = :system
+          a.provider = provider
+        end
+      end
+    end
+
     # `before:` option has to be a string as it has to match
     # a named initializer exactly as a String or a Symbol
     # "importmap" is a string, you can see this list to check
