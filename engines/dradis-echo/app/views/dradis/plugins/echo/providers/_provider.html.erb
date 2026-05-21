@@ -36,12 +36,18 @@
     <%= link_to edit_provider_path(provider), class: 'btn btn-warning btn-sm' do %>
       <i class="fa-solid fa-pencil"></i> Edit
     <% end %>
-    <%= button_to provider_path(provider), method: :delete,
-          class: 'btn btn-danger btn-sm',
-          form: { data: { turbo_confirm: provider.in_use? ?
-            "#{provider.name} is in use and cannot be deleted." :
-            "Delete #{provider.name}?" } } do %>
-      <i class="fa-solid fa-xmark"></i> Delete
+    <% if provider.in_use? %>
+      <span data-bs-toggle="tooltip" data-bs-title="<%= provider.name %> is in use and cannot be deleted.">
+        <button class="btn btn-danger btn-sm" disabled>
+          <i class="fa-solid fa-xmark"></i> Delete
+        </button>
+      </span>
+    <% else %>
+      <%= button_to provider_path(provider), method: :delete,
+            class: 'btn btn-danger btn-sm',
+            form: { data: { turbo_confirm: "Delete #{provider.name}?" } } do %>
+        <i class="fa-solid fa-xmark"></i> Delete
+      <% end %>
     <% end %>
   </div>
 </div>
