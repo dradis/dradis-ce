@@ -5,7 +5,7 @@
         <h5 class="card-title mb-1"><%= agent.name %></h5>
         <div class="d-flex align-items-center gap-2 mb-2">
           <span class="badge bg-secondary"><%= agent.agent_type.humanize %></span>
-          <span class="badge <%= agent.enabled? ? 'bg-success' : 'bg-warning text-dark' %>">
+          <span class="badge <%= agent.enabled? ? 'bg-success' : 'bg-danger' %>">
             <%= agent.enabled? ? 'Enabled' : 'Disabled' %>
           </span>
         </div>
@@ -17,7 +17,9 @@
         </div>
       </div>
       <div>
-        <%= link_to 'Edit', edit_agent_path(agent), class: 'btn btn-warning btn-sm' %>
+        <%= link_to edit_agent_path(agent), class: 'btn btn-warning btn-sm' do %>
+          <i class="fa-solid fa-pencil"></i> Edit
+        <% end %>
       </div>
     </div>
   </div>
