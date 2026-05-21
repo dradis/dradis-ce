@@ -33,11 +33,15 @@
     </div>
   </div>
   <div class="d-flex gap-2 flex-shrink-0">
-    <%= link_to 'Edit', edit_provider_path(provider), class: 'btn btn-warning btn-sm' %>
-    <%= button_to 'Delete', provider_path(provider), method: :delete,
+    <%= link_to edit_provider_path(provider), class: 'btn btn-warning btn-sm' do %>
+      <i class="fa-solid fa-pencil"></i> Edit
+    <% end %>
+    <%= button_to provider_path(provider), method: :delete,
           class: 'btn btn-danger btn-sm',
           form: { data: { turbo_confirm: provider.in_use? ?
             "#{provider.name} is in use and cannot be deleted." :
-            "Delete #{provider.name}?" } } %>
+            "Delete #{provider.name}?" } } do %>
+      <i class="fa-solid fa-xmark"></i> Delete
+    <% end %>
   </div>
 </div>
