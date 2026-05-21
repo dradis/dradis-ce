@@ -1,6 +1,9 @@
 class StaticPagesController < AuthenticatedController
+  before_action :set_bi_stats, only: [:bi_index]
   before_action :set_entries, only: [:issuelib_index, :issuelib_import]
   before_action :set_tickets, only: [:remediationtracker_index]
+
+  def bi_index; end
 
   def issuelib_index; end
 
@@ -16,6 +19,52 @@ class StaticPagesController < AuthenticatedController
   def remediationtracker_index; end
 
   private
+
+  def set_bi_stats
+    current_year_start = Time.current.beginning_of_year
+    last_year_start    = 1.year.ago.beginning_of_year
+    last_year_end      = 1.year.ago
+
+    issuelib_ids = Node.where(type_id: Node::Types::ISSUELIB).pluck(:id)
+    issues       = Issue.where(node_id: issuelib_ids)
+
+    @bi_tags      = Tag.joins(:taggings).where(taggings: { taggable_type: Issue.base_class.name, taggable_id: issues.select(:id) }).distinct
+    @selected_tag = params[:tag].presence
+    @selected_tag = nil unless @bi_tags.exists?(name: @selected_tag)
+
+    filtered_issues = @selected_tag ? issues.joins(:tags).where(tags: { name: @selected_tag }) : issues
+
+    current_issues_count = filtered_issues.where(created_at: current_year_start..Time.current).count
+    last_issues_count    = filtered_issues.where(created_at: last_year_start..last_year_end).count
+
+    current_users_count  = User.where(created_at: current_year_start..Time.current).count
+    last_users_count     = User.where(created_at: last_year_start..last_year_end).count
+
+    @bi_projects     = { current_year_count: 1, last_year_count: 1, yoy_delta: 0 }
+    @bi_issues       = {
+      current_year_count: current_issues_count,
+      last_year_count:    last_issues_count,
+      yoy_delta:          yoy_delta(current_issues_count, last_issues_count)
+    }
+    @bi_contributors = {
+      current_year_count: current_users_count,
+      last_year_count:    last_users_count,
+      yoy_delta:          yoy_delta(current_users_count, last_users_count)
+    }
+    @bi_top_issues   = filtered_issues.where(created_at: current_year_start..Time.current)
+      .group_by(&:title)
+      .map { |title, group| { title: title, count: group.size } }
+      .sort_by { |stats| -stats[:count] }
+      .first(10)
+  end
+
+  def yoy_delta(current, previous)
+    if previous.zero?
+      current > 0 ? 100 : 0
+    else
+      ((current - previous).to_f / previous * 100).round
+    end
+  end
 
   def set_entries
     @entries = issuelib_entries

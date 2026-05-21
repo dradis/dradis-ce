@@ -1,0 +1,150 @@
+<% content_for :title, 'Business Intelligence' %>
+
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to 'Dashboard', main_app.root_path %></li>
+    <li class="breadcrumb-item active">Business Intelligence</li>
+  </ol>
+<% end %>
+
+<% content_for :sidebar do %>
+  <div class="header">
+    <div class="header-inner">
+      <h5 class="header-name">BI Dashboard Tips</h5>
+      <div class="options">
+        <%= link_to '#bi-page-tips', data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle update state</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div id="bi-page-tips" class="page-tips show collapse">
+    <div class="bg-info">
+      <p>The BI Dashboard surfaces stats and analytics across your engagements so you can identify trends and draw conclusions from your security data.</p>
+      <p>Get an overview of your <strong>Projects</strong> and <strong>Issues</strong> from the current year, and surface your most common findings to prioritize your security investments.</p>
+      <p class="text-end card-link">More about <a href="https://dradis.com/tools/bi.html" target="_blank">Business Intelligence</a>.</p>
+    </div>
+  </div>
+<% end %>
+
+<h1>Your security posture at a glance</h1>
+<h2 class="mb-3">Year-over-year insights into your risk reduction</h2>
+
+<div class="row mt-4">
+  <div class="col-sm-6 col-xl-3">
+    <div class="content-container mb-3">
+      <div class="d-flex flex-column flex-grow-1 justify-content-center">
+        <div class="position-relative d-flex flex-column flex-grow-1">
+          <div class="bg-icon">
+            <i class="fa-solid fa-briefcase fa-2x"></i>
+          </div>
+          <h3 class="mb-0 fs-5 title">Projects</h3>
+          <h4 class="mb-0"><%= @bi_projects[:current_year_count] %></h4>
+          <p class="mb-3">created this year</p>
+          <h5 class="<%= class_names('delta', positive: @bi_projects[:yoy_delta] > 0, negative: @bi_projects[:yoy_delta] < 0) %>">
+            <i class="fa-solid <%= delta_icon(@bi_projects[:yoy_delta]) %> delta-icon"></i><%= @bi_projects[:yoy_delta].abs %>%
+          </h5>
+          <p>from <%= @bi_projects[:last_year_count] %> during Jan 1 - <%= Date.today.prev_year.strftime('%b %d %Y') %></p>
+        </div>
+      </div>
+    </div>
+
+    <a href="javascript:void(0)" class="js-try-pro" data-term="bi" data-url="https://dradis.com/pro/pages/bi.html">
+      <div class="content-container pro-teaser">
+        <div class="d-flex flex-column flex-grow-1 justify-content-center">
+          <div class="position-relative d-flex flex-column flex-grow-1">
+            <div class="bg-icon">
+              <i class="fa-solid fa-people-group fa-2x"></i>
+            </div>
+            <h3 class="mb-0 fs-5 title">Teams</h3>
+            <div class="mt-2">
+              <span class="badge text-bg-warning"><i class="fa-solid fa-star me-1"></i>Pro</span>
+              <p class="text-muted mt-2 mb-0">Track team performance and year-over-year growth across your organisation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div class="col-sm-6 col-xl-3">
+    <div class="content-container mb-3">
+      <div class="d-flex flex-column flex-grow-1 justify-content-center">
+        <div class="position-relative d-flex flex-column flex-grow-1">
+          <div class="bg-icon">
+            <i class="fa-solid fa-bug fa-2x"></i>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <h3 class="mb-0 fs-5 title">Issues</h3>
+            <div class="form-container">
+              <%= form_with url: static_bi_path, method: :get do |form| %>
+                <div class="small">
+                  <%= form.select :tag, options_for_select(tag_options(@bi_tags), @selected_tag), {}, data: { behavior: 'widget-filter' }, class: 'form-select' %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <h4 class="mb-0"><%= @bi_issues[:current_year_count] %></h4>
+          <p class="mb-3">created this year</p>
+          <h5 class="<%= class_names('delta', positive: @bi_issues[:yoy_delta] > 0, negative: @bi_issues[:yoy_delta] < 0) %>">
+            <i class="fa-solid <%= delta_icon(@bi_issues[:yoy_delta]) %> delta-icon"></i><%= @bi_issues[:yoy_delta].abs %>%
+          </h5>
+          <p>from <%= @bi_issues[:last_year_count] %> during Jan 1 - <%= Date.today.prev_year.strftime('%b %d %Y') %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-container">
+      <div class="d-flex flex-column flex-grow-1 justify-content-center">
+        <div class="position-relative d-flex flex-column flex-grow-1">
+          <div class="bg-icon">
+            <i class="fa-solid fa-chalkboard-user fa-2x"></i>
+          </div>
+          <h3 class="mb-0 fs-5 title">Contributors</h3>
+          <h4 class="mb-0"><%= @bi_contributors[:current_year_count] %></h4>
+          <p class="mb-3">active this year</p>
+          <h5 class="<%= class_names('delta', positive: @bi_contributors[:yoy_delta] > 0, negative: @bi_contributors[:yoy_delta] < 0) %>">
+            <i class="fa-solid <%= delta_icon(@bi_contributors[:yoy_delta]) %> delta-icon"></i><%= @bi_contributors[:yoy_delta].abs %>%
+          </h5>
+          <p>from <%= @bi_contributors[:last_year_count] %> during Jan 1 - <%= Date.today.prev_year.strftime('%b %d %Y') %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-12 col-xl-6">
+    <div class="content-container chart top-issues">
+      <div class="d-flex flex-column flex-grow-1 justify-content-center">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+          <div class="d-flex flex-column">
+            <h3 class="mb-0 fs-5">Most Common Issues</h3>
+            <small class="text-muted">created this year, across projects, by title</small>
+          </div>
+        </div>
+        <div class="chart-wrap py-3">
+          <% if @bi_top_issues.any? %>
+            <% max_count = @bi_top_issues.first[:count].to_f %>
+            <% @bi_top_issues.each do |issue| %>
+              <div class="d-flex flex-row align-items-center justify-content-between progress-wrap">
+                <p class="pe-3 text-end text-truncate issue-title"><%= issue[:title] %></p>
+                <div class="progress w-100">
+                  <% percent = (issue[:count].to_f / max_count) * 100 %>
+                  <div
+                    class="progress-bar"
+                    role="progressbar"
+                    style="width: <%= percent %>%"
+                    aria-valuenow="<%= issue[:count] %>"
+                    aria-valuemin="0"
+                    aria-valuemax="<%= max_count %>">
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-muted text-center mt-4">No issues created this year yet.</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
