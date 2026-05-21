@@ -29,7 +29,8 @@ export default class extends Controller {
     const contentEl = this._contentEl();
     if (!contentEl) return;
 
-    this.highlighter ||= new GrammarHighlighter(contentEl, this);
+    const storageKey = `grammar_dismissed:${this.commentableTypeValue}:${this.commentableIdValue}`;
+    this.highlighter ||= new GrammarHighlighter(contentEl, this, storageKey);
 
     const body = new URLSearchParams({
       commentable_type: this.commentableTypeValue,
@@ -51,14 +52,59 @@ export default class extends Controller {
   }
 
   showSuggestion(match) {
-    this.panelBodyTarget.innerHTML = this._buildPanelHTML(match);
+    const body = this.panelBodyTarget;
+    body.replaceChildren();
 
-    this.panelBodyTarget.querySelectorAll('[data-grammar-action=accept]').forEach(btn => {
-      btn.addEventListener('click', () => this._applyReplacement(match, btn.dataset.replacement));
-    });
+    const quote = document.createElement('blockquote');
+    quote.className   = 'fs-6 border-start border-3 ps-3 text-body-secondary mb-3';
+    quote.textContent = match.exact;
+    body.appendChild(quote);
 
-    this.panelBodyTarget.querySelector('[data-grammar-action=dismiss]')
-      ?.addEventListener('click', () => this._dismiss(match));
+    const comment = document.createElement('div');
+    comment.className = 'inline-thread-comment py-2';
+    comment.innerHTML =
+      '<div class="d-flex">' +
+        '<div class="me-2 flex-shrink-0" style="width:30px;text-align:center;">' +
+          '<i class="fa-solid fa-spell-check text-muted mt-1"></i>' +
+        '</div>' +
+        '<div class="w-100">' +
+          '<div class="mb-1"><span class="fw-semibold small">LanguageTool</span></div>' +
+          '<div class="content"></div>' +
+        '</div>' +
+      '</div>';
+
+    const content = comment.querySelector('.content');
+
+    const message = document.createElement('p');
+    message.className   = 'mb-2';
+    message.textContent = match.message;
+    content.appendChild(message);
+
+    if (match.replacements?.length) {
+      const replacements = document.createElement('div');
+      replacements.className = 'd-flex flex-wrap gap-1';
+
+      match.replacements.forEach(r => {
+        const btn = document.createElement('button');
+        btn.type        = 'button';
+        btn.className   = 'btn btn-sm btn-outline-primary';
+        btn.textContent = r;
+        btn.addEventListener('click', () => this._applyReplacement(match, r));
+        replacements.appendChild(btn);
+      });
+
+      content.appendChild(replacements);
+    }
+
+    body.appendChild(comment);
+    body.appendChild(document.createElement('hr'));
+
+    const dismissBtn = document.createElement('button');
+    dismissBtn.type      = 'button';
+    dismissBtn.className = 'btn btn-sm btn-outline-secondary';
+    dismissBtn.innerHTML = '<i class="fa-solid fa-xmark me-1"></i>Dismiss';
+    dismissBtn.addEventListener('click', () => this._dismiss(match));
+    body.appendChild(dismissBtn);
 
     new bootstrap.Offcanvas(this.panelTarget).show();
   }
@@ -116,54 +162,11 @@ export default class extends Controller {
       });
   }
 
-  _buildPanelHTML(match) {
-    let html = `<blockquote class="fs-6 border-start border-3 ps-3 text-body-secondary mb-3">${this._esc(match.exact)}</blockquote>`;
-
-    html += `
-      <div class="inline-thread-comment py-2">
-        <div class="d-flex">
-          <div class="me-2 flex-shrink-0" style="width:30px;text-align:center;">
-            <i class="fa-solid fa-spell-check text-muted mt-1"></i>
-          </div>
-          <div class="w-100">
-            <div class="mb-1"><span class="fw-semibold small">LanguageTool</span></div>
-            <div class="content">
-              <p class="mb-2">${this._esc(match.message)}</p>`;
-
-    if (match.replacements?.length) {
-      html += `<div class="d-flex flex-wrap gap-1">`;
-      match.replacements.forEach(r => {
-        html += `<button class="btn btn-sm btn-outline-primary" data-grammar-action="accept" data-replacement="${this._escAttr(r)}">${this._esc(r)}</button>`;
-      });
-      html += `</div>`;
-    }
-
-    html += `
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr>
-      <button class="btn btn-sm btn-outline-secondary" data-grammar-action="dismiss">
-        <i class="fa-solid fa-xmark me-1"></i>Dismiss
-      </button>`;
-
-    return html;
-  }
-
   _contentEl() {
     return document.querySelector('[data-behavior~=content-textile]');
   }
 
   _csrf() {
     return document.querySelector('meta[name="csrf-token"]').content;
-  }
-
-  _esc(str) {
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
-
-  _escAttr(str) {
-    return String(str).replace(/"/g, '&quot;');
   }
 }

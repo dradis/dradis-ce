@@ -8,10 +8,11 @@
 */
 
 class GrammarHighlighter {
-  constructor(contentElement, coordinator) {
+  constructor(contentElement, coordinator, storageKey) {
     this.contentEl   = contentElement;
     this.coordinator = coordinator;
-    this.dismissed   = new Set();
+    this.storageKey  = storageKey;
+    this.dismissed   = this._loadDismissed();
   }
 
   highlight(matches) {
@@ -34,6 +35,7 @@ class GrammarHighlighter {
 
   dismiss(match) {
     this.dismissed.add(this._key(match));
+    this._saveDismissed();
     this.contentEl.querySelectorAll('[data-behavior~=grammar-suggestion-highlight]').forEach(mark => {
       if (mark.dataset.matchKey === this._key(match)) {
         const parent = mark.parentNode;
@@ -128,7 +130,26 @@ class GrammarHighlighter {
   }
 
   _key(match) {
-    return `${match.field_name}:${match.offset}:${match.length}`;
+    return `${match.field_name}:${match.exact}`;
+  }
+
+  _loadDismissed() {
+    if (!this.storageKey) return new Set();
+    try {
+      const stored = localStorage.getItem(this.storageKey);
+      return stored ? new Set(JSON.parse(stored)) : new Set();
+    } catch {
+      return new Set();
+    }
+  }
+
+  _saveDismissed() {
+    if (!this.storageKey) return;
+    try {
+      localStorage.setItem(this.storageKey, JSON.stringify([...this.dismissed]));
+    } catch {
+      // localStorage may be unavailable (private browsing, storage full)
+    }
   }
 }
 
