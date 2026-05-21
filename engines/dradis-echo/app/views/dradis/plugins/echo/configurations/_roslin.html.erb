@@ -5,7 +5,7 @@
         <%= f.check_box :enabled,
               class: 'form-check-input',
               role: 'switch',
-              data: { agent_switch: '', action: 'change->dradis--plugins--echo--agent#toggle' } %>
+              data: { "dradis--plugins--echo--agent-target" => 'agentSwitch', action: 'change->dradis--plugins--echo--agent#toggle' } %>
       </div>
       <div>
         <h5 class="card-title mb-1">Roslin</h5>

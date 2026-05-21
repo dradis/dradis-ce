@@ -2,24 +2,22 @@ module Dradis::Plugins::Echo
   class ProvidersController < ApplicationController
     before_action :admin_required, if: -> { defined?(Dradis::Pro) }
     before_action :set_provider, only: [:edit, :update, :destroy]
+    before_action :set_provider_type, only: [:new, :create]
 
     def index
       @providers = Provider.all.order(:type)
     end
 
     def new
-      type = Provider::ALLOWED_TYPES.find { |t| t == params[:type] } || 'Ollama'
-      klass = "Dradis::Plugins::Echo::Provider::#{type}".constantize
-      @provider = klass.new(
-        address: klass.default_address,
-        model: klass.default_model,
-        name: type
+      @provider = @provider_type.new(
+        address: @provider_type.default_address,
+        model: @provider_type.default_model,
+        name: @provider_type.name.demodulize
       )
     end
 
     def create
-      type = Provider::ALLOWED_TYPES.find { |t| t == provider_params[:type] } || 'Ollama'
-      @provider = Provider.new(provider_params.merge(type: "Dradis::Plugins::Echo::Provider::#{type}"))
+      @provider = Provider.new(provider_params.except(:type).merge(type: @provider_type.name))
 
       if @provider.save
         redirect_to providers_path, notice: "#{@provider.name} added."
@@ -62,6 +60,12 @@ module Dradis::Plugins::Echo
 
     def set_provider
       @provider = Provider.find(params[:id])
+    end
+
+    def set_provider_type
+      type_name = params[:type].presence || params.dig(:provider, :type)
+      type = Provider::ALLOWED_TYPES.find { |t| t == type_name } || 'Ollama'
+      @provider_type = "Dradis::Plugins::Echo::Provider::#{type}".constantize
     end
 
     def provider_params
