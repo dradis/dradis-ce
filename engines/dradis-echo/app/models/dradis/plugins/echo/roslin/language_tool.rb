@@ -1,5 +1,5 @@
 module Dradis::Plugins::Echo
-  class Roslin
+  module Roslin
     class LanguageTool
       include Dradis::Plugins::Configurable
 
@@ -11,7 +11,7 @@ module Dradis::Plugins::Echo
       end
 
       def self.enabled?
-        Roslin.enabled? && ActiveModel::Type::Boolean.new.cast(settings.enabled)
+        Agents::Roslin.enabled? && ActiveModel::Type::Boolean.new.cast(settings.enabled)
       end
 
       def self.load_configuration(form)

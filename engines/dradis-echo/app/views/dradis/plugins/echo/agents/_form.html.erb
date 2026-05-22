@@ -32,6 +32,13 @@
     <div class="form-text">Leave blank to use the provider's default model<% if agent.provider %> (default: <code><%= agent.provider.model %></code>)<% end %>.</div>
   </div>
 
+  <div class="mb-3">
+    <%= f.label :language_tool_address, 'LanguageTool address', class: 'form-label' %>
+    <%= f.text_field :language_tool_address, class: 'form-control',
+        placeholder: Dradis::Plugins::Echo::Roslin::LanguageTool::DEFAULT_ADDRESS %>
+    <div class="form-text">Address of the LanguageTool server (default: <code><%= Dradis::Plugins::Echo::Roslin::LanguageTool::DEFAULT_ADDRESS %></code>).</div>
+  </div>
+
   <div class="form-actions">
     <%= f.submit 'Update Agent', class: 'btn btn-primary' %>
     or <%= link_to 'Cancel', agents_path %>

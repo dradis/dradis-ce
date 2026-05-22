@@ -28,7 +28,7 @@ module Dradis::Plugins::Echo
     end
 
     def agent_params
-      params.require(:agent).permit(:enabled, :model_override, :provider_id)
+      params.require(:agent).permit(:enabled, :language_tool_address, :model_override, :provider_id)
     end
 
     def set_agent
