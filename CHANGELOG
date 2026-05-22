@@ -8,6 +8,7 @@
   - Upgraded gems:
     - addressable, net-imap, nokogiri, rack
   - Bugs fixes:
+    - Fields: show a visible border on dropdown fields in the editor
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
