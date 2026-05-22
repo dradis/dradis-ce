@@ -2,7 +2,7 @@ module Dradis::Plugins::Echo
   class Provider::OpenAI < Provider
     include Provider::HttpStreaming
 
-    DEFAULT_ADDRESS = 'https://api.openai.com/v1/'.freeze
+    DEFAULT_ADDRESS = 'https://api.openai.com/v1'.freeze
     DEFAULT_MODEL = 'gpt-4o'.freeze
     END_OF_STREAM_MARKER = '[DONE]'.freeze
 
@@ -21,7 +21,7 @@ module Dradis::Plugins::Echo
     end
 
     def build_uri(_model)
-      URI.join(address, 'chat/completions')
+      URI("#{address}/chat/completions")
     end
 
     def end_of_stream_marker

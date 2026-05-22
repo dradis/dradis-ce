@@ -1,4 +1,5 @@
 require 'rails_helper'
+require File.expand_path('../../../../factories/agents', __dir__)
 require File.expand_path('../../../../factories/providers', __dir__)
 
 describe Dradis::Plugins::Echo::Provider do
@@ -57,7 +58,7 @@ describe Dradis::Plugins::Echo::Provider do
 
     it 'returns the default for each subclass' do
       expect(described_class::Ollama.default_address).to eq('http://localhost:11434')
-      expect(described_class::OpenAI.default_address).to eq('https://api.openai.com/v1/')
+      expect(described_class::OpenAI.default_address).to eq('https://api.openai.com/v1')
       expect(described_class::Anthropic.default_address).to eq('https://api.anthropic.com/v1/messages')
       expect(described_class::Gemini.default_address).to include('generativelanguage.googleapis.com')
     end
@@ -72,7 +73,7 @@ describe Dradis::Plugins::Echo::Provider do
       expect(described_class::Ollama.default_model).to eq('qwen2.5:14b')
       expect(described_class::OpenAI.default_model).to eq('gpt-4o')
       expect(described_class::Anthropic.default_model).to eq('claude-sonnet-4-6')
-      expect(described_class::Gemini.default_model).to eq('gemini-2.0-flash')
+      expect(described_class::Gemini.default_model).to eq('gemini-2.5-flash')
     end
   end
 
@@ -88,19 +89,13 @@ describe Dradis::Plugins::Echo::Provider do
     end
   end
 
-  describe '#in_use?' do
-    let(:provider) { create(:provider) }
-
-    it 'returns true when the provider is assigned to an agent' do
-      allow(Dradis::Plugins::Echo::Roslin::IssueInteraction)
-        .to receive(:settings).and_return(double(provider_id: provider.id))
-      expect(provider.in_use?).to be true
-    end
-
-    it 'returns false when the provider is not assigned to any agent' do
-      allow(Dradis::Plugins::Echo::Roslin::IssueInteraction)
-        .to receive(:settings).and_return(double(provider_id: nil))
-      expect(provider.in_use?).to be false
+  describe '#generate' do
+    it 'raises NotImplementedError on the base class' do
+      provider = build(:provider)
+      # Ollama overrides #generate, so test the base class directly
+      expect {
+        Dradis::Plugins::Echo::Provider.new.generate(prompt: 'test')
+      }.to raise_error(NotImplementedError)
     end
   end
 

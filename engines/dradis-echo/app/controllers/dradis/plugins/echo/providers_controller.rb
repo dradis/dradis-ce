@@ -5,7 +5,7 @@ module Dradis::Plugins::Echo
     before_action :set_provider_type, only: [:new, :create]
 
     def index
-      @providers = Provider.all.order(:type)
+      @providers = Provider.includes(:agents).all.order(:type)
     end
 
     def new
@@ -41,11 +41,10 @@ module Dradis::Plugins::Echo
     end
 
     def destroy
-      if @provider.in_use?
-        redirect_to providers_path, alert: "#{@provider.name} is in use and cannot be deleted."
-      else
-        @provider.destroy
+      if @provider.destroy
         redirect_to providers_path, notice: "#{@provider.name} removed."
+      else
+        redirect_to providers_path, alert: "#{@provider.name} is in use and cannot be deleted."
       end
     end
 
