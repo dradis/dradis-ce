@@ -28,8 +28,8 @@
   <div class="mb-3">
     <%= f.label :model_override, 'Model override', class: 'form-label' %>
     <%= f.text_field :model_override, class: 'form-control',
-        placeholder: "Uses provider's default model" %>
-    <div class="form-text">Leave blank to use the provider's default model<% if agent.provider %> (default: <code><%= agent.provider.model %></code>)<% end %>.</div>
+        placeholder: "Uses provider's configured model" %>
+    <div class="form-text">Leave blank to use the model configured on the provider<% if agent.provider %> (currently: <code><%= agent.provider.model %></code>)<% end %>.</div>
   </div>
 
   <div class="form-actions">
