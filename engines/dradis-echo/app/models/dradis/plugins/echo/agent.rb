@@ -1,12 +1,21 @@
 module Dradis::Plugins::Echo
   class Agent < ApplicationRecord
-    belongs_to :provider
-
     enum :agent_type, %i[system user], default: :user
 
+    # -- Relationships --------------------------------------------------------
+    belongs_to :provider
+
+    # -- Callbacks ------------------------------------------------------------
+    before_destroy :prevent_system_deletion
+
+    # -- Validations ----------------------------------------------------------
     validates :name, presence: true, uniqueness: true
 
-    before_destroy :prevent_system_deletion
+    # -- Scopes ---------------------------------------------------------------
+
+    # -- Class Methods --------------------------------------------------------
+
+    # -- Instance Methods -----------------------------------------------------
 
     private
 
