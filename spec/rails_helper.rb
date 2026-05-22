@@ -95,7 +95,6 @@ RSpec.configure do |config|
     # tmp/storage so we only need to clean one place.
     FileUtils.rm_rf(Rails.root.join('tmp/storage'))
     FileUtils.mkdir_p(Attachment.pwd)
-
   end
 end
 
