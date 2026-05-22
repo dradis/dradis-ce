@@ -11,7 +11,7 @@ module Dradis::Plugins::Echo
     # Sends prompt to the provider and returns the response.
     #
     # With a block: yields each text chunk as it arrives, enabling streaming UX
-    # (e.g. IssueInteractionJob broadcasts each chunk to the browser via Turbo).
+    # (e.g. InteractionJob broadcasts each chunk to the browser via Turbo).
     #
     # Without a block: accumulates all chunks and returns the complete response
     # as a string once the API finishes, for use outside a streaming context.
@@ -46,7 +46,9 @@ module Dradis::Plugins::Echo
     def parse_sse_response(uri, headers:, body:, &block)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme == 'https'
+      http.open_timeout = 10
       http.read_timeout = READ_TIMEOUT
+      http.write_timeout = 10
 
       request = Net::HTTP::Post.new(uri)
       request['Content-Type'] = 'application/json'
@@ -56,7 +58,11 @@ module Dradis::Plugins::Echo
       buffer = +''
 
       http.request(request) do |response|
-        raise "#{self.class.name} API error (#{response.code}): #{response.body}" unless response.is_a?(Net::HTTPSuccess)
+        unless response.is_a?(Net::HTTPSuccess)
+          error_body = +''
+          response.read_body { |chunk| error_body << chunk }
+          raise "#{self.class.name} API error (#{response.code}): #{error_body}"
+        end
 
         response.read_body do |chunk|
           buffer << chunk

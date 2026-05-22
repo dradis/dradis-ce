@@ -1,9 +1,14 @@
 module Dradis::Plugins::Echo
   class Provider::Ollama < Provider
-    validates :address, presence: true
+    DEFAULT_ADDRESS = 'http://localhost:11434'.freeze
+    DEFAULT_MODEL = 'qwen2.5:14b'.freeze
+
+    def requires_api_key?
+      false
+    end
 
     def generate(prompt:, model: nil, &block)
-      resolved_model = model || self.model
+      resolved_model = model.presence || self.model
       buffer = block_given? ? nil : +''
 
       client.generate({ model: resolved_model, prompt: prompt }) do |event, _raw|

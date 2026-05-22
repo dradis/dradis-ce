@@ -1,0 +1,10 @@
+<div class="dropdown d-inline">
+  <button type="button" class="btn btn-primary mb-2 dropdown-toggle" data-bs-toggle="dropdown">
+    <i class="fa-solid fa-plus"></i> New Provider
+  </button>
+  <ul class="dropdown-menu">
+    <% Dradis::Plugins::Echo::Provider::ALLOWED_TYPES.each do |type| %>
+      <li><%= link_to type, new_provider_path(type: type), class: 'dropdown-item' %></li>
+    <% end %>
+  </ul>
+</div>

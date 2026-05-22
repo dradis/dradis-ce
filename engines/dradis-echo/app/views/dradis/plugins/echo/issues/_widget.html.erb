@@ -1,41 +1,25 @@
-<% if Dradis::Plugins::Echo::Roslin.enabled? %>
-  <% grammar_enabled = Dradis::Plugins::Echo::Roslin::LanguageTool.enabled? %>
-<% if grammar_enabled %>
-<div class="header"
-     data-controller="dradis--plugins--echo--grammar"
-     data-dradis--plugins--echo--grammar-commentable-type-value="<%= @issue.class %>"
-     data-dradis--plugins--echo--grammar-commentable-id-value="<%= @issue.id %>"
-     data-dradis--plugins--echo--grammar-grammar-check-url-value="<%= echo.project_grammar_check_path(current_project) %>"
-     data-dradis--plugins--echo--grammar-grammar-replacements-url-value="<%= echo.project_grammar_replacements_path(current_project) %>">
-<% else %>
 <div class="header">
-<% end %>
   <div class="header-inner">
     <h5 class="header-name">
-      <i class="fa-solid fa-robot fa-fw me-1"></i> Roslin
+      Roslin
+      <i class="fa-solid ms-2 fa-info-circle"></i>
     </h5>
     <div class="options">
-      <a data-bs-toggle="collapse" data-behavior="collapse-collection" href="#roslin-widget-<%= @issue.id %>">
-        <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i>
-        <span class="visually-hidden">Toggle Roslin Widget</span>
+      <a data-bs-toggle="collapse" data-behavior="collapse-collection" href="#roslin-widget">
+        <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle Roslin Agent Widget</span>
       </a>
     </div>
   </div>
-  <div class="collapse show" id="roslin-widget-<%= @issue.id %>">
-    <% if grammar_enabled %>
-      <div class="d-flex align-items-center justify-content-between mb-2">
-        <button class="btn btn-sm btn-outline-secondary"
-                data-dradis--plugins--echo--grammar-target="checkButton"
-                data-action="click->dradis--plugins--echo--grammar#check">
-          Check
-        </button>
-        <button class="btn btn-sm btn-link text-muted p-0"
-                data-action="click->dradis--plugins--echo--grammar#clear">
-          Clear
-        </button>
-      </div>
-      <span class="small text-muted" data-dradis--plugins--echo--grammar-target="status"></span>
-    <% end %>
-  </div>
 </div>
-<% end %>
+
+<div class="collapse show" id="roslin-widget">
+  <% if Dradis::Plugins::Echo::Agents::Roslin.enabled? %>
+    <div class="alert alert-primary mt-0">
+      Use the <strong>Echo</strong> tab to run AI prompts against this issue.
+    </div>
+  <% else %>
+    <div class="alert alert-primary mt-0">
+      <%= link_to 'Enable Roslin', echo.agents_path %> to get AI-powered suggestions for this issue.
+    </div>
+  <% end %>
+</div>

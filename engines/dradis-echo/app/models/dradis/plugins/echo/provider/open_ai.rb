@@ -1,20 +1,12 @@
 module Dradis::Plugins::Echo
   class Provider::OpenAI < Provider
-    DEFAULT_ADDRESS = 'https://api.openai.com/v1/'.freeze
+    include Provider::HttpStreaming
+
+    DEFAULT_ADDRESS = 'https://api.openai.com/v1'.freeze
+    DEFAULT_MODEL = 'gpt-4o'.freeze
     END_OF_STREAM_MARKER = '[DONE]'.freeze
 
-    validates :api_key, presence: true
-
     private
-
-    def build_uri(_model)
-      base = address.presence || DEFAULT_ADDRESS
-      URI.join(base, 'chat/completions')
-    end
-
-    def build_headers
-      { 'Authorization' => "Bearer #{api_key}" }
-    end
 
     def build_body(prompt:, model:)
       {
@@ -22,6 +14,14 @@ module Dradis::Plugins::Echo
         messages: [{ role: 'user', content: prompt }],
         stream: true
       }
+    end
+
+    def build_headers
+      { 'Authorization' => "Bearer #{api_key}" }
+    end
+
+    def build_uri(_model)
+      URI("#{address}/chat/completions")
     end
 
     def end_of_stream_marker
