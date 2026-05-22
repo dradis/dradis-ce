@@ -355,9 +355,9 @@
     .logo-text { fill: #000000; stroke: #000000; }
 
     @media (prefers-color-scheme: dark) {
-      .logo-ring { fill: #e8e8e8; }
-      .logo-ring-accent { fill: #636363; }
-      .logo-text { fill: #f4f4f4; stroke: #f4f4f4; }
+      .logo-ring { fill: #d2e7db; }
+      .logo-ring-accent { fill: #11512c; }
+      .logo-text { fill: #d2e7db; stroke: #d2e7db; }
     }
   </style>
   </defs>
