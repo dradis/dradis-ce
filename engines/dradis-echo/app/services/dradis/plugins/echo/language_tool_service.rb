@@ -15,7 +15,9 @@ module Dradis::Plugins::Echo
 
     def check_field(field_name, text)
       uri      = URI("#{@address}/v2/check")
-      response = Net::HTTP.post_form(uri, text: text, language: 'en-US')
+      response = Net::HTTP.start(uri.host, uri.port, open_timeout: 5, read_timeout: 10) do |http|
+        http.post(uri.path, URI.encode_www_form(text: text, language: 'en-US'))
+      end
 
       JSON.parse(response.body)['matches'].map do |m|
         {

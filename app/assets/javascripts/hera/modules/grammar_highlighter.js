@@ -22,6 +22,10 @@ class GrammarHighlighter extends BaseHighlighter {
     });
   }
 
+  clearHighlights() {
+    this._clearHighlights('grammar-suggestion-highlight');
+  }
+
   dismiss(match) {
     this.dismissed.add(this._key(match));
     this._saveDismissed();

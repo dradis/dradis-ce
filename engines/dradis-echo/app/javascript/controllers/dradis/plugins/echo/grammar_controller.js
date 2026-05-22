@@ -46,7 +46,10 @@ export default class extends Controller {
       },
       body: body.toString()
     })
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error(`Grammar check failed: ${r.status}`);
+        return r.json();
+      })
       .then(matches => this.highlighter.highlight(matches))
       .catch(err => console.warn('GrammarCheck: check failed:', err));
   }
@@ -64,7 +67,7 @@ export default class extends Controller {
     comment.className = 'inline-thread-comment py-2';
     comment.innerHTML =
       '<div class="d-flex">' +
-        '<div class="me-2 flex-shrink-0" style="width:30px;text-align:center;">' +
+        '<div class="me-2 flex-shrink-0">' +
           '<i class="fa-solid fa-spell-check text-muted mt-1"></i>' +
         '</div>' +
         '<div class="w-100">' +
