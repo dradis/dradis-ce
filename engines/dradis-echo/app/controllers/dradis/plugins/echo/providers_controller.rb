@@ -5,7 +5,7 @@ module Dradis::Plugins::Echo
     before_action :set_provider_type, only: [:new, :create]
 
     def index
-      @providers = Provider.all.order(:type)
+      @providers = Provider.includes(:agents).all.order(:type)
     end
 
     def new

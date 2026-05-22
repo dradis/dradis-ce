@@ -5,7 +5,7 @@ module Dradis::Plugins::Echo
     before_action :set_providers, only: [:edit, :update]
 
     def index
-      @agents = Agent.all.order(:name)
+      @agents = Agent.includes(:provider).all.order(:name)
     end
 
     def edit; end
