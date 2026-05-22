@@ -8,7 +8,12 @@ module Dradis::Plugins::Echo
       def instance
         Agent.find_by!(name: 'Roslin')
       end
-      delegate :enabled?, :id, :model_override, :provider, to: :instance
+
+      def enabled?
+        Agent.find_by(name: 'Roslin')&.enabled? || false
+      end
+
+      delegate :id, :model_override, :provider, to: :instance
     end
   end
 end
