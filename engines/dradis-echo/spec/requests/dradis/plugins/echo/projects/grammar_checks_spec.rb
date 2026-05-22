@@ -27,7 +27,7 @@ describe 'Grammar checks' do
 
   describe 'POST /addons/echo/projects/:project_id/grammar_check' do
     it 'returns grammar matches for a project issue' do
-      post '/addons/echo/projects/#{@project.id}/grammar_check', params: {
+      post "/addons/echo/projects/#{@project.id}/grammar_check", params: {
         commentable_type: 'Issue',
         commentable_id:   issue.id
       }
@@ -43,7 +43,7 @@ describe 'Grammar checks' do
       other_issue = create(:issue, node: create(:node))
 
       expect {
-        post '/addons/echo/projects/#{@project.id}/grammar_check', params: {
+        post "/addons/echo/projects/#{@project.id}/grammar_check", params: {
           commentable_type: 'Issue',
           commentable_id:   other_issue.id
         }
@@ -51,7 +51,7 @@ describe 'Grammar checks' do
     end
 
     it 'returns 422 for an invalid commentable_type' do
-      post '/addons/echo/projects/#{@project.id}/grammar_check', params: {
+      post "/addons/echo/projects/#{@project.id}/grammar_check", params: {
         commentable_type: 'User',
         commentable_id:   1
       }
