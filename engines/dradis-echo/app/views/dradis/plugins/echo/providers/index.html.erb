@@ -34,22 +34,20 @@
 
 <div class="content-container">
   <h4 class="header-underline">Providers
-    <% if @providers.any? %>
-      <span class="actions pt-1">
-        <div class="action">
-          <div class="dropdown">
-            <%= link_to 'javascript:void(0)', class: 'dropdown-toggle', data: { bs_toggle: 'dropdown' } do %>
-              <i class="fa-solid fa-plus me-1"></i>New Provider
+    <span class="actions pt-1">
+      <div class="action">
+        <div class="dropdown">
+          <%= link_to 'javascript:void(0)', class: 'dropdown-toggle', data: { bs_toggle: 'dropdown' } do %>
+            <i class="fa-solid fa-plus me-1"></i>New Provider
+          <% end %>
+          <ul class="dropdown-menu">
+            <% Dradis::Plugins::Echo::Provider::ALLOWED_TYPES.each do |type| %>
+              <li><%= link_to type, new_provider_path(type: type), class: 'dropdown-item' %></li>
             <% end %>
-            <ul class="dropdown-menu">
-              <% Dradis::Plugins::Echo::Provider::ALLOWED_TYPES.each do |type| %>
-                <li><%= link_to type, new_provider_path(type: type), class: 'dropdown-item' %></li>
-              <% end %>
-            </ul>
-          </div>
+          </ul>
         </div>
-      </span>
-    <% end %>
+      </div>
+    </span>
   </h4>
 
   <% if @providers.any? %>
@@ -58,7 +56,6 @@
     </div>
   <% else %>
     <%= render 'shared/empty_state',
-          actions_partial: 'dradis/plugins/echo/providers/empty_state_actions',
           docs_link: 'https://dradis.com/support/guides/echo/providers.html',
           name: 'provider',
           text: 'Use providers to connect Echo to your LLM services. Configure connections to OpenAI, Anthropic, or a self-hosted Ollama instance to power your AI tools.' %>
