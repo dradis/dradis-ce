@@ -14,7 +14,7 @@ describe Dradis::Plugins::Echo::Provider::OpenAI do
   describe '#build_uri' do
     it 'appends chat/completions to the address' do
       expect(provider.send(:build_uri, 'gpt-4o').to_s)
-        .to eq("#{described_class::DEFAULT_ADDRESS}chat/completions")
+        .to eq("#{described_class::DEFAULT_ADDRESS}/chat/completions")
     end
 
     it 'uses a custom address when set' do

@@ -2,7 +2,7 @@ module Dradis::Plugins::Echo
   class Provider::Gemini < Provider
     include Provider::HttpStreaming
 
-    DEFAULT_ADDRESS = 'https://generativelanguage.googleapis.com/v1beta/models/'.freeze
+    DEFAULT_ADDRESS = 'https://generativelanguage.googleapis.com/v1beta/models'.freeze
     DEFAULT_MODEL = 'gemini-2.5-flash'.freeze
 
     private
@@ -18,7 +18,7 @@ module Dradis::Plugins::Echo
     end
 
     def build_uri(model)
-      URI("#{address.chomp('/')}/#{model}:streamGenerateContent?alt=sse")
+      URI("#{address}/#{model}:streamGenerateContent?alt=sse")
     end
 
     # Gemini SSE envelope (with alt=sse query param):

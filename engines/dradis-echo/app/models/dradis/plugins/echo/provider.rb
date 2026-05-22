@@ -1,7 +1,5 @@
 module Dradis::Plugins::Echo
   class Provider < ApplicationRecord
-    self.table_name = 'dradis_plugins_echo_providers'
-
     # Each subclass automatically adds itself when loaded, so
     # the list remains up-to-date when we add new providers.
     ALLOWED_TYPES = []
@@ -14,6 +12,8 @@ module Dradis::Plugins::Echo
     has_many :agents, dependent: :restrict_with_error
 
     encrypts :api_key
+
+    normalizes :address, with: ->(a) { a.strip.chomp('/') }
 
     validates :address, presence: true,
                         format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]),
