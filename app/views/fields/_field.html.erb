@@ -22,7 +22,7 @@
     <div class="edit-hover">
       <% if render_dropdown?(value) %>
         <% options = value.split(' | ') %>
-        <%= select :item_form, "field_value_#{index}", options, {}, { class: 'form-control', data: { behavior: 'preview-enabled' }, tabindex: index + 1 } %>
+        <%= select :item_form, "field_value_#{index}", options, {}, { class: 'form-select', data: { behavior: 'preview-enabled' }, tabindex: index + 1 } %>
       <% else %>
         <%= label_tag "item_form[field_value_#{index}]", 'Field Value', class: 'visually-hidden' %>
         <%= text_area_tag "item_form[field_value_#{index}]", value, rows: 1,
