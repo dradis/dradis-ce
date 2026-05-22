@@ -9,6 +9,7 @@
     - addressable, net-imap, nokogiri, rack
   - Bugs fixes:
     - Drops: preserve Liquid tags when sanitizing issue and evidence field values
+    - Fields: show a visible border on dropdown fields in the editor
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
