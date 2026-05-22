@@ -44,7 +44,7 @@ class GrammarHighlighter extends BaseHighlighter {
     marks.forEach(mark => {
       mark.addEventListener('click', e => {
         e.preventDefault();
-        this.coordinator.showSuggestion(match);
+        this.coordinator.showSuggestion(match, mark);
       });
     });
   }

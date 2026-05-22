@@ -1,7 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ['panel', 'panelBody']
   static values  = {
     commentableType:        String,
     commentableId:          String,
@@ -10,17 +9,26 @@ export default class extends Controller {
   }
 
   connect() {
-    this.highlighter = null;
+    this.highlighter    = null;
+    this._activePopover = null;
+    this._activeMark    = null;
 
     const contentEl = this._contentEl();
-    if (!contentEl) return;
-
-    this._onLiquidRendered = () => this._fetchAndHighlight();
-    contentEl.addEventListener('dradis:liquid-rendered', this._onLiquidRendered);
+    if (contentEl) {
+      this._onLiquidRendered = () => this._fetchAndHighlight();
+      contentEl.addEventListener('dradis:liquid-rendered', this._onLiquidRendered);
+    } else {
+      this._watchPreviewPane();
+    }
   }
 
   disconnect() {
     this._contentEl()?.removeEventListener('dradis:liquid-rendered', this._onLiquidRendered);
+    this._destroyPopover();
+    if (this._previewObserver) {
+      this._previewObserver.disconnect();
+      this._previewObserver = null;
+    }
   }
 
   // ----------------------------------------------------------------- private
@@ -32,12 +40,46 @@ export default class extends Controller {
     const storageKey = `grammar_dismissed:${this.commentableTypeValue}:${this.commentableIdValue}`;
     this.highlighter ||= new GrammarHighlighter(contentEl, this, storageKey);
 
+    this._fetchMatches().then(matches => this.highlighter.highlight(matches));
+  }
+
+  _watchPreviewPane() {
+    const editorEl = document.getElementById('issues_editor');
+    if (!editorEl) return;
+
+    let debounceTimer = null;
+
+    this._previewObserver = new MutationObserver((mutations) => {
+      const previewEl = editorEl.querySelector('.textile-preview');
+
+      // Ignore mutations caused by our own mark insertion/removal inside the preview
+      if (previewEl && mutations.every(m => previewEl.contains(m.target))) return;
+
+      if (!previewEl || !previewEl.children.length) return;
+
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => this._fetchAndHighlightPreview(previewEl), 300);
+    });
+
+    this._previewObserver.observe(editorEl, { childList: true, subtree: true });
+  }
+
+  _fetchAndHighlightPreview(previewEl) {
+    this._destroyPopover();
+
+    const storageKey = `grammar_dismissed:${this.commentableTypeValue}:${this.commentableIdValue}`;
+    this.highlighter = new GrammarHighlighter(previewEl, this, storageKey);
+
+    this._fetchMatches().then(matches => this.highlighter.highlight(matches));
+  }
+
+  _fetchMatches() {
     const body = new URLSearchParams({
       commentable_type: this.commentableTypeValue,
       commentable_id:   this.commentableIdValue
     });
 
-    fetch(this.grammarCheckUrlValue, {
+    return fetch(this.grammarCheckUrlValue, {
       method:  'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -50,33 +92,21 @@ export default class extends Controller {
         if (!r.ok) throw new Error(`Grammar check failed: ${r.status}`);
         return r.json();
       })
-      .then(matches => this.highlighter.highlight(matches))
-      .catch(err => console.warn('GrammarCheck: check failed:', err));
+      .catch(err => {
+        console.warn('GrammarCheck: check failed:', err);
+        return [];
+      });
   }
 
-  showSuggestion(match) {
-    const body = this.panelBodyTarget;
-    body.replaceChildren();
+  showSuggestion(match, markEl) {
+    this._destroyPopover();
+
+    const content = document.createElement('div');
 
     const quote = document.createElement('blockquote');
     quote.className   = 'fs-6 border-start border-3 ps-3 text-body-secondary mb-3';
     quote.textContent = match.exact;
-    body.appendChild(quote);
-
-    const comment = document.createElement('div');
-    comment.className = 'inline-thread-comment py-2';
-    comment.innerHTML =
-      '<div class="d-flex">' +
-        '<div class="me-2 flex-shrink-0">' +
-          '<i class="fa-solid fa-spell-check text-muted mt-1"></i>' +
-        '</div>' +
-        '<div class="w-100">' +
-          '<div class="mb-1"><span class="fw-semibold small">LanguageTool</span></div>' +
-          '<div class="content"></div>' +
-        '</div>' +
-      '</div>';
-
-    const content = comment.querySelector('.content');
+    content.appendChild(quote);
 
     const message = document.createElement('p');
     message.className   = 'mb-2';
@@ -85,31 +115,43 @@ export default class extends Controller {
 
     if (match.replacements?.length) {
       const replacements = document.createElement('div');
-      replacements.className = 'd-flex flex-wrap gap-1';
+      replacements.className = 'd-flex flex-wrap gap-1 mb-3';
 
       match.replacements.forEach(r => {
-        const btn = document.createElement('button');
-        btn.type        = 'button';
-        btn.className   = 'btn btn-sm btn-outline-primary';
-        btn.textContent = r;
-        btn.addEventListener('click', () => this._applyReplacement(match, r));
-        replacements.appendChild(btn);
+        if (this.grammarReplacementsUrlValue) {
+          const btn = document.createElement('button');
+          btn.type        = 'button';
+          btn.className   = 'btn btn-sm btn-outline-primary';
+          btn.textContent = r;
+          btn.addEventListener('click', () => this._applyReplacement(match, r, markEl));
+          replacements.appendChild(btn);
+        } else {
+          const badge = document.createElement('span');
+          badge.className   = 'badge text-bg-secondary';
+          badge.textContent = r;
+          replacements.appendChild(badge);
+        }
       });
 
       content.appendChild(replacements);
     }
-
-    body.appendChild(comment);
-    body.appendChild(document.createElement('hr'));
 
     const dismissBtn = document.createElement('button');
     dismissBtn.type      = 'button';
     dismissBtn.className = 'btn btn-sm btn-outline-secondary';
     dismissBtn.innerHTML = '<i class="fa-solid fa-xmark me-1"></i>Dismiss';
     dismissBtn.addEventListener('click', () => this._dismiss(match));
-    body.appendChild(dismissBtn);
+    content.appendChild(dismissBtn);
 
-    new bootstrap.Offcanvas(this.panelTarget).show();
+    this._activePopover = new bootstrap.Popover(markEl, {
+      content:   content,
+      html:      true,
+      trigger:   'manual',
+      placement: 'bottom',
+      title:     '<i class="fa-solid fa-spell-check me-1"></i> Grammar Suggestion'
+    });
+    this._activeMark = markEl;
+    this._activePopover.show();
   }
 
   _applyReplacement(match, replacement) {
@@ -133,7 +175,7 @@ export default class extends Controller {
     })
       .then(r => r.json())
       .then(data => {
-        bootstrap.Offcanvas.getInstance(this.panelTarget)?.hide();
+        this._destroyPopover();
         this.highlighter.clearHighlights();
         this._refreshContent(data.raw);
       })
@@ -141,8 +183,16 @@ export default class extends Controller {
   }
 
   _dismiss(match) {
-    bootstrap.Offcanvas.getInstance(this.panelTarget)?.hide();
+    this._destroyPopover();
     this.highlighter.dismiss(match);
+  }
+
+  _destroyPopover() {
+    if (this._activePopover) {
+      this._activePopover.dispose();
+      this._activePopover = null;
+      this._activeMark    = null;
+    }
   }
 
   _refreshContent(newRaw) {

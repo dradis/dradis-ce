@@ -4,20 +4,6 @@
        data-dradis--plugins--echo--grammar-grammar-replacements-url-value="<%= echo.project_grammar_replacements_path(current_project) %>"
        data-dradis--plugins--echo--grammar-commentable-type-value="<%= @issue.class %>"
        data-dradis--plugins--echo--grammar-commentable-id-value="<%= @issue.id %>">
-    <div class="offcanvas offcanvas-end"
-         data-dradis--plugins--echo--grammar-target="panel"
-         data-bs-backdrop="false"
-         data-bs-scroll="true"
-         tabindex="-1"
-         id="grammar-panel-<%= @issue.id %>">
-      <div class="offcanvas-header">
-        <h6 class="offcanvas-title">
-          <i class="fa-solid fa-spell-check me-1"></i> Grammar Suggestion
-        </h6>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body pt-0" data-dradis--plugins--echo--grammar-target="panelBody"></div>
-    </div>
   </div>
 <% end %>
 
