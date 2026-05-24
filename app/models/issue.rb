@@ -77,6 +77,11 @@ class Issue < Note
     self.category = Category.issue unless self.category
   end
 
+  # When an issue changes, evidence that references it via Liquid is stale.
+  # update_all clears the cache in one query without firing callbacks, avoiding
+  # a cascade through evidence's belongs_to :node, touch: true.
+  after_touch { evidence.update_all(rendered_content: nil) }
+
   # -- Validations ----------------------------------------------------------
 
   # -- Scopes ---------------------------------------------------------------

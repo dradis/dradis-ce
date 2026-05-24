@@ -14,6 +14,8 @@ class Evidence < ApplicationRecord
   delegate :project, to: :node
 
   # -- Callbacks ------------------------------------------------------------
+  before_save { self[:rendered_content] = nil }
+  after_touch  { update_column(:rendered_content, nil) }
 
   # -- Validations ----------------------------------------------------------
   validates :content, length: { maximum: DB_MAX_TEXT_LENGTH }
@@ -33,7 +35,7 @@ class Evidence < ApplicationRecord
   def local_fields
     {
       'Label' => node.try(:label),
-      'Title' => issue.try(:title)
+      'Title' => issue&.raw_fields&.fetch('Title', nil)
     }
   end
 
