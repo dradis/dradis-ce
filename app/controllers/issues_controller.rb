@@ -4,7 +4,6 @@ class IssuesController < AuthenticatedController
   include DynamicFieldNamesCacher
   include EventPublisher
   include IssuesHelper
-  include LiquidEnabledResource
   include Mentioned
   include MultipleDestroy
   include NotificationsReader
