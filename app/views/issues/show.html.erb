@@ -1,4 +1,4 @@
-<% content_for :title, @issue.title %>
+<% content_for :title, @issue.title(liquid_assigns: liquid_assigns) %>
 
 <% content_for :sidebar do %>
   <%= render 'sidebar'%>
@@ -32,7 +32,7 @@
           <% cache ['issue-information-tab', @issue] do %>
             <div class="note-text-inner">
               <h4 class="mb-4 header-underline">
-                <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
+                <span class="text-truncate" title="<%= @issue.title(liquid_assigns: liquid_assigns) %>"><%= @issue.title(liquid_assigns: liquid_assigns) %></span>
                 <%= render partial: 'shared/liquid_loading' %>
                 <%= render partial: 'actions' %>
               </h4>
