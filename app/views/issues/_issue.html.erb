@@ -6,7 +6,7 @@
 <%= content_tag :div, id: "#{dom_id(issue)}_link", class: item_css.join do %>
   <%= link_to  main_app.project_issue_path(current_project, issue) do %>
     <%= colored_icon_for_model(issue, 'fa-bug', 'list-item-icon') %>
-    <%= issue.title %>
+    <%= liquid_title(issue) %>
   <% end %>
 
   <div class="list-item-actions">
