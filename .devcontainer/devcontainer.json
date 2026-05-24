@@ -1,0 +1,16 @@
+{
+  "name": "Dradis CE DevContainer",
+  "dockerComposeFile": "compose.yaml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Shopify.ruby-lsp"
+      ]
+    }
+  },
+  "postCreateCommand": "bundle install",
+  "forwardPorts": [3000],
+  "remoteUser": "vscode"
+}

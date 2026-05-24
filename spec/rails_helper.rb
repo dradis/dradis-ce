@@ -33,16 +33,30 @@ end
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
+if ENV['SELENIUM_HOST']
+  require 'socket'
+  Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
+  Capybara.server_port = 3001
+end
+
 Capybara.register_driver :firefox do |app|
-  options = %w[--headless --disable-gpu]
-  Capybara::Selenium::Driver.new(
-    app,
-    browser: :firefox,
-    clear_local_storage: true,
-    options: Selenium::WebDriver::Firefox::Options.new(
-      args: options
+  if ENV['SELENIUM_HOST']
+    Capybara::Selenium::Driver.new(
+      app,
+      browser: :remote,
+      url: "http://#{ENV['SELENIUM_HOST']}:4444",
+      options: Selenium::WebDriver::Firefox::Options.new
     )
-  )
+  else
+    Capybara::Selenium::Driver.new(
+      app,
+      browser: :firefox,
+      clear_local_storage: true,
+      options: Selenium::WebDriver::Firefox::Options.new(
+        args: %w[--headless --disable-gpu]
+      )
+    )
+  end
 end
 
 Capybara.server = :puma, { Silent: true }
