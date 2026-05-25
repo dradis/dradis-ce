@@ -55,6 +55,22 @@ describe 'Grammar checks' do
       )
     end
 
+    context 'when raw text is provided' do
+      it 'checks the provided text instead of the persisted content' do
+        raw_text = "#[Title]#\nUnsaved speling mistake\n"
+
+        post "/addons/echo/projects/#{@project.id}/grammar_check", params: {
+          commentable_type: 'Issue',
+          commentable_id:   issue.id,
+          text:             raw_text
+        }
+
+        expect(Dradis::Plugins::Echo::LanguageToolService).to have_received(:new).with(
+          hash_including(fields: FieldParser.source_to_fields(raw_text))
+        )
+      end
+    end
+
     it 'returns 404 for an issue outside the current project scope' do
       other_issue = create(:issue, node: create(:node))
 
