@@ -10,7 +10,8 @@ module Dradis::Plugins::Echo
       length      = params[:length].to_i
       replacement = params[:replacement]
 
-      raw_text = @record.respond_to?(:text) ? @record.text : @record.content
+      raw_text = params[:text].presence ||
+                 (@record.respond_to?(:text) ? @record.text : @record.content)
       fields   = FieldParser.source_to_fields(raw_text)
 
       return head :unprocessable_entity unless fields[field_name]

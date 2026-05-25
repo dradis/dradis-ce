@@ -27,6 +27,27 @@ describe 'Grammar replacements' do
       expect(issue.reload.text).to include('test')
     end
 
+    context 'when raw text is provided (unsaved editor content)' do
+      it 'applies the replacement to the provided text, not the persisted version' do
+        unsaved_text = "#[Title]#\ntset\n\n#[Description]#\nUnsaved edits to description"
+
+        post "/addons/echo/projects/#{@project.id}/grammar_replacements", params: {
+          commentable_type: 'Issue',
+          commentable_id:   issue.id,
+          field_name:       'Title',
+          offset:           0,
+          length:           4,
+          replacement:      'test',
+          text:             unsaved_text
+        }
+
+        expect(response).to have_http_status(:ok)
+        saved = issue.reload.text
+        expect(saved).to include('test')
+        expect(saved).to include('Unsaved edits to description')
+      end
+    end
+
     it 'returns 404 for an issue outside the current project scope' do
       other_issue = create(:issue, node: create(:node))
 

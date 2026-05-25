@@ -167,6 +167,9 @@ export default class extends Controller {
       replacement:      replacement
     });
 
+    const textarea = document.querySelector('textarea.textile');
+    if (textarea) body.set('text', textarea.value);
+
     fetch(this.grammarReplacementsUrlValue, {
       method:  'POST',
       headers: {
