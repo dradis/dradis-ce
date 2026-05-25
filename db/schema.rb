@@ -110,6 +110,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_21_000001) do
     t.boolean "enabled", default: true, null: false
     t.string "model_override"
     t.string "name", null: false
+    t.text "env", default: "{}"
     t.integer "provider_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
