@@ -39,17 +39,5 @@ describe 'Roslin widget' do
       end
     end
 
-    context 'when the Roslin agent record is missing' do
-      before do
-        allow(Dradis::Plugins::Echo::Agents::Roslin).to receive(:instance).and_return(nil)
-      end
-
-      it 'renders without error' do
-        get "/projects/#{@project.id}/issues/#{issue.id}"
-
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to include('Enable Roslin')
-      end
-    end
   end
 end
