@@ -236,7 +236,7 @@ export default class extends Controller {
     const successEl  = document.querySelector('[data-behavior~=roslin-status-success]');
     const errorEl    = document.querySelector('[data-behavior~=roslin-status-error]');
     const summaryEl  = document.querySelector('[data-behavior~=roslin-issues-summary]');
-    const collapseEl = document.getElementById('roslin-widget');
+    const collapseEl = document.querySelector('[data-behavior~=roslin-widget]');
 
     const summaryText = count > 0
       ? `${count} issue${count === 1 ? '' : 's'} found`
