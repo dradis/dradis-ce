@@ -57,6 +57,37 @@ class GrammarHighlighter extends BaseHighlighter {
     return mark;
   }
 
+  // Uses textContent concatenation instead of innerText to avoid block-boundary \n mismatches.
+  _findTextInNodes(textNodes, searchText) {
+    let offset = 0;
+    const nodeMap = [];
+
+    for (const node of textNodes) {
+      const len = node.textContent.length;
+      nodeMap.push({ node, startIndex: offset, endIndex: offset + len });
+      offset += len;
+    }
+
+    const combined = nodeMap.map(e => e.node.textContent).join('');
+    const matchIndex = combined.indexOf(searchText);
+    if (matchIndex === -1) return [];
+
+    const matchEnd = matchIndex + searchText.length;
+    const segments = [];
+
+    for (const entry of nodeMap) {
+      if (entry.endIndex <= matchIndex) continue;
+      if (entry.startIndex >= matchEnd) break;
+      segments.push({
+        node:        entry.node,
+        startOffset: Math.max(matchIndex, entry.startIndex) - entry.startIndex,
+        endOffset:   Math.min(matchEnd, entry.endIndex) - entry.startIndex
+      });
+    }
+
+    return segments;
+  }
+
   _key(match) {
     return `${match.field_name}:${match.exact}`;
   }
