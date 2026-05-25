@@ -4,7 +4,7 @@
     data-dradis--plugins--echo--prompt-interaction-id-value="<%= @interaction_id %>"
     data-dradis--plugins--echo--prompt-prompt-value="<%= @prompt_content %>"
     data-dradis--plugins--echo--prompt-response-id-value="<%= @response_id %>"
-    data-dradis--plugins--echo--prompt-url-value="<%= project_prompts_path %>"
+    data-dradis--plugins--echo--prompt-url-value="<%= project_interactions_path %>"
   >
 
     <p>Dradis Echo interaction #<%= @interaction_id.truncate(12) %></p>
@@ -14,7 +14,7 @@
 
     <%# Here is where we will stream the responses from the LLM %>
     <div id="messages" class="my-2" style="height: 50vh; overflow-y: auto">
-      <%= render partial: 'dradis/plugins/echo/projects/prompts/response' %>
+      <%= render partial: 'dradis/plugins/echo/projects/interactions/response' %>
     </div>
   </div>
 </turbo-frame>
