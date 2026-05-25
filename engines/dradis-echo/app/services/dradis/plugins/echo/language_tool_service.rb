@@ -2,6 +2,8 @@ module Dradis::Plugins::Echo
   class LanguageToolService
     class UnavailableError < StandardError; end
 
+    DEFAULT_ADDRESS = 'http://localhost:8010'.freeze
+
     def initialize(fields:, address:)
       @fields  = fields
       @address = address

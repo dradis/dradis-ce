@@ -29,7 +29,7 @@ module Dradis::Plugins::Echo
 
     def agent_params
       permitted = params.require(:agent).permit(
-        :enabled, :language_tool_address, :model_override, :provider_id,
+        :enabled, :model_override, :provider_id,
         env_keys: [], env_values: []
       )
       keys   = permitted.delete(:env_keys) || []
