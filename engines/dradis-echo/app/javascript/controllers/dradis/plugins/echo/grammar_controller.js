@@ -106,11 +106,6 @@ export default class extends Controller {
 
     const content = document.createElement('div');
 
-    const quote = document.createElement('blockquote');
-    quote.className   = 'fs-6 border-start border-3 ps-3 text-body-secondary mb-3';
-    quote.textContent = match.exact;
-    content.appendChild(quote);
-
     const message = document.createElement('p');
     message.className   = 'mb-2';
     message.textContent = match.message;
@@ -124,7 +119,7 @@ export default class extends Controller {
         if (this.grammarReplacementsUrlValue) {
           const btn = document.createElement('button');
           btn.type        = 'button';
-          btn.className   = 'btn btn-sm btn-outline-primary';
+          btn.className   = 'btn btn-sm btn-outline-lavender';
           btn.textContent = r;
           btn.addEventListener('click', () => this._applyReplacement(match, r, markEl));
           replacements.appendChild(btn);
@@ -139,19 +134,22 @@ export default class extends Controller {
       content.appendChild(replacements);
     }
 
+    const footer = document.createElement('div');
+    footer.className = 'popover-footer';
+
     const dismissBtn = document.createElement('button');
     dismissBtn.type      = 'button';
-    dismissBtn.className = 'btn btn-sm btn-outline-secondary';
-    dismissBtn.innerHTML = '<i class="fa-solid fa-xmark me-1"></i>Dismiss';
+    dismissBtn.className = 'btn btn-link btn-sm p-0';
+    dismissBtn.textContent = 'Dismiss';
     dismissBtn.addEventListener('click', () => this._dismiss(match));
-    content.appendChild(dismissBtn);
+    footer.appendChild(dismissBtn);
+    content.appendChild(footer);
 
     this._activePopover = new bootstrap.Popover(markEl, {
       content:   content,
       html:      true,
       trigger:   'manual',
-      placement: 'bottom',
-      title:     '<i class="fa-solid fa-spell-check me-1"></i> Grammar Suggestion'
+      placement: 'auto'
     });
     this._activeMark = markEl;
     this._activePopover.show();

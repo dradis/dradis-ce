@@ -314,6 +314,14 @@ mark {
   }
 }
 
+.popover-footer {
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+}
+
 p:last-child {
   margin-bottom: 0;
 }
