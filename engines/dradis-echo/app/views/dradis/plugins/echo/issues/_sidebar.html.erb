@@ -1,0 +1,17 @@
+<div class="header">
+  <div class="header-inner">
+    <h5 class="header-name">Roslin</h5>
+    <div class="options">
+      <%= link_to '#roslin-sidebar', data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+        <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i>
+        <span class="visually-hidden">Toggle Roslin</span>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div id="roslin-sidebar" class="collapse show">
+  <% unless Dradis::Plugins::Echo::Agents::Roslin.enabled? %>
+    <p class="mb-0"><%= link_to 'Enable Roslin', echo.agents_path %> to use grammar and spell check.</p>
+  <% end %>
+</div>
