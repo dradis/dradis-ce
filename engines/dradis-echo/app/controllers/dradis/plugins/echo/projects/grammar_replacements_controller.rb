@@ -5,6 +5,8 @@ module Dradis::Plugins::Echo
     before_action :set_record
 
     def create
+      return head :service_unavailable unless Agents::Roslin.enabled?
+
       field_name  = params[:field_name]
       offset      = params[:offset].to_i
       length      = params[:length].to_i
@@ -12,14 +14,25 @@ module Dradis::Plugins::Echo
 
       return head :unprocessable_entity if replacement.nil?
 
-      raw_text = params[:text].presence ||
-                 (@record.respond_to?(:text) ? @record.text : @record.content)
+      raw_text =
+        if params.key?(:text)
+          params[:text].to_s
+        elsif @record.respond_to?(:text)
+          @record.text
+        else
+          @record.content
+        end
+
       fields   = FieldParser.source_to_fields(raw_text)
 
       return head :unprocessable_entity unless fields[field_name]
 
       field_value = fields[field_name]
       return head :unprocessable_entity if offset < 0 || (offset + length) > field_value.length
+
+      if (exact = params[:exact])
+        return head :conflict if field_value[offset, length] != exact
+      end
 
       new_raw = apply_replacement(raw_text, field_name, offset, length, replacement)
 
