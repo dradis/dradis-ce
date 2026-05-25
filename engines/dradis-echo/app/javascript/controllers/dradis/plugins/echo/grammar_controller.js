@@ -121,7 +121,7 @@ export default class extends Controller {
           btn.type        = 'button';
           btn.className   = 'btn btn-sm btn-outline-lavender';
           btn.textContent = r;
-          btn.addEventListener('click', () => this._applyReplacement(match, r, markEl));
+          btn.addEventListener('click', () => this._applyReplacement(match, r));
           replacements.appendChild(btn);
         } else {
           const badge = document.createElement('span');
@@ -173,7 +173,10 @@ export default class extends Controller {
     });
 
     const textarea = document.querySelector('textarea.textile');
-    if (textarea) body.set('text', textarea.value);
+    if (textarea) {
+      body.set('text', textarea.value);
+      if (!this._contentEl()) body.set('persist', 'false');
+    }
 
     fetch(this.grammarReplacementsUrlValue, {
       method:  'POST',
@@ -187,7 +190,7 @@ export default class extends Controller {
       .then(r => r.json())
       .then(data => {
         this._destroyPopover();
-        this.highlighter.clearHighlights();
+        this.highlighter.highlight([]);
         this._refreshContent(data.raw);
       })
       .catch(err => console.error('GrammarCheck: replacement failed:', err));
@@ -241,6 +244,6 @@ export default class extends Controller {
   }
 
   _csrf() {
-    return document.querySelector('meta[name="csrf-token"]').content;
+    return document.querySelector('meta[name="csrf-token"]')?.content;
   }
 }

@@ -6,7 +6,9 @@ describe 'Grammar checks' do
   let(:issue) { create(:issue, node: @project.issue_library) }
 
   let(:roslin_agent) do
-    instance_double(Dradis::Plugins::Echo::Agent, env: { 'LANGUAGETOOL_ADDRESS' => 'http://languagetool:8010' })
+    instance_double(Dradis::Plugins::Echo::Agent,
+                    enabled?: true,
+                    env:      { 'LANGUAGETOOL_ADDRESS' => 'http://languagetool:8010' })
   end
 
   let(:service_double) do

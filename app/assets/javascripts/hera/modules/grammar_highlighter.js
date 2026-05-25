@@ -22,15 +22,11 @@ class GrammarHighlighter extends BaseHighlighter {
     });
   }
 
-  clearHighlights() {
-    this._clearHighlights('grammar-suggestion-highlight');
-  }
-
   dismiss(match) {
     this.dismissed.add(this._key(match));
     this._saveDismissed();
-    this.contentEl.querySelectorAll('[data-behavior~=grammar-suggestion-highlight]').forEach(mark => {
-      if (mark.dataset.matchKey === this._key(match)) this._removeMark(mark);
+    this.contentEl.querySelectorAll(`[data-match-key="${this._key(match)}"]`).forEach(mark => {
+      this._removeMark(mark);
     });
   }
 
@@ -89,7 +85,7 @@ class GrammarHighlighter extends BaseHighlighter {
   }
 
   _key(match) {
-    return `${match.field_name}:${match.exact}`;
+    return `${match.field_name}:${match.offset}:${match.exact}`;
   }
 
   _loadDismissed() {
