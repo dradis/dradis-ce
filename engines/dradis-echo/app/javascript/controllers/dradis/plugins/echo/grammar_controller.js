@@ -79,6 +79,9 @@ export default class extends Controller {
       commentable_id:   this.commentableIdValue
     });
 
+    const textarea = document.querySelector('textarea.textile');
+    if (textarea) body.set('text', textarea.value);
+
     return fetch(this.grammarCheckUrlValue, {
       method:  'POST',
       headers: {
@@ -197,22 +200,30 @@ export default class extends Controller {
 
   _refreshContent(newRaw) {
     const contentEl = this._contentEl();
-    contentEl.dataset.content = newRaw;
 
-    fetch(contentEl.dataset.path, {
-      method:  'POST',
-      headers: {
-        'Accept':       'text/html',
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': this._csrf()
-      },
-      body: JSON.stringify({ text: newRaw })
-    })
-      .then(r => r.text())
-      .then(html => {
-        contentEl.innerHTML = html;
-        contentEl.dispatchEvent(new CustomEvent('dradis:liquid-rendered', { bubbles: true }));
-      });
+    if (contentEl) {
+      contentEl.dataset.content = newRaw;
+
+      fetch(contentEl.dataset.path, {
+        method:  'POST',
+        headers: {
+          'Accept':       'text/html',
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': this._csrf()
+        },
+        body: JSON.stringify({ text: newRaw })
+      })
+        .then(r => r.text())
+        .then(html => {
+          contentEl.innerHTML = html;
+          contentEl.dispatchEvent(new CustomEvent('dradis:liquid-rendered', { bubbles: true }));
+        });
+    } else {
+      const textarea = document.querySelector('textarea.textile');
+      if (!textarea) return;
+      textarea.value = newRaw;
+      $(textarea).trigger('load-preview');
+    }
   }
 
   _contentEl() {

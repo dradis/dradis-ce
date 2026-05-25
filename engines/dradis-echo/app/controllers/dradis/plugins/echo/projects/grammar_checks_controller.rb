@@ -5,7 +5,8 @@ module Dradis::Plugins::Echo
     before_action :set_record
 
     def create
-      raw_text = @record.respond_to?(:text) ? @record.text : @record.content
+      raw_text = params[:text].presence ||
+                 (@record.respond_to?(:text) ? @record.text : @record.content)
       fields   = FieldParser.source_to_fields(raw_text)
 
       matches = LanguageToolService.new(
