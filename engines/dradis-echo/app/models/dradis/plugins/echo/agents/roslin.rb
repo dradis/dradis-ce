@@ -5,15 +5,11 @@ module Dradis::Plugins::Echo
     module Roslin
       extend self
 
-      def enabled?
-        instance&.enabled? || false
-      end
-
       def instance
-        Agent.find_by(name: 'Roslin')
+        Agent.find_by!(name: 'Roslin')
       end
 
-      delegate :id, :model_override, :provider, to: :instance, allow_nil: true
+      delegate :enabled?, :id, :model_override, :provider, to: :instance
     end
   end
 end

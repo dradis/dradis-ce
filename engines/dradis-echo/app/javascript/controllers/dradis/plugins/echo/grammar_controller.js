@@ -238,12 +238,13 @@ export default class extends Controller {
     const summaryEl  = document.querySelector('[data-behavior~=roslin-issues-summary]');
     const collapseEl = document.getElementById('roslin-widget');
 
-    if (successEl) successEl.classList.toggle('d-none', count > 0);
-    if (errorEl)   errorEl.classList.toggle('d-none', count === 0);
-
-    if (summaryEl) summaryEl.textContent = count > 0
+    const summaryText = count > 0
       ? `${count} issue${count === 1 ? '' : 's'} found`
       : 'No grammar or spelling errors!';
+
+    if (successEl) successEl.classList.toggle('d-none', count > 0);
+    if (errorEl)   errorEl.classList.toggle('d-none', count === 0);
+    if (summaryEl) summaryEl.textContent = summaryText;
     if (collapseEl) collapseEl.classList.toggle('show', count > 0);
   }
 

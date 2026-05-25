@@ -35,10 +35,11 @@ class GrammarHighlighter extends BaseHighlighter {
     if (!match.exact) return;
 
     const fromIndex = nextFrom.get(match.exact) || 0;
-    const segments  = this._findTextInNodes(this._getTextNodes(), match.exact, fromIndex);
+    const textNodes = this._getTextNodes();
+    const segments  = this._findTextInNodes(textNodes, match.exact, fromIndex);
     if (segments.length === 0) return;
 
-    const combined = this.contentEl.innerText;
+    const combined = textNodes.map(n => n.textContent).join('');
     const matchPos = combined.indexOf(match.exact, fromIndex);
     if (matchPos !== -1) nextFrom.set(match.exact, matchPos + match.exact.length);
 
@@ -60,7 +61,7 @@ class GrammarHighlighter extends BaseHighlighter {
   }
 
   // Uses textContent concatenation instead of innerText to avoid block-boundary \n mismatches.
-  _findTextInNodes(textNodes, searchText) {
+  _findTextInNodes(textNodes, searchText, fromIndex = 0) {
     let offset = 0;
     const nodeMap = [];
 
@@ -71,7 +72,7 @@ class GrammarHighlighter extends BaseHighlighter {
     }
 
     const combined = nodeMap.map(e => e.node.textContent).join('');
-    const matchIndex = combined.indexOf(searchText);
+    const matchIndex = combined.indexOf(searchText, fromIndex);
     if (matchIndex === -1) return [];
 
     const matchEnd = matchIndex + searchText.length;
