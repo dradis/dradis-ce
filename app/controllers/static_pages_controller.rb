@@ -8,6 +8,11 @@ class StaticPagesController < AuthenticatedController
     @entries = @entries.select { |e| e[:state] == 'published' }
   end
 
+  def projects_index
+    @project = Project.find(1)
+    render layout: 'hera'
+  end
+
   def remediationtracker_index; end
 
   private
