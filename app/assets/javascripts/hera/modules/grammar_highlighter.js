@@ -15,9 +15,10 @@ class GrammarHighlighter extends BaseHighlighter {
 
   highlight(matches) {
     this._clearHighlights('grammar-suggestion-highlight');
+    const nextFrom = new Map();
     matches.forEach(match => {
       if (!this.dismissed.has(this._key(match))) {
-        this._highlightMatch(match);
+        this._highlightMatch(match, nextFrom);
       }
     });
   }
@@ -30,11 +31,16 @@ class GrammarHighlighter extends BaseHighlighter {
     });
   }
 
-  _highlightMatch(match) {
+  _highlightMatch(match, nextFrom = new Map()) {
     if (!match.exact) return;
 
-    const segments = this._findTextInNodes(this._getTextNodes(), match.exact);
+    const fromIndex = nextFrom.get(match.exact) || 0;
+    const segments  = this._findTextInNodes(this._getTextNodes(), match.exact, fromIndex);
     if (segments.length === 0) return;
+
+    const combined = this.contentEl.innerText;
+    const matchPos = combined.indexOf(match.exact, fromIndex);
+    if (matchPos !== -1) nextFrom.set(match.exact, matchPos + match.exact.length);
 
     const marks = this._wrapSegments(segments, match);
     marks.forEach(mark => {

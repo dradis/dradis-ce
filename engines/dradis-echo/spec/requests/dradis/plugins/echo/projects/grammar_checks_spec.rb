@@ -73,6 +73,20 @@ describe 'Grammar checks' do
       end
     end
 
+    context 'when an empty text param is provided' do
+      it 'checks the empty text rather than falling back to persisted content' do
+        post "/addons/echo/projects/#{@project.id}/grammar_check", params: {
+          commentable_type: 'Issue',
+          commentable_id:   issue.id,
+          text:             ''
+        }
+
+        expect(Dradis::Plugins::Echo::LanguageToolService).to have_received(:new).with(
+          hash_including(fields: {})
+        )
+      end
+    end
+
     it 'returns 404 for an issue outside the current project scope' do
       other_issue = create(:issue, node: create(:node))
 

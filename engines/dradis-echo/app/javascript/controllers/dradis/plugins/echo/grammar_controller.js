@@ -164,6 +164,7 @@ export default class extends Controller {
       field_name:       match.field_name,
       offset:           match.offset,
       length:           match.length,
+      exact:            match.exact,
       replacement:      replacement
     });
 
@@ -182,8 +183,17 @@ export default class extends Controller {
       },
       body: body.toString()
     })
-      .then(r => r.json())
+      .then(r => {
+        if (r.status === 409) {
+          this._destroyPopover();
+          this.highlighter.highlight([]);
+          return null;
+        }
+        if (!r.ok) throw new Error(`Grammar replacement failed: ${r.status}`);
+        return r.json();
+      })
       .then(data => {
+        if (!data) return;
         this._destroyPopover();
         this.highlighter.highlight([]);
         this._refreshContent(data.raw);

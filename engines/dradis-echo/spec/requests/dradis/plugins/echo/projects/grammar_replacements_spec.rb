@@ -3,6 +3,14 @@ require 'rails_helper'
 describe 'Grammar replacements' do
   before { login_to_project_as_user }
 
+  let(:roslin_agent) do
+    instance_double(Dradis::Plugins::Echo::Agent, enabled?: true)
+  end
+
+  before do
+    allow(Dradis::Plugins::Echo::Agents::Roslin).to receive(:instance).and_return(roslin_agent)
+  end
+
   let(:issue) do
     create(:issue,
       node: @project.issue_library,
@@ -65,6 +73,74 @@ describe 'Grammar replacements' do
         expect(json['raw']).to include('test')
         expect(issue.reload.text).not_to include('test')
       end
+    end
+
+    it 'returns 409 when the exact text does not match the current content' do
+      post "/addons/echo/projects/#{@project.id}/grammar_replacements", params: {
+        commentable_type: 'Issue',
+        commentable_id:   issue.id,
+        field_name:       'Title',
+        offset:           0,
+        length:           4,
+        replacement:      'test',
+        exact:            'xxxx'
+      }
+
+      expect(response).to have_http_status(:conflict)
+      expect(issue.reload.text).not_to include('test')
+    end
+
+    it 'returns 422 when replacement param is missing' do
+      post "/addons/echo/projects/#{@project.id}/grammar_replacements", params: {
+        commentable_type: 'Issue',
+        commentable_id:   issue.id,
+        field_name:       'Title',
+        offset:           0,
+        length:           4
+      }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'returns 422 when offset is negative' do
+      post "/addons/echo/projects/#{@project.id}/grammar_replacements", params: {
+        commentable_type: 'Issue',
+        commentable_id:   issue.id,
+        field_name:       'Title',
+        offset:           -1,
+        length:           4,
+        replacement:      'test'
+      }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'returns 422 when offset + length exceeds the field length' do
+      post "/addons/echo/projects/#{@project.id}/grammar_replacements", params: {
+        commentable_type: 'Issue',
+        commentable_id:   issue.id,
+        field_name:       'Title',
+        offset:           0,
+        length:           999,
+        replacement:      'test'
+      }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'returns 503 when Roslin is disabled' do
+      allow(roslin_agent).to receive(:enabled?).and_return(false)
+
+      post "/addons/echo/projects/#{@project.id}/grammar_replacements", params: {
+        commentable_type: 'Issue',
+        commentable_id:   issue.id,
+        field_name:       'Title',
+        offset:           0,
+        length:           4,
+        replacement:      'test'
+      }
+
+      expect(response).to have_http_status(:service_unavailable)
     end
 
     it 'returns 404 for an issue outside the current project scope' do
