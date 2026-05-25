@@ -5,22 +5,42 @@ module Dradis::Plugins::Echo
     before_action :set_record
 
     def create
+      return head :service_unavailable unless Agents::Roslin.enabled?
+
       field_name  = params[:field_name]
       offset      = params[:offset].to_i
       length      = params[:length].to_i
       replacement = params[:replacement]
 
-      raw_text = @record.respond_to?(:text) ? @record.text : @record.content
+      return head :unprocessable_entity if replacement.nil?
+
+      raw_text =
+        if params.key?(:text)
+          params[:text].to_s
+        elsif @record.respond_to?(:text)
+          @record.text
+        else
+          @record.content
+        end
+
       fields   = FieldParser.source_to_fields(raw_text)
 
       return head :unprocessable_entity unless fields[field_name]
 
+      field_value = fields[field_name]
+      return head :unprocessable_entity if offset < 0 || (offset + length) > field_value.length
+
+      if (exact = params[:exact])
+        return head :conflict if field_value[offset, length] != exact
+      end
+
       new_raw = apply_replacement(raw_text, field_name, offset, length, replacement)
 
-      if @record.respond_to?(:text)
-        @record.update!(text: new_raw)
-      else
-        @record.update!(content: new_raw)
+      if params[:persist] != 'false'
+        attr = @record.respond_to?(:text) ? :text : :content
+        unless @record.update(attr => new_raw)
+          return render json: { errors: @record.errors.full_messages }, status: :unprocessable_entity
+        end
       end
 
       render json: { raw: new_raw }

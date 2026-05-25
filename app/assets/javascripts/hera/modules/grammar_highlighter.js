@@ -15,30 +15,32 @@ class GrammarHighlighter extends BaseHighlighter {
 
   highlight(matches) {
     this._clearHighlights('grammar-suggestion-highlight');
+    const nextFrom = new Map();
     matches.forEach(match => {
       if (!this.dismissed.has(this._key(match))) {
-        this._highlightMatch(match);
+        this._highlightMatch(match, nextFrom);
       }
     });
-  }
-
-  clearHighlights() {
-    this._clearHighlights('grammar-suggestion-highlight');
   }
 
   dismiss(match) {
     this.dismissed.add(this._key(match));
     this._saveDismissed();
-    this.contentEl.querySelectorAll('[data-behavior~=grammar-suggestion-highlight]').forEach(mark => {
-      if (mark.dataset.matchKey === this._key(match)) this._removeMark(mark);
+    this.contentEl.querySelectorAll(`[data-match-key="${this._key(match)}"]`).forEach(mark => {
+      this._removeMark(mark);
     });
   }
 
-  _highlightMatch(match) {
+  _highlightMatch(match, nextFrom = new Map()) {
     if (!match.exact) return;
 
-    const segments = this._findTextInNodes(this._getTextNodes(), match.exact);
+    const fromIndex = nextFrom.get(match.exact) || 0;
+    const segments  = this._findTextInNodes(this._getTextNodes(), match.exact, fromIndex);
     if (segments.length === 0) return;
+
+    const combined = this.contentEl.innerText;
+    const matchPos = combined.indexOf(match.exact, fromIndex);
+    if (matchPos !== -1) nextFrom.set(match.exact, matchPos + match.exact.length);
 
     const marks = this._wrapSegments(segments, match);
     marks.forEach(mark => {
@@ -58,7 +60,7 @@ class GrammarHighlighter extends BaseHighlighter {
   }
 
   _key(match) {
-    return `${match.field_name}:${match.exact}`;
+    return `${match.field_name}:${match.offset}:${match.exact}`;
   }
 
   _loadDismissed() {

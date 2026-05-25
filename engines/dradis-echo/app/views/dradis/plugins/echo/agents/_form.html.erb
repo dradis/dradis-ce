@@ -1,4 +1,5 @@
-<%= form_with model: agent, scope: :agent, url: agent_path(agent) do |f| %>
+<%= form_with model: agent, scope: :agent, url: agent_path(agent),
+              data: { controller: 'dradis--plugins--echo--agent' } do |f| %>
 
   <% if agent.errors.any? %>
     <div class="alert alert-danger">
@@ -33,10 +34,37 @@
   </div>
 
   <div class="mb-3">
-    <%= f.label :language_tool_address, 'LanguageTool address', class: 'form-label' %>
-    <%= f.text_field :language_tool_address, class: 'form-control',
-        placeholder: Dradis::Plugins::Echo::Roslin::LanguageTool::DEFAULT_ADDRESS %>
-    <div class="form-text">Address of the LanguageTool server (default: <code><%= Dradis::Plugins::Echo::Roslin::LanguageTool::DEFAULT_ADDRESS %></code>).</div>
+    <label class="form-label">ENV Variables</label>
+    <div data-dradis--plugins--echo--agent-target="envVarsContainer">
+      <% agent.env.each do |key, value| %>
+        <div class="d-flex gap-2 mb-2" data-env-var-row>
+          <input type="text" name="agent[env_keys][]" value="<%= key %>"
+                 class="form-control font-monospace" placeholder="KEY">
+          <input type="text" name="agent[env_values][]" value="<%= value %>"
+                 class="form-control" placeholder="value">
+          <button type="button" class="btn btn-outline-danger"
+                  data-action="click->dradis--plugins--echo--agent#removeRow">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      <% end %>
+    </div>
+    <button type="button" class="btn btn-outline-secondary btn-sm mt-1"
+            data-action="click->dradis--plugins--echo--agent#addRow">
+      <i class="fa-solid fa-plus me-1"></i>Add variable
+    </button>
+    <template data-dradis--plugins--echo--agent-target="envVarTemplate">
+      <div class="d-flex gap-2 mb-2" data-env-var-row>
+        <input type="text" name="agent[env_keys][]"
+               class="form-control font-monospace" placeholder="KEY">
+        <input type="text" name="agent[env_values][]"
+               class="form-control" placeholder="value">
+        <button type="button" class="btn btn-outline-danger"
+                data-action="click->dradis--plugins--echo--agent#removeRow">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </template>
   </div>
 
   <div class="form-actions">

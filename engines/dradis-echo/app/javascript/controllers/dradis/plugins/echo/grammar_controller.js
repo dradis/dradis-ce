@@ -79,6 +79,9 @@ export default class extends Controller {
       commentable_id:   this.commentableIdValue
     });
 
+    const textarea = document.querySelector('textarea.textile');
+    if (textarea) body.set('text', textarea.value);
+
     return fetch(this.grammarCheckUrlValue, {
       method:  'POST',
       headers: {
@@ -123,7 +126,7 @@ export default class extends Controller {
           btn.type        = 'button';
           btn.className   = 'btn btn-sm btn-outline-primary';
           btn.textContent = r;
-          btn.addEventListener('click', () => this._applyReplacement(match, r, markEl));
+          btn.addEventListener('click', () => this._applyReplacement(match, r));
           replacements.appendChild(btn);
         } else {
           const badge = document.createElement('span');
@@ -161,8 +164,15 @@ export default class extends Controller {
       field_name:       match.field_name,
       offset:           match.offset,
       length:           match.length,
+      exact:            match.exact,
       replacement:      replacement
     });
+
+    const textarea = document.querySelector('textarea.textile');
+    if (textarea) {
+      body.set('text', textarea.value);
+      if (!this._contentEl()) body.set('persist', 'false');
+    }
 
     fetch(this.grammarReplacementsUrlValue, {
       method:  'POST',
@@ -173,10 +183,19 @@ export default class extends Controller {
       },
       body: body.toString()
     })
-      .then(r => r.json())
+      .then(r => {
+        if (r.status === 409) {
+          this._destroyPopover();
+          this.highlighter.highlight([]);
+          return null;
+        }
+        if (!r.ok) throw new Error(`Grammar replacement failed: ${r.status}`);
+        return r.json();
+      })
       .then(data => {
+        if (!data) return;
         this._destroyPopover();
-        this.highlighter.clearHighlights();
+        this.highlighter.highlight([]);
         this._refreshContent(data.raw);
       })
       .catch(err => console.error('GrammarCheck: replacement failed:', err));
@@ -197,22 +216,30 @@ export default class extends Controller {
 
   _refreshContent(newRaw) {
     const contentEl = this._contentEl();
-    contentEl.dataset.content = newRaw;
 
-    fetch(contentEl.dataset.path, {
-      method:  'POST',
-      headers: {
-        'Accept':       'text/html',
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': this._csrf()
-      },
-      body: JSON.stringify({ text: newRaw })
-    })
-      .then(r => r.text())
-      .then(html => {
-        contentEl.innerHTML = html;
-        contentEl.dispatchEvent(new CustomEvent('dradis:liquid-rendered', { bubbles: true }));
-      });
+    if (contentEl) {
+      contentEl.dataset.content = newRaw;
+
+      fetch(contentEl.dataset.path, {
+        method:  'POST',
+        headers: {
+          'Accept':       'text/html',
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': this._csrf()
+        },
+        body: JSON.stringify({ text: newRaw })
+      })
+        .then(r => r.text())
+        .then(html => {
+          contentEl.innerHTML = html;
+          contentEl.dispatchEvent(new CustomEvent('dradis:liquid-rendered', { bubbles: true }));
+        });
+    } else {
+      const textarea = document.querySelector('textarea.textile');
+      if (!textarea) return;
+      textarea.value = newRaw;
+      $(textarea).trigger('load-preview');
+    }
   }
 
   _contentEl() {
@@ -220,6 +247,6 @@ export default class extends Controller {
   }
 
   _csrf() {
-    return document.querySelector('meta[name="csrf-token"]').content;
+    return document.querySelector('meta[name="csrf-token"]')?.content;
   }
 }

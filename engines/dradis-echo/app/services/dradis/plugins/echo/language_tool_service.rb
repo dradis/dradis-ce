@@ -2,6 +2,8 @@ module Dradis::Plugins::Echo
   class LanguageToolService
     class UnavailableError < StandardError; end
 
+    DEFAULT_ADDRESS = 'http://localhost:8010'.freeze
+
     def initialize(fields:, address:)
       @fields  = fields
       @address = address
@@ -14,12 +16,13 @@ module Dradis::Plugins::Echo
     private
 
     def check_field(field_name, text)
-      uri      = URI("#{@address}/v2/check")
-      response = Net::HTTP.start(uri.host, uri.port, open_timeout: 5, read_timeout: 10) do |http|
+      uri      = URI("#{@address.chomp('/')}/v2/check")
+      response = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https',
+                                 open_timeout: 5, read_timeout: 10) do |http|
         http.post(uri.path, URI.encode_www_form(text: text, language: 'en-US'))
       end
 
-      JSON.parse(response.body)['matches'].map do |m|
+      JSON.parse(response.body).fetch('matches', []).map do |m|
         {
           field_name:   field_name,
           offset:       m['offset'],

@@ -5,6 +5,12 @@ describe 'Grammar checks' do
 
   let(:issue) { create(:issue, node: @project.issue_library) }
 
+  let(:roslin_agent) do
+    instance_double(Dradis::Plugins::Echo::Agent,
+                    enabled?: true,
+                    env:      { 'LANGUAGETOOL_ADDRESS' => 'http://languagetool:8010' })
+  end
+
   let(:service_double) do
     instance_double(
       Dradis::Plugins::Echo::LanguageToolService,
@@ -22,6 +28,7 @@ describe 'Grammar checks' do
   end
 
   before do
+    allow(Dradis::Plugins::Echo::Agents::Roslin).to receive(:instance).and_return(roslin_agent)
     allow(Dradis::Plugins::Echo::LanguageToolService).to receive(:new).and_return(service_double)
   end
 
@@ -37,6 +44,47 @@ describe 'Grammar checks' do
       expect(json).to be_an(Array)
       expect(json.first['message']).to eq('Possible spelling mistake')
       expect(json.first['field_name']).to eq('Title')
+    end
+
+    it 'passes the configured LanguageTool address to the service' do
+      post "/addons/echo/projects/#{@project.id}/grammar_check", params: {
+        commentable_type: 'Issue',
+        commentable_id:   issue.id
+      }
+
+      expect(Dradis::Plugins::Echo::LanguageToolService).to have_received(:new).with(
+        hash_including(address: 'http://languagetool:8010')
+      )
+    end
+
+    context 'when raw text is provided' do
+      it 'checks the provided text instead of the persisted content' do
+        raw_text = "#[Title]#\nUnsaved speling mistake\n"
+
+        post "/addons/echo/projects/#{@project.id}/grammar_check", params: {
+          commentable_type: 'Issue',
+          commentable_id:   issue.id,
+          text:             raw_text
+        }
+
+        expect(Dradis::Plugins::Echo::LanguageToolService).to have_received(:new).with(
+          hash_including(fields: FieldParser.source_to_fields(raw_text))
+        )
+      end
+    end
+
+    context 'when an empty text param is provided' do
+      it 'checks the empty text rather than falling back to persisted content' do
+        post "/addons/echo/projects/#{@project.id}/grammar_check", params: {
+          commentable_type: 'Issue',
+          commentable_id:   issue.id,
+          text:             ''
+        }
+
+        expect(Dradis::Plugins::Echo::LanguageToolService).to have_received(:new).with(
+          hash_including(fields: {})
+        )
+      end
     end
 
     it 'returns 404 for an issue outside the current project scope' do
@@ -57,6 +105,18 @@ describe 'Grammar checks' do
       }
 
       expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'returns 503 when LanguageTool is unavailable' do
+      allow(service_double).to receive(:call)
+        .and_raise(Dradis::Plugins::Echo::LanguageToolService::UnavailableError, 'Connection refused')
+
+      post "/addons/echo/projects/#{@project.id}/grammar_check", params: {
+        commentable_type: 'Issue',
+        commentable_id:   issue.id
+      }
+
+      expect(response).to have_http_status(:service_unavailable)
     end
   end
 end

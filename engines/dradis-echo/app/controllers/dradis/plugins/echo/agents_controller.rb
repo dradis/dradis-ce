@@ -28,7 +28,13 @@ module Dradis::Plugins::Echo
     end
 
     def agent_params
-      params.require(:agent).permit(:enabled, :language_tool_address, :model_override, :provider_id)
+      permitted = params.require(:agent).permit(
+        :enabled, :model_override, :provider_id,
+        env_keys: [], env_values: []
+      )
+      keys   = permitted.delete(:env_keys) || []
+      values = permitted.delete(:env_values) || []
+      permitted.merge(env: keys.zip(values).reject { |k, _| k.blank? }.to_h)
     end
 
     def set_agent

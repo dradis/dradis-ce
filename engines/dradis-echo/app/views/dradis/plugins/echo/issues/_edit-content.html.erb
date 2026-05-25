@@ -1,6 +1,7 @@
-<% if Dradis::Plugins::Echo::Roslin::LanguageTool.enabled? %>
+<% if Dradis::Plugins::Echo::Agents::Roslin.enabled? %>
   <div data-controller="dradis--plugins--echo--grammar"
        data-dradis--plugins--echo--grammar-grammar-check-url-value="<%= echo.project_grammar_check_path(current_project) %>"
+       data-dradis--plugins--echo--grammar-grammar-replacements-url-value="<%= echo.project_grammar_replacements_path(current_project) %>"
        data-dradis--plugins--echo--grammar-commentable-type-value="<%= @issue.class %>"
        data-dradis--plugins--echo--grammar-commentable-id-value="<%= @issue.id %>">
   </div>

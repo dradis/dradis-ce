@@ -5,12 +5,22 @@ module Dradis::Plugins::Echo
     before_action :set_record
 
     def create
-      raw_text = @record.respond_to?(:text) ? @record.text : @record.content
+      return head :service_unavailable unless Agents::Roslin.enabled?
+
+      raw_text =
+        if params.key?(:text)
+          params[:text].to_s
+        elsif @record.respond_to?(:text)
+          @record.text
+        else
+          @record.content
+        end
+
       fields   = FieldParser.source_to_fields(raw_text)
 
       matches = LanguageToolService.new(
         fields:  fields,
-        address: Roslin::LanguageTool.settings.address
+        address: Dradis::Plugins::Echo::Agents::Roslin.instance.env['LANGUAGETOOL_ADDRESS']
       ).call
 
       render json: matches

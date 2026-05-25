@@ -45,9 +45,9 @@ class BaseHighlighter {
   // Uses innerText as the combined string because anchor.exact comes
   // from getSelection().toString() which mirrors innerText behavior
   // (inserting \n at block boundaries and <br> elements).
-  _findTextInNodes(textNodes, searchText) {
+  _findTextInNodes(textNodes, searchText, fromIndex = 0) {
     const combined = this.contentEl.innerText;
-    let matchIndex = combined.indexOf(searchText);
+    let matchIndex = combined.indexOf(searchText, fromIndex);
     let matchEnd;
 
     if (matchIndex !== -1) {
@@ -56,7 +56,7 @@ class BaseHighlighter {
       // Cross-browser: anchor.exact may use different whitespace than
       // the current browser's innerText (e.g. Safari uses spaces where
       // Firefox uses \n\n around block elements). Fuzzy-match whitespace.
-      const result = fuzzyIndexOf(combined, searchText);
+      const result = fuzzyIndexOf(combined, searchText, fromIndex);
       if (!result) return [];
       matchIndex = result.start;
       matchEnd   = result.end;
