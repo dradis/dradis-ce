@@ -23,7 +23,8 @@ module Dradis::Plugins::Echo
     end
 
     def create
-      IssueInteractionJob.perform_later(
+      InteractionJob.perform_later(
+        agent_id: Agents::Roslin.id,
         prompt: params[:prompt],
         interaction_id: params[:interaction_id],
         response_id: params[:response_id]
@@ -33,6 +34,15 @@ module Dradis::Plugins::Echo
     end
 
     private
+
+    def check_turbo_config
+      @turbo_status = begin
+        ActionCable.server.pubsub.redis_connection_for_subscriptions.ping
+        true
+      rescue
+        false
+      end
+    end
 
     def liquid_parse(template)
       assigns = { 'issue' => IssueDrop.new(@record) }
@@ -51,24 +61,12 @@ module Dradis::Plugins::Echo
       params.permit(:id, :type, :project_id, :record)
     end
 
-    # Echo requires Turbo, and Turbo requires:
-    #   1. ActionCable to be configured using the :redis adapter.
-    #   2. for Redis to be running.
-    def check_turbo_config
-      @turbo_status = begin
-        ActionCable.server.pubsub.redis_connection_for_subscriptions.ping
-        true
-      rescue
-        false
-      end
+    def set_prompt
+      @prompt = current_user.prompts.find(params[:id])
     end
 
     def set_record
       @record = current_project.send(@type.to_s.pluralize).find(record_params[:record])
-    end
-
-    def set_prompt
-      @prompt = current_user.prompts.find(params[:id])
     end
 
     def set_type

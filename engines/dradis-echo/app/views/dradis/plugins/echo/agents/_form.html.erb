@@ -1,0 +1,39 @@
+<%= form_with model: agent, scope: :agent, url: agent_path(agent) do |f| %>
+
+  <% if agent.errors.any? %>
+    <div class="alert alert-danger">
+      <ul class="mb-0">
+        <% agent.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <div class="form-check form-switch">
+      <%= f.check_box :enabled, class: 'form-check-input', role: 'switch' %>
+      <%= f.label :enabled, 'Enabled', class: 'form-check-label' %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :provider_id, 'Provider', class: 'form-label' %>
+    <%= f.select :provider_id,
+          @providers.map { |p| [p.name, p.id] },
+          { include_blank: 'Select a provider' },
+          class: 'form-select', required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :model_override, 'Model override', class: 'form-label' %>
+    <%= f.text_field :model_override, class: 'form-control',
+        placeholder: "Uses provider's configured model" %>
+    <div class="form-text">Leave blank to use the model configured on the provider<% if agent.provider %> (currently: <code><%= agent.provider.model %></code>)<% end %>.</div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit 'Update Agent', class: 'btn btn-primary' %>
+    or <%= link_to 'Cancel', agents_path %>
+  </div>
+<% end %>
