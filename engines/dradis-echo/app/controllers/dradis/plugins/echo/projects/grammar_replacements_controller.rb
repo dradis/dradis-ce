@@ -14,13 +14,15 @@ module Dradis::Plugins::Echo
 
       return head :unprocessable_entity if replacement.nil?
 
-      raw_text = if params.key?(:text)
-                   params[:text].to_s
-                 elsif @record.respond_to?(:text)
-                   @record.text
-                 else
-                   @record.content
-                 end
+      raw_text =
+        if params.key?(:text)
+          params[:text].to_s
+        elsif @record.respond_to?(:text)
+          @record.text
+        else
+          @record.content
+        end
+
       fields   = FieldParser.source_to_fields(raw_text)
 
       return head :unprocessable_entity unless fields[field_name]
