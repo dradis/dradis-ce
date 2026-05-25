@@ -48,6 +48,25 @@ describe 'Grammar replacements' do
       end
     end
 
+    context 'when persist=false (edit mode)' do
+      it 'returns the corrected text without saving to the database' do
+        post "/addons/echo/projects/#{@project.id}/grammar_replacements", params: {
+          commentable_type: 'Issue',
+          commentable_id:   issue.id,
+          field_name:       'Title',
+          offset:           0,
+          length:           4,
+          replacement:      'test',
+          persist:          'false'
+        }
+
+        expect(response).to have_http_status(:ok)
+        json = JSON.parse(response.body)
+        expect(json['raw']).to include('test')
+        expect(issue.reload.text).not_to include('test')
+      end
+    end
+
     it 'returns 404 for an issue outside the current project scope' do
       other_issue = create(:issue, node: create(:node))
 

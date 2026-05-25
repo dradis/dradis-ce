@@ -23,9 +23,11 @@ module Dradis::Plugins::Echo
 
       new_raw = apply_replacement(raw_text, field_name, offset, length, replacement)
 
-      attr = @record.respond_to?(:text) ? :text : :content
-      unless @record.update(attr => new_raw)
-        return render json: { errors: @record.errors.full_messages }, status: :unprocessable_entity
+      if params[:persist] != 'false'
+        attr = @record.respond_to?(:text) ? :text : :content
+        unless @record.update(attr => new_raw)
+          return render json: { errors: @record.errors.full_messages }, status: :unprocessable_entity
+        end
       end
 
       render json: { raw: new_raw }

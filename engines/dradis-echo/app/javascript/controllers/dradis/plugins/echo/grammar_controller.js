@@ -168,7 +168,10 @@ export default class extends Controller {
     });
 
     const textarea = document.querySelector('textarea.textile');
-    if (textarea) body.set('text', textarea.value);
+    if (textarea) {
+      body.set('text', textarea.value);
+      if (!this._contentEl()) body.set('persist', 'false');
+    }
 
     fetch(this.grammarReplacementsUrlValue, {
       method:  'POST',
