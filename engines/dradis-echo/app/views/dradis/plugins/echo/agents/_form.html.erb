@@ -38,12 +38,10 @@
     <div data-dradis--plugins--echo--agent-target="envVarsContainer">
       <% agent.env.each do |key, value| %>
         <div class="d-flex gap-2 mb-2" data-env-var-row>
-          <input type="text" name="agent[env_keys][]" value="<%= key %>"
-                 class="form-control font-monospace" placeholder="KEY">
-          <input type="text" name="agent[env_values][]" value="<%= value %>"
-                 class="form-control" placeholder="value">
-          <button type="button" class="btn btn-outline-danger"
-                  data-action="click->dradis--plugins--echo--agent#removeRow">
+          <input type="text" name="agent[env_keys][]" value="<%= key %>" class="form-control font-monospace" placeholder="KEY">
+          <input type="text" name="agent[env_values][]" value="<%= value %>" class="form-control" placeholder="value">
+
+          <button type="button" class="btn btn-outline-danger" data-action="click->dradis--plugins--echo--agent#removeRow">
             <i class="fa-solid fa-xmark"></i>
           </button>
         </div>
@@ -55,12 +53,10 @@
     </button>
     <template data-dradis--plugins--echo--agent-target="envVarTemplate">
       <div class="d-flex gap-2 mb-2" data-env-var-row>
-        <input type="text" name="agent[env_keys][]"
-               class="form-control font-monospace" placeholder="KEY">
-        <input type="text" name="agent[env_values][]"
-               class="form-control" placeholder="value">
-        <button type="button" class="btn btn-outline-danger"
-                data-action="click->dradis--plugins--echo--agent#removeRow">
+        <input type="text" name="agent[env_keys][]" class="form-control font-monospace" placeholder="KEY">
+        <input type="text" name="agent[env_values][]" class="form-control" placeholder="value">
+
+        <button type="button" class="btn btn-outline-danger" data-action="click->dradis--plugins--echo--agent#removeRow">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
