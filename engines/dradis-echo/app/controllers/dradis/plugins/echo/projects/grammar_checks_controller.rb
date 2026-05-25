@@ -10,7 +10,7 @@ module Dradis::Plugins::Echo
 
       matches = LanguageToolService.new(
         fields:  fields,
-        address: Roslin::LanguageTool.settings.address
+        address: Dradis::Plugins::Echo::Agents::Roslin.instance.env['LANGUAGETOOL_ADDRESS'].settings.address
       ).call
 
       render json: matches

@@ -6,6 +6,9 @@ class CreateAgents < ActiveRecord::Migration[8.0]
       t.boolean :enabled, default: true, null: false
       t.string :model_override
       t.string :name, null: false
+
+      t.json :env, default: {}
+
       t.references :provider, null: false,
                    foreign_key: { to_table: :dradis_plugins_echo_providers }
       t.timestamps
