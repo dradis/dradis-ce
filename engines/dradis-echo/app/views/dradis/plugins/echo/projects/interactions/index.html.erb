@@ -39,7 +39,7 @@
 <% else %>
   <div class="alert alert-warning">
     <% if !current_user.respond_to?(:role?) || current_user.role?(:admin) %>
-      Roslin is not enabled. <%= link_to 'Enable it', echo.agents_path %> before using this feature.
+      Roslin is not enabled. <%= link_to 'Enable it', echo.agents_path, data: { turbo_frame: '_top' } %> before using this feature.
     <% else %>
       Roslin is not enabled. Ask an admin to enable it before using this feature.
     <% end %>
