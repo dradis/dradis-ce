@@ -153,6 +153,13 @@ export default class extends Controller {
     });
     this._activeMark = markEl;
     this._activePopover.show();
+
+    this._onDocumentClick = (e) => {
+      if (!markEl.contains(e.target) && !document.querySelector('.popover')?.contains(e.target)) {
+        this._destroyPopover();
+      }
+    };
+    setTimeout(() => document.addEventListener('click', this._onDocumentClick), 0);
   }
 
   _applyReplacement(match, replacement) {
@@ -194,6 +201,8 @@ export default class extends Controller {
       this._activePopover = null;
       this._activeMark    = null;
     }
+    document.removeEventListener('click', this._onDocumentClick);
+    this._onDocumentClick = null;
   }
 
   _refreshContent(newRaw) {
