@@ -28,8 +28,7 @@ class CreateAgents < ActiveRecord::Migration[8.0]
           name: 'Ollama'
         )
 
-        lt_address = config_value('roslin_language_tool_address') ||
-                     Dradis::Plugins::Echo::LanguageToolService::DEFAULT_ADDRESS
+        lt_address = Dradis::Plugins::Echo::LanguageToolService::DEFAULT_ADDRESS
 
         Dradis::Plugins::Echo::Agent.create!(
           agent_type: :system,

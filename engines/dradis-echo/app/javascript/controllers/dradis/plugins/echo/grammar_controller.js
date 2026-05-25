@@ -1,10 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static values  = {
-    commentableType:        String,
-    commentableId:          String,
-    grammarCheckUrl:        String,
+  static values = {
+    commentableType: String,
+    commentableId: String,
+    grammarCheckUrl: String,
     grammarReplacementsUrl: String
   }
 

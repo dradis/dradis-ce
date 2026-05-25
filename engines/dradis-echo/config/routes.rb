@@ -8,7 +8,7 @@ Dradis::Plugins::Echo::Engine.routes.draw do
         get :preview, on: :member
       end
 
-      resource  :grammar_check,        only: [:create], controller: 'projects/grammar_checks'
+      resource :grammar_check, only: [:create], controller: 'projects/grammar_checks'
       resources :grammar_replacements, only: [:create], controller: 'projects/grammar_replacements'
     end
 
