@@ -36,7 +36,7 @@
   <div class="mb-3">
     <label class="form-label">ENV Variables</label>
     <div data-dradis--plugins--echo--agent-target="envVarsContainer">
-      <% (agent.env || {}).each do |key, value| %>
+      <% agent.env.each do |key, value| %>
         <div class="d-flex gap-2 mb-2" data-env-var-row>
           <input type="text" name="agent[env_keys][]" value="<%= key %>"
                  class="form-control font-monospace" placeholder="KEY">

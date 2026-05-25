@@ -182,7 +182,7 @@ export default class extends Controller {
       .then(r => r.json())
       .then(data => {
         this._destroyPopover();
-        this.highlighter.clearHighlights();
+        this.highlighter.highlight([]);
         this._refreshContent(data.raw);
       })
       .catch(err => console.error('GrammarCheck: replacement failed:', err));
