@@ -25,7 +25,7 @@
   background-color: transparent;
   color: inherit;
   cursor: pointer;
-  text-decoration: underline wavy $lavender-dark;
+  text-decoration: underline wavy var(--badge-lavender-color);
   text-underline-offset: 3px;
 }
 
