@@ -32,7 +32,7 @@ module Dradis::Plugins::Echo
         :enabled, :model_override, :provider_id,
         env_keys: [], env_values: []
       )
-      keys   = permitted.delete(:env_keys) || []
+      keys = permitted.delete(:env_keys) || []
       values = permitted.delete(:env_values) || []
       permitted.merge(env: keys.zip(values).reject { |k, _| k.blank? }.to_h)
     end

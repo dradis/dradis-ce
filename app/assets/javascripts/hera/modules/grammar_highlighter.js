@@ -10,7 +10,7 @@ class GrammarHighlighter extends BaseHighlighter {
   constructor(contentElement, coordinator, storageKey) {
     super(contentElement, coordinator);
     this.storageKey = storageKey;
-    this.dismissed  = this._loadDismissed();
+    this.dismissed = this._loadDismissed();
   }
 
   highlight(matches) {
@@ -36,7 +36,7 @@ class GrammarHighlighter extends BaseHighlighter {
 
     const fromIndex = nextFrom.get(match.exact) || 0;
     const textNodes = this._getTextNodes();
-    const segments  = this._findTextInNodes(textNodes, match.exact, fromIndex);
+    const segments = this._findTextInNodes(textNodes, match.exact, fromIndex);
     if (segments.length === 0) return;
 
     const combined = textNodes.map(n => n.textContent).join('');
@@ -54,7 +54,7 @@ class GrammarHighlighter extends BaseHighlighter {
 
   _createMark(match) {
     const mark = document.createElement('mark');
-    mark.className        = 'grammar-suggestion-highlight';
+    mark.className = 'grammar-suggestion-highlight';
     mark.dataset.behavior = 'grammar-suggestion-highlight';
     mark.dataset.matchKey = this._key(match);
     return mark;
@@ -82,9 +82,9 @@ class GrammarHighlighter extends BaseHighlighter {
       if (entry.endIndex <= matchIndex) continue;
       if (entry.startIndex >= matchEnd) break;
       segments.push({
-        node:        entry.node,
+        node: entry.node,
         startOffset: Math.max(matchIndex, entry.startIndex) - entry.startIndex,
-        endOffset:   Math.min(matchEnd, entry.endIndex) - entry.startIndex
+        endOffset: Math.min(matchEnd, entry.endIndex) - entry.startIndex
       });
     }
 

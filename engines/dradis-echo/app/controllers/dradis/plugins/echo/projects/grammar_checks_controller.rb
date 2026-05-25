@@ -7,20 +7,13 @@ module Dradis::Plugins::Echo
     def create
       return head :service_unavailable unless Agents::Roslin.enabled?
 
-      raw_text =
-        if params.key?(:text)
-          params[:text].to_s
-        elsif @record.respond_to?(:text)
-          @record.text
-        else
-          @record.content
-        end
+      raw_text = params.key?(:text) ? params[:text].to_s : @record.content
 
-      fields   = FieldParser.source_to_fields(raw_text)
+      fields = FieldParser.source_to_fields(raw_text)
 
       matches = LanguageToolService.new(
-        fields:  fields,
-        address: Dradis::Plugins::Echo::Agents::Roslin.instance.env['LANGUAGETOOL_ADDRESS']
+        fields: fields,
+        address: Agents::Roslin.instance.env['LANGUAGETOOL_ADDRESS']
       ).call
 
       render json: matches

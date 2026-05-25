@@ -43,9 +43,9 @@ class InlineThreadHighlighter extends BaseHighlighter {
 
   _createMark(thread) {
     const mark = document.createElement('mark');
-    mark.className           = 'inline-thread-highlight';
-    mark.dataset.behavior    = 'inline-thread-highlight';
-    mark.dataset.threadId    = thread.id;
+    mark.className = 'inline-thread-highlight';
+    mark.dataset.behavior = 'inline-thread-highlight';
+    mark.dataset.threadId = thread.id;
     mark.dataset.commentCount = thread.comments.length;
 
     if (thread.status === 'resolved') mark.classList.add('resolved');

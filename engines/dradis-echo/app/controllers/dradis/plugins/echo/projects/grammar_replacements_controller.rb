@@ -7,27 +7,17 @@ module Dradis::Plugins::Echo
     def create
       return head :service_unavailable unless Agents::Roslin.enabled?
 
-      field_name  = params[:field_name]
-      offset      = params[:offset].to_i
-      length      = params[:length].to_i
+      field_name = params[:field_name]
+      offset = params[:offset].to_i
+      length = params[:length].to_i
       replacement = params[:replacement]
 
       return head :unprocessable_entity if replacement.nil?
 
-      raw_text =
-        if params.key?(:text)
-          params[:text].to_s
-        elsif @record.respond_to?(:text)
-          @record.text
-        else
-          @record.content
-        end
+      raw_text = params.key?(:text) ? params[:text].to_s : @record.content
+      fields = FieldParser.source_to_fields(raw_text)
 
-      fields   = FieldParser.source_to_fields(raw_text)
-
-      return head :unprocessable_entity unless fields[field_name]
-
-      field_value = fields[field_name]
+      return head :unprocessable_entity unless (field_value = fields[field_name])
       return head :unprocessable_entity if offset < 0 || (offset + length) > field_value.length
 
       if (exact = params[:exact])
@@ -36,9 +26,8 @@ module Dradis::Plugins::Echo
 
       new_raw = apply_replacement(raw_text, field_name, offset, length, replacement)
 
-      if params[:persist] != 'false'
-        attr = @record.respond_to?(:text) ? :text : :content
-        unless @record.update(attr => new_raw)
+      unless params[:persist] == 'false'
+        unless @record.update(content: new_raw)
           return render json: { errors: @record.errors.full_messages }, status: :unprocessable_entity
         end
       end
@@ -49,8 +38,8 @@ module Dradis::Plugins::Echo
     private
 
     def apply_replacement(raw_text, field_name, offset, length, replacement)
-      fields             = FieldParser.source_to_fields(raw_text)
-      field_value        = fields[field_name]
+      fields = FieldParser.source_to_fields(raw_text)
+      field_value = fields[field_name]
       fields[field_name] = field_value[0, offset] + replacement + field_value[(offset + length)..]
       FieldParser.fields_hash_to_source(fields)
     end

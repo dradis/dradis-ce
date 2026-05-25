@@ -12,7 +12,7 @@
 
 class BaseHighlighter {
   constructor(contentElement, coordinator) {
-    this.contentEl   = contentElement;
+    this.contentEl = contentElement;
     this.coordinator = coordinator;
   }
 
@@ -31,7 +31,7 @@ class BaseHighlighter {
   }
 
   _getTextNodes() {
-    const nodes  = [];
+    const nodes = [];
     const walker = document.createTreeWalker(this.contentEl, NodeFilter.SHOW_TEXT, null, false);
     let node;
     while ((node = walker.nextNode())) nodes.push(node);
@@ -59,10 +59,10 @@ class BaseHighlighter {
       const result = fuzzyIndexOf(combined, searchText, fromIndex);
       if (!result) return [];
       matchIndex = result.start;
-      matchEnd   = result.end;
+      matchEnd = result.end;
     }
 
-    const nodeMap  = [];
+    const nodeMap = [];
     let searchFrom = 0;
 
     for (var i = 0; i < textNodes.length; i++) {
@@ -81,7 +81,7 @@ class BaseHighlighter {
       if (entry.endIndex <= matchIndex) continue;
       if (entry.startIndex >= matchEnd) break;
       var segStart = Math.max(matchIndex, entry.startIndex) - entry.startIndex;
-      var segEnd   = Math.min(matchEnd, entry.endIndex) - entry.startIndex;
+      var segEnd = Math.min(matchEnd, entry.endIndex) - entry.startIndex;
       segments.push({ node: entry.node, startOffset: segStart, endOffset: segEnd });
     }
 
