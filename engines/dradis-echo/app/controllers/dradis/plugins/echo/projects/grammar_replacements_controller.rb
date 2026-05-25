@@ -10,18 +10,22 @@ module Dradis::Plugins::Echo
       length      = params[:length].to_i
       replacement = params[:replacement]
 
+      return head :unprocessable_entity if replacement.nil?
+
       raw_text = params[:text].presence ||
                  (@record.respond_to?(:text) ? @record.text : @record.content)
       fields   = FieldParser.source_to_fields(raw_text)
 
       return head :unprocessable_entity unless fields[field_name]
 
+      field_value = fields[field_name]
+      return head :unprocessable_entity if offset < 0 || (offset + length) > field_value.length
+
       new_raw = apply_replacement(raw_text, field_name, offset, length, replacement)
 
-      if @record.respond_to?(:text)
-        @record.update!(text: new_raw)
-      else
-        @record.update!(content: new_raw)
+      attr = @record.respond_to?(:text) ? :text : :content
+      unless @record.update(attr => new_raw)
+        return render json: { errors: @record.errors.full_messages }, status: :unprocessable_entity
       end
 
       render json: { raw: new_raw }

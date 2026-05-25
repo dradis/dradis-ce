@@ -126,7 +126,7 @@ export default class extends Controller {
           btn.type        = 'button';
           btn.className   = 'btn btn-sm btn-outline-primary';
           btn.textContent = r;
-          btn.addEventListener('click', () => this._applyReplacement(match, r, markEl));
+          btn.addEventListener('click', () => this._applyReplacement(match, r));
           replacements.appendChild(btn);
         } else {
           const badge = document.createElement('span');
@@ -234,6 +234,6 @@ export default class extends Controller {
   }
 
   _csrf() {
-    return document.querySelector('meta[name="csrf-token"]').content;
+    return document.querySelector('meta[name="csrf-token"]')?.content;
   }
 }

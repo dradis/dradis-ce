@@ -5,6 +5,8 @@ module Dradis::Plugins::Echo
     before_action :set_record
 
     def create
+      return head :service_unavailable unless Agents::Roslin.enabled?
+
       raw_text = params[:text].presence ||
                  (@record.respond_to?(:text) ? @record.text : @record.content)
       fields   = FieldParser.source_to_fields(raw_text)
