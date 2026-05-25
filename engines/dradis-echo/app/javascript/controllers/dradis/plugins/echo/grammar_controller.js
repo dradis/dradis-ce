@@ -40,7 +40,10 @@ export default class extends Controller {
     const storageKey = `grammar_dismissed:${this.commentableTypeValue}:${this.commentableIdValue}`;
     this.highlighter ||= new GrammarHighlighter(contentEl, this, storageKey);
 
-    this._fetchMatches().then(matches => this.highlighter.highlight(matches));
+    this._fetchMatches().then(matches => {
+      this.highlighter.highlight(matches);
+      this._updateWidget(this._visibleMatchCount());
+    });
   }
 
   _watchPreviewPane() {
@@ -70,7 +73,10 @@ export default class extends Controller {
     const storageKey = `grammar_dismissed:${this.commentableTypeValue}:${this.commentableIdValue}`;
     this.highlighter = new GrammarHighlighter(previewEl, this, storageKey);
 
-    this._fetchMatches().then(matches => this.highlighter.highlight(matches));
+    this._fetchMatches().then(matches => {
+      this.highlighter.highlight(matches);
+      this._updateWidget(this._visibleMatchCount());
+    });
   }
 
   _fetchMatches() {
@@ -209,6 +215,7 @@ export default class extends Controller {
   _dismiss(match) {
     this._destroyPopover();
     this.highlighter.dismiss(match);
+    this._updateWidget(this._visibleMatchCount());
   }
 
   _destroyPopover() {
@@ -219,6 +226,25 @@ export default class extends Controller {
     }
     document.removeEventListener('click', this._onDocumentClick);
     this._onDocumentClick = null;
+  }
+
+  _visibleMatchCount() {
+    return this.highlighter?.contentEl.querySelectorAll('[data-behavior~=grammar-suggestion-highlight]').length ?? 0;
+  }
+
+  _updateWidget(count) {
+    const successEl  = document.querySelector('[data-behavior~=roslin-status-success]');
+    const errorEl    = document.querySelector('[data-behavior~=roslin-status-error]');
+    const summaryEl  = document.querySelector('[data-behavior~=roslin-issues-summary]');
+    const collapseEl = document.getElementById('roslin-widget');
+
+    if (successEl) successEl.classList.toggle('d-none', count > 0);
+    if (errorEl)   errorEl.classList.toggle('d-none', count === 0);
+
+    if (summaryEl) summaryEl.textContent = count > 0
+      ? `${count} issue${count === 1 ? '' : 's'} found`
+      : 'No grammar or spelling errors!';
+    if (collapseEl) collapseEl.classList.toggle('show', count > 0);
   }
 
   _refreshContent(newRaw) {

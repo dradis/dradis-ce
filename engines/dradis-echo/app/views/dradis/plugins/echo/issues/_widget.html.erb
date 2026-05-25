@@ -1,6 +1,16 @@
+<% roslin_enabled = Dradis::Plugins::Echo::Agents::Roslin.enabled? %>
+
 <div class="header">
   <div class="header-inner">
-    <h5 class="header-name">Roslin</h5>
+    <h5 class="header-name">
+      Roslin
+      <% if roslin_enabled %>
+        <i class="fa-solid fa-check ms-1 d-none" data-behavior="roslin-status-success"></i>
+        <i class="fa-solid fa-times ms-1 d-none" data-behavior="roslin-status-error"></i>
+      <% else %>
+        <i class="fa-solid fa-info-circle ms-1"></i>
+      <% end %>
+    </h5>
     <div class="options">
       <%= link_to '#roslin-widget', data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
         <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i>
@@ -10,9 +20,9 @@
   </div>
 </div>
 
-<% if Dradis::Plugins::Echo::Agents::Roslin.enabled? %>
+<% if roslin_enabled %>
   <div id="roslin-widget" class="collapse">
-    <p class="mb-0">Roslin automatically checks your content for grammar and spelling issues.</p>
+    <p class="mb-0" data-behavior="roslin-issues-summary"></p>
   </div>
 <% else %>
   <div id="roslin-widget" class="collapse show">
