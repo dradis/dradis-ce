@@ -34,7 +34,7 @@ describe 'Roslin widget' do
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to include('fa-info-circle')
-        expect(response.body).to include('Enable Roslin')
+        expect(response.body).to include(Dradis::Plugins::Echo::Engine.routes.url_helpers.agents_path)
         expect(response.body).to match(/<div id="roslin-widget" class="collapse show"/)
       end
     end
