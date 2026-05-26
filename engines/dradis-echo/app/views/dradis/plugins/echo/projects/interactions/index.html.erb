@@ -7,7 +7,7 @@
 <% if Dradis::Plugins::Echo::Agents::Roslin.enabled? %>
   <% if @prompts.any? %>
     <p>
-      Interact with <i class="fa-regular fa-robot me-1"></i>Roslin by selecting a
+      Interact with <i class="fa-solid fa-robot me-1"></i>Roslin by selecting a
       <%= link_to 'saved prompt', echo.prompts_path, data: { turbo_frame: '_top' } %> to use with this Issue.
     </p>
     <p>
@@ -46,11 +46,11 @@
 <% else %>
   <div class="alert alert-warning">
     <% if !current_user.respond_to?(:role?) || current_user.role?(:admin) %>
-      <i class="fa-regular fa-robot me-1"></i>Roslin is not enabled.
+      <i class="fa-solid fa-robot me-1"></i>Roslin is not enabled.
       <%= link_to 'Enable it', echo.agents_path, data: { turbo_frame: '_top' } %>
       to allow LLM interactions.
     <% else %>
-      <i class="fa-regular fa-robot me-1"></i>Roslin is not enabled. Ask an
+      <i class="fa-solid fa-robot me-1"></i>Roslin is not enabled. Ask an
       admin to enable it to allow LLM interactions.
     <% end %>
   </div>
