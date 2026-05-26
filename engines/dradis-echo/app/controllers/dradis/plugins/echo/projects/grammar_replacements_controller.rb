@@ -1,11 +1,7 @@
 module Dradis::Plugins::Echo
-  class Projects::GrammarReplacementsController < AuthenticatedController
-    include ProjectScoped
-
-    before_action :set_record
-
+  class Projects::GrammarReplacementsController < Projects::GrammarController
     def create
-      return head :service_unavailable unless Agents::Roslin.enabled?
+      return head :service_unavailable unless Agents::Roslin.enabled? && Agents::Roslin.language_tool_configured?
 
       field_name = params[:field_name]
       offset = params[:offset].to_i
@@ -42,16 +38,6 @@ module Dradis::Plugins::Echo
       field_value = fields[field_name]
       fields[field_name] = field_value[0, offset] + replacement + field_value[(offset + length)..]
       FieldParser.fields_hash_to_source(fields)
-    end
-
-    def set_record
-      commentable_class = InlineCommentable.allowed_types
-                            .find { |t| t == params[:commentable_type] }
-                            &.constantize
-
-      return head :unprocessable_entity unless commentable_class
-
-      @record = current_project.send(commentable_class.model_name.plural).find(params[:commentable_id])
     end
   end
 end

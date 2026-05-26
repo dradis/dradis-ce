@@ -10,6 +10,10 @@ module Dradis::Plugins::Echo
       end
 
       delegate :enabled?, :id, :model_override, :provider, to: :instance
+
+      def language_tool_configured?
+        instance.env['LANGUAGETOOL_ADDRESS'].present?
+      end
     end
   end
 end
