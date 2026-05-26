@@ -20,15 +20,6 @@
   }
 }
 
-// Grammar/style suggestion highlights
-.grammar-suggestion-highlight {
-  background-color: transparent;
-  color: inherit;
-  cursor: pointer;
-  text-decoration: underline wavy var(--badge-lavender-color);
-  text-underline-offset: 3px;
-}
-
 // Inline comment selection button (follows .selection-quote-button pattern)
 .inline-comment-button {
   align-items: center;
