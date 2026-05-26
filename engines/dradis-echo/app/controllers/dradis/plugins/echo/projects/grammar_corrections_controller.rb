@@ -1,5 +1,5 @@
 module Dradis::Plugins::Echo
-  class Projects::GrammarReplacementsController < AuthenticatedController
+  class Projects::GrammarCorrectionsController < AuthenticatedController
     include ProjectScoped
 
     before_action :set_record
