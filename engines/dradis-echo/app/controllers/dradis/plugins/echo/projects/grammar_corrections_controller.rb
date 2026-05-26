@@ -16,11 +16,10 @@ module Dradis::Plugins::Echo
       return head :unprocessable_entity unless (field_value = fields[field_name])
       return head :unprocessable_entity if offset < 0 || (offset + length) > field_value.length
 
-      if (exact = params[:exact])
-        return head :conflict if field_value[offset, length] != exact
-      end
+      exact = params[:exact]
+      return head :conflict if exact && field_value[offset, length] != exact
 
-      new_raw = apply_replacement(raw_text, field_name, offset, length, replacement)
+      new_raw = apply_replacement(field_name, length, offset, raw_text, replacement)
 
       unless params[:persist] == 'false'
         unless @record.update(content: new_raw)
@@ -33,7 +32,7 @@ module Dradis::Plugins::Echo
 
     private
 
-    def apply_replacement(raw_text, field_name, offset, length, replacement)
+    def apply_replacement(field_name, length, offset, raw_text, replacement)
       fields = FieldParser.source_to_fields(raw_text)
       field_value = fields[field_name]
       fields[field_name] = field_value[0, offset] + replacement + field_value[(offset + length)..]
