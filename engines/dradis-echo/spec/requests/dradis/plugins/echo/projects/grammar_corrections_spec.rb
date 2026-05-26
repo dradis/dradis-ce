@@ -4,7 +4,9 @@ describe 'Grammar corrections' do
   before { login_to_project_as_user }
 
   let(:roslin_agent) do
-    instance_double(Dradis::Plugins::Echo::Agent, enabled?: true)
+    instance_double(Dradis::Plugins::Echo::Agent,
+                    enabled?: true,
+                    env: { 'LANGUAGETOOL_ADDRESS' => 'http://languagetool:8010' })
   end
 
   before do
