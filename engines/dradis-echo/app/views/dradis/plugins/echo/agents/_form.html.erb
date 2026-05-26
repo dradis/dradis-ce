@@ -11,12 +11,19 @@
     </div>
   <% end %>
 
+  <p>
+    When enabled, Roslin provides two capabilities: AI-assisted writing through your LLM
+    provider, and grammar and spell check through LanguageTool.
+  </p>
+
   <div class="mb-3">
     <div class="form-check form-switch">
       <%= f.check_box :enabled, class: 'form-check-input', role: 'switch' %>
       <%= f.label :enabled, 'Enabled', class: 'form-check-label' %>
     </div>
   </div>
+
+  <hr>
 
   <div class="mb-3">
     <%= f.label :provider_id, 'Provider', class: 'form-label' %>
@@ -33,8 +40,15 @@
     <div class="form-text">Leave blank to use the model configured on the provider<% if agent.provider %> (currently: <code><%= agent.provider.model %></code>)<% end %>.</div>
   </div>
 
+  <hr>
+
   <div class="mb-3">
     <label class="form-label">ENV Variables</label>
+    <div class="form-text mb-2">
+      Set <code>LANGUAGETOOL_ADDRESS</code> to the URL of your LanguageTool server
+      (default: <code>http://localhost:8010</code>). Without it, grammar and spell check
+      will not work.
+    </div>
     <div data-dradis--plugins--echo--agent-target="envVarsContainer">
       <% agent.env.each do |key, value| %>
         <div class="d-flex gap-2 mb-2" data-env-var-row>
