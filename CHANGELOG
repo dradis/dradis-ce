@@ -9,7 +9,7 @@
   - Upgraded gems:
     - addressable, net-imap, nokogiri, rack
   - Bugs fixes:
-    - Drops: preserve Liquid tags when sanitizing issue and evidence field values
+    - Liquid: stop stripping comparison operators from Liquid tags in issue and evidence fields
     - Fields: show a visible border on dropdown fields in the editor
     - [entity]:
       - [future tense verb] [bug fix]
