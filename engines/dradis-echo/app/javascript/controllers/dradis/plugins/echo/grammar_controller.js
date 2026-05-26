@@ -4,8 +4,8 @@ export default class extends Controller {
   static values = {
     commentableType: String,
     commentableId: String,
-    grammarCheckUrl: String,
-    grammarReplacementsUrl: String
+    grammarCorrectionsUrl: String,
+    grammarSuggestionsUrl: String
   }
 
   connect() {
@@ -88,7 +88,7 @@ export default class extends Controller {
     const textarea = document.querySelector('textarea.textile');
     if (textarea) body.set('text', textarea.value);
 
-    return fetch(this.grammarCheckUrlValue, {
+    return fetch(this.grammarSuggestionsUrlValue, {
       method:  'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -122,7 +122,7 @@ export default class extends Controller {
       replacements.className = 'd-flex flex-wrap gap-1 mb-3';
 
       match.replacements.forEach(r => {
-        if (this.grammarReplacementsUrlValue) {
+        if (this.grammarCorrectionsUrlValue) {
           const btn = document.createElement('button');
           btn.type        = 'button';
           btn.className   = 'btn btn-sm btn-outline-lavender';
@@ -185,7 +185,7 @@ export default class extends Controller {
       if (!this._contentEl()) body.set('persist', 'false');
     }
 
-    fetch(this.grammarReplacementsUrlValue, {
+    fetch(this.grammarCorrectionsUrlValue, {
       method:  'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',

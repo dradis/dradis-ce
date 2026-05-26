@@ -1,5 +1,5 @@
 module Dradis::Plugins::Echo
-  class Projects::GrammarChecksController < Projects::GrammarController
+  class Projects::GrammarSuggestionsController < Projects::GrammarController
     def create
       return head :service_unavailable unless Agents::Roslin.enabled? && Agents::Roslin.language_tool_configured?
 
