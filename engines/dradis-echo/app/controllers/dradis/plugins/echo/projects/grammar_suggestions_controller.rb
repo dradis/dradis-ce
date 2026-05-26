@@ -1,9 +1,5 @@
 module Dradis::Plugins::Echo
   class Projects::GrammarSuggestionsController < Projects::GrammarController
-    include ProjectScoped
-
-    before_action :set_record
-
     def create
       return head :service_unavailable unless Agents::Roslin.enabled? && Agents::Roslin.language_tool_configured?
 
