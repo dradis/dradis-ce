@@ -3,7 +3,7 @@
 <div class="header">
   <div class="header-inner">
     <h5 class="header-name">
-      Roslin
+      <i class="fa-regular fa-robot me-1"></i>Roslin
       <% if roslin_enabled %>
         <i class="fa-solid fa-check ms-1 d-none" data-behavior="roslin-status-success"></i>
         <i class="fa-solid fa-times ms-1 d-none" data-behavior="roslin-status-error"></i>
@@ -26,6 +26,9 @@
   </div>
 <% else %>
   <div id="roslin-widget" class="collapse show">
-    <p class="mb-0"><%= link_to 'Enable Roslin', echo.agents_path %> to use grammar and spell check.</p>
+    <p class="mb-0">
+      <%= link_to 'Enable the Roslin agent', echo.agents_path %> to use grammar
+      and spell check.
+    </p>
   </div>
 <% end %>
