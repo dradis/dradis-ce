@@ -7,7 +7,7 @@
     - Node-level Methodologies
     - Projects
   - Upgraded gems:
-    - addressable, net-imap, nokogiri, rack
+    - addressable, faraday, net-imap, nokogiri, rack
   - Bugs fixes:
     - Fields: show a visible border on dropdown fields in the editor
     - [entity]:
