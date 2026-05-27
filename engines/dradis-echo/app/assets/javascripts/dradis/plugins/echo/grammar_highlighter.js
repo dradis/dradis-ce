@@ -34,14 +34,15 @@ class GrammarHighlighter extends BaseHighlighter {
   _highlightMatch(match, nextFrom = new Map()) {
     if (!match.exact) return;
 
-    const fromIndex = nextFrom.get(match.exact) || 0;
-    const textNodes = this._getTextNodes();
+    const key = `${match.field_name}:${match.exact}`;
+    const fromIndex = nextFrom.get(key) || 0;
+    const textNodes = this._getFieldTextNodes(match.field_name);
     const segments = this._findTextInNodes(textNodes, match.exact, fromIndex);
     if (segments.length === 0) return;
 
     const combined = textNodes.map(n => n.textContent).join('');
     const matchPos = combined.indexOf(match.exact, fromIndex);
-    if (matchPos !== -1) nextFrom.set(match.exact, matchPos + match.exact.length);
+    if (matchPos !== -1) nextFrom.set(key, matchPos + match.exact.length);
 
     const marks = this._wrapSegments(segments, match);
     marks.forEach(mark => {
@@ -58,6 +59,22 @@ class GrammarHighlighter extends BaseHighlighter {
     mark.dataset.behavior = 'grammar-suggestion-highlight';
     mark.dataset.matchKey = this._key(match);
     return mark;
+  }
+
+  _getFieldTextNodes(fieldName) {
+    const headings = Array.from(this.contentEl.querySelectorAll('h5'));
+    const headingIndex = headings.findIndex(h => h.textContent.trim() === fieldName);
+    if (headingIndex === -1) return this._getTextNodes();
+
+    const startHeading = headings[headingIndex];
+    const endHeading = headings[headingIndex + 1] || null;
+
+    return this._getTextNodes().filter(node => {
+      const afterStart = startHeading.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_FOLLOWING;
+      if (!afterStart) return false;
+      if (!endHeading) return true;
+      return !!(endHeading.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_PRECEDING);
+    });
   }
 
   // Uses textContent concatenation instead of innerText to avoid block-boundary \n mismatches.
