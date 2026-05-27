@@ -17,7 +17,7 @@ module Dradis::Plugins::Echo
         Turbo::StreamsChannel.broadcast_append_to(
           [interaction_id, 'prompts'],
           target: response_id,
-          content: chunk
+          content: ERB::Util.html_escape(chunk)
         )
       end
 

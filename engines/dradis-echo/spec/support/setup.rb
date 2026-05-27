@@ -8,6 +8,7 @@ RSpec.configure do |config|
     provider.agents.find_or_create_by!(name: 'Roslin') do |a|
       a.agent_type = :system
       a.enabled    = false
+      a.env        = { 'LANGUAGETOOL_ADDRESS' => Dradis::Plugins::Echo::LanguageToolService::DEFAULT_ADDRESS }
     end
   end
 end

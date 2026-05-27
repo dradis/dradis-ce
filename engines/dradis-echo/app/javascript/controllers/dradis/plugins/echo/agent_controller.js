@@ -1,10 +1,20 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-  static targets = ['agentSwitch', 'tool'];
+  static targets = ['agentSwitch', 'envVarsContainer', 'envVarTemplate', 'tool'];
 
   connect() { this.update(); }
   toggle() { this.update(); }
+
+  addRow() {
+    const row = this.envVarTemplateTarget.content.cloneNode(true);
+    this.envVarsContainerTarget.appendChild(row);
+    this.envVarsContainerTarget.lastElementChild.querySelector('input').focus();
+  }
+
+  removeRow(event) {
+    event.currentTarget.closest('[data-env-var-row]')?.remove();
+  }
 
   update() {
     const agentEnabled = this.hasAgentSwitchTarget ? this.agentSwitchTarget.checked : true;
