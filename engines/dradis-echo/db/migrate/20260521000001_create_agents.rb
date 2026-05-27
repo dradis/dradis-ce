@@ -6,6 +6,9 @@ class CreateAgents < ActiveRecord::Migration[8.0]
       t.boolean :enabled, default: true, null: false
       t.string :model_override
       t.string :name, null: false
+
+      t.text :env
+
       t.references :provider, null: false,
                    foreign_key: { to_table: :dradis_plugins_echo_providers }
       t.timestamps
@@ -25,9 +28,12 @@ class CreateAgents < ActiveRecord::Migration[8.0]
           name: 'Ollama'
         )
 
+        lt_address = Dradis::Plugins::Echo::LanguageToolService::DEFAULT_ADDRESS
+
         Dradis::Plugins::Echo::Agent.create!(
           agent_type: :system,
           enabled: enabled,
+          env: { 'LANGUAGETOOL_ADDRESS' => lt_address },
           name: 'Roslin',
           provider: provider
         )

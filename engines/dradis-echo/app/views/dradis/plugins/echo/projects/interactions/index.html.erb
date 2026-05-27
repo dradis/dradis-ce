@@ -6,7 +6,14 @@
 
 <% if Dradis::Plugins::Echo::Agents::Roslin.enabled? %>
   <% if @prompts.any? %>
-    <p>Interact with Echo by selecting a saved prompt to use with this Issue. You can edit the prompt before sending it, any changes are one-off and won't affect the saved prompt template.</p>
+    <p>
+      Interact with <i class="fa-solid fa-robot me-1"></i>Roslin by selecting a
+      <%= link_to 'saved prompt', echo.prompts_path, data: { turbo_frame: '_top' } %> to use with this Issue.
+    </p>
+    <p>
+      You can edit the prompt before sending it, any changes are one-off and
+      won't affect the saved prompt template.
+    </p>
 
     <div class="row" data-controller="dradis--plugins--echo--prompt-selector">
       <div class="col-12 mb-3">
@@ -39,9 +46,12 @@
 <% else %>
   <div class="alert alert-warning">
     <% if !current_user.respond_to?(:role?) || current_user.role?(:admin) %>
-      Roslin is not enabled. <%= link_to 'Enable it', echo.agents_path, data: { turbo_frame: '_top' } %> before using this feature.
+      <i class="fa-solid fa-robot me-1"></i>Roslin is not enabled.
+      <%= link_to 'Enable it', echo.agents_path, data: { turbo_frame: '_top' } %>
+      to allow LLM interactions.
     <% else %>
-      Roslin is not enabled. Ask an admin to enable it before using this feature.
+      <i class="fa-solid fa-robot me-1"></i>Roslin is not enabled. Ask an
+      admin to enable it to allow LLM interactions.
     <% end %>
   </div>
 <% end %>

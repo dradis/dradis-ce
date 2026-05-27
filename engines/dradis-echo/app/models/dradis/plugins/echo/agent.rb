@@ -2,6 +2,8 @@ module Dradis::Plugins::Echo
   class Agent < ApplicationRecord
     enum :agent_type, %i[system user], default: :user
 
+    store :env, coder: JSON
+
     # -- Relationships --------------------------------------------------------
     belongs_to :provider
 
