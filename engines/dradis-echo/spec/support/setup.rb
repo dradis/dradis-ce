@@ -3,6 +3,6 @@ RSpec.configure do |config|
     # The migration creates Roslin enabled; disable it so grammar checks don't
     # run across all views during specs unless a test explicitly enables it.
     agent = Dradis::Plugins::Echo::Agents::Roslin
-    agent.update!(enabled: false) if agent.enabled?
+    agent.instance.update!(enabled: false) if agent.enabled?
   end
 end
