@@ -26,7 +26,6 @@ class UploadController < AuthenticatedController
     @attachment.save
 
     @success = true
-    @item_id = Log.new.uid
     flash.now[:notice] = "Successfully uploaded #{ filename }"
   end
 
@@ -40,15 +39,14 @@ class UploadController < AuthenticatedController
     # cause the processing of a small file to time out).
     #
     # In Development and testing, if the file is small, process in line.
-    if Rails.env.production? || (File.size(attachment.fullpath) > 1024 * 1024)
-      process_upload_background(attachment: attachment)
-    else
-      process_upload_inline(attachment: attachment)
-    end
+    job =
+      if Rails.env.production? || (File.size(attachment.fullpath) > 1024 * 1024)
+        process_upload_background(attachment: attachment)
+      else
+        process_upload_inline(attachment: attachment)
+      end
 
-    # Nothing to do, the client-side JS will poll ./status for updates
-    # from now on
-    head :ok
+    render json: { job_id: job.job_id }
   end
 
   private
