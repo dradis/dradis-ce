@@ -1,10 +1,12 @@
-<% roslin_enabled = Dradis::Plugins::Echo::Agents::Roslin.enabled? %>
+<% roslin = Dradis::Plugins::Echo::Agents::Roslin %>
+<% roslin_enabled = roslin.enabled? %>
+<% lt_reachable = roslin_enabled && roslin.language_tool_reachable? %>
 
 <div class="header">
   <div class="header-inner">
     <h5 class="header-name">
       Roslin
-      <% if roslin_enabled %>
+      <% if lt_reachable %>
         <i class="fa-solid fa-check ms-1 d-none" data-behavior="roslin-status-success"></i>
         <i class="fa-solid fa-times ms-1 d-none" data-behavior="roslin-status-error"></i>
       <% else %>
@@ -20,15 +22,31 @@
   </div>
 </div>
 
-<% if roslin_enabled %>
+<% if lt_reachable %>
   <div id="roslin-widget" class="collapse" data-behavior="roslin-widget">
     <p class="mb-0" data-behavior="roslin-issues-summary"></p>
   </div>
-<% else %>
+<% elsif !roslin_enabled %>
   <div id="roslin-widget" class="collapse show">
     <p class="mb-0">
       <%= link_to 'Enable the Roslin agent', echo.agents_path %> to use grammar
       and spell checking.
+    </p>
+  </div>
+<% elsif !roslin.language_tool_configured? %>
+  <div id="roslin-widget" class="collapse show">
+    <p class="mb-0">
+      LanguageTool is not configured. <%= link_to 'Update the Roslin agent',
+      echo.edit_agent_path(Dradis::Plugins::Echo::Agents::Roslin) %> to enable
+      grammar and spell checking.
+    </p>
+  </div>
+<% else %>
+  <div id="roslin-widget" class="collapse show">
+    <p>LanguageTool server is not reachable.</p>
+    <p class="mb-0">
+      Make sure the server address
+      is <%= link_to 'properly configured', echo.edit_agent_path(Dradis::Plugins::Echo::Agents::Roslin) %>.
     </p>
   </div>
 <% end %>
