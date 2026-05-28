@@ -10,6 +10,8 @@ describe 'Roslin widget' do
       before do
         roslin_agent = instance_double(Dradis::Plugins::Echo::Agent, enabled?: true)
         allow(Dradis::Plugins::Echo::Agents::Roslin).to receive(:instance).and_return(roslin_agent)
+        allow(Dradis::Plugins::Echo::Agents::Roslin).to receive(:language_tool_configured?).and_return(true)
+        allow(Dradis::Plugins::Echo::Agents::Roslin).to receive(:language_tool_reachable?).and_return(true)
       end
 
       it 'renders the status icons and collapsed widget body' do

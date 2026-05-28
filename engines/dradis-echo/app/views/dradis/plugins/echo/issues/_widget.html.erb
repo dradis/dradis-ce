@@ -37,14 +37,14 @@
 <% elsif !lt_configured %>
   <div id="roslin-widget" class="collapse show">
     <p class="mb-0">
-      LanguageTool is not configured. <%= link_to 'Update the Roslin agent', echo.agents_path %> to add a LanguageTool address.
+    The Language Tool is not configured. <%= link_to 'Update the Roslin agent', echo.edit_agent_path(Dradis::Plugins::Echo::Agents::Roslin) %> to add a <code>LANGUAGETOOL_ADDRESS</code>.
     </p>
   </div>
 <% else %>
   <div id="roslin-widget" class="collapse show">
     <p class="mb-0">
       LanguageTool server is not reachable. Make sure the server at
-      <%= roslin.instance.env['LANGUAGETOOL_ADDRESS'] %> is running.
+      <strong><%= roslin.instance.env['LANGUAGETOOL_ADDRESS'] %></strong> is running.
     </p>
   </div>
 <% end %>
