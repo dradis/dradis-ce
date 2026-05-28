@@ -12,9 +12,14 @@
   <% end %>
 
   <p>
-    When enabled, Roslin provides two capabilities: AI-assisted writing through your LLM
-    provider, and grammar and spell check through LanguageTool.
+    Roslin is a writing assistant. When enabled, Roslin provides two capabilities:
   </p>
+  <ol>
+    <li>AI-assited writing</li>
+    <li>Grammar and spell checking</li>
+  </ol>
+
+  <p>If you want #2 but not #1, just point your Provider to a non-existing IP / port.</p>
 
   <div class="mb-3">
     <div class="form-check form-switch">
@@ -24,6 +29,27 @@
   </div>
 
   <hr>
+
+  <h5>1. AI-assisted writing</h5>
+
+  <p>
+    After you configure a <%= link_to 'LLM provider', echo.providers_path %>,
+    Roslin can help to summarize, rewrite, or adapt findings to your audience,
+    via configurable <%= link_to 'Prompts', echo.prompts_path %> that are aware
+    of your project context.
+  </p>
+
+  <p>
+    If your provider is self-hosted (e.g. Ollama), your project content never
+    leaves your infrastructure.
+  </p>
+
+  <div class="alert alert-warning">
+    If you configure a cloud service (e.g. OpenAI, Claude, etc.), you will be
+    sending your content as part of your prompts.
+  </div>
+
+  <p>Learn about <a href="https://dradis.com/academy/data-sovereignty/shadow-ai-pentest-data-leakage.html" target="_blank">Shadow AI in pentesting</a>.</p>
 
   <div class="mb-3">
     <%= f.label :provider_id, 'Provider', class: 'form-label' %>
@@ -37,18 +63,26 @@
     <%= f.label :model_override, 'Model override', class: 'form-label' %>
     <%= f.text_field :model_override, class: 'form-control',
         placeholder: "Uses provider's configured model" %>
-    <div class="form-text">Leave blank to use the model configured on the provider<% if agent.provider %> (currently: <code><%= agent.provider.model %></code>)<% end %>.</div>
+    <div class="form-text">
+      Leave blank to use the model configured on the provider<% if agent.provider %> (currently: <code><%= agent.provider.model %></code>)<% end %>.
+    </div>
   </div>
 
   <hr>
+  <h5>2. Grammar and spell check</h5>
+  <p>
+    If your run an instance of the open-source <a href="https://languagetool.org/"
+    target="_blank">LanguageTool</a>, Roslin can use it to detect grammar and
+    spelling errors and offer suggestions.
+  </p>
+
+  <p>
+    Set <code>LANGUAGETOOL_ADDRESS</code> to the URL of your LanguageTool server
+    (default: <code>http://localhost:8010</code>). Remove it to disable the feature.
+  </p>
 
   <div class="mb-3">
     <label class="form-label">ENV Variables</label>
-    <div class="form-text mb-2">
-      Set <code>LANGUAGETOOL_ADDRESS</code> to the URL of your LanguageTool server
-      (default: <code>http://localhost:8010</code>). Without it, grammar and spell check
-      will not work.
-    </div>
     <div data-dradis--plugins--echo--agent-target="envVarsContainer">
       <% agent.env.each do |key, value| %>
         <div class="d-flex gap-2 mb-2" data-env-var-row>
