@@ -1,4 +1,4 @@
-[v#.#.#] ([month] [YYYY])
+v5.1.0 (May 2026)
   - [entity]:
     - [future tense verb] [feature]
   - DataTables: add sticky table toolbar that tracks below the navigation bar when scrolling
