@@ -16,10 +16,13 @@ class CreateAgents < ActiveRecord::Migration[8.0]
 
     add_index :dradis_plugins_echo_agents, :name, unique: true
 
+    # Seed data is also in engines/dradis-echo/db/seeds.rb for fresh installs
+    # (db:prepare loads the schema and runs seeds, skipping migration bodies).
+    # This block handles the upgrade path — existing instances running db:migrate
+    # don't run seeds, so Roslin must be created here.
     reversible do |dir|
       dir.up do
         address = config_value('roslin_ollama_address') || Dradis::Plugins::Echo::Provider::Ollama::DEFAULT_ADDRESS
-        enabled = config_value('roslin_enabled') != 'false'
         model = config_value('roslin_ollama_model') || Dradis::Plugins::Echo::Provider::Ollama::DEFAULT_MODEL
 
         provider = Dradis::Plugins::Echo::Provider::Ollama.create!(
@@ -28,6 +31,9 @@ class CreateAgents < ActiveRecord::Migration[8.0]
           name: 'Ollama'
         )
 
+        next if Dradis::Plugins::Echo::Agent.exists?(name: 'Roslin')
+
+        enabled = config_value('roslin_enabled') != 'false'
         lt_address = Dradis::Plugins::Echo::LanguageToolService::DEFAULT_ADDRESS
 
         Dradis::Plugins::Echo::Agent.create!(

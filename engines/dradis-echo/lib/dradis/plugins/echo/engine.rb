@@ -12,6 +12,12 @@ module Dradis::Plugins::Echo
       app.config.paths['db/migrate'].push(engine_migrations_path)
     end
 
+    initializer 'dradis-echo.append_seeds' do |app|
+      app.class.set_callback(:load_seed, :after) do
+        Dradis::Plugins::Echo::Engine.load_seed
+      end
+    end
+
     initializer 'echo.asset_precompile_paths' do |app|
       app.config.assets.paths << root.join('app/javascript')
       app.config.assets.precompile += [
