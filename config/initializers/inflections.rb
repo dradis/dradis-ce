@@ -11,6 +11,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.uncountable %w( evidence )
   inflect.singular /^os+$/i, 'OS'
   inflect.plural /^os+$/i, 'OSs'
+  inflect.acronym 'AI'
   inflect.acronym 'IP'
   inflect.acronym 'IPs'
   inflect.acronym 'JSON'

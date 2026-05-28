@@ -84,6 +84,14 @@
     --bs-offcanvas-border-color: #{$grey-700};
   }
 
+  // Popover overrides
+  .popover {
+    --bs-popover-arrow-border: #{$grey-700};
+    --bs-popover-bg: #{$grey-900};
+    --bs-popover-body-color: #{$grey-100};
+    --bs-popover-border-color: #{$grey-700};
+  }
+
   color-scheme: dark;
 }
 

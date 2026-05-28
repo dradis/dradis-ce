@@ -16,8 +16,8 @@
     - Bug tracker items:
       - [item]
   - Echo enhancements:
-    - [Echo entity]:
-      - [future tense verb] [Echo enhancement]
+    - Providers: add OpenAI, Anthropic, and Google Gemini as LLM provider options alongside Ollama
+    - Add inline grammar checking via LanguageTool
   - New integrations:
     - [integration]
   - Integration enhancements:
