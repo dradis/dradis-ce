@@ -46,12 +46,17 @@
 <% else %>
   <div class="alert alert-warning">
     <% if !current_user.respond_to?(:role?) || current_user.role?(:admin) %>
-      <i class="fa-solid fa-robot me-1"></i>Roslin is not enabled.
+      The Roslin agent is not enabled.
       <%= link_to 'Enable it', echo.agents_path, data: { turbo_frame: '_top' } %>
-      to allow LLM interactions.
+      to allow LLM interactions for AI-assisted writing.
     <% else %>
       <i class="fa-solid fa-robot me-1"></i>Roslin is not enabled. Ask an
       admin to enable it to allow LLM interactions.
     <% end %>
   </div>
+  <p>
+    Think of Roslin as an editor or writing companion. It allows you to interact
+    with different LLM providers to help enhance your findings's readability
+    or adapt them to your audience.
+  </p>
 <% end %>
