@@ -13,7 +13,9 @@ module Dradis::Plugins::Echo
 
       return head :unprocessable_entity unless commentable_class
 
-      @record = current_project.send(commentable_class.model_name.plural).find(params[:commentable_id])
+      @record = current_project.send(commentable_class.model_name.plural).find_by(id: params[:commentable_id])
+
+      head :not_found unless @record
     end
   end
 end
