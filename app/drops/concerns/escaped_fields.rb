@@ -1,7 +1,7 @@
 module EscapedFields
   def fields
     @record.fields.transform_values do |value|
-      HTML::Pipeline::SanitizationFilter.call(value).to_s
+      BaseDrop.sanitize(value)
     end
   end
 end
