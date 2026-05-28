@@ -1,7 +1,6 @@
 <% roslin = Dradis::Plugins::Echo::Agents::Roslin %>
 <% roslin_enabled = roslin.enabled? %>
-<% lt_configured = roslin_enabled && roslin.language_tool_configured? %>
-<% lt_reachable = lt_configured && roslin.language_tool_reachable? %>
+<% lt_reachable = roslin_enabled && roslin.language_tool_reachable? %>
 
 <div class="header">
   <div class="header-inner">
@@ -34,7 +33,7 @@
       and spell checking.
     </p>
   </div>
-<% elsif !lt_configured %>
+<% elsif !roslin.language_tool_configured? %>
   <div id="roslin-widget" class="collapse show">
     <p class="mb-0">
       LanguageTool is not configured. <%= link_to 'Update the Roslin agent',

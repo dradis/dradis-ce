@@ -18,7 +18,10 @@ module Dradis::Plugins::Echo
       def language_tool_reachable?
         return false unless language_tool_configured?
 
-        LanguageToolService.reachable?(instance.env['LANGUAGETOOL_ADDRESS'])
+        address = instance.env['LANGUAGETOOL_ADDRESS']
+        Rails.cache.fetch("echo:languagetool:reachable:#{address}", expires_in: 5.minutes) do
+          LanguageToolService.reachable?(address)
+        end
       end
     end
   end
