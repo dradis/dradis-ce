@@ -14,6 +14,12 @@ module Dradis::Plugins::Echo
       def language_tool_configured?
         instance.env['LANGUAGETOOL_ADDRESS'].present?
       end
+
+      def language_tool_reachable?
+        return false unless language_tool_configured?
+
+        LanguageToolService.reachable?(instance.env['LANGUAGETOOL_ADDRESS'])
+      end
     end
   end
 end
