@@ -9,8 +9,7 @@ class CreateAgents < ActiveRecord::Migration[8.0]
 
       t.text :env
 
-      t.references :provider, null: false,
-                   foreign_key: { to_table: :dradis_plugins_echo_providers }
+      t.references :provider, null: false, foreign_key: { to_table: :dradis_plugins_echo_providers }
       t.timestamps
     end
 
