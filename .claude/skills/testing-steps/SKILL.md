@@ -7,7 +7,7 @@ Based on the work done in this conversation, generate an acceptance testing plan
 
 The plan must follow this exact format:
 
-**How To Test**
+### Testing steps
 
 A numbered list of steps where each step is either:
 - An **action**: what the tester does (e.g. "Navigate to...", "Login as...", "Create a...", "Edit a...", "Delete a...", "Click on...")

@@ -2,10 +2,15 @@
   - [entity]:
     - [future tense verb] [feature]
   - Cards: add option to move a task to a different list
+  - DataTables: add sticky table toolbar that tracks below the navigation bar when scrolling
   - Mail: add support for SMTP configuration via environment variables for Docker deployments; smtp.yml remains supported for VM deployments during the deprecation transition
+  - Show don't gate: 
+    - Node-level Methodologies
+    - Projects
   - Upgraded gems:
-    - [gem]
+    - addressable, net-imap, nokogiri, rack
   - Bugs fixes:
+    - Fields: show a visible border on dropdown fields in the editor
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
@@ -30,6 +35,12 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v5.0.2 (May 2026)
+  - Update the Gemfile to use rubygems for dradis-pentera
+  - Version bump to align with Pro
+  - Upgraded gems:
+    - addressable, nokogiri, rack
 
 v5.0.1 (April 2026)
   - Version bump to align with Pro
