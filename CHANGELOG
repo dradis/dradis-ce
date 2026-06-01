@@ -9,6 +9,7 @@ v5.1.0 (May 2026)
   - Bugs fixes:
     - Liquid: stop stripping comparison operators from Liquid tags in issue and evidence fields
     - Fields: show a visible border on dropdown fields in the editor
+  - Bump Ruby to 3.4.9
   - Echo enhancements:
     - Providers: add OpenAI, Anthropic, and Google Gemini as LLM provider options alongside Ollama
     - Add inline grammar checking via LanguageTool
