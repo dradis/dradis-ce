@@ -5,7 +5,7 @@ v5.1.0 (May 2026)
     - Node-level Methodologies
     - Projects
   - Upgraded gems:
-    - addressable, faraday, net-imap, nokogiri, rack
+    - addressable, erb, faraday, net-imap, nokogiri, rack
   - Bugs fixes:
     - Liquid: stop stripping comparison operators from Liquid tags in issue and evidence fields
     - Fields: show a visible border on dropdown fields in the editor
