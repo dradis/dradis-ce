@@ -21,7 +21,7 @@ module Dradis::Plugins::Echo
 
     private
 
-    # System agents (e.g. Roslin) are seeded by migration and must not be deleted.
+    # The engine provisions system agents (e.g. Roslin), and they must not be deleted.
     def prevent_system_deletion
       throw(:abort) if system?
     end
