@@ -23,6 +23,12 @@ describe Dradis::Plugins::Echo::Agents::Roslin do
     end
   end
 
+  describe '.language_tool_configured?' do
+    it 'returns false when Roslin is not provisioned' do
+      expect(described_class.language_tool_configured?).to be false
+    end
+  end
+
   describe '.instance' do
     it 'finds the system agent named Roslin' do
       agent = create(:system_agent, name: described_class::NAME)
