@@ -48,7 +48,7 @@ describe 'cards#move_to_list' do
 
   it 'creates an activity' do
     expect { submit }.to have_enqueued_job(ActivityTrackingJob).with(
-      action: 'move_to_list',
+      action: 'update',
       project_id: current_project.id,
       trackable_id: card_b.id,
       trackable_type: 'Card',

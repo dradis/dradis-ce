@@ -1,7 +1,6 @@
 class CardsController < AuthenticatedController
   include ActivityTracking
   include ContentFromTemplate
-  include EventPublisher
   include Mentioned
   include NotificationsReader
   include ProjectScoped
@@ -74,7 +73,7 @@ class CardsController < AuthenticatedController
       @card.save!
     end
 
-    publish_event('card.updated', @card.to_event_payload)
+    track_updated(@card)
     redirect_to [current_project, @board, target_list, @card], notice: 'Task moved.'
   end
 
