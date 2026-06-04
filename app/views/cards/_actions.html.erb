@@ -1,15 +1,19 @@
 <div class="actions">
-  <% if @other_lists.any? %>
+  <% if @lists.count > 1 %>
     <span class="action dropdown">
       <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-table-columns fa-fw"></i> <%= @list.name %></a>
       <div class="dropdown-menu">
-        <% @other_lists.each do |list| %>
-          <%= link_to(
-            move_to_list_project_board_list_card_path(current_project, @board, @list, @card, new_list_id: list.id),
-            method: :post,
-            class: 'dropdown-item'
-          ) do %>
-            <%= list.name %>
+        <% @lists.each do |list| %>
+          <% if list.id == @list.id %>
+            <a href="javascript:void(0)" class="dropdown-item disabled"><%= list.name %></a>
+          <% else %>
+            <%= link_to(
+              move_to_list_project_board_list_card_path(current_project, @board, @list, @card, new_list_id: list.id),
+              method: :post,
+              class: 'dropdown-item'
+            ) do %>
+              <%= list.name %>
+            <% end %>
           <% end %>
         <% end %>
       </div>
