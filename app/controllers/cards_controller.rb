@@ -17,6 +17,7 @@ class CardsController < AuthenticatedController
   layout 'cards'
 
   def show
+    @lists = @board.ordered_lists
     render layout: !request.xhr?
   end
 
@@ -50,6 +51,30 @@ class CardsController < AuthenticatedController
       initialize_sidebar
       render 'edit'
     end
+  end
+
+  def move_to_list
+    target_list = @board.lists.find(params[:new_list_id])
+
+    if target_list.id == @card.list_id
+      redirect_to [current_project, @board, @list, @card], alert: 'Task is already in that list.'
+      return
+    end
+
+    Card.transaction do
+      # Repair the source list chain before changing list_id,
+      # since next_card scopes to self.list
+      if (next_card = @card.next_card)
+        next_card.update_attribute(:previous_id, @card.previous_id)
+      end
+
+      @card.list_id = target_list.id
+      @card.previous_id = target_list.last_card&.id
+      @card.save!
+    end
+
+    track_updated(@card)
+    redirect_to [current_project, @board, target_list, @card], notice: 'Task moved.'
   end
 
   def move

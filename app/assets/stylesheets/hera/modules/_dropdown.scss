@@ -32,6 +32,12 @@
       font-weight: 600;
     }
 
+    &.disabled {
+      color: var(--text-muted);
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
     i {
       margin-right: 0.25rem;
     }
