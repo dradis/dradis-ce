@@ -2,7 +2,7 @@ module Dradis::Plugins::Echo
   class LanguageToolService
     class UnavailableError < StandardError; end
 
-    DEFAULT_ADDRESS = 'http://localhost:8010'.freeze
+    DEFAULT_ADDRESS = 'http://localhost:8081'.freeze
 
     def self.reachable?(address)
       uri = URI("#{address.strip.chomp('/')}/v2/languages")
