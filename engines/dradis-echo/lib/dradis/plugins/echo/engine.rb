@@ -6,24 +6,26 @@ module Dradis::Plugins::Echo
     provides :addon
     description 'Dradis AI Copilot'
 
-    addon_settings :echo do
-      settings.default_roslin_enabled = false
-      settings.default_roslin_teaser = false
-      settings.default_roslin_languagetool_address = 'http://localhost:8010'
-      settings.default_roslin_ollama_address = 'http://localhost:11434'
-      settings.default_roslin_ollama_model = 'qwen2.5:14b'
-    end
-
     # add engine migrations to main app migrations paths
     initializer 'dradis-echo.append_migrations' do |app|
       engine_migrations_path = config.paths['db/migrate'].expanded.first
       app.config.paths['db/migrate'].push(engine_migrations_path)
     end
 
+    initializer 'dradis-echo.append_seeds' do |app|
+      app.class.set_callback(:load_seed, :after) do
+        Dradis::Plugins::Echo::Engine.load_seed
+      end
+    end
+
     initializer 'echo.asset_precompile_paths' do |app|
       app.config.assets.paths << root.join('app/javascript')
       app.config.assets.precompile += [
-        'dradis/plugins/echo/manifests/hera.js'
+        'dradis/plugins/echo/manifests/hera.js',
+        'dradis/plugins/echo/anthropic.svg',
+        'dradis/plugins/echo/gemini.svg',
+        'dradis/plugins/echo/ollama.svg',
+        'dradis/plugins/echo/open_ai.svg'
       ]
     end
 
@@ -41,6 +43,16 @@ module Dradis::Plugins::Echo
           mount Engine, at: '/', as: :echo
         end
       end
+    end
+
+    # In production, Rails eager loads all classes at boot so provider subclasses
+    # are always loaded before anything reads ALLOWED_TYPES (which is dynamically built).
+    # In development, classes are lazy loaded, so we force-load the provider subclasses directory here to
+    # ensure ALLOWED_TYPES is populated before the first request.
+    config.to_prepare do
+      Rails.autoloaders.main.eager_load_dir(
+        Engine.root.join('app/models/dradis/plugins/echo/provider')
+      )
     end
 
     # `before:` option has to be a string as it has to match
