@@ -141,7 +141,7 @@ gem 'net-smtp'
 gem 'net-pop'
 gem 'net-imap', '>= 0.6.4'
 
-gem 'puma', '>= 6.5.0'
+gem 'puma', '~> 7.2.1'
 
 gem 'csv'
 

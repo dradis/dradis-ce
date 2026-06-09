@@ -383,7 +383,7 @@ GEM
       date
       stringio
     public_suffix (7.0.5)
-    puma (6.6.0)
+    puma (7.2.1)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (2.2.23)
@@ -675,7 +675,7 @@ DEPENDENCIES
   nokogiri (>= 1.19.3)
   paper_trail (~> 16.0)
   parslet (~> 1.6.0)
-  puma (>= 6.5.0)
+  puma (~> 7.2.1)
   rack-mini-profiler (~> 2.0)
   rails (~> 8.0.5)
   rails-html-sanitizer (~> 1.6.1)
