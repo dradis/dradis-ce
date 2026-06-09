@@ -4,7 +4,7 @@ describe Dradis::Plugins::Echo::LanguageToolService do
   let(:service) do
     described_class.new(
       fields:  { 'Description' => 'This are a mistake.' },
-      address: 'http://languagetool.local:8010'
+      address: 'http://languagetool.local:8081'
     )
   end
 

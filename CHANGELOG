@@ -1,40 +1,17 @@
-[v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+v5.1.0 (May 2026)
   - DataTables: add sticky table toolbar that tracks below the navigation bar when scrolling
   - Mail: add support for SMTP configuration via environment variables for Docker deployments; smtp.yml remains supported for VM deployments during the deprecation transition
   - Show don't gate: 
     - Node-level Methodologies
     - Projects
   - Upgraded gems:
-    - addressable, faraday, net-imap, nokogiri, rack
+    - addressable, erb, faraday, net-imap, nokogiri, rack
   - Bugs fixes:
     - Liquid: stop stripping comparison operators from Liquid tags in issue and evidence fields
     - Fields: show a visible border on dropdown fields in the editor
-    - [entity]:
-      - [future tense verb] [bug fix]
-    - Bug tracker items:
-      - [item]
   - Echo enhancements:
     - Providers: add OpenAI, Anthropic, and Google Gemini as LLM provider options alongside Ollama
     - Add inline grammar checking via LanguageTool
-  - New integrations:
-    - [integration]
-  - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
-  - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
-  - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v5.0.2 (May 2026)
   - Update the Gemfile to use rubygems for dradis-pentera
