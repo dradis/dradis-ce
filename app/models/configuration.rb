@@ -14,10 +14,6 @@ class Configuration < ApplicationRecord
 
   # -- Class Methods --------------------------------------------------------
   # --------------------------------------------------------------- Misc admin:
-  def self.mail_host
-    create_with(value: 'dradis-framework.dev')
-      .find_or_create_by(name: 'admin:mail_host').value
-  end
 
   def self.max_deleted_inline
     create_with(value: 15)

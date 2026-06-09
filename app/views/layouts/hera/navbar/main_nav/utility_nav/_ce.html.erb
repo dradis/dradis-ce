@@ -1,22 +1,24 @@
 <%= render partial: 'layouts/hera/navbar/main_nav/utility_nav/theme_menu' %>
 
-<% cache(['navbar-trash', current_project]) do %>
-  <li class="nav-item">
-    <%= link_to main_app.project_trash_path(current_project), class: 'nav-link' do %>
-      <i class="fa-solid fa-trash-can fa-fw d-none d-lg-inline" title="Trash"></i>
-      <span class="d-inline d-lg-none">Trash</span>
-    <% end %>
-  </li>
-<% end %>
-
-<% cache(['navbar-config', current_project]) do %>
-  <%= render layout: 'layouts/hera/navbar/main_nav/utility_nav/configuration_menu' do %>
-    <%= render partial: 'layouts/hera/navbar/projects/project_configurations' %>
+<% if defined?(current_project) %>
+  <% cache(['navbar-trash', current_project]) do %>
+    <li class="nav-item">
+      <%= link_to main_app.project_trash_path(current_project), class: 'nav-link' do %>
+        <i class="fa-solid fa-trash-can fa-fw d-none d-lg-inline" title="Trash"></i>
+        <span class="d-inline d-lg-none">Trash</span>
+      <% end %>
+    </li>
   <% end %>
-<% end %>
 
-<% cache(['navbar-notifications', current_project]) do %>
-  <%= render 'layouts/hera/navbar/main_nav/utility_nav/notifications' %>
+  <% cache(['navbar-config', current_project]) do %>
+    <%= render layout: 'layouts/hera/navbar/main_nav/utility_nav/configuration_menu' do %>
+      <%= render partial: 'layouts/hera/navbar/projects/project_configurations' %>
+    <% end %>
+  <% end %>
+
+  <% cache(['navbar-notifications', current_project]) do %>
+    <%= render 'layouts/hera/navbar/main_nav/utility_nav/notifications' %>
+  <% end %>
 <% end %>
 
 <%= render partial: 'layouts/hera/navbar/main_nav/help_menu' %>
