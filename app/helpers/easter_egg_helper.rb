@@ -9,7 +9,7 @@ module EasterEggHelper
   def easter_egg_logo
     case
     when december?
-      'december/logo_full_small.png'
+      'december/logo_full_small.svg'
     when may_4th?
       'may_4th/logo_full_small.png'
     else
