@@ -1,6 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
+  - Dark mode: add support for login and setup views
   - Upgraded gems:
     - puma
   - Bugs fixes:
