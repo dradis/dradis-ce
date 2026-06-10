@@ -40,8 +40,8 @@ a {
 .btn-experience {
   border: 1.5px solid var(--border-color);
   border-radius: 5px;
-  color: var(--text-default);
   box-shadow: 0px 0px 0px 0px rgba(62, 66, 66, 0.1);
+  color: var(--text-default);
   height: 100%;
   padding: 1.375rem 1.85rem;
   text-align: left;
@@ -50,12 +50,12 @@ a {
 
   &:focus,
   &:hover {
-    border-color: var(--brand-bg);
+    border-color: var(--text-link);
     box-shadow: 0px 0px 50px 0px rgba(62, 66, 66, 0.1);
   }
 
   p {
-    color: var(--brand-bg);
+    color: var(--text-link);
     font-weight: bold;
   }
 
@@ -67,7 +67,7 @@ a {
 
     i {
       bottom: 0;
-      color: var(--brand-bg);
+      color: var(--text-link);
       font-size: 1rem;
       position: absolute;
       right: 0;
@@ -88,19 +88,14 @@ a {
   border-color: var(--text-link);
   color: var(--text-link);
 
+  &:hover,
   &:focus,
   &:focus-visible,
   &:active,
   &:not(:disabled):not(.disabled):active {
-    background: $primary;
-    border-color: $primary;
-    color: $white;
-  }
-
-  &:hover {
-    background: $light;
-    border-color: $dark;
-    color: $dark;
+    background: var(--text-link);
+    border-color: var(--text-link);
+    color: var(--text-inverted);
   }
 }
 
@@ -115,6 +110,8 @@ a {
   &:active,
   &:not(:disabled):not(.disabled):active {
     background-color: darken($primary, 10);
+    border-color: darken($primary, 10);
+    color: $white;
   }
 }
 
