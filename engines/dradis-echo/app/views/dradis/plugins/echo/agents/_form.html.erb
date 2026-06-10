@@ -1,0 +1,118 @@
+<%= form_with model: agent, scope: :agent, url: agent_path(agent),
+              data: { controller: 'dradis--plugins--echo--agent' } do |f| %>
+
+  <% if agent.errors.any? %>
+    <div class="alert alert-danger">
+      <ul class="mb-0">
+        <% agent.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    Roslin is a writing assistant. When enabled, Roslin provides two capabilities:
+  </p>
+  <ol>
+    <li>AI-assisted writing</li>
+    <li>Grammar and spell checking</li>
+  </ol>
+
+  <p>If you want #2 but not #1, just point your Provider to a non-existing IP / port.</p>
+
+  <div class="mb-3">
+    <div class="form-check form-switch">
+      <%= f.check_box :enabled, class: 'form-check-input', role: 'switch' %>
+      <%= f.label :enabled, 'Enabled', class: 'form-check-label' %>
+    </div>
+  </div>
+
+  <hr>
+
+  <h5>1. AI-assisted writing</h5>
+
+  <p>
+    After you configure a <%= link_to 'LLM provider', echo.providers_path %>,
+    Roslin can help to summarize, rewrite, or adapt findings to your audience,
+    via configurable <%= link_to 'Prompts', echo.prompts_path %> that are aware
+    of your project context.
+  </p>
+
+  <p>
+    If your provider is self-hosted (e.g. Ollama), your project content never
+    leaves your infrastructure.
+  </p>
+
+  <div class="alert alert-warning">
+    If you configure a cloud service (e.g. OpenAI, Claude, etc.), you will be
+    sending your content as part of your prompts.
+  </div>
+
+  <p>Learn about <a href="https://dradis.com/academy/data-sovereignty/shadow-ai-pentest-data-leakage.html" target="_blank">Shadow AI in pentesting</a>.</p>
+
+  <div class="mb-3">
+    <%= f.label :provider_id, 'Provider', class: 'form-label' %>
+    <%= f.select :provider_id,
+          @providers.map { |p| [p.name, p.id] },
+          { include_blank: 'Select a provider' },
+          class: 'form-select', required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :model_override, 'Model override', class: 'form-label' %>
+    <%= f.text_field :model_override, class: 'form-control',
+        placeholder: "Uses provider's configured model" %>
+    <div class="form-text">
+      Leave blank to use the model configured on the provider<% if agent.provider %> (currently: <code><%= agent.provider.model %></code>)<% end %>.
+    </div>
+  </div>
+
+  <hr>
+  <h5>2. Grammar and spell checking</h5>
+  <p>
+    If you run an instance of the open-source <a href="https://languagetool.org/"
+    target="_blank">LanguageTool</a>, Roslin can use it to detect grammar and
+    spelling errors and offer suggestions.
+  </p>
+
+  <p>
+    Set <code>LANGUAGETOOL_ADDRESS</code> to the URL of your LanguageTool server
+    (default: <code>http://localhost:8081</code>). Remove it to disable the feature.
+  </p>
+
+  <div class="mb-3">
+    <label class="form-label">ENV Variables</label>
+    <div data-dradis--plugins--echo--agent-target="envVarsContainer">
+      <% agent.env.each do |key, value| %>
+        <div class="d-flex gap-2 mb-2" data-env-var-row>
+          <input type="text" name="agent[env_keys][]" value="<%= key %>" class="form-control font-monospace" placeholder="KEY">
+          <input type="text" name="agent[env_values][]" value="<%= value %>" class="form-control" placeholder="value">
+
+          <button type="button" class="btn btn-outline-danger" data-action="click->dradis--plugins--echo--agent#removeRow">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      <% end %>
+    </div>
+    <button type="button" class="btn btn-link mt-1"
+            data-action="click->dradis--plugins--echo--agent#addRow">
+      <i class="fa-solid fa-plus me-1"></i>Add variable
+    </button>
+    <template data-dradis--plugins--echo--agent-target="envVarTemplate">
+      <div class="d-flex gap-2 mb-2" data-env-var-row>
+        <input type="text" name="agent[env_keys][]" class="form-control font-monospace" placeholder="KEY">
+        <input type="text" name="agent[env_values][]" class="form-control" placeholder="value">
+
+        <button type="button" class="btn btn-outline-danger" data-action="click->dradis--plugins--echo--agent#removeRow">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </template>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit 'Update Agent', class: 'btn btn-primary' %>
+    or <%= link_to 'Cancel', agents_path %>
+  </div>
+<% end %>
