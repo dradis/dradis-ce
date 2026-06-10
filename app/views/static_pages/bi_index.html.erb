@@ -77,19 +77,14 @@
           <div class="d-flex align-items-center justify-content-between">
             <h3 class="mb-0 fs-5 title">Issues</h3>
             <div class="form-container">
-              <%= form_with url: static_bi_path, method: :get do |form| %>
+              <%= form_with url: static_bi_insights_issues_path, method: :get, data: { turbo: true, turbo_frame: 'issue_stats' } do |form| %>
                 <div class="small">
                   <%= form.select :tag, options_for_select(tag_options(@bi_tags), @selected_tag), {}, data: { behavior: 'widget-filter' }, class: 'form-select' %>
                 </div>
               <% end %>
             </div>
           </div>
-          <h4 class="mb-0"><%= @bi_issues[:current_year_count] %></h4>
-          <p class="mb-3">created this year</p>
-          <h5 class="<%= class_names('delta', positive: @bi_issues[:yoy_delta] > 0, negative: @bi_issues[:yoy_delta] < 0) %>">
-            <i class="fa-solid <%= delta_icon(@bi_issues[:yoy_delta]) %> delta-icon"></i><%= @bi_issues[:yoy_delta].abs %>%
-          </h5>
-          <p>from <%= @bi_issues[:last_year_count] %> during Jan 1 - <%= Date.today.prev_year.strftime('%b %d %Y') %></p>
+          <%= render 'static_pages/bi_index/issue_stats' %>
         </div>
       </div>
     </div>
@@ -120,29 +115,16 @@
             <h3 class="mb-0 fs-5">Most Common Issues</h3>
             <small class="text-muted">created this year, across projects, by title</small>
           </div>
-        </div>
-        <div class="chart-wrap py-3">
-          <% if @bi_top_issues.any? %>
-            <% max_count = @bi_top_issues.first[:count].to_f %>
-            <% @bi_top_issues.each do |issue| %>
-              <div class="d-flex flex-row align-items-center justify-content-between progress-wrap">
-                <p class="pe-3 text-end text-truncate issue-title"><%= issue[:title] %></p>
-                <div class="progress w-100">
-                  <% percent = (issue[:count].to_f / max_count) * 100 %>
-                  <div
-                    class="progress-bar"
-                    role="progressbar"
-                    style="width: <%= percent %>%"
-                    aria-valuenow="<%= issue[:count] %>"
-                    aria-valuemin="0"
-                    aria-valuemax="<%= max_count %>">
-                  </div>
-                </div>
+          <div class="form-container">
+            <%= form_with url: static_bi_insights_top_issues_path, method: :get, data: { turbo: true, turbo_frame: 'top_issues' } do |form| %>
+              <div class="small">
+                <%= form.select :tag, options_for_select(tag_options(@bi_tags), @selected_tag), {}, data: { behavior: 'widget-filter' }, class: 'form-select' %>
               </div>
             <% end %>
-          <% else %>
-            <p class="text-muted text-center mt-4">No issues created this year yet.</p>
-          <% end %>
+          </div>
+        </div>
+        <div class="chart-wrap py-3">
+          <%= render 'static_pages/bi_index/top_issues' %>
         </div>
       </div>
     </div>

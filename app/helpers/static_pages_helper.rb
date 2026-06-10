@@ -1,4 +1,8 @@
 module StaticPagesHelper
+  def issue_bar_color(issue)
+    issue.tags.first&.color || 'var(--untagged-color)'
+  end
+
   def delta_icon(delta)
     case
     when delta > 0 then 'fa-arrow-up'
