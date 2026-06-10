@@ -1,0 +1,15 @@
+<% content_for :title, 'New Provider' %>
+
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to 'Dashboard', main_app.root_path %></li>
+    <li class="breadcrumb-item"><%= link_to 'Echo', prompts_path %></li>
+    <li class="breadcrumb-item"><%= link_to 'Providers', providers_path %></li>
+    <li class="breadcrumb-item active">New Provider</li>
+  </ol>
+<% end %>
+
+<div class="content-container">
+  <h4 class="header-underline">New Provider</h4>
+  <%= render 'form', provider: @provider %>
+</div>

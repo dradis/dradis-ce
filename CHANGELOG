@@ -2,10 +2,8 @@
   - [entity]:
     - [future tense verb] [feature]
   - Show don't gate: add custom project properties teaser to the project overview
-  - Mail: add support for SMTP configuration via environment variables for Docker deployments; smtp.yml remains supported for VM deployments during the deprecation transition
-  - Show don't gate: Node-level Methodologies
   - Upgraded gems:
-    - addressable, nokogiri, rack
+    - puma
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
@@ -31,6 +29,27 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v5.1.0 (May 2026)
+  - DataTables: add sticky table toolbar that tracks below the navigation bar when scrolling
+  - Mail: add support for SMTP configuration via environment variables for Docker deployments; smtp.yml remains supported for VM deployments during the deprecation transition
+  - Show don't gate: 
+    - Node-level Methodologies
+    - Projects
+  - Upgraded gems:
+    - addressable, erb, faraday, net-imap, nokogiri, rack
+  - Bugs fixes:
+    - Liquid: stop stripping comparison operators from Liquid tags in issue and evidence fields
+    - Fields: show a visible border on dropdown fields in the editor
+  - Echo enhancements:
+    - Providers: add OpenAI, Anthropic, and Google Gemini as LLM provider options alongside Ollama
+    - Add inline grammar checking via LanguageTool
+
+v5.0.2 (May 2026)
+  - Update the Gemfile to use rubygems for dradis-pentera
+  - Version bump to align with Pro
+  - Upgraded gems:
+    - addressable, nokogiri, rack
 
 v5.0.1 (April 2026)
   - Version bump to align with Pro
