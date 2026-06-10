@@ -1,5 +1,5 @@
 body.unauthenticated:not(.contributors).may-4th {
-  @include easter-egg-theme(#222222);
+  @include easter-egg-theme(#111111);
 
   &::after,
   &::before {

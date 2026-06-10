@@ -1,11 +1,5 @@
 body.unauthenticated:not(.contributors).december {
-  @include easter-egg-theme(#c30f16);
-
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) & {
-      @include easter-egg-theme(#f35f65);
-    }
-  }
+  @include easter-egg-theme(#cc293b);
 
   &::after,
   &::before {
