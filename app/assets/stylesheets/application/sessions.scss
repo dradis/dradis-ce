@@ -18,7 +18,7 @@ body.unauthenticated {
   min-height: 100vh;
 
   a {
-    color: var(--primary);
+    color: var(--text-link);
     transition: color 0.2s ease-in-out;
 
     &:hover {
@@ -48,13 +48,17 @@ body.unauthenticated {
     }
 
     &.btn-primary {
-      border: 0px none;
       background: var(--primary);
-      font-weight: 300;
+      border-color: var(--primary);
+      color: $white;
 
       &:hover,
+      &:focus,
+      &:focus-visible,
+      &:active,
       &:not(:disabled):not(.disabled):active {
         background: var(--dark);
+        border-color: var(--dark);
       }
     }
   }
