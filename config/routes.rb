@@ -8,9 +8,9 @@ Rails.application.routes.draw do
     get 'projects/1/addons/issuelib', to: 'static_pages#issuelib_index', as: :static_issuelib
     get 'projects/1/addons/issuelib/import', to: 'static_pages#issuelib_import', as: :static_issuelib_import
     get 'projects/1/addons/remediationtracker', to: 'static_pages#remediationtracker_index', as: :static_remediationtracker
-    get 'addons/bi', to: 'static_pages#bi_index', as: :static_bi
-    get 'addons/bi/insights/issues', to: 'static_pages#bi_insights_issues', as: :static_bi_insights_issues
-    get 'addons/bi/insights/top-issues', to: 'static_pages#bi_insights_top_issues', as: :static_bi_insights_top_issues
+    get 'projects/1/addons/bi', to: 'static_pages#bi_index', as: :static_bi
+    get 'projects/1/addons/bi/insights/issues', to: 'static_pages#bi_insights_issues', as: :static_bi_insights_issues
+    get 'projects/1/addons/bi/insights/top-issues', to: 'static_pages#bi_insights_top_issues', as: :static_bi_insights_top_issues
   end
 
   # ------------------------------------------------------------ Authentication
