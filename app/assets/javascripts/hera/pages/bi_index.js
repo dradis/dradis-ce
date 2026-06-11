@@ -1,13 +1,26 @@
 document.addEventListener('turbo:load', function () {
   if ($('body.static_pages.bi_index').length) {
-    $('[data-behavior~=widget-filter]').on('change', function (e) {
-      const form = e.target.closest('form');
-      const frameId = form.dataset.turboFrame;
-      if (frameId) {
-        $(`#${frameId} [data-behavior~=fetch-loader]`).removeClass('d-none');
-        $(`#${frameId} [data-behavior~=widget-content]`).addClass('d-none');
+    $(document).on('dradis:fetch turbo:frame-render', function (event) {
+      const $widgetFilter = $(
+        event.target.closest('[data-behavior~=fetch]')
+      ).find('[data-behavior~=widget-filter]');
+
+      if ($widgetFilter.length) {
+        if (event.type == 'turbo:frame-render') {
+          window.initBehaviors(
+            event.target
+              .closest('[data-behavior~=fetch]')
+              .querySelector('[data-behavior~=widget-content]')
+          );
+        }
+
+        $widgetFilter.on('change', function (e) {
+          const $container = $(e.target).parents('[data-behavior~=fetch]');
+          $container.find('[data-behavior~=fetch-loader]').removeClass('d-none');
+          $container.find('[data-behavior~=widget-content]').addClass('d-none');
+          e.target.closest('form').requestSubmit();
+        });
       }
-      form.requestSubmit();
     });
   }
 });

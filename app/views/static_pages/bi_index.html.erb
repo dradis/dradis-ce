@@ -32,7 +32,7 @@
 
 <div class="row mt-4">
   <div class="col-sm-6 col-xl-3">
-    <div class="content-container mb-3">
+    <div class="content-container">
       <div class="d-flex flex-column flex-grow-1 justify-content-center">
         <div class="position-relative d-flex flex-column flex-grow-1">
           <div class="bg-icon">
@@ -49,47 +49,34 @@
       </div>
     </div>
 
-    <a href="javascript:void(0)" class="js-try-pro" data-term="bi" data-url="https://dradis.com/pro/pages/bi.html">
-      <div class="content-container pro-teaser">
-        <div class="d-flex flex-column flex-grow-1 justify-content-center">
-          <div class="position-relative d-flex flex-column flex-grow-1">
-            <div class="bg-icon">
-              <i class="fa-solid fa-people-group fa-2x"></i>
-            </div>
-            <h3 class="mb-0 fs-5 title">Teams</h3>
-            <div class="mt-2">
-              <span class="badge text-bg-warning"><i class="fa-solid fa-star me-1"></i>Pro</span>
-              <p class="text-muted mt-2 mb-0">Track team performance and year-over-year growth across your organisation.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </a>
-  </div>
-
-  <div class="col-sm-6 col-xl-3">
-    <div class="content-container mb-3">
+    <div class="content-container pro-teaser js-try-pro" data-term="bi" data-url="https://dradis.com/pro/pages/bi.html">
       <div class="d-flex flex-column flex-grow-1 justify-content-center">
         <div class="position-relative d-flex flex-column flex-grow-1">
           <div class="bg-icon">
-            <i class="fa-solid fa-bug fa-2x"></i>
+            <i class="fa-solid fa-people-group fa-2x"></i>
           </div>
-          <div class="d-flex align-items-center justify-content-between">
-            <h3 class="mb-0 fs-5 title">Issues</h3>
-            <div class="form-container">
-              <%= form_with url: static_bi_insights_issues_path, method: :get, data: { turbo: true, turbo_frame: 'issue_stats' } do |form| %>
-                <div class="small">
-                  <%= form.select :tag, options_for_select(tag_options(@bi_tags), @selected_tag), {}, data: { behavior: 'widget-filter' }, class: 'form-select' %>
-                </div>
-              <% end %>
-            </div>
-          </div>
-          <%= render 'static_pages/bi_index/issue_stats' %>
+          <h3 class="mb-0 fs-5 title">Teams</h3>
+          <h4 class="mb-0"><%= @bi_teams[:current_year_count] %></h4>
+          <p class="mb-3">active this year</p>
+          <h5 class="<%= class_names('delta', positive: @bi_teams[:yoy_delta] > 0, negative: @bi_teams[:yoy_delta] < 0) %>">
+            <i class="fa-solid <%= delta_icon(@bi_teams[:yoy_delta]) %> delta-icon"></i><%= @bi_teams[:yoy_delta].abs %>%
+          </h5>
+          <p>from <%= @bi_teams[:last_year_count] %> during Jan 1 - <%= Date.today.prev_year.strftime('%b %d %Y') %></p>
         </div>
       </div>
     </div>
+  </div>
 
+  <div class="col-sm-6 col-xl-3">
     <div class="content-container">
+      <div class="d-flex flex-column flex-grow-1 justify-content-center"
+           data-behavior="fetch"
+           data-path="<%= static_bi_insights_issues_path %>">
+        <%= spinner_tag %>
+      </div>
+    </div>
+
+    <div class="content-container pro-teaser js-try-pro" data-term="bi" data-url="https://dradis.com/pro/pages/bi.html">
       <div class="d-flex flex-column flex-grow-1 justify-content-center">
         <div class="position-relative d-flex flex-column flex-grow-1">
           <div class="bg-icon">
@@ -109,24 +96,22 @@
 
   <div class="col-sm-12 col-xl-6">
     <div class="content-container chart top-issues">
-      <div class="d-flex flex-column flex-grow-1 justify-content-center">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-          <div class="d-flex flex-column">
-            <h3 class="mb-0 fs-5">Most Common Issues</h3>
-            <small class="text-muted">created this year, across projects, by title</small>
-          </div>
-          <div class="form-container">
-            <%= form_with url: static_bi_insights_top_issues_path, method: :get, data: { turbo: true, turbo_frame: 'top_issues' } do |form| %>
-              <div class="small">
-                <%= form.select :tag, options_for_select(tag_options(@bi_tags), @selected_tag), {}, data: { behavior: 'widget-filter' }, class: 'form-select' %>
-              </div>
-            <% end %>
-          </div>
-        </div>
-        <div class="chart-wrap py-3">
-          <%= render 'static_pages/bi_index/top_issues' %>
-        </div>
+      <div class="d-flex flex-column flex-grow-1 justify-content-center"
+           data-behavior="fetch"
+           data-path="<%= static_bi_insights_top_issues_path %>">
+        <%= spinner_tag %>
       </div>
     </div>
+  </div>
+</div>
+
+<hr class="mt-0">
+<div class="row mt-4">
+  <div class="col-lg-6">
+    <%= render 'static_pages/bi_top_team_properties' %>
+    <hr class="d-lg-none">
+  </div>
+  <div class="col-lg-6">
+    <%= render 'static_pages/bi_top_project_properties' %>
   </div>
 </div>
