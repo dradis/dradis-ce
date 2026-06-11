@@ -63,6 +63,7 @@
 //= require hera/modules/uploads
 
 //= require hera/pages/activities
+//= require hera/pages/bi_index
 //= require hera/pages/boards
 //= require hera/pages/issues
 //= require hera/pages/nodes/new_form

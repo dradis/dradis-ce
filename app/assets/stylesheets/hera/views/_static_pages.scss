@@ -1,0 +1,90 @@
+@import 'hera/variables';
+
+.content-container {
+  &.chart {
+    .progress-wrap {
+      margin-bottom: 0.25rem;
+
+      .issue-title {
+        margin-bottom: 0;
+        width: 25rem;
+      }
+
+      .progress {
+        background-color: transparent;
+        border-radius: 0;
+
+        .progress-bar {
+          background-color: var(--brand-bg);
+          border-radius: 0;
+        }
+      }
+    }
+
+  }
+}
+
+body.static_pages.bi_index {
+  .form-container {
+    flex-grow: 1;
+    margin-left: 1rem;
+    max-width: 12rem;
+  }
+
+  .content-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 12.5rem;
+
+    .bg-icon {
+      font-size: 2.5rem;
+      opacity: 0.08;
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      i {
+        color: var(--brand-bg);
+      }
+    }
+
+    .delta {
+      align-items: center;
+      color: var(--text-muted);
+      display: flex;
+      font-size: 1.2rem;
+      margin-bottom: 0;
+
+      &.negative {
+        color: var(--text-error);
+      }
+
+      &.positive {
+        color: var(--text-success);
+      }
+
+      &-icon {
+        font-size: 0.65rem;
+        margin: 0 0.25rem 0.1rem 0;
+      }
+    }
+
+    .title {
+      line-height: 2.3rem;
+    }
+
+    &.chart.property-item {
+      min-height: 18rem;
+    }
+
+    &.chart.top-issues {
+      min-height: 26.5rem;
+    }
+
+    &.pro-teaser {
+      color: var(--text-default);
+      cursor: pointer;
+    }
+  }
+}
