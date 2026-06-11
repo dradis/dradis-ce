@@ -14,7 +14,7 @@ document.addEventListener('turbo:load', function () {
           );
         }
 
-        $widgetFilter.on('change', function (e) {
+        $widgetFilter.off('change').on('change', function (e) {
           const $container = $(e.target).parents('[data-behavior~=fetch]');
           $container.find('[data-behavior~=fetch-loader]').removeClass('d-none');
           $container.find('[data-behavior~=widget-content]').addClass('d-none');
