@@ -4,8 +4,8 @@ describe 'BI insights' do
   before { login_to_project_as_user }
 
   let(:current_year_start) { Time.current.beginning_of_year }
-  let(:last_year_start)    { 1.year.ago.beginning_of_year }
-  let(:last_year_end)      { 1.year.ago }
+  let(:last_year_start) { 1.year.ago.beginning_of_year }
+  let(:last_year_end) { 1.year.ago }
 
   def issue_text(title)
     "#[Title]#\n#{title}\n\n#[Description]#\nFoo"
@@ -20,7 +20,7 @@ describe 'BI insights' do
     it 'counts issues created this year only' do
       create(:issue, text: issue_text('Current'), created_at: current_year_start + 1.day)
       create(:issue, text: issue_text('Current'), created_at: current_year_start + 2.days)
-      create(:issue, text: issue_text('Old'),     created_at: 2.years.ago)
+      create(:issue, text: issue_text('Old'), created_at: 2.years.ago)
       get static_bi_insights_issues_path
       expect(response.body).to match(/<h4 class="mb-0">2<\/h4>/)
     end
@@ -60,7 +60,7 @@ describe 'BI insights' do
 
     it 'groups issues by title and orders by count descending' do
       3.times { create(:issue, text: issue_text('SQL Injection'), created_at: current_year_start + 1.day) }
-      1.times { create(:issue, text: issue_text('XSS'),           created_at: current_year_start + 1.day) }
+      1.times { create(:issue, text: issue_text('XSS'), created_at: current_year_start + 1.day) }
       get static_bi_insights_top_issues_path
       expect(response.body).to match(/SQL Injection.*XSS/m)
     end
