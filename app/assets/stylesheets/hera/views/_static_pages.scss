@@ -21,13 +21,16 @@
       }
     }
 
-    &.top-issues {
-      min-height: 26.5rem;
-    }
   }
 }
 
 body.static_pages.bi_index {
+  .form-container {
+    flex-grow: 1;
+    margin-left: 1rem;
+    max-width: 12rem;
+  }
+
   .content-container {
     display: flex;
     flex-direction: column;
@@ -71,22 +74,17 @@ body.static_pages.bi_index {
       line-height: 2.3rem;
     }
 
-    .form-container {
-      flex-grow: 1;
-      margin-left: 1rem;
-      max-width: 12rem;
+    &.chart.property-item {
+      min-height: 18rem;
+    }
+
+    &.chart.top-issues {
+      min-height: 26.5rem;
     }
 
     &.pro-teaser {
       color: var(--text-default);
+      cursor: pointer;
     }
-  }
-}
-
-a:has(.pro-teaser) {
-  text-decoration: none;
-
-  &:hover .pro-teaser {
-    border-color: var(--brand-border);
   }
 }
