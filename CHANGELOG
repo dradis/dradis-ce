@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Show don't gate: Business Intelligence
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
