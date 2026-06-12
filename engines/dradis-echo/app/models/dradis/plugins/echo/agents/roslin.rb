@@ -52,7 +52,7 @@ module Dradis::Plugins::Echo
       end
 
       def language_tool_configured?
-        instance.env['LANGUAGETOOL_ADDRESS'].present?
+        instance.env && instance.env['LANGUAGETOOL_ADDRESS'].present?
       rescue ActiveRecord::RecordNotFound
         false
       end
