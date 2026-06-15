@@ -2,7 +2,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - puma
+    - net-imap, puma
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
