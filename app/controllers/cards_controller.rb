@@ -11,9 +11,6 @@ class CardsController < AuthenticatedController
   before_action :initialize_sidebar, only: [:show, :new, :edit]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
 
-  # Not at top because we need board and list set first
-  include ValidateMove
-
   layout 'cards'
 
   def show
@@ -53,48 +50,6 @@ class CardsController < AuthenticatedController
     end
   end
 
-  def move_to_list
-    target_list = @board.lists.find(params[:new_list_id])
-
-    if target_list.id == @card.list_id
-      redirect_to [current_project, @board, @list, @card], alert: 'Task is already in that list.'
-      return
-    end
-
-    Card.transaction do
-      # Repair the source list chain before changing list_id,
-      # since next_card scopes to self.list
-      if (next_card = @card.next_card)
-        next_card.update_attribute(:previous_id, @card.previous_id)
-      end
-
-      @card.list_id = target_list.id
-      @card.previous_id = target_list.last_card&.id
-      @card.save!
-    end
-
-    track_updated(@card)
-    redirect_to [current_project, @board, target_list, @card], notice: 'Task moved.'
-  end
-
-  def move
-    List.move(@card, prev_item: @prev_item, next_item: @next_item)
-
-    if new_list
-      @card.list = new_list
-      @card.save
-    end
-
-    track_updated(@card)
-
-    render json: {
-      is_card:  true,
-      id:       @card.id,
-      link:     polymorphic_path([current_project, @board, @card.reload.list, @card]),
-      moveLink: move_project_board_list_card_path(current_project, @board, @card.reload.list, @card)
-    }
-  end
-
   def destroy
     if @card.destroy
       track_destroyed(@card)
@@ -108,13 +63,6 @@ class CardsController < AuthenticatedController
 
   def card_params
     params.require(:card).permit(:name, :description, :due_date, assignee_ids: [])
-  end
-
-  def move_params
-    params.
-      permit(:id, :project_id, :board_id, :list_id,
-        :next_id, :prev_id, :new_list_id
-      )
   end
 
   def initialize_sidebar
@@ -132,7 +80,7 @@ class CardsController < AuthenticatedController
 
   def set_current_board_and_list
     @board = current_project.boards.includes(:lists).find(params[:board_id])
-    @list  = @board.lists.includes(:cards).find(params[:list_id])
+    @list = @board.lists.includes(:cards).find(params[:list_id])
   end
 
   def set_auto_save_key
@@ -143,9 +91,5 @@ class CardsController < AuthenticatedController
     else
       "#{@list.id}-card"
     end
-  end
-
-  def new_list
-    @board.lists.find(move_params[:new_list_id]) if move_params[:new_list_id]
   end
 end

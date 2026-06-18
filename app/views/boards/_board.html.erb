@@ -35,7 +35,7 @@
           <ul class="list-cards js-sortable-cards">
             <% list.ordered_cards.each do |card| %>
               <% cache ['board-list-card', card] do %>
-                <li class="card" data-card-id="<%= card.id %>" data-move-url="<%= move_project_board_list_card_path(current_project, board, list, card) %>">
+                <li class="card" data-card-id="<%= card.id %>" data-move-url="<%= project_board_list_card_position_path(current_project, board, list, card) %>">
                   <%= link_to project_board_list_card_path(current_project, board, list, card) do %>
                     <div class="card-details">
                       <div class="card-title"><%= card.name %></div>

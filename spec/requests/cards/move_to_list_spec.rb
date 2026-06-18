@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-describe 'cards#move_to_list' do
+describe 'Cards::TransferController#create' do
   before { login_to_project_as_user }
 
-  let(:board)       { create(:board, node: current_project.methodology_library, project: current_project) }
+  let(:board) { create(:board, node: current_project.methodology_library, project: current_project) }
   let(:source_list) { create(:list, board: board) }
   let(:target_list) { create(:list, board: board, previous_id: source_list.id) }
 
@@ -14,7 +14,7 @@ describe 'cards#move_to_list' do
   let(:last_card_in_target) { create(:card, list: target_list) }
 
   let(:submit) do
-    post move_to_list_project_board_list_card_path(current_project, board, source_list, card_b),
+    post project_board_list_card_transfer_path(current_project, board, source_list, card_b),
       params: { new_list_id: target_list.id }
   end
 
@@ -58,7 +58,7 @@ describe 'cards#move_to_list' do
 
   context 'when moving the first card in the source list' do
     let(:submit) do
-      post move_to_list_project_board_list_card_path(current_project, board, source_list, card_a),
+      post project_board_list_card_transfer_path(current_project, board, source_list, card_a),
         params: { new_list_id: target_list.id }
     end
 
@@ -70,7 +70,7 @@ describe 'cards#move_to_list' do
 
   context 'when moving the last card in the source list' do
     let(:submit) do
-      post move_to_list_project_board_list_card_path(current_project, board, source_list, card_c),
+      post project_board_list_card_transfer_path(current_project, board, source_list, card_c),
         params: { new_list_id: target_list.id }
     end
 
@@ -82,7 +82,7 @@ describe 'cards#move_to_list' do
 
   context 'when the target list is the same as the source list' do
     let(:submit) do
-      post move_to_list_project_board_list_card_path(current_project, board, source_list, card_c),
+      post project_board_list_card_transfer_path(current_project, board, source_list, card_c),
         params: { new_list_id: source_list.id }
     end
 

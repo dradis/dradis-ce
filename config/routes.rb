@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   # ------------------------------------------------------------ Authentication
   # Sign in / sign out
-  get '/login'  => 'sessions#new'
+  get '/login' => 'sessions#new'
   get '/logout' => 'sessions#destroy'
   resource :session
 
@@ -58,10 +58,8 @@ Rails.application.routes.draw do
       resources :lists, except: [:index] do
         member { post :move }
         resources :cards, except: [:index] do
-          member do
-            post :move
-            post :move_to_list
-          end
+          resource :position, only: [:create], controller: 'cards/position'
+          resource :transfer, only: [:create], controller: 'cards/transfer'
           resources :revisions, only: [:index, :show]
         end
       end
@@ -135,12 +133,12 @@ Rails.application.routes.draw do
     get 'trash' => 'revisions#trash'
 
     # ------------------------------------------------------- Export Manager
-    get  '/export' => 'export#index', as: :export_manager
+    get '/export' => 'export#index', as: :export_manager
 
     # ------------------------------------------------------- Upload Manager
-    get  '/upload'        => 'upload#index',  as: :upload_manager
-    post '/upload'        => 'upload#create'
-    post '/upload/parse'  => 'upload#parse'
+    get '/upload' => 'upload#index', as: :upload_manager
+    post '/upload' => 'upload#create'
+    post '/upload/parse' => 'upload#parse'
   end
 
   resources :console, only: [] do
