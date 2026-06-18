@@ -9,11 +9,13 @@ class Cards::PositionController < AuthenticatedController
   before_action :validate_move_params
 
   def create
-    List.move(@card, prev_item: @prev_item, next_item: @next_item)
+    Card.transaction do
+      List.move(@card, prev_item: @prev_item, next_item: @next_item)
 
-    if new_list
-      @card.list = new_list
-      @card.save
+      if new_list
+        @card.list = new_list
+        @card.save!
+      end
     end
 
     track_updated(@card)
