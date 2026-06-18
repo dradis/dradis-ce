@@ -38,9 +38,7 @@ module Dradis::Plugins::Echo
     end
 
     def set_agent
-      # Avoid params[:id] until we allow :user Agents
-      agent_id = Agents::Roslin.id
-      @agent = Agent.find(agent_id)
+      @agent = Agents::Roslin.instance
     end
 
     def set_providers

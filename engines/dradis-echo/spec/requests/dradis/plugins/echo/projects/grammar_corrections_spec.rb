@@ -6,7 +6,7 @@ describe 'Grammar corrections' do
   let(:roslin_agent) do
     instance_double(Dradis::Plugins::Echo::Agent,
                     enabled?: true,
-                    env: { 'LANGUAGETOOL_ADDRESS' => 'http://languagetool:8010' })
+                    env: { 'LANGUAGETOOL_ADDRESS' => 'http://languagetool:8081' })
   end
 
   before do

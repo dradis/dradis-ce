@@ -8,7 +8,7 @@ describe 'Grammar suggestions' do
   let(:roslin_agent) do
     instance_double(Dradis::Plugins::Echo::Agent,
                     enabled?: true,
-                    env: { 'LANGUAGETOOL_ADDRESS' => 'http://languagetool:8010' })
+                    env: { 'LANGUAGETOOL_ADDRESS' => 'http://languagetool:8081' })
   end
 
   let(:service_double) do
@@ -53,7 +53,7 @@ describe 'Grammar suggestions' do
       }
 
       expect(Dradis::Plugins::Echo::LanguageToolService).to have_received(:new).with(
-        hash_including(address: 'http://languagetool:8010')
+        hash_including(address: 'http://languagetool:8081')
       )
     end
 

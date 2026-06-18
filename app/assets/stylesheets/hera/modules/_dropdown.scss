@@ -13,6 +13,10 @@
   padding: 0.25rem 0;
   z-index: 4;
 
+  .dropdown-divider {
+    border-top: 1px solid var(--border-color);
+  }
+
   .dropdown-item {
     align-items: center;
     color: var(--text-link);
