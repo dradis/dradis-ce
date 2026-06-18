@@ -3,7 +3,7 @@
     - [future tense verb] [feature]
   - Dark mode: add support for login and setup views
   - Upgraded gems:
-    - puma
+    - net-imap, puma
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
