@@ -140,6 +140,20 @@ a {
   }
 }
 
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    .form-control,
+    .form-select {
+      background-color: transparent;
+      border-color: var(--text-default);
+
+      &:focus {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
 .form-label {
   color: var(--text-default);
 }
