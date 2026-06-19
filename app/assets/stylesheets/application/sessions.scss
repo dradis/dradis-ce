@@ -175,6 +175,10 @@ body.unauthenticated {
   }
 
   @media (prefers-color-scheme: dark) {
+    .form-container {
+      --bs-card-bg: #{$brand-100};
+    }
+
     .form-control {
       background-color: transparent;
       border-color: var(--text-default);
@@ -182,10 +186,6 @@ body.unauthenticated {
       &:focus {
         background-color: transparent;
       }
-    }
-
-    .form-container {
-      --bs-card-bg: rgba(255, 255, 255, 0.8);
     }
 
     .mission-container span {

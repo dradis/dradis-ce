@@ -6,7 +6,7 @@
 
 @mixin dark-theme {
   // Backgrounds
-  --brand-bg: #{$brand-600};
+  --brand-bg: #{$brand-500};
   --nav-active-bg: #{$brand-600};
   --primary-bg: #{$grey-900};
   --primary-bg-subtle: #{$grey-800};
@@ -70,9 +70,10 @@
   --text-error: #{$red-300};
   --text-error-hover: #{$red-200};
   --text-inverted: #{$grey-900};
-  --text-link: #{$brand-300};
+  --text-link: #{$brand-200};
   --text-link-hover: #{$brand-200};
   --text-muted: #{$grey-400};
+  --text-revert: #{$grey-900};
   --text-success: #{$green-400};
   --text-warning: #{$yellow-400};
   --untagged-color: #{$grey-400};
@@ -107,7 +108,7 @@
   --brand-bg: #{$brand-500};
   --nav-active-bg: #{$brand-500};
   --primary-bg: #{$white};
-  --primary-bg-subtle: #{darken($white, 3%)}; // darken($primary-bg, 3%)
+  --primary-bg-subtle: #{darken($white, 1%)}; // darken($primary-bg, 1%)
   --secondary-bg: #{$grey-100};
   --secondary-bg-strong: #{darken($grey-100, 10%)}; // darken($secondary-bg, 10%)
   --secondary-bg-subtle: #{darken($grey-100, 5%)}; // darken($secondary-bg, 5%)
@@ -147,6 +148,7 @@
   --text-link: #{$brand-500};
   --text-link-hover: #{darken($brand-500, 20%)};
   --text-muted: #{$grey-700};
+  --text-revert: #{$grey-100};
   --text-success: #{darken($green-700, 10%)};
   --text-warning: #{darken($yellow-600, 15%)};
   --untagged-color: #{$grey-700};
