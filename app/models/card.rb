@@ -1,6 +1,5 @@
 class Card < ApplicationRecord
   include Commentable
-  include Eventable
   include HasFields
   include RevisionTracking
   include Subscribable
@@ -83,16 +82,6 @@ class Card < ApplicationRecord
         end
       end
     end
-  end
-
-  def local_event_payload
-    {
-      project: {
-        id: project.id,
-        name: project.name
-      },
-      title: name
-    }
   end
 
   def local_fields
