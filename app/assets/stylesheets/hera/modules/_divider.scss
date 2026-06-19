@@ -1,18 +1,19 @@
 .divider {
-  border-top: 1px solid var(--border-color);
-  height: 0;
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
   margin: 0.25rem 0;
-  position: relative;
+
+  &::before,
+  &::after {
+    border-top: 1px solid var(--border-color);
+    content: '';
+    flex: 1;
+  }
 
   .divider-label {
-    background-color: var(--primary-bg);
     color: var(--text-default);
     font-size: $text-small;
-    left: 50%;
-    padding: 0 0.5rem;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
 
     &.lead {
       font-size: 1.25rem;
