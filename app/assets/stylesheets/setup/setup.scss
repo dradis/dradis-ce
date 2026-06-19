@@ -45,7 +45,8 @@ a {
   height: 100%;
   padding: 1.375rem 1.85rem;
   text-align: left;
-  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
   width: 100%;
 
   &:focus,
@@ -128,14 +129,14 @@ a {
 
 .form-control,
 .form-select {
-  background-color: var(--primary-bg-subtle);
+  background-color: transparent;
   border-color: var(--border-color);
   color: var(--text-default);
 
   &:focus {
-    background-color: var(--primary-bg-subtle);
+    background: transparent;
     border-color: var(--brand-bg);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px var(--brand-bg);
+    box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--brand-bg) 50%, transparent);
     color: var(--text-default);
     outline: 0;
   }
