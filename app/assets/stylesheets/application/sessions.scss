@@ -169,4 +169,14 @@ body.unauthenticated {
       line-height: 4rem;
     }
   }
+
+  @media (prefers-color-scheme: dark) {
+    .form-container {
+      --bs-card-bg: rgba(255, 255, 255, 0.8);
+    }
+
+    .mission-container span {
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
 }
