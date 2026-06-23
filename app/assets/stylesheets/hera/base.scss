@@ -339,6 +339,10 @@ pre {
   }
 }
 
+.progress {
+  --bs-progress-bg: var(--secondary-bg);
+}
+
 .required-input {
   color: $red;
 }
@@ -375,7 +379,7 @@ pre {
 }
 
 .text-primary {
-  color: $primary !important;
+  color: var(--text-link) !important;
 }
 
 .text-success {
