@@ -173,33 +173,20 @@ body.unauthenticated {
       line-height: 4rem;
     }
   }
-
 }
 
 @mixin unauthenticated-dark {
   body.unauthenticated {
-    color: var(--text-revert);
-
-    a {
-      color: var(--primary);
-    }
-
     .form-container {
-      background-color: $brand-100;
+      background-color: var(--primary-bg-subtle);
     }
 
     .form-control {
       background-color: transparent;
-      border-color: var(--text-revert);
-      color: var(--text-revert);
 
       &:focus {
         background-color: transparent;
       }
-    }
-
-    .mission-container span {
-      color: $brand-100;
     }
   }
 }

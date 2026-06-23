@@ -71,9 +71,8 @@
   --text-error-hover: #{$red-200};
   --text-inverted: #{$grey-900};
   --text-link: #{$brand-200};
-  --text-link-hover: #{$brand-200};
+  --text-link-hover: #{$brand-300};
   --text-muted: #{$grey-400};
-  --text-revert: #{$grey-900};
   --text-success: #{$green-400};
   --text-warning: #{$yellow-400};
   --untagged-color: #{$grey-400};
@@ -148,7 +147,6 @@
   --text-link: #{$brand-500};
   --text-link-hover: #{darken($brand-500, 20%)};
   --text-muted: #{$grey-700};
-  --text-revert: #{$grey-100};
   --text-success: #{darken($green-700, 10%)};
   --text-warning: #{darken($yellow-600, 15%)};
   --untagged-color: #{$grey-700};
