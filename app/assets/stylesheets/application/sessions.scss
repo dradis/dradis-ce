@@ -174,14 +174,24 @@ body.unauthenticated {
     }
   }
 
-  @media (prefers-color-scheme: dark) {
+}
+
+@mixin unauthenticated-dark {
+  body.unauthenticated {
+    color: var(--text-revert);
+
+    a {
+      color: var(--primary);
+    }
+
     .form-container {
-      --bs-card-bg: #{$brand-100};
+      background-color: $brand-100;
     }
 
     .form-control {
       background-color: transparent;
-      border-color: var(--text-default);
+      border-color: var(--text-revert);
+      color: var(--text-revert);
 
       &:focus {
         background-color: transparent;
@@ -189,7 +199,17 @@ body.unauthenticated {
     }
 
     .mission-container span {
-      color: rgba(255, 255, 255, 0.8);
+      color: $brand-100;
     }
   }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    @include unauthenticated-dark;
+  }
+}
+
+[data-theme='dark'] {
+  @include unauthenticated-dark;
 }
