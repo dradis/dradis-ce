@@ -64,7 +64,7 @@ body.unauthenticated {
 
     &.btn-primary {
       background: var(--primary);
-      border-color: var(--primary);
+      border: none;
       color: $white;
 
       &:hover,
@@ -73,7 +73,6 @@ body.unauthenticated {
       &:active,
       &:not(:disabled):not(.disabled):active {
         background: var(--dark);
-        border-color: var(--dark);
       }
     }
   }
