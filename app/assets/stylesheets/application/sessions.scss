@@ -22,7 +22,7 @@ body.unauthenticated {
     transition: color 0.2s ease-in-out;
 
     &:hover {
-      color: var(--dark);
+      color: var(--text-link-hover);
       text-decoration: none;
     }
   }
