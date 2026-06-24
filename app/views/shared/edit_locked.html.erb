@@ -1,0 +1,41 @@
+<% content_for :title, 'Record locked' %>
+
+<div class="content-container">
+  <div class="edit-locked">
+    <div class="edit-locked__icon">
+      <i class="fa-solid fa-lock"></i>
+    </div>
+
+    <h3 class="edit-locked__heading">
+      This <%= @locked_record.model_name.human.downcase %> is currently being edited
+    </h3>
+
+    <p class="edit-locked__description">
+      Another team member is making changes to this record. You can wait for
+      them to finish, go back, or proceed to edit anyway (which may lead to
+      conflicting changes).
+    </p>
+
+    <% @locked_by.each do |user| %>
+      <div class="edit-locked__editor">
+        <%= avatar_image(user, size: 48) %>
+        <div class="edit-locked__editor-info">
+          <span class="edit-locked__editor-name"><%= user.name %></span>
+          <span class="edit-locked__editor-status">
+            <span class="edit-locked__pulse"></span> Currently editing
+          </span>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="edit-locked__actions">
+      <%= link_to @back_path, class: 'btn btn-primary' do %>
+        <i class="fa-solid fa-arrow-left"></i> Go back
+      <% end %>
+
+      <%= link_to url_for(params.permit!.merge(force: 'true')), class: 'btn btn-outline-danger' do %>
+        <i class="fa-solid fa-lock-open"></i> Edit anyway
+      <% end %>
+    </div>
+  </div>
+</div>
