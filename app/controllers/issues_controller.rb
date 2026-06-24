@@ -2,6 +2,7 @@ class IssuesController < AuthenticatedController
   include ConflictResolver
   include ContentFromTemplate
   include DynamicFieldNamesCacher
+  include EditLockable
   include EventPublisher
   include IssuesHelper
   include LiquidEnabledResource
@@ -31,8 +32,8 @@ class IssuesController < AuthenticatedController
                         .group('nodes.id')
                         .sort_by { |node, _| node.label }
 
-    @first_node      = @affected_nodes.first
-    @first_evidence  = Evidence.where(node: @first_node, issue: @issue)
+    @first_node = @affected_nodes.first
+    @first_evidence = Evidence.where(node: @first_node, issue: @issue)
 
     load_conflicting_revisions(@issue)
   end
@@ -73,10 +74,16 @@ class IssuesController < AuthenticatedController
   end
 
   def edit
+    check_edit_lock(@issue)
+    return if performed?
+
+    acquire_edit_session(@issue)
     @form_preview_path = preview_project_issue_path(current_project, @issue)
   end
 
   def update
+    release_edit_session(@issue)
+
     respond_to do |format|
       updated_at_before_save = @issue.updated_at.to_i
 
