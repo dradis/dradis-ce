@@ -126,16 +126,6 @@
     }
   }
 
-  .progress.empty {
-    background-color: transparent;
-    border: 1px solid var(--border-color);
-
-    .progress-bar {
-      background-color: transparent;
-      width: 100%;
-    }
-  }
-
   .project-card-header {
     display: flex;
     flex-direction: column;
