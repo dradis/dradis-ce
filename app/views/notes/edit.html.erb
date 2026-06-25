@@ -9,6 +9,17 @@
 <div class="content-container">
   <h4 class="header-underline">Edit note</h4>
   <div class="note-text-inner">
-    <%= render "form" %>
+    <% if @lock_owner %>
+      <%= render 'shared/editing_locked',
+            lock_owner: @lock_owner,
+            record: @note,
+            force_path: edit_project_node_note_path(current_project, @node, @note) %>
+    <% else %>
+      <div data-controller="editing-lock"
+           data-editing-lock-lock-url-value="<%= lock_project_node_note_path(current_project, @node, @note) %>"
+           data-editing-lock-unlock-url-value="<%= unlock_project_node_note_path(current_project, @node, @note) %>">
+      </div>
+      <%= render "form" %>
+    <% end %>
   </div>
 </div>

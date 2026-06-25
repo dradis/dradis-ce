@@ -1,0 +1,13 @@
+<div class="alert alert-warning">
+  <p>
+    <strong><%= lock_owner['user_name'] %></strong> is currently editing this
+    <%= record.model_name.human.downcase %>. Editing at the same time may cause
+    conflicts.
+  </p>
+  <p>
+    You can wait for them to finish, or take over the edit. If you take over,
+    <%= lock_owner['user_name'] %> will be notified on their next auto-save
+    heartbeat and their save will be blocked.
+  </p>
+  <%= link_to 'Take over edit', "#{force_path}?force=true", class: 'btn btn-sm btn-warning', data: { turbo: false } %>
+</div>
