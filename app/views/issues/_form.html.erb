@@ -47,5 +47,11 @@
       behavior: 'clear-local-auto-save'
     }
     %>
+
+  <% if @issue.persisted? %>
+    <span id="editing-presence-editors" class="editing-presence-editors">
+      <%= render 'shared/editing_presence', editors: EditingSession.for_record(@issue).by_others(current_user).includes(:user).map(&:user) %>
+    </span>
+  <% end %>
 </div>
 <% end %>
