@@ -1,8 +1,9 @@
 [v#.#.#] ([month] [YYYY])
+  - UI: add dark mode support to the login and setup wizard pages
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - concurrent-ruby, faraday, net-imap, nokogiri, puma
+    - concurrent-ruby, crass, faraday, net-imap, nokogiri, puma
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
