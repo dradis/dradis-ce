@@ -3,7 +3,7 @@ class ProjectsController < AuthenticatedController
 
   before_action :set_project
 
-  helper        :hera
+  helper :hera
   helper_method :current_project
 
   def index
@@ -11,15 +11,15 @@ class ProjectsController < AuthenticatedController
   end
 
   def show
-    @activities    = Activity.latest
-    @authors       = [current_user]
-    @boards        = current_project.methodology_library.boards
-    @issues        = current_project.issues.includes(:tags).sort
+    @activities = Activity.latest
+    @authors = [current_user]
+    @boards = current_project.methodology_library.boards
+    @issues = current_project.issues.includes(:tags).sort
     @methodologies = current_project.methodology_library.notes.map { |n| Methodology.new(filename: n.id, content: n.text) }
-    @nodes         = current_project.nodes.in_tree
-    @tags          = current_project.tags
+    @nodes = current_project.nodes.in_tree
+    @tags = current_project.tags
 
-    @count_by_tag  = { unassigned: 0 }
+    @count_by_tag = { unassigned: 0 }
     @issues_by_tag = Hash.new { |h, k| h[k] = [] }
 
     @tag_names = @tags.map do |tag|
@@ -30,11 +30,11 @@ class ProjectsController < AuthenticatedController
     @issues.each do |issue|
       if issue.tags.empty?
         @issues_by_tag[:unassigned] << issue
-        @count_by_tag[:unassigned]  += 1
+        @count_by_tag[:unassigned] += 1
       else
         issue.tags.each do |tag|
           @issues_by_tag[tag.name] << issue
-          @count_by_tag[tag.name]  += 1
+          @count_by_tag[tag.name] += 1
         end
       end
     end
