@@ -39,6 +39,12 @@ class ProjectsController < AuthenticatedController
       end
     end
 
+    @chart_data = {
+      dimension: 'tags',
+      tags: @tag_names.to_json,
+      issues_count: @count_by_tag.to_json
+    }
+
     respond_to do |format|
       format.html { render layout: 'hera/project' if !request.xhr? }
       format.json { render json: @boards }

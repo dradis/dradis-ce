@@ -1,7 +1,7 @@
 <section class="summary-panel">
   <% if @issues.any? %>
     <h4 class="header-underline">Issues so far</h4>
-    <div id="issue-chart"></div>
+    <%= tag.div id: 'issue-chart', data: @chart_data %>
 
     <div id="issues-accordion" role="tablist">
       <%= render 'projects/issues/summary/tags_accordion' %>
@@ -16,7 +16,3 @@
     %>
   <% end %>
 </section>
-
-<% if @issues.any? %>
-  <div id='issues-summary-data' data-tags='<%= @tag_names.to_json %>' data-issues-count='<%= @count_by_tag.to_json %>'></div>
-<% end %>
