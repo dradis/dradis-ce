@@ -1,7 +1,8 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="auto">
   <head>
     <title><%= [content_for(:title), 'Dradis Community Edition'].compact.join(' | ') %></title>
+    <script>(() => { const t = localStorage.getItem('dradis-theme'); if (t) document.documentElement.dataset.theme = t; })();</script>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track' => true %>
     <%= javascript_include_tag 'legacy.application', 'data-turbo-track' => true %>
     <%= favicon_link_tag %>

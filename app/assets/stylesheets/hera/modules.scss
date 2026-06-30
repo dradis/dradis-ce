@@ -307,6 +307,12 @@
 }
 
 .nav-tabs {
+  & + .card {
+    border-top: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
   .nav-link {
     &.active {
       background-color: var(--primary-bg);

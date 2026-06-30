@@ -1,10 +1,18 @@
+<% if Dradis::Plugins::Echo::Agents::Roslin.enabled? %>
+  <div data-controller="dradis--plugins--echo--grammar"
+       data-dradis--plugins--echo--grammar-grammar-corrections-url-value="<%= echo.project_grammar_corrections_path(current_project) %>"
+       data-dradis--plugins--echo--grammar-grammar-suggestions-url-value="<%= echo.project_grammar_suggestions_path(current_project) %>"
+       data-dradis--plugins--echo--grammar-commentable-type-value="<%= @issue.class %>"
+       data-dradis--plugins--echo--grammar-commentable-id-value="<%= @issue.id %>">
+  </div>
+<% end %>
+
 <div class="tab-pane" id="echo-tab">
   <div class="inner">
-    <h4 class="header-underline">Dradis Echo
-    </h4>
+    <h4 class="header-underline">Dradis Echo</h4>
 
     <turbo-frame id="<%= dom_id(@issue, :echo) %>">
-      <div data-behavior="fetch" data-path="<%= echo.project_prompts_path(current_project, type: :issue, record: @issue.id) %>"></div>
+      <div data-behavior="fetch" data-path="<%= echo.project_interactions_path(current_project, type: :issue, record: @issue.id) %>"></div>
     </turbo-frame>
   </div>
 </div>

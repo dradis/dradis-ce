@@ -17,6 +17,7 @@ document.addEventListener('turbo:load', function () {
       .then(function (html) {
         $(that).html(html);
         $(that).trigger('dradis:liquid-rendered');
+        that.dispatchEvent(new CustomEvent('dradis:liquid-rendered', { bubbles: true }));
         $spinner.addClass('d-none');
       });
   });

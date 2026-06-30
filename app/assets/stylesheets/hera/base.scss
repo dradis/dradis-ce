@@ -244,6 +244,10 @@ fieldset.check_boxes {
   background-image: var(--form-select-caret);
 }
 
+.form-text {
+  color: var(--text-muted);
+}
+
 h1,
 h2,
 h3,
@@ -308,6 +312,14 @@ mark {
   &.dropdown-toggle::after {
     display: none;
   }
+}
+
+.popover-footer {
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
 }
 
 p:last-child {

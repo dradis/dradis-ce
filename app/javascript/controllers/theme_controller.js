@@ -29,6 +29,7 @@ export default class extends Controller {
   }
 
   persist(theme) {
+    localStorage.setItem('dradis-theme', theme)
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
     fetch(this.preferencesPathValue, {
       method: "PATCH",

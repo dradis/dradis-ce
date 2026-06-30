@@ -1,4 +1,8 @@
 <div class="inner-content">
+  <% if @issue %>
+    <%= render_view_hooks 'issues/widget' %>
+  <% end %>
+
   <%= render 'layouts/hera/sidebar_collection',
     category_id: nil,
     collection: @issues,

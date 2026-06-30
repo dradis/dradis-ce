@@ -13,6 +13,7 @@ module Dradis
 end
 
 require 'html/ignore_liquid_in_textile_block_codes'
+require 'html/liquid_safe_sanitizer'
 require 'html/no_inline_code_textile_formatter'
 
 require 'html/pipeline/dradis/code_highlight_filter'

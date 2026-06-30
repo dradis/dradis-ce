@@ -5,6 +5,10 @@ request... were there any bugs you had fixed? If so, mention them. If
 these bugs have open GitHub issues, be sure to tag them here as well,
 to keep the conversation linked together.
 
+### Testing steps
+
+<!-- Acceptance testing steps for this PR. Generate with /testing-steps.
+     Remove this section if not applicable. -->
 
 ### Other Information
 

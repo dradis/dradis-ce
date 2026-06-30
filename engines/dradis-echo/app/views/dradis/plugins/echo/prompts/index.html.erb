@@ -2,12 +2,8 @@
 
 <% content_for :breadcrumbs do %>
   <ol class="breadcrumb">
-    <% if defined?(Dradis::Pro) %>
-    <li class="breadcrumb-item"><%= link_to 'Dashboard', main_app.dashboard_path %></li>
-    <% else %>
-    <li class="breadcrumb-item"><%= link_to Project.new.name, main_app.project_path(1) %></li>
-    <% end %>
-    <li class="breadcrumb-item active">Dradis Echo</li>
+    <li class="breadcrumb-item"><%= link_to 'Dashboard', main_app.root_path %></li>
+    <li class="breadcrumb-item active">Echo</li>
   </ol>
 <% end %>
 
@@ -25,8 +21,8 @@
     </div>
   </div>
 
-  <div id="prompts-tip" class="collapse show">
-    <div class="alert alert-primary mt-0">
+  <div id="prompts-tip" class="page-tips collapse show">
+    <div class="bg-info">
       <p>
         Create reusable AI prompts to automate repetitive tasks like summarizing findings, generating CVSS scores, or translating technical issues for non-technical audiences. Use Liquid Dynamic Content like <code class="text-nowrap px-0">{{ issue.text }}</code> to include issue content.
       </p>

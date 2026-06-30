@@ -1,6 +1,16 @@
 Rails.application.routes.draw do
   get 'up', to: ->(env) { [204, {}, ['']] }
 
+  # ------------------------------------------------------------ Show Don't Gate
+  if !defined?(Dradis::Pro)
+    # Static pages
+    get 'projects', to: 'static_pages#projects_index', as: :static_projects
+    get 'projects/1/addons/gateway', to: 'static_pages#gateway_index', as: :static_gateway
+    get 'projects/1/addons/issuelib', to: 'static_pages#issuelib_index', as: :static_issuelib
+    get 'projects/1/addons/issuelib/import', to: 'static_pages#issuelib_import', as: :static_issuelib_import
+    get 'projects/1/addons/remediationtracker', to: 'static_pages#remediationtracker_index', as: :static_remediationtracker
+  end
+
   # ------------------------------------------------------------ Authentication
   # Sign in / sign out
   get '/login'  => 'sessions#new'
@@ -166,12 +176,6 @@ Rails.application.routes.draw do
 
   if defined?(Dradis::Pro)
   else
-    # Static pages
-    get 'projects/1/addons/gateway', to: 'static_pages#gateway_index', as: :static_gateway
-    get 'projects/1/addons/issuelib', to: 'static_pages#issuelib_index', as: :static_issuelib
-    get 'projects/1/addons/issuelib/import', to: 'static_pages#issuelib_import', as: :static_issuelib_import
-    get 'projects/1/addons/remediationtracker', to: 'static_pages#remediationtracker_index', as: :static_remediationtracker
-
     root to: 'setup/passwords#new'
   end
 

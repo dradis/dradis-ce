@@ -2,15 +2,9 @@
 
 <% content_for :breadcrumbs do %>
   <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      Dradis Echo
-    </li>
-    <li class="breadcrumb-item">
-      <%= link_to 'Prompts', prompts_path %>
-    </li>
-    <li class="breadcrumb-item active">
-      New Prompt
-    </li>
+    <li class="breadcrumb-item"><%= link_to 'Dashboard', main_app.root_path %></li>
+    <li class="breadcrumb-item"><%= link_to 'Echo', prompts_path %></li>
+    <li class="breadcrumb-item active">New Prompt</li>
   </ol>
 <% end %>
 <div class="content-container">

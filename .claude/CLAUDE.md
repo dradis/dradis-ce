@@ -307,4 +307,4 @@ document.addEventListener('turbo:load', function () {
 
 ## Acceptance testing
 
-After a feature is complete, generate an acceptance testing plan using `/testing-steps`. The plan goes in the task tracker under the "Acceptance" section.
+After a feature is complete, generate an acceptance testing plan using `/testing-steps`. The plan goes in the PR description under the "Testing steps" section.

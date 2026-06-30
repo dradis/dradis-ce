@@ -41,12 +41,13 @@ class QuoteSelector {
     this.$content.on('dradis:liquid-rendered', () => {
       this.appendQuoteBtn();
     });
+
+    this.behaviors();
   }
 
   appendQuoteBtn() {
     this.$content.append(this.$quoteBtn);
     this.$content.data('quoteSelector', this);
-    this.behaviors();
   }
 
   behaviors() {
@@ -114,7 +115,11 @@ class QuoteSelector {
       }
     });
 
-    this.$quoteBtn.on('click', function () {
+    // Use event delegation on $content rather than direct binding on the
+    // button element. jQuery's .html() (used by liquid_async.js) calls
+    // cleanData() on child elements, stripping any directly-bound handlers.
+    // Delegated handlers survive because they live on the parent.
+    this.$content.on('click', '[data-behavior~=selection-quote-button]', function () {
       var selectionText = document.getSelection().toString(),
         affix,
         editor;
