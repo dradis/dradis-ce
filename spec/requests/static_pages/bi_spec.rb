@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'BI insights' do
+describe 'BI insights', skip: defined?(Dradis::Pro) do
   before { login_to_project_as_user }
 
   let(:current_year_start) { Time.current.beginning_of_year }
