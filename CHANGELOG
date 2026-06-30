@@ -1,9 +1,10 @@
 [v#.#.#] ([month] [YYYY])
   - Show don't gate: Business Intelligence
+  - UI: add dark mode support to the login and setup wizard pages
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - puma
+    - concurrent-ruby, crass, faraday, net-imap, nokogiri, puma
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
