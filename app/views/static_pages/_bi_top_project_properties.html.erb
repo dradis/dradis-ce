@@ -1,0 +1,37 @@
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h3 class="mb-0 fs-5 title">Top Project Properties</h3>
+  <div class="form-container">
+    <a href="javascript:void(0)" class="js-try-pro combobox" data-term="bi" data-url="https://dradis.com/pro/pages/bi.html">
+      Assessment type
+    </a>
+  </div>
+</div>
+
+<% @bi_top_project_properties.each_with_index do |property, index| %>
+  <div class="content-container chart property-item <%= 'mb-3' unless index == @bi_top_project_properties.length - 1 %>">
+    <h4 class="mb-0"><%= property[:name] %></h4>
+    <div class="d-flex flex-row align-items-baseline justify-content-between py-3">
+      <div class="d-flex flex-column">
+        <h4 class="mb-0"><%= property[:current_year_count] %></h4>
+        <small>created this year</small>
+      </div>
+      <div class="d-flex flex-column align-items-end justify-content-between">
+        <h5 class="<%= class_names('delta', positive: property[:yoy_delta] > 0, negative: property[:yoy_delta] < 0) %>">
+          <i class="fa-solid <%= delta_icon(property[:yoy_delta]) %> delta-icon"></i><%= property[:yoy_delta].abs %>%
+        </h5>
+        <p>from <%= property[:last_year_count] %> during Jan 1 - <%= Date.today.prev_year.strftime('%b %d %Y') %></p>
+      </div>
+    </div>
+    <div class="divider divider-lg">
+      <span class="divider-label">Most common issues</span>
+    </div>
+    <% property[:top_issues].each do |issue| %>
+      <div class="d-flex flex-row align-items-center justify-content-between progress-wrap">
+        <p class="pe-3 text-end text-truncate issue-title"><%= issue[:title] %></p>
+        <div class="progress w-100">
+          <div class="progress-bar" role="progressbar" style="width: <%= issue[:percent] %>%; background-color: <%= issue[:color] %>" aria-valuenow="<%= issue[:count] %>" aria-valuemin="0" aria-valuemax="<%= property[:current_year_count] %>"></div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

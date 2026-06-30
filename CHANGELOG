@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Show don't gate: Business Intelligence
   - UI: add dark mode support to the login and setup wizard pages
   - [entity]:
     - [future tense verb] [feature]

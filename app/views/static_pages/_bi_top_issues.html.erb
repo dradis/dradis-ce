@@ -1,0 +1,43 @@
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <div class="d-flex flex-column">
+    <h3 class="mb-0 fs-5">Most Common Issues</h3>
+    <small class="text-muted">created this year, across projects, by title</small>
+  </div>
+  <div class="form-container">
+    <%= form_with url: static_bi_insights_top_issues_path, method: :get, data: { turbo: true, turbo_frame: 'top_issues' } do |form| %>
+      <div class="small">
+        <%= form.select :tag, options_for_select(tag_options(Tag.all), @selected_tag), {}, data: { behavior: 'widget-filter' }, class: 'form-select' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<%= turbo_frame_tag 'top_issues', class: 'mb-auto' do %>
+  <div data-behavior="fetch-loader" class="d-none">
+    <%= spinner_tag %>
+  </div>
+  <div data-behavior="widget-content">
+    <div class="chart-wrap py-3">
+      <% if @bi_top_issues.any? %>
+        <% max_count = @bi_top_issues.first[:count].to_f %>
+        <% @bi_top_issues.each do |issue| %>
+          <div class="d-flex flex-row align-items-center justify-content-between progress-wrap">
+            <p class="pe-3 text-end text-truncate issue-title"><%= issue[:title] %></p>
+            <div class="progress w-100">
+              <% percent = (issue[:count].to_f / max_count) * 100 %>
+              <div
+                class="progress-bar"
+                role="progressbar"
+                style="width: <%= percent %>%; background-color: <%= issue_bar_color(issue[:issue]) %>"
+                aria-valuenow="<%= issue[:count] %>"
+                aria-valuemin="0"
+                aria-valuemax="<%= max_count %>">
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="text-muted text-center mt-4">No issues created this year yet.</p>
+      <% end %>
+    </div>
+  </div>
+<% end %>

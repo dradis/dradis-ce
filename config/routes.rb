@@ -8,11 +8,14 @@ Rails.application.routes.draw do
     get 'projects/1/addons/issuelib', to: 'static_pages#issuelib_index', as: :static_issuelib
     get 'projects/1/addons/issuelib/import', to: 'static_pages#issuelib_import', as: :static_issuelib_import
     get 'projects/1/addons/remediationtracker', to: 'static_pages#remediationtracker_index', as: :static_remediationtracker
+    get 'projects/1/addons/bi', to: 'static_pages#bi_index', as: :static_bi
+    get 'projects/1/addons/bi/insights/issues', to: 'static_pages#bi_insights_issues', as: :static_bi_insights_issues
+    get 'projects/1/addons/bi/insights/top-issues', to: 'static_pages#bi_insights_top_issues', as: :static_bi_insights_top_issues
   end
 
   # ------------------------------------------------------------ Authentication
   # Sign in / sign out
-  get '/login'  => 'sessions#new'
+  get '/login' => 'sessions#new'
   get '/logout' => 'sessions#destroy'
   resource :session
 
@@ -132,12 +135,12 @@ Rails.application.routes.draw do
     get 'trash' => 'revisions#trash'
 
     # ------------------------------------------------------- Export Manager
-    get  '/export' => 'export#index', as: :export_manager
+    get '/export' => 'export#index', as: :export_manager
 
     # ------------------------------------------------------- Upload Manager
-    get  '/upload'        => 'upload#index',  as: :upload_manager
-    post '/upload'        => 'upload#create'
-    post '/upload/parse'  => 'upload#parse'
+    get '/upload' => 'upload#index', as: :upload_manager
+    post '/upload' => 'upload#create'
+    post '/upload/parse' => 'upload#parse'
   end
 
   resources :console, only: [] do

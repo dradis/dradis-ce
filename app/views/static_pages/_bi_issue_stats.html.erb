@@ -1,0 +1,28 @@
+<div class="position-relative d-flex flex-column flex-grow-1">
+  <div class="bg-icon">
+    <i class="fa-solid fa-bug fa-2x"></i>
+  </div>
+  <div class="d-flex align-items-center justify-content-between">
+    <h3 class="mb-0 fs-5 title">Issues</h3>
+    <div class="form-container">
+      <%= form_with url: static_bi_insights_issues_path, method: :get, data: { turbo: true, turbo_frame: 'issue_stats' } do |form| %>
+        <div class="small">
+          <%= form.select :tag, options_for_select(tag_options(Tag.all), @selected_tag), {}, data: { behavior: 'widget-filter' }, class: 'form-select' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <%= turbo_frame_tag 'issue_stats' do %>
+    <div data-behavior="fetch-loader" class="d-none">
+      <%= spinner_tag %>
+    </div>
+    <div data-behavior="widget-content">
+      <h4 class="mb-0"><%= @bi_issues[:current_year_count] %></h4>
+      <p class="mb-3">created this year</p>
+      <h5 class="<%= class_names('delta', positive: @bi_issues[:yoy_delta] > 0, negative: @bi_issues[:yoy_delta] < 0) %>">
+        <i class="fa-solid <%= delta_icon(@bi_issues[:yoy_delta]) %> delta-icon"></i><%= @bi_issues[:yoy_delta].abs %>%
+      </h5>
+      <p>from <%= @bi_issues[:last_year_count] %> during Jan 1 - <%= Date.today.prev_year.strftime('%b %d %Y') %></p>
+    </div>
+  <% end %>
+</div>
