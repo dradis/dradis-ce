@@ -3,7 +3,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - concurrent-ruby, crass, faraday, net-imap, nokogiri, puma
+    - concurrent-ruby, crass, faraday, msgpack, net-imap, nokogiri, puma
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
