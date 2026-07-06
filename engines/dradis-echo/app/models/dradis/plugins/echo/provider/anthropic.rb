@@ -21,7 +21,7 @@ module Dradis::Plugins::Echo
     def build_headers
       {
         'anthropic-version' => API_VERSION,
-        'x-api-key'         => api_key
+        'x-api-key' => api_key
       }
     end
 

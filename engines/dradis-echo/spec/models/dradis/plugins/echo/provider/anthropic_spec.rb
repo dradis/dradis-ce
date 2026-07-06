@@ -47,7 +47,7 @@ describe Dradis::Plugins::Echo::Provider::Anthropic do
   describe '#extract_text' do
     it 'extracts text from content_block_delta events' do
       payload = {
-        'type'  => 'content_block_delta',
+        'type' => 'content_block_delta',
         'delta' => { 'type' => 'text_delta', 'text' => 'Hello' }
       }
       expect(provider.send(:extract_text, payload)).to eq('Hello')
