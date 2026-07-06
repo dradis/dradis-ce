@@ -12,12 +12,13 @@ describe Dradis::Plugins::Echo::Provider::Anthropic do
   end
 
   describe '#build_uri' do
-    it 'returns the configured address' do
-      expect(provider.send(:build_uri, 'claude-sonnet-4-6').to_s).to eq(described_class::DEFAULT_ADDRESS)
+    it 'appends messages to the address' do
+      expect(provider.send(:build_uri, 'claude-sonnet-4-6').to_s)
+        .to eq("#{described_class::DEFAULT_ADDRESS}/messages")
     end
 
-    it 'uses a custom address when set' do
-      provider.address = 'https://anthropic.proxy.example.com/v1/messages'
+    it 'appends messages to a custom address, preventing full-path control' do
+      provider.address = 'https://anthropic.proxy.example.com/v1'
       expect(provider.send(:build_uri, 'claude-sonnet-4-6').to_s)
         .to eq('https://anthropic.proxy.example.com/v1/messages')
     end
