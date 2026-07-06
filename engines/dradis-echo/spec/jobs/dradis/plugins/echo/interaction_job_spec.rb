@@ -26,24 +26,34 @@ describe Dradis::Plugins::Echo::InteractionJob do
   describe 'when agent is not enabled' do
     before { agent.update!(enabled: false) }
 
-    it 'broadcasts a user-friendly error' do
+    it 'broadcasts a generic error without leaking details' do
       perform
       expect(Turbo::StreamsChannel).to have_received(:broadcast_update_to) do |_, **kwargs|
-        expect(kwargs[:html]).to include('is not enabled')
+        expect(kwargs[:html]).to include('Something went wrong')
+        expect(kwargs[:html]).not_to include('is not enabled')
       end
     end
   end
 
-  describe 'error message sanitisation' do
-    it 'HTML-escapes the error message before broadcasting' do
+  describe 'error message handling' do
+    it 'does not reflect the underlying error message to the browser' do
       allow_any_instance_of(Dradis::Plugins::Echo::Provider::Ollama)
-        .to receive(:generate).and_raise('<script>alert(1)</script>')
+        .to receive(:generate).and_raise('<script>alert(1)</script> upstream-secret')
 
       perform
       expect(Turbo::StreamsChannel).to have_received(:broadcast_update_to) do |_, **kwargs|
-        expect(kwargs[:html]).to include('&lt;script&gt;')
-        expect(kwargs[:html]).not_to include('<script>')
+        expect(kwargs[:html]).to include('Something went wrong')
+        expect(kwargs[:html]).not_to include('script')
+        expect(kwargs[:html]).not_to include('upstream-secret')
       end
+    end
+
+    it 'logs the full error message for operators' do
+      allow_any_instance_of(Dradis::Plugins::Echo::Provider::Ollama)
+        .to receive(:generate).and_raise('upstream-secret')
+
+      expect(Rails.logger).to receive(:error).with(/upstream-secret/)
+      perform
     end
   end
 
