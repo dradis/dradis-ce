@@ -1,5 +1,8 @@
 v5.2.0 (July 2026)
   - UI: add dark mode support to the login and setup wizard pages
+  - Bugs fixes:
+    - Echo: stop broadcasting AI provider error responses to the browser
+    - Echo: restrict Anthropic provider requests to the fixed messages endpoint
   - Upgraded gems:
     - concurrent-ruby, crass, faraday, msgpack, net-imap, nokogiri, puma
 
