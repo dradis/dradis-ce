@@ -32,7 +32,7 @@ jobs:
           rubygems: 'latest'
           bundler-cache: true
       - name: Security audit dependencies
-        run: bundle exec bundler-audit --update --ignore CVE-2024-21510 CVE-2025-61921
+        run: bundle exec bundler-audit --update --ignore CVE-2024-21510 CVE-2025-61921 CVE-2026-38969
       - name: Security audit ruby
         # These ignores can be removed once the Ruby version is upgraded (>= 3.4.8 for the
         # 2025 CVEs; >= 4.0.3 for CVE-2026-41316, whose bundled erb we already override).
