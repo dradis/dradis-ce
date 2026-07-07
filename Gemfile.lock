@@ -74,7 +74,7 @@ GIT
 
 GIT
   remote: https://github.com/dradis/dradis-html_export.git
-  revision: f0398b7ac3208426c0bc08fb209e586074da1fd7
+  revision: 3f9f66683f059d866d4b5c59c1ee6dcb0c61dbec
   branch: release-5.2.0
   specs:
     dradis-html_export (5.2.0)
