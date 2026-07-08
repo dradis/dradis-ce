@@ -3,14 +3,14 @@ require 'rails_helper'
 describe Dradis::Plugins::Echo::LanguageToolService do
   let(:service) do
     described_class.new(
-      fields:  { 'Description' => 'This are a mistake.' },
+      fields: { 'Description' => 'This are a mistake.' },
       address: 'http://languagetool.local:8081'
     )
   end
 
   def stub_http(body:)
     response = instance_double(Net::HTTPResponse, body: body)
-    http     = instance_double(Net::HTTP)
+    http = instance_double(Net::HTTP)
     allow(http).to receive(:post).and_return(response)
     allow(Net::HTTP).to receive(:start).and_yield(http)
   end
@@ -21,9 +21,9 @@ describe Dradis::Plugins::Echo::LanguageToolService do
         {
           'matches' => [
             {
-              'offset'       => 5,
-              'length'       => 3,
-              'message'      => 'Possible agreement error',
+              'offset' => 5,
+              'length' => 3,
+              'message' => 'Possible agreement error',
               'replacements' => [{ 'value' => 'is' }, { 'value' => 'was' }]
             }
           ]
@@ -50,9 +50,9 @@ describe Dradis::Plugins::Echo::LanguageToolService do
         many_body = {
           'matches' => [
             {
-              'offset'       => 0,
-              'length'       => 4,
-              'message'      => 'Error',
+              'offset' => 0,
+              'length' => 4,
+              'message' => 'Error',
               'replacements' => [1, 2, 3, 4].map { |n| { 'value' => "r#{n}" } }
             }
           ]
