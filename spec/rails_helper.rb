@@ -44,6 +44,7 @@ Capybara.register_driver :firefox do |app|
     Capybara::Selenium::Driver.new(
       app,
       browser: :remote,
+      clear_local_storage: true,
       url: "http://#{ENV['SELENIUM_HOST']}:4444",
       options: Selenium::WebDriver::Firefox::Options.new
     )
