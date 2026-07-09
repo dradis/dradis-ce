@@ -29,10 +29,6 @@ FileUtils.chdir APP_ROOT do
     FileUtils.cp 'config/database.yml.template', 'config/database.yml'
   end
 
-  unless File.exist?('config/smtp.yml')
-    FileUtils.cp 'config/smtp.yml.template', 'config/smtp.yml'
-  end
-
   puts "\n== Preparing templates folder =="
   unless Dir.exist?('templates')
     FileUtils.mkdir 'templates'

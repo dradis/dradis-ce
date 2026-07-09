@@ -83,18 +83,7 @@ ApplicationController                          # includes Authentication, Turbo:
 
 ### Nested resource controllers
 
-We try to adhere to a RESTful convention. Try to identify "hidden" sub-resources. For instance, instead of:
-
-```
-resources :inline_threads do
-  member do
-    post :resolve
-    post :reopen
-  end
-end
-```
-
-We can extract the `Resolution` resource (not a DB-backed model) and have a more RESTful approach:
+We try to adhere to a RESTful convention. Try to identify "hidden" sub-resources — extract them rather than using `member` action blocks. For instance, `post :resolve` / `post :reopen` become a `Resolution` resource (not DB-backed):
 
 - controllers/qa/inline_threads/resolutions_controller.rb # QA::InlineThreads::ResolutionsController
 
@@ -192,12 +181,10 @@ Stylesheets shared across multiple layouts go in `app/assets/stylesheets/shared/
 - **No ID selectors** — they add unnecessary specificity. Use classes.
 - **No inline `style` attributes** on HTML elements.
 - **Avoid `!important`** — revisit the CSS specificity instead.
-- **Use relative units** (`rem`, `em`, `ch`, etc.) — avoid `px`.
+- **Use relative units** (`rem`, `em`, `ch`, etc.) — avoid `px`. Exception: `px` is acceptable for borders and other fixed-size structural properties.
 - **Sort selectors alphabetically** within a file (where it doesn't break the cascade).
 - **Sort declarations alphabetically** within each rule block.
-- **Use SASS asset helpers**, not plain `url()`:
-  - `background: image-url('image.png')` not `background: url(/assets/image.png)`
-  - `src: font-url('Font.ttf')` not `src: url('Font.ttf')`
+- **Use SASS asset helpers** (`image-url()`, `font-url()`), not plain `url()`.
 
 
 ## JavaScript conventions
@@ -229,55 +216,23 @@ New scripts must be explicitly added to the layout manifest (`//= require hera/p
 
 ### Element selection
 
-Always select elements via `data` attributes. Never use CSS classes, IDs, or element type selectors as JS hooks.
-
-```js
-// ✅
-document.querySelector('[data-behavior~=my-action]')
-// ❌
-document.querySelector('.my-class')
-document.querySelector('#my-id')
-document.querySelector('button')
-```
-
-If you encounter class/ID selectors in existing code, refactor them to `data-behavior`.
+Always select elements via `data` attributes (e.g. `[data-behavior~=my-action]`). Never use CSS classes, IDs, or element type selectors as JS hooks. Refactor any existing class/ID selectors to `data-behavior`.
 
 ### Event handling
 
-Never use inline event handlers. Always use `addEventListener`.
-
-```js
-// ✅
-element.addEventListener('click', handleClick);
-```
-
-```html
-❌ <button onclick="handleClick()">
-```
+Never use inline event handlers (`onclick`, etc.). Always use `addEventListener`.
 
 ### Turbo and initialization
 
 Always use `turbo:load` — never `DOMContentLoaded`, `window.onload`, or `$(document).ready()`.
 
-**Page-level guard** (scripts in `pages/` — run only on the intended page):
+**Page-level guard** (scripts in `pages/`): check body class. Body classes come from `controller_path.gsub('/', '-')` and `action_name` (see `HeraHelper#body_css`).
+**Component-level guard** (scripts in `modules/`): check for the component element.
 
 ```js
 document.addEventListener('turbo:load', function () {
-  if ($('body.controller-name.action-name').length) {
-    // page-specific code
-  }
-});
-```
-
-Body classes come from `controller_path.gsub('/', '-')` and `action_name` (see `HeraHelper#body_css`).
-
-**Component-level guard** (scripts in `modules/` — run whenever the component is present):
-
-```js
-document.addEventListener('turbo:load', function () {
-  if ($('[data-behavior~=my-component]').length) {
-    // component code
-  }
+  if ($('body.controller-name.action-name').length) { /* page-specific */ }
+  if ($('[data-behavior~=my-component]').length) { /* component code */ }
 });
 ```
 
@@ -320,8 +275,6 @@ document.addEventListener('turbo:load', function () {
   - Run `bin/rubocop-ci develop false`. Do not commit if it fails.
 - Commit message format: `imperative-verb description` — max 80 characters.
 - Describe the **why**, not the what. The code shows what changed; the message should explain the reason.
-  - ❌ `add text-wrap class to card`
-  - ✅ `prevent card content from overflowing parent`
 - Do not add `Co-Authored-By` lines to commit messages.
 
 ### Pull requests
@@ -348,19 +301,10 @@ document.addEventListener('turbo:load', function () {
 
 **Bugs Fixed entries:** do not start with "fixed" — it's redundant. Describe what the fix does, still answering "What will this upgrade do to my instance?"
 
-```
-REST/JSON API enhancements:
-Personal access tokens: add multiple, per-user, scoped tokens for agentic workflows
-
-Bugs Fixed:
-Evidence: redirect back to the correct view when canceling an edit
-Editor: insert images at the cursor position when dragging and dropping or copying and pasting
-```
-
 - All user-facing changes require a CHANGELOG entry.
 - A code refactor, or an internal change like a spec/ addition, don't need one.
 
 
 ## Acceptance testing
 
-After a feature is complete, generate an acceptance testing plan using `/testing-steps`. The plan goes in the task tracker under the "Acceptance" section.
+After a feature is complete, generate an acceptance testing plan using `/testing-steps`. The plan goes in the PR description under the "Testing steps" section.

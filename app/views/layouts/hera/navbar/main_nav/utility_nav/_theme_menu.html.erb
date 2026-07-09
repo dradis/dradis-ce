@@ -1,4 +1,5 @@
 <% dradis_theme = current_user.preferences.theme %>
+<% cache(['navbar-theme', dradis_theme]) do %>
 <li class="nav-item dropdown">
   <a href="javascript:void(0)" class="nav-link dropdown-toggle no-caret-xl" title="Theme" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="d-none d-lg-inline">
@@ -26,3 +27,4 @@
     </li>
   </ul>
 </li>
+<% end %>

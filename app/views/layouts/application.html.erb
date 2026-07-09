@@ -1,7 +1,8 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="auto">
   <head>
     <title><%= [content_for(:title), 'Dradis Community Edition'].compact.join(' | ') %></title>
+    <script>(() => { const t = localStorage.getItem('dradis-theme'); if (t) document.documentElement.dataset.theme = t; })();</script>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track' => true %>
     <%= javascript_include_tag 'legacy.application', 'data-turbo-track' => true %>
     <%= favicon_link_tag %>
@@ -11,7 +12,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <% cache [:analytics, ::Configuration.usage_sharing_enabled?] do %>
-      <%= render 'layouts/plausible' if Rails.env.sandbox? || ::Configuration.usage_sharing_enabled? %>
+      <%= render 'layouts/plausible' if ::Configuration.usage_sharing_enabled? %>
     <% end %>
   </head>
 

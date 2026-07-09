@@ -13,6 +13,6 @@ end
 ::Configuration.create!(name: 'admin:usage_sharing', value: 1)
 
 # Load Kit
-kit_folder = Rails.root.join('lib', 'tasks', 'templates', 'welcome').to_s
-logger = Log.new.info('Loading Welcome kit...')
+kit_folder = Rails.root.join('lib', 'tasks', 'templates', 'owasp').to_s
+logger = Log.new.info('Loading OWASP kit...')
 KitImportJob.perform_now(kit_folder, logger: logger)

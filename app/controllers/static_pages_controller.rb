@@ -1,6 +1,4 @@
 class StaticPagesController < AuthenticatedController
-  include ProjectScoped
-
   before_action :set_entries, only: [:issuelib_index, :issuelib_import]
   before_action :set_tickets, only: [:remediationtracker_index]
 
@@ -8,6 +6,11 @@ class StaticPagesController < AuthenticatedController
 
   def issuelib_import
     @entries = @entries.select { |e| e[:state] == 'published' }
+  end
+
+  def projects_index
+    @project = Project.find(1)
+    render layout: 'hera'
   end
 
   def remediationtracker_index; end

@@ -40,6 +40,7 @@
 
 # Ignore development and test files
 /.byebug_history
+/.claude
 /.devcontainer
 /.rspec
 /.rubocop*

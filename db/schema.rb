@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_02_034852) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_21_000001) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -105,6 +105,19 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_02_034852) do
     t.index ["name"], name: "index_configurations_on_name", unique: true
   end
 
+  create_table "dradis_plugins_echo_agents", force: :cascade do |t|
+    t.integer "agent_type", default: 1, null: false
+    t.boolean "enabled", default: true, null: false
+    t.string "model_override"
+    t.string "name", null: false
+    t.text "env"
+    t.integer "provider_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_dradis_plugins_echo_agents_on_name", unique: true
+    t.index ["provider_id"], name: "index_dradis_plugins_echo_agents_on_provider_id"
+  end
+
   create_table "dradis_plugins_echo_prompts", force: :cascade do |t|
     t.string "title", null: false
     t.string "icon", null: false
@@ -115,6 +128,16 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_02_034852) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_dradis_plugins_echo_prompts_on_user_id"
+  end
+
+  create_table "dradis_plugins_echo_providers", force: :cascade do |t|
+    t.string "address"
+    t.text "api_key"
+    t.string "model"
+    t.string "name", null: false
+    t.string "type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "evidence", force: :cascade do |t|
@@ -277,6 +300,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_02_034852) do
   add_foreign_key "boards", "nodes", on_delete: :cascade
   add_foreign_key "comments", "inline_threads"
   add_foreign_key "comments", "users", on_delete: :nullify
+  add_foreign_key "dradis_plugins_echo_agents", "dradis_plugins_echo_providers", column: "provider_id"
   add_foreign_key "dradis_plugins_echo_prompts", "users"
   add_foreign_key "inline_threads", "users"
   add_foreign_key "inline_threads", "users", column: "resolved_by_id"

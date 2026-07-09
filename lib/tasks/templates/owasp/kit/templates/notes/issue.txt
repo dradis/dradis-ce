@@ -1,0 +1,28 @@
+#[Title]#
+
+#[OWASP Domain]#
+Web | API | Mobile
+
+#[OWASP Top 10]#
+
+#[Description Short]#
+
+#[Description Long]#
+
+#[Impact]#
+Very Low | Low | Moderate | High | Very High
+
+#[Likelihood]#
+Very Low | Low | Moderate | High | Very High
+
+#[Risk]#
+{% assign impact_value = 0 %}{% case issue.fields['Impact'] %}{% when "Very High" %}{% assign impact_value = 5 %}{% when "High" %}{% assign impact_value = 4 %}{% when "Moderate" %}{% assign impact_value = 3 %}{% when "Low" %}{% assign impact_value = 2 %}{% when "Very Low" %}{% assign impact_value = 1 %}{% endcase %}{% assign likelihood_value = 0 %}{% case issue.fields['Likelihood'] %}{% when "Very High" %}{% assign likelihood_value = 5 %}{% when "High" %}{% assign likelihood_value = 4 %}{% when "Moderate" %}{% assign likelihood_value = 3 %}{% when "Low" %}{% assign likelihood_value = 2 %}{% when "Very Low" %}{% assign likelihood_value = 1 %}{% endcase %}{% assign risk_score = impact_value | times: likelihood_value %}{% if risk_score >= 20 %}Critical{% elsif risk_score >= 15 %}High{% elsif risk_score >= 8 %}Moderate{% elsif risk_score >= 3 %}Low{% else %}Info{% endif %}
+
+#[Risk Score]#
+{% assign impact_value = 0 %}{% case issue.fields['Impact'] %}{% when "Very High" %}{% assign impact_value = 5 %}{% when "High" %}{% assign impact_value = 4 %}{% when "Moderate" %}{% assign impact_value = 3 %}{% when "Low" %}{% assign impact_value = 2 %}{% when "Very Low" %}{% assign impact_value = 1 %}{% endcase %}{% assign likelihood_value = 0 %}{% case issue.fields['Likelihood'] %}{% when "Very High" %}{% assign likelihood_value = 5 %}{% when "High" %}{% assign likelihood_value = 4 %}{% when "Moderate" %}{% assign likelihood_value = 3 %}{% when "Low" %}{% assign likelihood_value = 2 %}{% when "Very Low" %}{% assign likelihood_value = 1 %}{% endcase %}{{ impact_value | times: likelihood_value }}
+
+#[Remediation Status]#
+Open | In Progress | Partially Remediated | Accepted Risk | Remediated
+
+#[References]#
+
