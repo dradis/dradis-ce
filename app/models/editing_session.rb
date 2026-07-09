@@ -5,8 +5,7 @@ class EditingSession < ApplicationRecord
   validates :record_id, presence: true
   validates :user_id, uniqueness: { scope: [:record_type, :record_id] }
 
-  after_create_commit :broadcast_presence
-  after_destroy_commit :broadcast_presence
+  after_commit :broadcast_presence, on: [:create, :destroy]
 
   scope :by_others, ->(user) { where.not(user: user) }
   scope :for_record, ->(record) {

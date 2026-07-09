@@ -43,4 +43,25 @@ describe EditingSession do
       expect(duplicate).not_to be_valid
     end
   end
+
+  describe 'presence broadcasting' do
+    include ActionCable::TestHelper
+
+    it 'broadcasts to other editors when a session is created' do
+      create(:editing_session, user: other_user, record_type: 'Issue', record_id: issue.id)
+
+      expect {
+        create(:editing_session, user: user, record_type: 'Issue', record_id: issue.id)
+      }.to have_broadcasted_to("editing_presence_#{other_user.id}_Issue_#{issue.id}")
+    end
+
+    it 'broadcasts to remaining editors when a session is destroyed' do
+      session = create(:editing_session, user: user, record_type: 'Issue', record_id: issue.id)
+      create(:editing_session, user: other_user, record_type: 'Issue', record_id: issue.id)
+
+      expect {
+        session.destroy
+      }.to have_broadcasted_to("editing_presence_#{other_user.id}_Issue_#{issue.id}")
+    end
+  end
 end
