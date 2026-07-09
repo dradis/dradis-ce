@@ -9,7 +9,7 @@ services:
         - linux/amd64
     command: sleep infinity
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       - SELENIUM_HOST=selenium
     volumes:
@@ -20,4 +20,4 @@ services:
     volumes:
       - /dev/shm:/dev/shm
     ports:
-      - "4444:4444"
+      - "4445:4444"
