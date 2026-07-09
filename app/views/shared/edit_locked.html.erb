@@ -33,7 +33,7 @@
         <i class="fa-solid fa-arrow-left"></i> Go back
       <% end %>
 
-      <%= link_to url_for(params.permit!.merge(force: 'true')), class: 'btn btn-outline-danger' do %>
+      <%= link_to url_for(request.parameters.merge(force: 'true')), class: 'btn btn-outline-danger' do %>
         <i class="fa-solid fa-lock-open"></i> Edit anyway
       <% end %>
     </div>
