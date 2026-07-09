@@ -4,17 +4,39 @@ describe EditingPresenceChannel, type: :channel do
   let(:user) { create(:user) }
   let(:project) { Project.new }
   let(:issue) { create(:issue, node: project.issue_library) }
+  let(:stream_name) { "editing_presence_#{user.id}_Issue_#{issue.id}" }
+  let(:signed_stream_name) { EditingPresenceChannel.signed_stream_name(stream_name) }
 
   before do
     stub_connection(current_user: user)
   end
 
   describe '#subscribed' do
-    it 'streams from the record-specific channel' do
-      subscribe(record_type: 'Issue', record_id: issue.id)
+    it 'streams from the verified stream name' do
+      subscribe(signed_stream_name: signed_stream_name)
 
       expect(subscription).to be_confirmed
-      expect(subscription).to have_stream_from("editing:Issue:#{issue.id}")
+      expect(subscription).to have_stream_from(stream_name)
+    end
+
+    it 'creates an editing session for the record encoded in the stream name' do
+      subscribe(signed_stream_name: signed_stream_name)
+
+      expect(
+        EditingSession.where(user: user, record_type: 'Issue', record_id: issue.id)
+      ).to exist
+    end
+
+    it 'rejects the subscription when the signed stream name is missing' do
+      subscribe(signed_stream_name: nil)
+
+      expect(subscription).to be_rejected
+    end
+
+    it 'rejects the subscription when the signed stream name is tampered with' do
+      subscribe(signed_stream_name: "#{signed_stream_name}-tampered")
+
+      expect(subscription).to be_rejected
     end
   end
 
@@ -26,14 +48,14 @@ describe EditingPresenceChannel, type: :channel do
         record_id: issue.id
       )
 
-      subscribe(record_type: 'Issue', record_id: issue.id)
+      subscribe(signed_stream_name: signed_stream_name)
       subscription.unsubscribe_from_channel
 
       expect(EditingSession.where(user: user, record_type: 'Issue', record_id: issue.id)).not_to exist
     end
 
     it 'does not fail when no session exists' do
-      subscribe(record_type: 'Issue', record_id: issue.id)
+      subscribe(signed_stream_name: signed_stream_name)
 
       expect {
         subscription.unsubscribe_from_channel

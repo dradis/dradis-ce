@@ -12,12 +12,9 @@
 
 <%= render_view_hooks 'issues/edit-content' %>
 
-<%= turbo_stream_from "editing_presence_#{current_user.id}_Issue_#{@issue.id}" %>
+<%= turbo_stream_from "editing_presence_#{current_user.id}_Issue_#{@issue.id}", channel: EditingPresenceChannel %>
 
-<div class="content-container" id="issues_editor"
-  data-behavior="editing-presence"
-  data-record-type="Issue"
-  data-record-id="<%= @issue.id %>">
+<div class="content-container" id="issues_editor">
   <div class="note-text-inner">
     <h4 class="header-underline">Edit issue (<%= @issue.state.humanize %>)</h4>
     <!-- This div is needed to allow correct tabbing order in Chrome with page is loaded with turbolinks -->
