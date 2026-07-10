@@ -1,4 +1,6 @@
 class EditingSession < ApplicationRecord
+  STALE_AFTER = 1.day
+
   belongs_to :user
 
   validates :record_type, presence: true
@@ -7,10 +9,16 @@ class EditingSession < ApplicationRecord
 
   after_commit :broadcast_presence, on: [:create, :destroy]
 
+  scope :active, -> { where(started_at: STALE_AFTER.ago..) }
   scope :by_others, ->(user) { where.not(user: user) }
   scope :for_record, ->(record) {
     where(record_type: record.class.name, record_id: record.id)
   }
+  scope :stale, -> { where(started_at: ...STALE_AFTER.ago) }
+
+  def self.purge_stale
+    stale.destroy_all
+  end
 
   private
 

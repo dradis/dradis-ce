@@ -6,7 +6,7 @@ module EditLockable
   def check_edit_lock(record)
     return if params[:force] == 'true'
 
-    active_sessions = EditingSession.for_record(record).by_others(current_user)
+    active_sessions = EditingSession.for_record(record).by_others(current_user).active
 
     if active_sessions.any?
       @locked_by = active_sessions.includes(:user).map(&:user)

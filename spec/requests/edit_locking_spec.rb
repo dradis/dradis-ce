@@ -45,6 +45,23 @@ describe 'EditLockable concern' do
       end
     end
 
+    context 'when another user has a stale editing session' do
+      before do
+        create(:editing_session,
+          user: user_a,
+          record_type: 'Issue',
+          record_id: issue.id,
+          started_at: EditingSession::STALE_AFTER.ago - 1.minute
+        )
+      end
+
+      it 'renders the edit page instead of the lockout page' do
+        login_as_user(user_b)
+        get edit_project_issue_path(project, issue)
+        expect(response.body).to include('Edit issue')
+      end
+    end
+
     context 'when force=true' do
       before do
         create(:editing_session,

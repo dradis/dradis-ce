@@ -35,6 +35,46 @@ describe EditingSession do
     end
   end
 
+  describe '.active' do
+    it 'excludes sessions older than the staleness threshold' do
+      fresh_session = create(:editing_session,
+        user: user,
+        record_type: 'Issue',
+        record_id: issue.id,
+        started_at: 1.minute.ago
+      )
+      create(:editing_session,
+        user: other_user,
+        record_type: 'Issue',
+        record_id: issue.id,
+        started_at: EditingSession::STALE_AFTER.ago - 1.minute
+      )
+
+      expect(EditingSession.for_record(issue).active).to eq([fresh_session])
+    end
+  end
+
+  describe '.purge_stale' do
+    it 'destroys sessions older than the staleness threshold' do
+      fresh_session = create(:editing_session,
+        user: user,
+        record_type: 'Issue',
+        record_id: issue.id,
+        started_at: 1.minute.ago
+      )
+      create(:editing_session,
+        user: other_user,
+        record_type: 'Issue',
+        record_id: issue.id,
+        started_at: EditingSession::STALE_AFTER.ago - 1.minute
+      )
+
+      EditingSession.purge_stale
+
+      expect(EditingSession.all).to eq([fresh_session])
+    end
+  end
+
   describe 'unique constraint' do
     it 'prevents duplicate sessions for the same user and record' do
       create(:editing_session, user: user, record_type: 'Issue', record_id: issue.id)
