@@ -37,21 +37,20 @@
 
   <div class="form-actions sticky">
     <%= render partial: 'qa/state_button', locals: { f: f, record: @issue } %>
-  </div>
-  or
-  <%=
-    link_to 'Cancel',
-    @form_cancel_path,
-    class: 'cancel-link',
-    data: {
-      behavior: 'clear-local-auto-save'
-    }
-    %>
+    or
+    <%=
+      link_to 'Cancel',
+      @form_cancel_path,
+      class: 'cancel-link',
+      data: {
+        behavior: 'clear-local-auto-save'
+      }
+      %>
 
-  <% if @issue.persisted? %>
-    <span id="editing-presence-editors" class="editing-presence-editors">
-      <%= render 'shared/editing_presence', editors: EditingSession.for_record(@issue).by_others(current_user).includes(:user).map(&:user) %>
-    </span>
-  <% end %>
-</div>
+    <% if @issue.persisted? %>
+      <span id="editing-presence-editors" class="editing-presence-editors">
+        <%= render 'shared/editing_presence', editors: EditingSession.for_record(@issue).by_others(current_user).includes(:user).map(&:user) %>
+      </span>
+    <% end %>
+  </div>
 <% end %>
