@@ -2,6 +2,7 @@ class EditingPresenceChannel < ApplicationCable::Channel
   extend Turbo::Streams::Broadcasts, Turbo::Streams::StreamName
   include Turbo::Streams::StreamName::ClassMethods
 
+  ALLOWED_RECORD_TYPES = %w[Issue].freeze
   STREAM_NAME_FORMAT = /\Aediting_presence_\d+_(?<record_type>.+)_(?<record_id>\d+)\z/
 
   def subscribed
@@ -38,7 +39,9 @@ class EditingPresenceChannel < ApplicationCable::Channel
   private
 
   def authorized_record(record_type, record_id)
-    record = record_type.safe_constantize&.find_by(id: record_id)
+    return unless ALLOWED_RECORD_TYPES.include?(record_type)
+
+    record = record_type.constantize.find_by(id: record_id)
     record if record && Ability.new(current_user).can?(:read, record)
   end
 end
