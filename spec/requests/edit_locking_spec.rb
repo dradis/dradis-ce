@@ -82,5 +82,20 @@ describe 'EditLockable concern' do
 
       expect(EditingSession.for_record(issue).where(user: user_a)).not_to exist
     end
+
+    it 'keeps the editing session when the update fails validation' do
+      login_as_user(user_a)
+      create(:editing_session,
+        user: user_a,
+        record_type: 'Issue',
+        record_id: issue.id
+      )
+
+      patch project_issue_path(project, issue),
+        params: { issue: { text: 'a' * (DB_MAX_TEXT_LENGTH + 1) } }
+
+      expect(response.body).to include('Edit issue')
+      expect(EditingSession.for_record(issue).where(user: user_a)).to exist
+    end
   end
 end
