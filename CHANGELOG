@@ -34,7 +34,9 @@ v5.2.0 (July 2026)
   - Upgraded gems:
     - concurrent-ruby, crass, faraday, msgpack, net-imap, nokogiri, puma
   - Bugs fixes:
-    - Echo: preserve line breaks in streamed Ollama responses for models that emit them as standalone tokens
+    - Echo:
+      - Preserve line breaks in streamed Ollama responses for models that emit them as standalone tokens
+      - Remove a stray leading blank line from streamed responses
 
 v5.1.0 (May 2026)
   - DataTables: add sticky table toolbar that tracks below the navigation bar when scrolling
