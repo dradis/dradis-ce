@@ -63,5 +63,22 @@ describe EditingSession do
         session.destroy
       }.to have_broadcasted_to("editing_presence_#{other_user.id}_Issue_#{issue.id}")
     end
+
+    it 'does not issue an extra query per sibling' do
+      session = create(:editing_session, user: user, record_type: 'Issue', record_id: issue.id)
+      create(:editing_session, user: other_user, record_type: 'Issue', record_id: issue.id)
+      create(:editing_session, user: create(:user), record_type: 'Issue', record_id: issue.id)
+
+      editing_session_queries = 0
+      counter = lambda do |*, payload|
+        editing_session_queries += 1 if payload[:sql].include?('FROM "editing_sessions"')
+      end
+
+      ActiveSupport::Notifications.subscribed(counter, 'sql.active_record') do
+        session.send(:broadcast_presence)
+      end
+
+      expect(editing_session_queries).to eq(1)
+    end
   end
 end
