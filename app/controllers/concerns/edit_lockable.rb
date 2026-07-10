@@ -23,6 +23,7 @@ module EditLockable
       record_id: record.id
     }
 
+    EditingSession.purge_stale_for(record_type: attrs[:record_type], record_id: attrs[:record_id])
     EditingSession.create!(attrs)
   rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid
     EditingSession.find_by!(attrs)

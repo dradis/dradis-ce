@@ -54,8 +54,8 @@ describe EditingSession do
     end
   end
 
-  describe '.purge_stale' do
-    it 'destroys sessions older than the staleness threshold' do
+  describe '.purge_stale_for' do
+    it 'destroys stale sessions for the given record only' do
       fresh_session = create(:editing_session,
         user: user,
         record_type: 'Issue',
@@ -68,10 +68,17 @@ describe EditingSession do
         record_id: issue.id,
         started_at: EditingSession::STALE_AFTER.ago - 1.minute
       )
+      other_issue = create(:issue, node: project.issue_library)
+      stale_elsewhere = create(:editing_session,
+        user: other_user,
+        record_type: 'Issue',
+        record_id: other_issue.id,
+        started_at: EditingSession::STALE_AFTER.ago - 1.minute
+      )
 
-      EditingSession.purge_stale
+      EditingSession.purge_stale_for(record_type: 'Issue', record_id: issue.id)
 
-      expect(EditingSession.all).to eq([fresh_session])
+      expect(EditingSession.all).to contain_exactly(fresh_session, stale_elsewhere)
     end
   end
 

@@ -60,6 +60,12 @@ describe 'EditLockable concern' do
         get edit_project_issue_path(project, issue)
         expect(response.body).to include('Edit issue')
       end
+
+      it 'purges the stale session' do
+        login_as_user(user_b)
+        get edit_project_issue_path(project, issue)
+        expect(EditingSession.where(user: user_a)).not_to exist
+      end
     end
 
     context 'when force=true' do

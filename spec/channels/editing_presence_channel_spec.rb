@@ -53,6 +53,20 @@ describe EditingPresenceChannel, type: :channel do
 
       expect(subscription).to be_rejected
     end
+
+    it 'purges stale sessions left by other editors of the same record' do
+      other_user = create(:user)
+      create(:editing_session,
+        user: other_user,
+        record_type: 'Issue',
+        record_id: issue.id,
+        started_at: EditingSession::STALE_AFTER.ago - 1.minute
+      )
+
+      subscribe(signed_stream_name: signed_stream_name)
+
+      expect(EditingSession.where(user: other_user)).not_to exist
+    end
   end
 
   describe '#unsubscribed' do

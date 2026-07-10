@@ -16,8 +16,8 @@ class EditingSession < ApplicationRecord
   }
   scope :stale, -> { where(started_at: ...STALE_AFTER.ago) }
 
-  def self.purge_stale
-    stale.destroy_all
+  def self.purge_stale_for(record_type:, record_id:)
+    where(record_type: record_type, record_id: record_id).stale.destroy_all
   end
 
   private
