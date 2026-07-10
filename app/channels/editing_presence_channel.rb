@@ -8,7 +8,7 @@ class EditingPresenceChannel < ApplicationCable::Channel
     stream_name = verified_stream_name_from_params
     match = stream_name && STREAM_NAME_FORMAT.match(stream_name)
 
-    if match
+    if match && authorized_record(match[:record_type], match[:record_id])
       @record_type = match[:record_type]
       @record_id = match[:record_id]
 
@@ -32,5 +32,12 @@ class EditingPresenceChannel < ApplicationCable::Channel
       record_type: @record_type,
       record_id: @record_id
     ).destroy_all
+  end
+
+  private
+
+  def authorized_record(record_type, record_id)
+    record = record_type.safe_constantize&.find_by(id: record_id)
+    record if record && Ability.new(current_user).can?(:read, record)
   end
 end

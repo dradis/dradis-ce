@@ -38,6 +38,21 @@ describe EditingPresenceChannel, type: :channel do
 
       expect(subscription).to be_rejected
     end
+
+    it 'rejects the subscription when the record does not exist' do
+      missing_stream_name = "editing_presence_#{user.id}_Issue_999999999"
+      subscribe(signed_stream_name: EditingPresenceChannel.signed_stream_name(missing_stream_name))
+
+      expect(subscription).to be_rejected
+    end
+
+    it 'rejects the subscription when the user is not authorized to read the record' do
+      other_user = create(:user)
+      unauthorized_stream_name = "editing_presence_#{user.id}_User_#{other_user.id}"
+      subscribe(signed_stream_name: EditingPresenceChannel.signed_stream_name(unauthorized_stream_name))
+
+      expect(subscription).to be_rejected
+    end
   end
 
   describe '#unsubscribed' do
