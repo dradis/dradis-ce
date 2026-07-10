@@ -4,16 +4,21 @@ module EditLockable
   protected
 
   def check_edit_lock(record)
+    editing_session = acquire_edit_session(record)
     return if params[:force] == 'true'
 
-    active_sessions = EditingSession.for_record(record).by_others(current_user).active
+    competing_sessions = EditingSession.for_record(record)
+                                       .active
+                                       .by_others(current_user)
+                                       .where('id < ?', editing_session.id)
 
-    if active_sessions.any?
-      @locked_by = active_sessions.includes(:user).map(&:user)
-      @locked_record = record
-      @back_path = request.referer || root_path
-      render 'shared/edit_locked'
-    end
+    return if competing_sessions.none?
+
+    editing_session.destroy
+    @locked_by = competing_sessions.includes(:user).map(&:user)
+    @locked_record = record
+    @back_path = request.referer || root_path
+    render 'shared/edit_locked'
   end
 
   def acquire_edit_session(record)

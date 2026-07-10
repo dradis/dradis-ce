@@ -77,7 +77,6 @@ class IssuesController < AuthenticatedController
     check_edit_lock(@issue)
     return if performed?
 
-    acquire_edit_session(@issue)
     @form_preview_path = preview_project_issue_path(current_project, @issue)
   end
 
