@@ -121,19 +121,14 @@
       color: inherit;
     }
 
+    &:hover,
     &:focus,
     &:focus-visible,
     &:active,
     &:not(:disabled):not(.disabled):active {
-      border-color: $primary;
-      background: $primary;
-      color: $white;
-    }
-
-    &:hover {
-      background: $light;
-      border-color: $dark;
-      color: $dark;
+      background: var(--text-link);
+      border-color: var(--text-link);
+      color: var(--text-inverted);
     }
   }
 
