@@ -26,7 +26,7 @@ class EditingSession < ApplicationRecord
     siblings = EditingSession.where(
       record_type: record_type,
       record_id: record_id
-    ).includes(:user).to_a
+    ).active.includes(:user).to_a
 
     siblings.each do |session|
       others = siblings.reject { |sibling| sibling.user_id == session.user_id }.map(&:user)
