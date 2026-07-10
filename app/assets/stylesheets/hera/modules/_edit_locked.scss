@@ -103,12 +103,6 @@
   }
 }
 
-.editing-presence-divider {
-  background: var(--border-color);
-  height: 1.25rem;
-  width: 1px;
-}
-
 .editing-presence-editors {
   align-items: center;
   display: flex;
@@ -122,6 +116,16 @@
   font-size: 0.75rem;
   font-weight: 400;
   white-space: nowrap;
+
+  &::after {
+    background: var(--border-color);
+    content: '';
+    display: inline-block;
+    height: 1.25rem;
+    margin-left: 0.25rem;
+    vertical-align: middle;
+    width: 1px;
+  }
 }
 
 .form-actions.sticky:has(.editing-presence-editors) {
