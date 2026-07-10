@@ -68,6 +68,22 @@ describe 'EditLockable concern' do
       end
     end
 
+    context 'when the request has a cross-origin referer' do
+      before do
+        create(:editing_session,
+          user: user_a,
+          record_type: 'Issue',
+          record_id: issue.id
+        )
+      end
+
+      it 'does not use the referer as the back path' do
+        login_as_user(user_b)
+        get edit_project_issue_path(project, issue), headers: { 'HTTP_REFERER' => 'https://evil.example.com/phish' }
+        expect(response.body).not_to include('https://evil.example.com/phish')
+      end
+    end
+
     context 'when force=true' do
       before do
         create(:editing_session,

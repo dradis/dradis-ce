@@ -17,7 +17,7 @@ module EditLockable
     editing_session.destroy
     @locked_by = competing_sessions.includes(:user).map(&:user)
     @locked_record = record
-    @back_path = request.referer || root_path
+    @back_path = url_from(request.referer) || root_path
     render 'shared/edit_locked'
   end
 
