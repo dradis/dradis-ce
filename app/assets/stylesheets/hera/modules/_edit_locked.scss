@@ -109,12 +109,6 @@
   width: 1px;
 }
 
-.form-actions.sticky:has(.editing-presence-editors) {
-  align-items: center;
-  display: flex;
-  gap: 0.25rem;
-}
-
 .editing-presence-editors {
   align-items: center;
   display: flex;
@@ -128,4 +122,10 @@
   font-size: 0.75rem;
   font-weight: 400;
   white-space: nowrap;
+}
+
+.form-actions.sticky:has(.editing-presence-editors) {
+  align-items: center;
+  display: flex;
+  gap: 0.25rem;
 }
