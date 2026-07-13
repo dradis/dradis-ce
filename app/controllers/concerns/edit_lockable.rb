@@ -44,10 +44,6 @@ module EditLockable
   end
 
   def release_edit_session(record)
-    EditingSession.where(
-      user: current_user,
-      record_type: record.class.name,
-      record_id: record.id
-    ).destroy_all
+    EditingSession.for_record(record).where(user: current_user).destroy_all
   end
 end
