@@ -28,19 +28,17 @@ class EditingSession < ApplicationRecord
   private
 
   def broadcast_presence
-    siblings = EditingSession.where(
+    editors = EditingSession.where(
       record_type: record_type,
       record_id: record_id
-    ).active.includes(:user).to_a
+    ).active.includes(:user).map(&:user)
 
-    siblings.each do |session|
-      others = siblings.reject { |sibling| sibling.user_id == session.user_id }.map(&:user)
-
+    editors.each do |editor|
       Turbo::StreamsChannel.broadcast_update_to(
-        editing_presence_stream_for(session.user),
+        editing_presence_stream_for(editor),
         target: 'editing-presence-editors',
         partial: 'shared/editing_presence',
-        locals: { editors: others }
+        locals: { editors: editors - [editor] }
       )
     end
   end
