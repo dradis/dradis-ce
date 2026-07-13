@@ -33,6 +33,10 @@ v5.2.0 (July 2026)
   - UI: add dark mode support to the login and setup wizard pages
   - Upgraded gems:
     - concurrent-ruby, crass, faraday, msgpack, net-imap, nokogiri, puma
+  - Bugs fixes:
+    - Echo:
+      - Preserve line breaks in streamed Ollama responses for models that emit them as standalone tokens
+      - Remove a stray leading blank line from streamed responses
 
 v5.1.0 (May 2026)
   - DataTables: add sticky table toolbar that tracks below the navigation bar when scrolling
