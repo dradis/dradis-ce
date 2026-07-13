@@ -112,7 +112,7 @@ gem 'rinku'
 gem 'sanitize', '6.0.2'
 
 # SQLite3 DB driver
-gem 'sqlite3'
+gem 'sqlite3', '~> 2.9.5'
 # gem 'pg'
 
 # --------------------------------------------------------- Dradis Professional
@@ -222,14 +222,14 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 5.1.0'
+gem 'dradis-plugins', '~> 5.2.0'
 
 # Built-in Engines
 gem 'dradis-api', path: 'engines/dradis-api'
 gem 'dradis-echo', path: 'engines/dradis-echo'
 
 # Import / export project data
-gem 'dradis-projects', '~> 5.1.0'
+gem 'dradis-projects', '~> 5.2.0'
 
 plugins_file = 'Gemfile.plugins'
 if File.exist?(plugins_file)
@@ -240,34 +240,34 @@ end
 # effective.
 
 # ----------------------------------------------------------------- Calculators
-gem 'dradis-calculator_cvss', '~> 5.1.0'
-gem 'dradis-calculator_dread', '~> 5.1.0'
-gem 'dradis-calculator_mitre', '~> 5.1.0'
+gem 'dradis-calculator_cvss', '~> 5.2.0'
+gem 'dradis-calculator_dread', '~> 5.2.0'
+gem 'dradis-calculator_mitre', '~> 5.2.0'
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv_export', '~> 5.1.0'
-gem 'dradis-html_export', '~> 5.1.0'
+gem 'dradis-csv_export', '~> 5.2.0'
+gem 'dradis-html_export', '~> 5.2.0'
 
 # ---------------------------------------------------------------------- Import
-gem 'dradis-csv', '~> 5.1.0'
+gem 'dradis-csv', '~> 5.2.0'
 
 # ---------------------------------------------------------------------- Upload
-gem 'dradis-acunetix', '~> 5.1.0'
-gem 'dradis-brakeman', '~> 5.1.0'
-gem 'dradis-burp', '~> 5.1.0'
-gem 'dradis-coreimpact', '~> 5.1.0'
-gem 'dradis-metasploit', '~> 5.1.0'
-gem 'dradis-nessus', '~> 5.1.0'
-gem 'dradis-netsparker', '~> 5.1.0'
-gem 'dradis-nexpose', '~> 5.1.0'
-gem 'dradis-nikto', '~> 5.1.0'
-gem 'dradis-nipper', '~> 5.1.0'
-gem 'dradis-nmap', '~> 5.1.0'
-gem 'dradis-ntospider', '~> 5.1.0'
-gem 'dradis-openvas', '~> 5.1.0'
-gem 'dradis-pentera', '~> 5.1.0'
-gem 'dradis-qualys', '~> 5.1.0'
-gem 'dradis-saint', '~> 5.1.0'
-gem 'dradis-veracode', '~> 5.1.0'
-gem 'dradis-wpscan', '~> 5.1.0'
-gem 'dradis-zap', '~> 5.1.0'
+gem 'dradis-acunetix', '~> 5.2.0'
+gem 'dradis-brakeman', '~> 5.2.0'
+gem 'dradis-burp', '~> 5.2.0'
+gem 'dradis-coreimpact', '~> 5.2.0'
+gem 'dradis-metasploit', '~> 5.2.0'
+gem 'dradis-nessus', '~> 5.2.0'
+gem 'dradis-netsparker', '~> 5.2.0'
+gem 'dradis-nexpose', '~> 5.2.0'
+gem 'dradis-nikto', '~> 5.2.0'
+gem 'dradis-nipper', '~> 5.2.0'
+gem 'dradis-nmap', '~> 5.2.0'
+gem 'dradis-ntospider', '~> 5.2.0'
+gem 'dradis-openvas', '~> 5.2.0'
+gem 'dradis-pentera', '~> 5.2.0'
+gem 'dradis-qualys', '~> 5.2.0'
+gem 'dradis-saint', '~> 5.2.0'
+gem 'dradis-veracode', '~> 5.2.0'
+gem 'dradis-wpscan', '~> 5.2.0'
+gem 'dradis-zap', '~> 5.2.0'
