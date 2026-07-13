@@ -7,6 +7,10 @@ module EditLockable
     editing_session = acquire_edit_session(record)
     return if params[:force] == 'true'
 
+    # Only sessions created before ours count as competing. The row id acts
+    # as a deterministic tiebreaker so that when two requests race, exactly
+    # one of them ends up with the lock and the other renders the lockout
+    # screen, instead of both or neither.
     competing_sessions = EditingSession.for_record(record)
                                        .active
                                        .by_others(current_user)
