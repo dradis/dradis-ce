@@ -4,6 +4,11 @@ module EditLockable
   protected
 
   def check_edit_lock(record)
+    # The session is acquired before we look for competitors, not after,
+    # so two requests arriving at the same time both get a row and the
+    # id tiebreaker below can decide between them. Checking first and
+    # acquiring second would leave a window where both requests see an
+    # empty lock and both proceed.
     editing_session = acquire_edit_session(record)
     return if params[:force] == 'true'
 
