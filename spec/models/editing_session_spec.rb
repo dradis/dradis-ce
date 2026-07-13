@@ -8,6 +8,15 @@ describe EditingSession do
 
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
+    it { is_expected.to belong_to(:record).optional }
+  end
+
+  describe '#record' do
+    it 'resolves the polymorphic association from record_type and record_id' do
+      session = create(:editing_session, user: user, record_type: 'Issue', record_id: issue.id)
+
+      expect(session.record).to eq(issue)
+    end
   end
 
   describe 'validations' do

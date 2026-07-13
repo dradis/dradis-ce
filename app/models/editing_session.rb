@@ -2,6 +2,7 @@ class EditingSession < ApplicationRecord
   STALE_AFTER = 1.day
 
   belongs_to :user
+  belongs_to :record, polymorphic: true, optional: true
 
   validates :record_type, presence: true
   validates :record_id, presence: true
