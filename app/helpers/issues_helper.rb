@@ -39,6 +39,11 @@ module IssuesHelper
     issues
   end
 
+  # Users other than the current one who are actively editing this issue.
+  def active_editors_for(issue)
+    EditingSession.for_record(issue).active.by_others(current_user).includes(:user).map(&:user)
+  end
+
   # Output Bootstrap badges if the issue has any associated tags
   def issue_tags(issue)
     return unless issue.fields.key?('Tags') || issue.fields.key?('AddonTags')
