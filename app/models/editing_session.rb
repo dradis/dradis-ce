@@ -7,7 +7,6 @@ class EditingSession < ApplicationRecord
 
   validates :record_type, presence: true
   validates :record_id, presence: true
-  validates :user_id, uniqueness: { scope: [:record_type, :record_id] }
 
   after_commit :broadcast_presence, on: [:create, :destroy]
 

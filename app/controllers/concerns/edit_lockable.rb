@@ -31,16 +31,12 @@ module EditLockable
   end
 
   def acquire_edit_session(record)
-    attrs = {
+    EditingSession.purge_stale_for(record_type: record.class.name, record_id: record.id)
+    EditingSession.create_or_find_by!(
       user: current_user,
       record_type: record.class.name,
       record_id: record.id
-    }
-
-    EditingSession.purge_stale_for(record_type: attrs[:record_type], record_id: attrs[:record_id])
-    EditingSession.create!(attrs)
-  rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid
-    EditingSession.find_by!(attrs)
+    )
   end
 
   def release_edit_session(record)

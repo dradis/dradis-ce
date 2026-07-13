@@ -105,11 +105,11 @@ describe EditingSession do
   end
 
   describe 'unique constraint' do
-    it 'prevents duplicate sessions for the same user and record' do
+    it 'prevents duplicate sessions for the same user and record at the database level' do
       create(:editing_session, user: user, record_type: 'Issue', record_id: issue.id)
 
       duplicate = EditingSession.new(user: user, record_type: 'Issue', record_id: issue.id)
-      expect(duplicate).not_to be_valid
+      expect { duplicate.save(validate: false) }.to raise_error(ActiveRecord::RecordNotUnique)
     end
   end
 
