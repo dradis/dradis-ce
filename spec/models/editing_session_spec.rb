@@ -63,6 +63,19 @@ describe EditingSession do
     end
   end
 
+  describe '.parse_stream_name' do
+    it 'extracts the record type and id from a stream name' do
+      match = EditingSession.parse_stream_name("editing_presence_#{user.id}_Issue_#{issue.id}")
+
+      expect(match[:record_type]).to eq('Issue')
+      expect(match[:record_id]).to eq(issue.id.to_s)
+    end
+
+    it 'returns nil for a stream name with an unexpected shape' do
+      expect(EditingSession.parse_stream_name('not_a_presence_stream')).to be_nil
+    end
+  end
+
   describe '.purge_stale_for' do
     it 'destroys stale sessions for the given record only' do
       fresh_session = create(:editing_session,

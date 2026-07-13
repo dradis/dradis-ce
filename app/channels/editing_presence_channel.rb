@@ -3,11 +3,10 @@ class EditingPresenceChannel < ApplicationCable::Channel
   include Turbo::Streams::StreamName::ClassMethods
 
   ALLOWED_RECORD_TYPES = %w[Issue].freeze
-  STREAM_NAME_FORMAT = /\Aediting_presence_\d+_(?<record_type>.+)_(?<record_id>\d+)\z/
 
   def subscribed
     stream_name = verified_stream_name_from_params
-    match = stream_name && STREAM_NAME_FORMAT.match(stream_name)
+    match = stream_name && EditingSession.parse_stream_name(stream_name)
 
     if match && authorized_record(match[:record_type], match[:record_id])
       @record_type = match[:record_type]

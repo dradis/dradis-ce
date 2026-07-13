@@ -1,5 +1,6 @@
 class EditingSession < ApplicationRecord
   STALE_AFTER = 1.day
+  STREAM_NAME_FORMAT = /\Aediting_presence_\d+_(?<record_type>.+)_(?<record_id>\d+)\z/
 
   belongs_to :user
   belongs_to :record, polymorphic: true, optional: true
@@ -19,6 +20,10 @@ class EditingSession < ApplicationRecord
 
   def self.purge_stale_for(record_type:, record_id:)
     where(record_type: record_type, record_id: record_id).stale.destroy_all
+  end
+
+  def self.parse_stream_name(stream_name)
+    STREAM_NAME_FORMAT.match(stream_name)
   end
 
   private
