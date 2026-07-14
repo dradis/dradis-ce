@@ -8,7 +8,7 @@ describe EditingSession do
 
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
-    it { is_expected.to belong_to(:record).optional }
+    it { is_expected.to belong_to(:record) }
   end
 
   describe '#record' do

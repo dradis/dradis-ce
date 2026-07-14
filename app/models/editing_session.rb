@@ -3,7 +3,7 @@ class EditingSession < ApplicationRecord
   STREAM_NAME_FORMAT = /\Aediting_presence_\d+_(?<record_type>.+)_(?<record_id>\d+)\z/
 
   belongs_to :user
-  belongs_to :record, polymorphic: true, optional: true
+  belongs_to :record, polymorphic: true
 
   validates :record_type, presence: true
   validates :record_id, presence: true
