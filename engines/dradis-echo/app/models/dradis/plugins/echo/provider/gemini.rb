@@ -4,12 +4,18 @@ module Dradis::Plugins::Echo
 
     DEFAULT_ADDRESS = 'https://generativelanguage.googleapis.com/v1beta/models'.freeze
     DEFAULT_MODEL = 'gemini-2.5-flash'.freeze
+    ROLE_MAP = { 'assistant' => 'model' }.freeze
 
     private
 
-    def build_body(prompt:, model:)
+    # Gemini names the assistant role "model" and wraps content in a parts
+    # array, so map each message into its contents structure.
+    def build_body(messages:, model:)
       {
-        contents: [{ role: 'user', parts: [{ text: prompt }] }]
+        contents: messages.map { |message|
+          { role: ROLE_MAP.fetch(message[:role], message[:role]),
+            parts: [{ text: message[:content] }] }
+        }
       }
     end
 
