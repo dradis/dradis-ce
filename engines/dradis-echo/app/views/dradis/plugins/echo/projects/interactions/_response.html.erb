@@ -20,9 +20,10 @@
         </button>
       </h2>
       <div id="collapseResponse" class="accordion-collapse" aria-labelledby="responseHeading" data-bs-parent="#accordionEcho">
-        <div id="<%= @response_id %>" class="accordion-body echo-content">
-          <div id="<%= "#{@response_id}_spinner" %>"><%= spinner_tag %></div>
-        </div>
+        <%# Keep the spinner div on the same line as its container: .echo-content uses
+            white-space: break-spaces, so a whitespace text node left behind after the
+            spinner is removed would render as a visible blank line before the response. %>
+        <div id="<%= @response_id %>" class="accordion-body echo-content"><div id="<%= "#{@response_id}_spinner" %>"><%= spinner_tag %></div></div>
       </div>
     </div>
   </div>
