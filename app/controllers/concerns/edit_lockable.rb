@@ -12,10 +12,13 @@ module EditLockable
     editing_session = acquire_edit_session(record)
     return if params[:force] == 'true'
 
-    # Only sessions created before ours count as competing. The row id acts
-    # as a deterministic tiebreaker so that when two requests race, exactly
-    # one of them ends up with the lock and the other renders the lockout
-    # screen, instead of both or neither.
+    # Only sessions created before ours count as competing. We compare by id
+    # rather than started_at because started_at only has second-level
+    # precision on SQLite's CURRENT_TIMESTAMP, so two racing requests in the
+    # same second would tie and neither would come out ahead. The id is
+    # unique and strictly increases with insertion order on every supported
+    # database, so it always breaks the tie: exactly one request ends up
+    # with the lock and the other renders the lockout screen.
     competing_sessions = EditingSession.for_record(record)
                                        .active
                                        .by_others(current_user)
