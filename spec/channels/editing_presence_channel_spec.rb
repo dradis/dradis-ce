@@ -54,6 +54,16 @@ describe EditingPresenceChannel, type: :channel do
       expect(subscription).to be_rejected
     end
 
+    it "authorizes against the record's project rather than the record itself" do
+      ability = instance_double(Ability, can?: true)
+      allow(Ability).to receive(:new).and_return(ability)
+
+      subscribe(signed_stream_name: signed_stream_name)
+
+      expect(ability).to have_received(:can?).with(:read, an_instance_of(Project))
+      expect(ability).not_to have_received(:can?).with(:read, issue)
+    end
+
     it 'purges stale sessions left by other editors of the same record' do
       other_user = create(:user)
       create(:editing_session,

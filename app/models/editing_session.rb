@@ -1,11 +1,12 @@
 class EditingSession < ApplicationRecord
+  ALLOWED_RECORD_TYPES = %w[Issue].freeze
   STALE_AFTER = 1.day
   STREAM_NAME_FORMAT = /\Aediting_presence_\d+_(?<record_type>.+)_(?<record_id>\d+)\z/
 
   belongs_to :user
   belongs_to :record, polymorphic: true
 
-  validates :record_type, presence: true
+  validates :record_type, presence: true, inclusion: { in: ALLOWED_RECORD_TYPES }
   validates :record_id, presence: true
 
   after_commit :broadcast_presence, on: [:create, :destroy]

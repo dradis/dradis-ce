@@ -11,9 +11,6 @@ class Ability
     can [:create, :read], InlineThread
     can [:resolve, :reopen], InlineThread
     can :destroy, InlineThread, user_id: user.id
-    can :read, Issue do |issue|
-      can?(:read, issue.project)
-    end
     can :manage, Tag
   end
 end
