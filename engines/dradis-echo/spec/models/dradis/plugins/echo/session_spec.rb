@@ -84,6 +84,57 @@ describe Dradis::Plugins::Echo::Session do
     end
   end
 
+  describe '#request_reply!' do
+    let(:session) { create(:echo_session) }
+
+    before do
+      allow(Dradis::Plugins::Echo::ReplyJob).to receive(:perform_later)
+      allow_any_instance_of(described_class).to receive(:broadcast_composer_state)
+    end
+
+    it 'flips an idle session to generating and enqueues one reply' do
+      expect { session.request_reply! }
+        .to change { session.reload.status }.from('idle').to('generating')
+      expect(Dradis::Plugins::Echo::ReplyJob)
+        .to have_received(:perform_later).with(session).once
+    end
+
+    it 'broadcasts the composer state on the idle->generating transition' do
+      expect(session).to receive(:broadcast_composer_state)
+      session.request_reply!
+    end
+
+    it 'does not double-enqueue while already generating' do
+      session.request_reply!
+      session.request_reply!
+      expect(Dradis::Plugins::Echo::ReplyJob).to have_received(:perform_later).once
+    end
+
+    context 'with a stale generating lock' do
+      let(:read_timeout) { Dradis::Plugins::Echo::Provider::HttpStreaming::READ_TIMEOUT.seconds }
+
+      before { session.update!(status: :generating) }
+
+      it 'reclaims a streaming message stuck past the read timeout and re-enqueues' do
+        stale = create(:assistant_message, session: session, status: :streaming, content: nil)
+        stale.update_column(:updated_at, (read_timeout + described_class::STUCK_MARGIN + 1.minute).ago)
+
+        session.request_reply!
+
+        expect(session.reload).to be_generating
+        expect(stale.reload).to be_failed
+        expect(stale.metadata['error']).to eq('interrupted')
+        expect(Dradis::Plugins::Echo::ReplyJob).to have_received(:perform_later).once
+      end
+
+      it 'leaves a fresh generating lock alone' do
+        create(:assistant_message, session: session, status: :streaming, content: nil)
+        session.request_reply!
+        expect(Dradis::Plugins::Echo::ReplyJob).not_to have_received(:perform_later)
+      end
+    end
+  end
+
   describe 'destroying the record' do
     it 'destroys sessions attached to a destroyed Note' do
       note = create(:note)
