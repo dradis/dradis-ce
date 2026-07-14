@@ -17,7 +17,7 @@ class IssuesController < AuthenticatedController
   before_action :set_columns, only: :index
 
   before_action :set_or_initialize_issue, except: [:import, :index]
-  before_action :check_edit_lock_for_issue, only: :edit
+  before_action :check_edit_lock, only: :edit
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
   before_action :set_affected_nodes, only: [:show]
   before_action :set_form_cancel_path, only: [:new, :edit]
@@ -128,10 +128,6 @@ class IssuesController < AuthenticatedController
   end
 
   private
-
-  def check_edit_lock_for_issue
-    check_edit_lock(@issue)
-  end
 
   def liquid_resource_assigns
     { 'issue' => IssueDrop.new(@issue) }

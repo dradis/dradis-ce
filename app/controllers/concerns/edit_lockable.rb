@@ -3,7 +3,15 @@ module EditLockable
 
   protected
 
-  def check_edit_lock(record)
+  def lockable_record
+    @lockable_record ||=
+      instance_variable_get("@#{controller_name.singularize}") ||
+        send("set_or_initialize_#{controller_name.singularize}")
+  end
+
+  def check_edit_lock
+    record = lockable_record
+
     # The session is acquired before we look for competitors, not after,
     # so two requests arriving at the same time both get a row and the
     # id tiebreaker below can decide between them. Checking first and
