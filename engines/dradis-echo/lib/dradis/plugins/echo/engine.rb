@@ -32,6 +32,20 @@ module Dradis::Plugins::Echo
     initializer 'echo.extend_user_model' do
       ActiveSupport.on_load :user_model do
         ::User.send(:has_many, :prompts, class_name: 'Dradis::Plugins::Echo::Prompt', dependent: :destroy)
+        # Keep a deleted user's sessions and messages around (attributed to a
+        # 'Deleted user') rather than destroying the conversation history.
+        ::User.send(:has_many, :echo_sessions, class_name: 'Dradis::Plugins::Echo::Session', dependent: :nullify)
+        ::User.send(:has_many, :echo_messages, class_name: 'Dradis::Plugins::Echo::Message', dependent: :nullify)
+      end
+    end
+
+    initializer 'echo.extend_note_model' do
+      ActiveSupport.on_load :note_model do
+        # Sessions hang off a polymorphic record (a Note or Issue). Clean them
+        # up when the record is destroyed. Inherited by Issue < Note.
+        ::Note.send(:before_destroy) do
+          Dradis::Plugins::Echo::Session.for_record(self).destroy_all
+        end
       end
     end
 

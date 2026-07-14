@@ -1,0 +1,22 @@
+<%# locals: (message:) -%>
+<%# Minimal render — Slice 5 restyles. Must render from `render partial:` with %>
+<%# only `message:` in locals, so no controller-context helpers here. %>
+<div id="<%= dom_id(message) %>" class="echo-message echo-message-<%= message.role %>" data-status="<%= message.status %>">
+  <p class="echo-message-author">
+    <% if message.assistant? %>
+      <%= message.session.agent.name %>
+    <% elsif message.user %>
+      <%= message.user.name %>
+    <% else %>
+      Deleted user
+    <% end %>
+  </p>
+
+  <div class="echo-message-content"><%= message.content %></div>
+
+  <% if message.streaming? %>
+    <span class="echo-message-spinner" data-behavior="echo-message-spinner"></span>
+  <% elsif message.failed? %>
+    <p class="echo-message-error">Something went wrong generating this response.</p>
+  <% end %>
+</div>
