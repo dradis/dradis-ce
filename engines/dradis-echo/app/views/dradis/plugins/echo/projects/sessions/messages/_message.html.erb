@@ -12,7 +12,8 @@
     <% end %>
   </p>
 
-  <div class="echo-message-content"><%= message.content %></div>
+  <%# ReplyJob streams chunks into this container by dom_id(message, :content). %>
+  <div id="<%= dom_id(message, :content) %>" class="echo-message-content"><%= message.content %></div>
 
   <% if message.streaming? %>
     <span class="echo-message-spinner" data-behavior="echo-message-spinner"></span>
