@@ -40,7 +40,7 @@ module Dradis::Plugins::Echo
 
     # -- Instance Methods -----------------------------------------------------
 
-    def generate(prompt:, model: nil, &block)
+    def generate(messages: nil, prompt: nil, model: nil, &block)
       raise NotImplementedError, "#{self.class.name} must implement #generate"
     end
 
@@ -54,6 +54,21 @@ module Dradis::Plugins::Echo
 
     def type_name
       self.class.name.demodulize
+    end
+
+    private
+
+    # Normalizes the two ways to call #generate into a messages array. Callers
+    # pass either a multi-turn messages: array or the prompt: sugar, which wraps
+    # a single string into one user message.
+    def resolve_messages(messages, prompt)
+      if messages
+        messages
+      elsif prompt
+        [{ role: 'user', content: prompt }]
+      else
+        raise ArgumentError, '#generate requires either messages: or prompt:'
+      end
     end
   end
 end

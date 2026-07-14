@@ -31,10 +31,15 @@ describe Dradis::Plugins::Echo::Provider::OpenAI do
   end
 
   describe '#build_body' do
-    it 'builds a streaming chat completions request' do
-      body = provider.send(:build_body, prompt: 'Hello', model: 'gpt-4o')
+    it 'passes the multi-turn messages through unchanged' do
+      messages = [
+        { role: 'user', content: 'Hello' },
+        { role: 'assistant', content: 'Hi there' },
+        { role: 'user', content: 'How are you?' }
+      ]
+      body = provider.send(:build_body, messages: messages, model: 'gpt-4o')
       expect(body[:model]).to eq('gpt-4o')
-      expect(body[:messages]).to eq([{ role: 'user', content: 'Hello' }])
+      expect(body[:messages]).to eq(messages)
       expect(body[:stream]).to be true
     end
   end

@@ -34,10 +34,15 @@ describe Dradis::Plugins::Echo::Provider::Anthropic do
   end
 
   describe '#build_body' do
-    it 'builds a streaming messages request' do
-      body = provider.send(:build_body, prompt: 'Hello', model: 'claude-sonnet-4-6')
+    it 'passes the multi-turn messages through unchanged' do
+      messages = [
+        { role: 'user', content: 'Hello' },
+        { role: 'assistant', content: 'Hi there' },
+        { role: 'user', content: 'How are you?' }
+      ]
+      body = provider.send(:build_body, messages: messages, model: 'claude-sonnet-4-6')
       expect(body[:model]).to eq('claude-sonnet-4-6')
-      expect(body[:messages]).to eq([{ role: 'user', content: 'Hello' }])
+      expect(body[:messages]).to eq(messages)
       expect(body[:stream]).to be true
       expect(body[:max_tokens]).to eq(described_class::DEFAULT_MAX_TOKENS)
     end
@@ -46,7 +51,7 @@ describe Dradis::Plugins::Echo::Provider::Anthropic do
   describe '#extract_text' do
     it 'extracts text from content_block_delta events' do
       payload = {
-        'type'  => 'content_block_delta',
+        'type' => 'content_block_delta',
         'delta' => { 'type' => 'text_delta', 'text' => 'Hello' }
       }
       expect(provider.send(:extract_text, payload)).to eq('Hello')

@@ -16,13 +16,17 @@ module Dradis::Plugins::Echo
     # Without a block: accumulates all chunks and returns the complete response
     # as a string once the API finishes, for use outside a streaming context.
     #
+    # Accepts a multi-turn messages: array ([{ role:, content: }]) or the
+    # prompt: sugar for a single user message.
+    #
     # Subclasses must implement: #build_uri, #build_headers, #build_body,
     # #extract_text. Optionally override #end_of_stream_marker.
-    def generate(prompt:, model: nil, &block)
+    def generate(messages: nil, prompt: nil, model: nil, &block)
       resolved_model = model.presence || self.model
+      resolved_messages = resolve_messages(messages, prompt)
       uri = build_uri(resolved_model)
       headers = build_headers
-      body = build_body(prompt: prompt, model: resolved_model)
+      body = build_body(messages: resolved_messages, model: resolved_model)
 
       buffer = block ? nil : +''
 
@@ -93,7 +97,7 @@ module Dradis::Plugins::Echo
     end
 
     # Returns the request body hash for the provider's API.
-    def build_body(prompt:, model:)
+    def build_body(messages:, model:)
       raise NotImplementedError, "#{self.class.name} must implement #build_body"
     end
 

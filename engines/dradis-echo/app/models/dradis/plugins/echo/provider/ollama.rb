@@ -7,14 +7,15 @@ module Dradis::Plugins::Echo
       false
     end
 
-    def generate(prompt:, model: nil, &block)
+    def generate(messages: nil, prompt: nil, model: nil, &block)
       resolved_model = model.presence || self.model
+      resolved_messages = resolve_messages(messages, prompt)
       buffer = block_given? ? nil : +''
 
-      client.generate({ model: resolved_model, prompt: prompt }) do |event, _raw|
+      client.chat({ model: resolved_model, messages: resolved_messages }) do |event, _raw|
         next if event['done']
 
-        chunk = event['response'].to_s
+        chunk = event.dig('message', 'content').to_s
         next if chunk.empty?
 
         chunk = chunk.sub('<think>', '{thinking}').sub('</think>', '{/thinking}')

@@ -9,10 +9,10 @@ module Dradis::Plugins::Echo
 
     private
 
-    def build_body(prompt:, model:)
+    def build_body(messages:, model:)
       {
         max_tokens: DEFAULT_MAX_TOKENS,
-        messages: [{ role: 'user', content: prompt }],
+        messages: messages,
         model: model,
         stream: true
       }
@@ -21,7 +21,7 @@ module Dradis::Plugins::Echo
     def build_headers
       {
         'anthropic-version' => API_VERSION,
-        'x-api-key'         => api_key
+        'x-api-key' => api_key
       }
     end
 
