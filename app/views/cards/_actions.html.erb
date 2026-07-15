@@ -8,7 +8,7 @@
             <a href="javascript:void(0)" class="dropdown-item disabled"><%= list.name %></a>
           <% else %>
             <%= link_to(
-              project_board_list_card_transfer_path(current_project, @board, @list, @card, new_list_id: list.id),
+              project_board_list_card_position_path(current_project, @board, @list, @card, new_list_id: list.id),
               method: :post,
               class: 'dropdown-item'
             ) do %>

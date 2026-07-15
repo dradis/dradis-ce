@@ -59,7 +59,6 @@ Rails.application.routes.draw do
         member { post :move }
         resources :cards, except: [:index] do
           resource :position, only: [:create], controller: 'cards/position'
-          resource :transfer, only: [:create], controller: 'cards/transfer'
           resources :revisions, only: [:index, :show]
         end
       end
