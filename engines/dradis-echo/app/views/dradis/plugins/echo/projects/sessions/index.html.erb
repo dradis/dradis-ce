@@ -1,0 +1,47 @@
+<% if Dradis::Plugins::Echo::Agents::Roslin.enabled? %>
+  <% if @prompts.any? %>
+    <% if @sessions.any? %>
+      <div class="list-group mb-3" id="echo-sessions" data-behavior="echo-sessions">
+        <% @sessions.each do |session| %>
+          <%= link_to session.title.presence || "Session ##{session.id}",
+                echo.project_session_path(current_project, session, type: @type, record: @record.id),
+                id: dom_id(session),
+                class: 'list-group-item list-group-item-action',
+                data: { turbo_frame: dom_id(@record, :echo) } %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <p>
+      Interact with <i class="fa-solid fa-robot me-1"></i>Roslin by selecting a
+      <%= link_to 'saved prompt', echo.prompts_path, data: { turbo_frame: '_top' } %> to start a session for this Issue.
+    </p>
+    <p>
+      You can edit the prompt before sending it, any changes are one-off and
+      won't affect the saved prompt template.
+    </p>
+  <% else %>
+    <%= render 'shared/empty_state',
+      actions_partial: 'dradis/plugins/echo/prompts/empty_state_actions',
+      docs_link: 'https://dradis.com/support/guides/echo/prompts.html',
+      name: 'prompt',
+      text: 'Create reusable prompts to standardize how your team analyzes findings, writes reports, summarizes vulnerabilities, and more. Save time by building a library of prompts that anyone on your team can use for consistent results.'
+    %>
+  <% end %>
+<% else %>
+  <div class="alert alert-warning">
+    <% if !current_user.respond_to?(:role?) || current_user.role?(:admin) %>
+      The Roslin agent is not enabled.
+      <%= link_to 'Enable it', echo.agents_path, data: { turbo_frame: '_top' } %>
+      to allow LLM interactions for AI-assisted writing.
+    <% else %>
+      <i class="fa-solid fa-robot me-1"></i>Roslin is not enabled. Ask an
+      admin to enable it to allow LLM interactions.
+    <% end %>
+  </div>
+  <p>
+    Think of Roslin as an editor or writing companion. It allows you to interact
+    with different LLM providers to help enhance your findings' readability
+    or adapt them to your audience.
+  </p>
+<% end %>
