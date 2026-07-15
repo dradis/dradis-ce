@@ -26,6 +26,13 @@ describe Dradis::Plugins::Echo::ReplyJob do
     allow_any_instance_of(Dradis::Plugins::Echo::Session).to receive(:broadcast_composer_state)
   end
 
+  # Guards against a private method shadowing ActiveJob::Core#serialize, which
+  # every queue adapter calls when enqueuing — a collision there breaks
+  # perform_later (and so Session#request_reply!) at runtime.
+  it 'can be serialized for enqueuing' do
+    expect { described_class.new(session).serialize }.not_to raise_error
+  end
+
   describe 'a successful reply' do
     before { stub_stream('Hello ', 'world') }
 
