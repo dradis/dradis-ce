@@ -4,7 +4,7 @@ module Dradis::Plugins::Echo
 
     # Generates one assistant reply for a session: it streams the provider
     # response into a `streaming` message, persists the final text as
-    # `complete` with model/provider metadata, then serializes — re-enqueueing
+    # `complete` with model/provider metadata, then finalizes — re-enqueueing
     # itself if the user spoke again mid-generation, or flipping the session
     # back to `idle`. Session#request_reply! owns the idle->generating gate.
     def perform(session)
@@ -18,7 +18,7 @@ module Dradis::Plugins::Echo
       text, duration_ms = stream_reply(agent, session, message, context)
 
       complete(agent, message, text, duration_ms)
-      serialize(session, cutoff_id)
+      finalize(session, cutoff_id)
     rescue => e
       fail_message(session, message, e)
     end
@@ -74,7 +74,7 @@ module Dradis::Plugins::Echo
     # Under a lock so it can't race the controller flipping idle<->generating:
     # if a user message landed after the reply started (id past the cutoff),
     # answer it too by re-enqueueing; otherwise release the session to idle.
-    def serialize(session, cutoff_id)
+    def finalize(session, cutoff_id)
       session.with_lock do
         if session.messages.where(role: :user).where('id > ?', cutoff_id).exists?
           self.class.perform_later(session)
