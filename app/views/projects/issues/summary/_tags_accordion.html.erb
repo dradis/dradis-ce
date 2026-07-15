@@ -1,4 +1,4 @@
-<% for tag in @tags do %>
+<% @tags.each do |tag| %>
   <% if @issues_by_tag[tag.name].any? %>
     <div class="card" style="border-color: <%= tag.color %>">
       <a data-bs-toggle="collapse" href="#collapse<%= tag.display_name %>" class="card-header" style="background: <%= tag.color %>" data-behavior="card-header">
