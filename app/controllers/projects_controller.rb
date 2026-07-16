@@ -1,5 +1,5 @@
 class ProjectsController < AuthenticatedController
-  include IssuesGrouping
+  include IssuesDimensionGrouping
   include NotificationsReader
 
   before_action :set_project

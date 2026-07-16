@@ -1,4 +1,4 @@
-module IssuesGrouping
+module IssuesDimensionGrouping
   private
 
   def build_all_tags_grouping
