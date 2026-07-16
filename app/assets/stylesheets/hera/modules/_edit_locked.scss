@@ -2,13 +2,13 @@
   padding: 3rem 2rem;
   text-align: center;
 
-  &__actions {
+  .actions {
     display: flex;
     gap: 0.75rem;
     justify-content: center;
   }
 
-  &__description {
+  .description {
     color: var(--text-muted);
     font-size: 1rem;
     line-height: 1.6;
@@ -16,7 +16,7 @@
     max-width: 28rem;
   }
 
-  &__editor {
+  .editor {
     align-items: center;
     background: var(--secondary-bg);
     border-radius: 0.5rem;
@@ -28,17 +28,17 @@
     padding: 1rem 1.5rem;
   }
 
-  &__editor-info {
+  .editor-info {
     text-align: left;
   }
 
-  &__editor-name {
+  .editor-name {
     display: block;
     font-size: 1rem;
     font-weight: 600;
   }
 
-  &__editor-status {
+  .editor-status {
     align-items: center;
     color: var(--text-muted);
     display: flex;
@@ -46,14 +46,14 @@
     gap: 0.35rem;
   }
 
-  &__heading {
+  .heading {
     color: var(--text-default);
     font-size: 1.4rem;
     font-weight: 700;
     margin-bottom: 0.75rem;
   }
 
-  &__icon {
+  .icon {
     align-items: center;
     background: $orange-100;
     border-radius: 50%;
@@ -69,9 +69,9 @@
     }
   }
 
-  &__pulse {
+  .pulse {
     animation: edit-locked-pulse 2s infinite;
-    background: $brand-400;
+    background: var(--brand-bg);
     border-radius: 50%;
     display: inline-block;
     height: 0.5rem;
