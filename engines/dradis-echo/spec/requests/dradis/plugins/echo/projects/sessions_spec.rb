@@ -45,17 +45,22 @@ describe 'Echo sessions' do
       { type: 'issue', record: issue.id, prompt_id: prompt.id, prompt: 'Summarise the SQLi finding' }
     end
 
-    it 'creates a session with the first user message and triggers a reply' do
+    it 'creates a session with the first user message but defers the reply to the subscribed client' do
       expect {
         post "/addons/echo/projects/#{@project.id}/sessions", params: params
       }.to change(Dradis::Plugins::Echo::Session, :count).by(1)
         .and change(Dradis::Plugins::Echo::Message, :count).by(1)
-        .and have_enqueued_job(Dradis::Plugins::Echo::ReplyJob)
+
+      # The reply is triggered by the session Stimulus controller once it has
+      # subscribed, not by create — otherwise the streaming container broadcasts
+      # before the socket is listening and never renders live (SEC-506 Bug 4).
+      expect(Dradis::Plugins::Echo::ReplyJob).not_to have_been_enqueued
 
       session = Dradis::Plugins::Echo::Session.last
       expect(session.title).to eq(prompt.title)
       expect(session.user).to eq(user)
       expect(session.record).to eq(issue)
+      expect(session).to be_reply_pending
 
       message = session.messages.first
       expect(message.role).to eq('user')

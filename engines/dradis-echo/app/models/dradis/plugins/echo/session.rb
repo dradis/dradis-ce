@@ -66,6 +66,17 @@ module Dradis::Plugins::Echo
       ReplyJob.perform_later(self) if enqueue
     end
 
+    # True when a reply is owed but generation hasn't started yet: the session is
+    # idle and the newest message is a user turn. `create` renders `show` in this
+    # state and lets the freshly-subscribed client trigger request_reply!, so the
+    # streaming container is only broadcast once the socket is listening (SEC-506
+    # Bug 4). It flips back to false the moment ReplyJob flips the session to
+    # `generating` or an assistant reply lands, which makes the client trigger
+    # idempotent across reconnects and multiple viewers.
+    def reply_pending?
+      idle? && messages.order(:created_at, :id).last&.user?
+    end
+
     # Only completed turns are safe to replay to a provider: a streaming row has
     # no content yet, and a failed one carries a nil/partial body. Sending either
     # would poison the next request with a `content: nil` turn.
