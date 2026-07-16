@@ -25,6 +25,13 @@ describe 'Echo interactions' do
   end
 
   describe 'GET /addons/echo/projects/:project_id/interactions' do
+    it 'renders the sessions panel entry point' do
+      get "/addons/echo/projects/#{@project.id}/interactions", params: { type: 'issue', record: issue.id }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include('Start a new conversation')
+    end
+
     it 'wraps the conversation list in the record Echo turbo-frame' do
       get "/addons/echo/projects/#{@project.id}/interactions",
         params: { type: 'issue', record: issue.id }
@@ -47,6 +54,20 @@ describe 'Echo interactions' do
       expect(response.body).to include("<turbo-frame id=\"#{frame_id}\"")
       # href attributes HTML-escape the query separator (& -> &amp;); match escaped.
       expect(response.body).to include(ERB::Util.html_escape(back_link))
+    end
+  end
+
+  describe 'the retired Roslin one-shot path' do
+    it 'no longer exposes a create route' do
+      expect {
+        post "/addons/echo/projects/#{@project.id}/interactions", params: { type: 'issue', record: issue.id }
+      }.to raise_error(ActionController::RoutingError)
+    end
+
+    it 'no longer exposes a show route' do
+      expect {
+        get "/addons/echo/projects/#{@project.id}/interactions/1", params: { type: 'issue', record: issue.id }
+      }.to raise_error(ActionController::RoutingError)
     end
   end
 end

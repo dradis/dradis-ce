@@ -5,8 +5,8 @@ module Dradis::Plugins::Echo
 
     before_action :check_turbo_config, only: [:index]
     before_action :set_type
-    before_action :set_prompt, only: [:preview, :show]
-    before_action :set_record, except: [:create]
+    before_action :set_prompt, only: [:preview]
+    before_action :set_record
 
     def index
       Prompt.seed_default_prompts(current_user) if current_user.prompts.empty?
@@ -16,23 +16,6 @@ module Dradis::Plugins::Echo
     end
 
     def preview; end
-
-    def show
-      @prompt_content = params[:prompt]
-      @interaction_id = SecureRandom.hex(20)
-      @response_id = SecureRandom.hex(10)
-    end
-
-    def create
-      InteractionJob.perform_later(
-        agent_id: Agents::Roslin.id,
-        prompt: params[:prompt],
-        interaction_id: params[:interaction_id],
-        response_id: params[:response_id]
-      )
-
-      head :ok
-    end
 
     private
 
