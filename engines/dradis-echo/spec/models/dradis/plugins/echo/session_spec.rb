@@ -171,6 +171,31 @@ describe Dradis::Plugins::Echo::Session do
     end
   end
 
+  describe '#reply_pending?' do
+    let(:session) { create(:echo_session) }
+
+    it 'is true when idle and the newest message is a user turn' do
+      create(:echo_message, session: session, role: :user, content: 'Hello')
+      expect(session).to be_reply_pending
+    end
+
+    it 'is false once an assistant reply is the newest message' do
+      create(:echo_message, session: session, role: :user, content: 'Hello')
+      create(:assistant_message, session: session, content: 'Hi there')
+      expect(session).not_to be_reply_pending
+    end
+
+    it 'is false while the session is already generating' do
+      create(:echo_message, session: session, role: :user, content: 'Hello')
+      session.update!(status: :generating)
+      expect(session).not_to be_reply_pending
+    end
+
+    it 'is false with no messages yet' do
+      expect(session).not_to be_reply_pending
+    end
+  end
+
   describe 'destroying the record' do
     it 'destroys sessions attached to a destroyed Note' do
       note = create(:note)
