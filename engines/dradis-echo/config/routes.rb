@@ -12,6 +12,7 @@ Dradis::Plugins::Echo::Engine.routes.draw do
       resources :grammar_suggestions, only: [:create], controller: 'projects/grammar_suggestions'
 
       resources :sessions, only: [:index, :show, :create], controller: 'projects/sessions' do
+        resource :reply, only: [:create], controller: 'projects/sessions/replies'
         resources :messages, only: [:create], controller: 'projects/sessions/messages'
       end
     end

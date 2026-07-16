@@ -24,6 +24,13 @@ module Dradis::Plugins::Echo
     # later edit or deletion of the template can't rewrite history. Scoping the
     # lookup through `for(@type)` honours the Prompt::SCOPES whitelist. The first
     # user Message carries the (Liquid-rendered, possibly edited) prompt text.
+    #
+    # We deliberately do NOT call request_reply! here: on initial creation the
+    # browser hasn't subscribed to the SessionsChannel yet, so an immediate
+    # generation would broadcast the streaming container before the socket is
+    # listening and the reply would never render live (SEC-506 Bug 4). Instead we
+    # render `show` in the reply_pending? state and let the session Stimulus
+    # controller POST to RepliesController once it has connected.
     def create
       prompt = current_user.prompts.for(@type).find(params[:prompt_id])
 
@@ -36,7 +43,6 @@ module Dradis::Plugins::Echo
       @session.messages.build(content: params[:prompt], role: :user, user: current_user)
       @session.save!
 
-      @session.request_reply!
       publish_event('echo_session.created', session: { id: @session.id })
 
       render :show
