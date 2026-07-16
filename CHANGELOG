@@ -33,6 +33,8 @@ v5.2.0 (July 2026)
   - UI: add dark mode support to the login and setup wizard pages
   - Upgraded gems:
     - concurrent-ruby, crass, faraday, msgpack, net-imap, nokogiri, puma
+  - Echo enhancements:
+    - Roslin: add multiplayer chat sessions on Issues — start a conversation from a saved prompt, follow up with more messages, and watch Roslin's reply stream live to everyone viewing
   - Bugs fixes:
     - Echo:
       - Preserve line breaks in streamed Ollama responses for models that emit them as standalone tokens
