@@ -37,4 +37,23 @@ describe 'Echo broadcasts under a non-nil Turbo request id' do
   it 'renders _composer_state via Session#broadcast_composer_state without StrictLocalsError' do
     expect { session.broadcast_composer_state }.not_to raise_error
   end
+
+  # SEC-508: the first-paint "thinking" sentinel must be retired when a real
+  # message lands, so the sentinel and the real bubble are never shown together.
+  describe 'the pending-reply sentinel removal' do
+    include ActionCable::TestHelper
+    include Turbo::Broadcastable::TestHelper
+
+    it 'broadcasts a remove for the session-scoped sentinel alongside the append' do
+      message = create(:echo_message, session: session, role: :user, user: user)
+
+      streams = capture_turbo_stream_broadcasts([session, :messages]) do
+        message.send(:broadcast_created)
+      end
+
+      remove = streams.find { |el| el['action'] == 'remove' }
+      expect(remove).to be_present
+      expect(remove['target']).to eq(ActionView::RecordIdentifier.dom_id(session, :pending_reply))
+    end
+  end
 end

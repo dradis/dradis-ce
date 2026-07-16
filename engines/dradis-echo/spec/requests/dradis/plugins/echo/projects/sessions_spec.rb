@@ -74,6 +74,24 @@ describe 'Echo sessions' do
       expect(response.body).to include("id=\"#{ActionView::RecordIdentifier.dom_id(issue, :echo)}\"")
     end
 
+    # SEC-508: first paint must be a reply-pending state, not an idle/interactive
+    # composer — the composer locks and a server-rendered "thinking" bubble shows
+    # before any socket round-trip.
+    it 'locks the composer and renders the pending-reply bubble on first paint' do
+      post "/addons/echo/projects/#{@project.id}/sessions", params: params
+
+      session = Dradis::Plugins::Echo::Session.last
+      sentinel = ActionView::RecordIdentifier.dom_id(session, :pending_reply)
+
+      # Pending "thinking" bubble, keyed off a session-scoped sentinel id.
+      expect(response.body).to include("id=\"#{sentinel}\"")
+      expect(response.body).to include('data-echo-pending-reply')
+      expect(response.body).to include('Roslin is responding')
+      # Locked composer: awaiting => data-generating true and Send disabled.
+      expect(response.body).to include('data-generating="true"')
+      expect(response.body).to match(/<button[^>]*type="submit"[^>]*disabled/)
+    end
+
     it 'copies the title without storing a prompt FK' do
       post "/addons/echo/projects/#{@project.id}/sessions", params: params
 
@@ -96,6 +114,25 @@ describe 'Echo sessions' do
         post "/addons/echo/projects/#{@project.id}/sessions",
           params: params.merge(record: other_issue.id)
       }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  describe 'GET /addons/echo/projects/:project_id/sessions/:id' do
+    # SEC-508: an answered session is not reply_pending?, so it must render with
+    # no pending bubble and an unlocked composer (no first-paint lock lingering).
+    it 'renders no pending bubble and an unlocked composer for an answered session' do
+      session = create(:echo_session, agent: roslin, record: issue)
+      create(:echo_message, session: session, role: :user, content: 'hi', user: user)
+      create(:assistant_message, session: session, content: 'hello', status: :complete)
+
+      get "/addons/echo/projects/#{@project.id}/sessions/#{session.id}",
+        params: { type: 'issue', record: issue.id }
+
+      expect(response).to have_http_status(:ok)
+      sentinel = ActionView::RecordIdentifier.dom_id(session, :pending_reply)
+      expect(response.body).not_to include("id=\"#{sentinel}\"")
+      expect(response.body).to include('data-generating="false"')
+      expect(response.body).to include('Anyone on this project can join')
     end
   end
 end

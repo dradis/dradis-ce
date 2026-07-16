@@ -32,6 +32,15 @@ module Dradis::Plugins::Echo
         partial: 'dradis/plugins/echo/projects/sessions/messages/message',
         locals: { message: self }
       )
+      # Retire the first-paint "thinking" sentinel now that a real message has
+      # landed, so the two are never shown together. A no-op when it's absent
+      # (every follow-up message), and terminal-state-safe: an explicit remove
+      # (vs a CSS :has() rule) can't let the sentinel reappear once the real
+      # bubble stops streaming (streaming -> complete/failed) — SEC-508.
+      broadcast_remove_to(
+        [session, :messages],
+        target: ActionView::RecordIdentifier.dom_id(session, :pending_reply)
+      )
     end
 
     def complete_user_messages

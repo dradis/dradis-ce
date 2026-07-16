@@ -6,16 +6,21 @@
 <%# Route-free and locals-only so it renders from ReplyJob. Carries the Send button %>
 <%# and the multiplayer hint; the session_controller reads data-generating to keep %>
 <%# the textarea disabled in step with the (server-rendered) button. %>
-<% generating = session.generating? %>
+<%# awaiting also covers the first-paint window where a reply is owed but ReplyJob %>
+<%# hasn't flipped the session to generating yet (reply_pending?). Locking on both %>
+<%# means the later idle->generating broadcast produces no visible flip. This %>
+<%# first-paint lock is client-recoverable: session_controller unlocks it if the %>
+<%# trigger POST fails, so it can never stick with no reply coming (SEC-508). %>
+<% awaiting = session.generating? || session.reply_pending? %>
 <%= tag.div id: dom_id(session, :composer_state),
-      data: { behavior: 'echo-composer-state', generating: generating } do %>
+      data: { behavior: 'echo-composer-state', generating: awaiting } do %>
   <div class="echo-composer-actions">
-    <% if generating %>
+    <% if awaiting %>
       <span class="echo-composer-hint"><i class="fa-solid fa-lock"></i> Roslin is responding — you can send once it finishes.</span>
     <% else %>
       <span class="echo-composer-hint">Anyone on this project can join the conversation.</span>
     <% end %>
-    <button type="submit" class="btn btn-primary"<%= ' disabled'.html_safe if generating %>>
+    <button type="submit" class="btn btn-primary"<%= ' disabled'.html_safe if awaiting %>>
       <i class="fa-solid fa-paper-plane me-1"></i> Send
     </button>
   </div>

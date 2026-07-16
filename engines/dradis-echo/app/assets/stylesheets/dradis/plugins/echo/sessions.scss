@@ -262,4 +262,11 @@
     font-size: 0.75rem;
     gap: 0.4rem;
   }
+
+  // Client-recoverable first-paint failure (SEC-508): shown only when the reply
+  // trigger POST fails. Error tone so it reads as a fault, not the idle hint.
+  .echo-composer-retry {
+    color: var(--text-error);
+    margin-top: 0.5rem;
+  }
 }

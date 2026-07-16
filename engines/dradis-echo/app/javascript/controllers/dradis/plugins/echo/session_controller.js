@@ -7,7 +7,7 @@ import { Controller } from "@hotwired/stimulus"
 // The Send button's disabled state is server-rendered by the broadcast
 // _composer_state partial; here we only keep the textarea in step with it.
 export default class extends Controller {
-  static targets = ["messages", "input"]
+  static targets = ["messages", "input", "retryHint"]
   static values = { replyUrl: String, replyPending: Boolean }
 
   connect() {
@@ -66,7 +66,27 @@ export default class extends Controller {
     fetch(this.replyUrlValue, {
       headers: { "X-CSRF-Token": this.#csrfToken() },
       method: "POST"
-    })
+    }).then((response) => {
+      if (!response.ok) this.#recoverFromFailedTrigger()
+    }).catch(() => this.#recoverFromFailedTrigger())
+  }
+
+  // The trigger POST never reached a started reply (route blocked, offline, 5xx),
+  // so no broadcast_composer_state (generating -> ... -> idle) will ever arrive to
+  // release the first-paint lock. Recover entirely client-side so the composer
+  // can't stick: unlock it, drop the never-resolving "thinking" sentinel, and
+  // invite a manual retry — sending any message re-runs request_reply! (SEC-508).
+  // The success branch leaves everything locked: a reply is genuinely coming and
+  // the normal broadcasts own the rest.
+  #recoverFromFailedTrigger() {
+    const state = this.element.querySelector("[data-behavior~=echo-composer-state]")
+    if (state) {
+      state.dataset.generating = "false"
+      state.querySelector("button[type=submit]")?.removeAttribute("disabled")
+    }
+    this.#syncGenerating()
+    this.element.querySelector("[data-echo-pending-reply]")?.remove()
+    if (this.hasRetryHintTarget) this.retryHintTarget.hidden = false
   }
 
   #csrfToken() {

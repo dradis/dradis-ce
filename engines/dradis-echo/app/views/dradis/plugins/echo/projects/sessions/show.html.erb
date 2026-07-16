@@ -36,6 +36,27 @@
          data-dradis--plugins--echo--session-target="messages">
       <%= render partial: 'dradis/plugins/echo/projects/sessions/messages/message',
                  collection: @session.messages.order(:created_at, :id), as: :message %>
+
+      <%# First-paint "thinking" bubble: a reply is owed but ReplyJob hasn't
+          broadcast its streaming container yet (reply_pending?). Server-rendered
+          here so it shows before any socket round-trip (Doherty), reusing the
+          assistant/streaming classes verbatim so the real bubble swaps in with no
+          layout jump. The id is a session-scoped sentinel — NOT dom_id(message) —
+          so it can't collide with the #message_<id> container ReplyJob appends;
+          Message#broadcast_created removes it when the real reply lands. %>
+      <% if @session.reply_pending? %>
+        <div id="<%= dom_id(@session, :pending_reply) %>" data-echo-pending-reply
+             class="echo-message echo-message-assistant echo-message-streaming">
+          <span class="echo-avatar-agent"><i class="fa-solid fa-robot"></i></span>
+          <div class="echo-message-body">
+            <div><span class="user"><%= @session.agent.name %></span></div>
+            <div class="echo-streaming-caption" role="status">
+              <span class="spinner-border spinner-border-xs" aria-hidden="true"></span>
+              <span>Roslin is responding&hellip;</span>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
 
     <%= form_with url: echo.project_session_messages_path(current_project, @session), method: :post,
@@ -49,6 +70,16 @@
           data: { 'dradis--plugins--echo--session-target': 'input' }
       %>
       <%= render 'dradis/plugins/echo/projects/sessions/composer_state', session: @session %>
+
+      <%# Hidden until the first-paint trigger POST fails (session_controller
+          #unlockAfterFailedTrigger). role="status" so it's announced when it
+          appears; sits outside the broadcast-replaced composer_state so a later
+          broadcast can't wipe it (there is none in the failure branch anyway). %>
+      <span class="echo-composer-hint echo-composer-retry" role="status" hidden
+            data-dradis--plugins--echo--session-target="retryHint">
+        <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+        Couldn&rsquo;t start Roslin — send your message to retry.
+      </span>
     <% end %>
   </div>
 </turbo-frame>

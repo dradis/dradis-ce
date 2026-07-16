@@ -1,6 +1,6 @@
 # Bundler files
 /.bundle
-/vendor/bundle/
+/vendor/bundle
 /vendor/cache/*darwin*
 
 # Ignore environment and deployment files
