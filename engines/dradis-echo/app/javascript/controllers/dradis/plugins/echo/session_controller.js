@@ -8,6 +8,7 @@ import { Controller } from "@hotwired/stimulus"
 // _composer_state partial; here we only keep the textarea in step with it.
 export default class extends Controller {
   static targets = ["messages", "input"]
+  static values = { replyUrl: String, replyPending: Boolean }
 
   connect() {
     this.#scrollToBottom()
@@ -26,6 +27,8 @@ export default class extends Controller {
     this.stateObserver.observe(this.element, {
       attributeFilter: ["data-generating"], attributes: true, childList: true, subtree: true
     })
+
+    this.#triggerPendingReply()
   }
 
   disconnect() {
@@ -46,6 +49,23 @@ export default class extends Controller {
       method: "POST"
     }).then((response) => {
       if (response.ok) form.reset()
+    })
+  }
+
+  // On a freshly-created session the server deliberately did NOT start
+  // generation (SEC-506 Bug 4): had it, ReplyJob's streaming-container broadcast
+  // would have raced ahead of this element's <turbo-cable-stream-source>
+  // subscription and been dropped. Now that we're connected — and thus
+  // subscribed — POST to start the reply, so every chunk lands on a listening
+  // socket. The POST round-trip comfortably outlasts the local subscribe
+  // handshake, and the server re-checks reply_pending? so a reconnect can't
+  // spawn a second reply.
+  #triggerPendingReply() {
+    if (!this.replyPendingValue || !this.hasReplyUrlValue) return
+
+    fetch(this.replyUrlValue, {
+      headers: { "X-CSRF-Token": this.#csrfToken() },
+      method: "POST"
     })
   }
 
