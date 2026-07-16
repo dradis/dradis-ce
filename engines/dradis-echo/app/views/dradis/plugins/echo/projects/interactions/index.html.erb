@@ -6,6 +6,40 @@
 
 <% if Dradis::Plugins::Echo::Agents::Roslin.enabled? %>
   <% if @prompts.any? %>
+    <%# The record's existing conversations, surfaced above the picker (Serial-position %>
+    <%# effect). Each row loads sessions#show into the Echo record frame. %>
+    <div class="echo-session-list" data-behavior="echo-sessions">
+      <div class="echo-section-label">Conversations</div>
+      <% if @sessions.any? %>
+        <% @sessions.each do |session| %>
+          <%= link_to echo.project_session_path(current_project, session, type: @type, record: @record.id),
+                id: dom_id(session),
+                class: 'echo-session-item',
+                data: { turbo_frame: dom_id(@record, :echo) } do %>
+            <i class="echo-session-icon fa-solid fa-comments"></i>
+            <span>
+              <span class="echo-session-title"><%= session.title.presence || "Session ##{session.id}" %></span><br>
+              <span class="echo-session-meta">
+                Started by <%= session.user&.name || 'a removed user' %> ·
+                updated <%= local_time_ago(session.updated_at) %> ·
+                <%= pluralize(session.messages.size, 'message') %>
+              </span>
+            </span>
+            <% if session.generating? %>
+              <span class="echo-session-generating"><span class="spinner-border spinner-border-xs" role="status"></span> Roslin is responding</span>
+            <% else %>
+              <i class="echo-session-chevron fa-solid fa-chevron-right"></i>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <div class="echo-session-empty">
+          <i class="fa-regular fa-comments me-1"></i> No conversations on this Issue yet — start one below.
+        </div>
+      <% end %>
+    </div>
+
+    <div class="echo-section-label">Start a new conversation</div>
     <p>
       Interact with <i class="fa-solid fa-robot me-1"></i>Roslin by selecting a
       <%= link_to 'saved prompt', echo.prompts_path, data: { turbo_frame: '_top' } %> to use with this Issue.

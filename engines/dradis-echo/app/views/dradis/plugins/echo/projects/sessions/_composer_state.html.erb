@@ -1,11 +1,19 @@
 <%# locals: (session:) -%>
 <%# Broadcast on every idle<->generating transition (Session#broadcast_composer_state). %>
-<%# Route-free and locals-only so it renders from ReplyJob. Slice 4 wires the %>
-<%# composer form; here we only reflect whether a reply is in flight. %>
-<div id="<%= dom_id(session, :composer_state) %>" data-behavior="echo-composer-state" data-generating="<%= session.generating? %>">
-  <% if session.generating? %>
-    <span class="echo-composer-status" data-behavior="echo-composer-generating">Generating…</span>
-  <% else %>
-    <span class="echo-composer-status" data-behavior="echo-composer-idle">Ready</span>
-  <% end %>
-</div>
+<%# Route-free and locals-only so it renders from ReplyJob. Carries the Send button %>
+<%# and the multiplayer hint; the session_controller reads data-generating to keep %>
+<%# the textarea disabled in step with the (server-rendered) button. %>
+<% generating = session.generating? %>
+<%= tag.div id: dom_id(session, :composer_state),
+      data: { behavior: 'echo-composer-state', generating: generating } do %>
+  <div class="echo-composer-actions">
+    <% if generating %>
+      <span class="echo-composer-hint"><i class="fa-solid fa-lock"></i> Roslin is responding — you can send once it finishes.</span>
+    <% else %>
+      <span class="echo-composer-hint">Anyone on this project can join the conversation.</span>
+    <% end %>
+    <button type="submit" class="btn btn-primary"<%= ' disabled'.html_safe if generating %>>
+      <i class="fa-solid fa-paper-plane me-1"></i> Send
+    </button>
+  </div>
+<% end %>

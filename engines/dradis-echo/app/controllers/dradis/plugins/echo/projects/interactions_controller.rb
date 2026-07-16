@@ -12,6 +12,7 @@ module Dradis::Plugins::Echo
       Prompt.seed_default_prompts(current_user) if current_user.prompts.empty?
 
       @prompts = current_user.prompts.for(@type)
+      @sessions = Session.for_record(@record).order(updated_at: :desc)
     end
 
     def preview; end
