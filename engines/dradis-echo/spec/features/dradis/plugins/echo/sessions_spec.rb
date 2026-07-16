@@ -42,15 +42,22 @@ describe 'Echo sessions' do
     )
   end
 
+  # Generation is now started by the session Stimulus controller once it has
+  # subscribed, not by sessions#create — otherwise ReplyJob's streaming container
+  # broadcasts before the socket is listening (SEC-506 Bug 4). rack_test has no
+  # JS, so drive that reply-trigger POST explicitly and run the job inline.
   def start_session
     visit echo.preview_project_interaction_path(@project.id, prompt.id, type: 'issue', record: issue.id)
-    perform_enqueued_jobs { click_button 'Start with this prompt' }
+    click_button 'Start with this prompt'
+
+    session = Dradis::Plugins::Echo::Session.last
+    perform_enqueued_jobs { page.driver.post(echo.project_session_reply_path(@project.id, session)) }
+    session
   end
 
   it 'starts a session from a prompt and persists the streamed first exchange' do
-    start_session
+    session = start_session
 
-    session = Dradis::Plugins::Echo::Session.last
     expect(session.title).to eq('Summarise the finding')
     expect(session.user).to eq(user)
     expect(session.record).to eq(issue)
@@ -60,12 +67,14 @@ describe 'Echo sessions' do
       %w[assistant Roslin\ reply\ 1]
     ])
     expect(session.reload).to be_idle
+
+    # The reply is generated after create renders show, so it lands on reload.
+    visit echo.project_session_path(@project.id, session, type: 'issue', record: issue.id)
     expect(page).to have_content('Roslin reply 1')
   end
 
   it 'retains the conversation context on a follow-up message after reload' do
-    start_session
-    session = Dradis::Plugins::Echo::Session.last
+    session = start_session
 
     # Reload the conversation: the first reply has finished, so the transcript
     # survives (acceptance: survives reload) and the composer re-enables.
