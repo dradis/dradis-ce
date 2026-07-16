@@ -5,27 +5,42 @@
     </div>
   <% end %>
 
-  <%# Live transcript + composer state. A later slice wires the custom %>
-  <%# SessionsChannel (`channel:`) so the socket re-authorizes on subscribe. %>
-  <%= turbo_stream_from [@session, :messages] %>
-  <%= turbo_stream_from [@session, :composer_state] %>
+  <%# Live transcript + composer state, both over the re-authorizing SessionsChannel %>
+  <%# (Slice 4): the socket re-checks project access on every subscribe. %>
+  <%= turbo_stream_from [@session, :messages], channel: Dradis::Plugins::Echo::SessionsChannel %>
+  <%= turbo_stream_from [@session, :composer_state], channel: Dradis::Plugins::Echo::SessionsChannel %>
 
-  <%= render 'dradis/plugins/echo/projects/sessions/messages', messages: @messages %>
+  <div class="echo-conversation" data-controller="dradis--plugins--echo--session">
+    <div class="echo-conversation-header">
+      <%= link_to echo.project_interactions_path(current_project, type: @type, record: @record.id),
+            class: 'echo-back-link' do %>
+        <i class="fa-solid fa-arrow-left"></i> Conversations
+      <% end %>
+      <h5 class="echo-conversation-title">
+        <%= @session.title.presence || "Session ##{@session.id}" %>
+        <span class="echo-conversation-agent">· with <%= @session.agent.name %></span>
+      </h5>
+    </div>
 
-  <%= render 'dradis/plugins/echo/projects/sessions/composer_state', session: @session %>
+    <%# Broadcasts append to the literal `echo-messages` target (Message#broadcast_created), %>
+    <%# so this id must stay verbatim; only one session view is mounted per Echo frame. %>
+    <div id="echo-messages" class="echo-messages"
+         data-dradis--plugins--echo--session-target="messages">
+      <%= render partial: 'dradis/plugins/echo/projects/sessions/messages/message',
+                 collection: @session.messages.order(:created_at, :id), as: :message %>
+    </div>
 
-  <%= form_with url: echo.project_session_messages_path(current_project, @session), method: :post do |f| %>
-    <div class="input-group">
+    <%= form_with url: echo.project_session_messages_path(current_project, @session), method: :post,
+          class: 'echo-composer',
+          data: { action: 'submit->dradis--plugins--echo--session#send' } do |f| %>
       <%=
         f.text_area :content,
           class: 'form-control field-sizing-content',
           placeholder: 'Message Roslin…',
-          rows: 3
+          rows: 2,
+          data: { 'dradis--plugins--echo--session-target': 'input' }
       %>
-    </div>
-
-    <div class="form-actions sticky pt-1">
-      <%= f.submit 'Send', class: 'btn btn-primary mt-2' %>
-    </div>
-  <% end %>
+      <%= render 'dradis/plugins/echo/projects/sessions/composer_state', session: @session %>
+    <% end %>
+  </div>
 </turbo-frame>
