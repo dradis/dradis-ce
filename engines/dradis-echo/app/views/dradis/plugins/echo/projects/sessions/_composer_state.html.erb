@@ -1,4 +1,7 @@
-<%# locals: (session:) -%>
+<%# locals: (session:, request_id: nil) -%>
+<%# request_id is accepted-and-ignored: turbo-rails injects request_id into every %>
+<%# broadcast partial's locals (broadcastable.rb:503); non-nil in-request, so strict %>
+<%# locals must tolerate it or broadcast_composer_state 500s (SEC-506 Bug 1). %>
 <%# Broadcast on every idle<->generating transition (Session#broadcast_composer_state). %>
 <%# Route-free and locals-only so it renders from ReplyJob. Carries the Send button %>
 <%# and the multiplayer hint; the session_controller reads data-generating to keep %>
