@@ -81,7 +81,7 @@ describe Dradis::Plugins::Echo::Provider::HttpStreaming do
       sse_body = "data: #{JSON.generate(delta_event)}\n\n"
       stub_http(body: sse_body)
 
-      result = provider.generate(prompt: 'test')
+      result = provider.generate(messages: [{ role: 'user', content: 'test' }])
       expect(result).to eq('Hello')
     end
 
@@ -91,7 +91,7 @@ describe Dradis::Plugins::Echo::Provider::HttpStreaming do
       stub_http(body: sse_body)
 
       chunks = []
-      result = provider.generate(prompt: 'test') { |chunk| chunks << chunk }
+      result = provider.generate(messages: [{ role: 'user', content: 'test' }]) { |chunk| chunks << chunk }
       expect(chunks).to eq(['Hello'])
       expect(result).to be_nil
     end
@@ -112,17 +112,7 @@ describe Dradis::Plugins::Echo::Provider::HttpStreaming do
       expect(provider.generate(messages: messages)).to eq('Hello')
     end
 
-    it 'wraps the prompt: sugar into a single user message' do
-      stub_http(body: '')
-
-      expect(provider).to receive(:build_body)
-        .with(messages: [{ role: 'user', content: 'test' }], model: 'claude-sonnet-4-6')
-        .and_call_original
-
-      provider.generate(prompt: 'test')
-    end
-
-    it 'raises when neither messages: nor prompt: is given' do
+    it 'raises when messages: is not given' do
       expect { provider.generate }.to raise_error(ArgumentError)
     end
   end
