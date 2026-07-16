@@ -5,7 +5,7 @@ Dradis::Plugins::Echo::Engine.routes.draw do
 
     resources :projects, only: [] do
       scope module: 'projects' do
-        resources :interactions, only: [:index, :show, :create] do
+        resources :interactions, only: [:index] do
           get :preview, on: :member
         end
 
