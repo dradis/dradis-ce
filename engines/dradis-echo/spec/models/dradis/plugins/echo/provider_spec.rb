@@ -94,7 +94,7 @@ describe Dradis::Plugins::Echo::Provider do
       provider = build(:provider)
       # Ollama overrides #generate, so test the base class directly
       expect do
-        Dradis::Plugins::Echo::Provider.new.generate(prompt: 'test')
+        Dradis::Plugins::Echo::Provider.new.generate(messages: [{ role: 'user', content: 'test' }])
       end.to raise_error(NotImplementedError)
     end
   end

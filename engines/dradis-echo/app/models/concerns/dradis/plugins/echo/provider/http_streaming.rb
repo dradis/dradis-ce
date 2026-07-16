@@ -23,25 +23,23 @@ module Dradis::Plugins::Echo
       OpenSSL::SSL::SSLError
     ].freeze
 
-    # Sends prompt to the provider and returns the response.
+    # Sends the conversation to the provider and returns the response.
     #
     # With a block: yields each text chunk as it arrives, enabling streaming UX
-    # (e.g. InteractionJob broadcasts each chunk to the browser via Turbo).
+    # (e.g. ReplyJob broadcasts each chunk to the browser via Turbo).
     #
     # Without a block: accumulates all chunks and returns the complete response
     # as a string once the API finishes, for use outside a streaming context.
     #
-    # Accepts a multi-turn messages: array ([{ role:, content: }]) or the
-    # prompt: sugar for a single user message.
+    # Accepts a multi-turn messages: array ([{ role:, content: }]).
     #
     # Subclasses must implement: #build_uri, #build_headers, #build_body,
     # #extract_text. Optionally override #end_of_stream_marker.
-    def generate(messages: nil, prompt: nil, model: nil, &block)
+    def generate(messages:, model: nil, &block)
       resolved_model = model.presence || self.model
-      resolved_messages = resolve_messages(messages, prompt)
       uri = build_uri(resolved_model)
       headers = build_headers
-      body = build_body(messages: resolved_messages, model: resolved_model)
+      body = build_body(messages: messages, model: resolved_model)
 
       buffer = block ? nil : +''
 
