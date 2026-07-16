@@ -1,4 +1,9 @@
-<%# locals: (message:) -%>
+<%# locals: (message:, request_id: nil) -%>
+<%# request_id is accepted-and-ignored: turbo-rails 2.0.4 broadcastable.rb:503 %>
+<%# reverse_merges request_id: Turbo.current_request_id into every broadcast %>
+<%# partial's locals. It's non-nil in a real request (RequestId middleware) and %>
+<%# .compact'd away in a job/rack_test, so strict locals must tolerate it or the %>
+<%# in-request broadcast_created 500s with StrictLocalsError (SEC-506 Bug 1). %>
 <%# Restyled per the accepted UX design (SEC-476). Renders from `render partial:` %>
 <%# with only `message:` in locals, so no controller-context helpers here. Author %>
 <%# line is keyed off `role`, never off user presence. %>
