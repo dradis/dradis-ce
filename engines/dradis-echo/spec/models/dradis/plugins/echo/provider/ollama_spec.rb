@@ -29,7 +29,7 @@ describe Dradis::Plugins::Echo::Provider::Ollama do
         content_event('', done: true)
       )
 
-      expect(provider.generate(prompt: 'hi')).to eq('Hello world')
+      expect(provider.generate(messages: [{ role: 'user', content: 'hi' }])).to eq('Hello world')
     end
 
     it 'preserves whitespace-only chunks, such as standalone line breaks' do
@@ -40,7 +40,7 @@ describe Dradis::Plugins::Echo::Provider::Ollama do
         content_event('', done: true)
       )
 
-      expect(provider.generate(prompt: 'hi')).to eq("1. First item.  \n2. Second item.")
+      expect(provider.generate(messages: [{ role: 'user', content: 'hi' }])).to eq("1. First item.  \n2. Second item.")
     end
 
     it 'skips events with empty content, such as thinking-only chunks' do
@@ -50,7 +50,7 @@ describe Dradis::Plugins::Echo::Provider::Ollama do
         content_event('', done: true)
       )
 
-      expect(provider.generate(prompt: 'hi')).to eq('Answer')
+      expect(provider.generate(messages: [{ role: 'user', content: 'hi' }])).to eq('Answer')
     end
 
     it 'replaces think tags embedded in the response text' do
@@ -62,7 +62,7 @@ describe Dradis::Plugins::Echo::Provider::Ollama do
         content_event('', done: true)
       )
 
-      expect(provider.generate(prompt: 'hi')).to eq('{thinking}reasoning{/thinking}Answer')
+      expect(provider.generate(messages: [{ role: 'user', content: 'hi' }])).to eq('{thinking}reasoning{/thinking}Answer')
     end
 
     it 'yields each chunk to the given block instead of buffering' do
@@ -73,7 +73,7 @@ describe Dradis::Plugins::Echo::Provider::Ollama do
       )
 
       chunks = []
-      provider.generate(prompt: 'hi') { |chunk| chunks << chunk }
+      provider.generate(messages: [{ role: 'user', content: 'hi' }]) { |chunk| chunks << chunk }
 
       expect(chunks).to eq(['Hello ', 'world'])
     end
@@ -89,14 +89,6 @@ describe Dradis::Plugins::Echo::Provider::Ollama do
         .and_yield(content_event('ok'), nil)
 
       expect(provider.generate(messages: messages)).to eq('ok')
-    end
-
-    it 'wraps the prompt: sugar into a single user message' do
-      expect(client).to receive(:chat)
-        .with(hash_including(messages: [{ role: 'user', content: 'hi' }]))
-        .and_yield(content_event('ok'), nil)
-
-      provider.generate(prompt: 'hi')
     end
   end
 end
