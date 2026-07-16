@@ -4,7 +4,7 @@ Dradis::Plugins::Echo::Engine.routes.draw do
     resources :providers, except: [:show]
 
     resources :projects, only: [] do
-      resources :interactions, only: [:index, :show, :create], controller: 'projects/interactions' do
+      resources :interactions, only: [:index], controller: 'projects/interactions' do
         get :preview, on: :member
       end
 
