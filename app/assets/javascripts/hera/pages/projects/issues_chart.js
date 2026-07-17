@@ -87,4 +87,8 @@ function initIssuesChart() {
   $($('.counter')[tagCount]).addClass('untagged');
 }
 
-document.addEventListener('turbo:load', initIssuesChart);
+document.addEventListener('turbo:frame-load', e => {
+  if (e.target.id === 'issues-summary') {
+    initIssuesChart();
+  }
+});
