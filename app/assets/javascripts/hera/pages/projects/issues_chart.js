@@ -19,12 +19,12 @@ function initIssuesChart() {
       .attr('transform', `translate(0,${margin.top})`);
 
   // --------------------------------------------------------- Data variables
-  const tags        = $chartElement.data('tags') || {};
+  const tags = $chartElement.data('tags') || {};
   const issuesByTag = $chartElement.data('issues-count') || {};
-  let   highest     = 0;
-  const data        = [];
-  const x_domain    = [];
-  const colors      = [];
+  let highest = 0;
+  const data = [];
+  const x_domain = [];
+  const colors = [];
 
   Object.keys(tags).forEach(key => {
     const issuesCount = issuesByTag[key] || 0;
