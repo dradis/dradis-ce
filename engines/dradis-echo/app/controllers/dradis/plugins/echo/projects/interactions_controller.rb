@@ -1,6 +1,7 @@
 module Dradis::Plugins::Echo
   class Projects::InteractionsController < AuthenticatedController
     include ProjectScoped
+    include TurboConfigCheck
     layout false
 
     before_action :check_turbo_config, only: [:index]
@@ -18,15 +19,6 @@ module Dradis::Plugins::Echo
     def preview; end
 
     private
-
-    def check_turbo_config
-      @turbo_status = begin
-        ActionCable.server.pubsub.redis_connection_for_subscriptions.ping
-        true
-      rescue
-        false
-      end
-    end
 
     def liquid_parse(template)
       assigns = { 'issue' => IssueDrop.new(@record) }
@@ -46,10 +38,12 @@ module Dradis::Plugins::Echo
     end
 
     def set_prompt
-      @prompt = current_user.prompts.find(params[:id])
+      @prompt = current_user.prompts.for(@type).find(params[:id])
     end
 
     def set_record
+      raise ActiveRecord::RecordNotFound if @type.blank?
+
       @record = current_project.send(@type.to_s.pluralize).find(record_params[:record])
     end
 
