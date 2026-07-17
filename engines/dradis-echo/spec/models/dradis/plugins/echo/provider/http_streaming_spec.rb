@@ -32,7 +32,7 @@ describe Dradis::Plugins::Echo::Provider::HttpStreaming do
                       URI('https://api.anthropic.com/v1/messages'),
                       headers: {},
                       body: {})
-      end.to raise_error(RuntimeError, /API error \(401\)/)
+      end.to raise_error(Dradis::Plugins::Echo::Provider::HttpStreaming::Error, /API error \(401\)/)
     end
 
     it 'parses SSE lines and yields text chunks' do

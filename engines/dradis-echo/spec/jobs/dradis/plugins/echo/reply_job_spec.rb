@@ -110,31 +110,79 @@ describe Dradis::Plugins::Echo::ReplyJob do
   describe 'when the agent is not enabled' do
     before { agent.update!(enabled: false) }
 
-    it 'does not create an assistant message and resets to idle' do
+    it 'raises so the failure reaches the job queue and creates no assistant message' do
       session.update!(status: :generating)
-      expect { perform }.not_to change { session.messages.assistant.count }
-      expect(session.reload).to be_idle
+      expect { perform }.to raise_error(/is not enabled/)
+      expect(session.messages.assistant).to be_empty
     end
   end
 
   describe 'when the provider raises' do
     before do
       allow_any_instance_of(Dradis::Plugins::Echo::Provider::Ollama)
-        .to receive(:generate).and_raise('provider exploded')
+        .to receive(:generate)
+        .and_raise(Dradis::Plugins::Echo::Provider::HttpStreaming::Error, 'API error (500): secret-host internal body')
       session.update!(status: :generating)
     end
 
-    it 'marks the assistant message failed with the error in metadata' do
+    it 'marks the assistant message failed with a generic, sanitised error' do
       perform
       message = session.messages.assistant.last
 
       expect(message).to be_failed
-      expect(message.metadata['error']).to eq('provider exploded')
+      expect(message.metadata['error']).to eq(Dradis::Plugins::Echo::Message::GENERIC_ERROR)
+      expect(message.metadata['error']).not_to include('secret-host')
     end
 
     it 'resets the session to idle' do
       perform
       expect(session.reload).to be_idle
+    end
+  end
+
+  describe 'when our own code raises a non-provider error' do
+    before do
+      allow_any_instance_of(Dradis::Plugins::Echo::Provider::Ollama)
+        .to receive(:generate).and_raise(ArgumentError, 'genuine bug')
+      session.update!(status: :generating)
+    end
+
+    it 're-raises so the bug reaches the failed queue instead of being swallowed' do
+      expect { perform }.to raise_error(ArgumentError, 'genuine bug')
+    end
+  end
+
+  describe 'retrying after a failed reply' do
+    it 'sends only complete turns on the retry, recovers, and unlocks the session' do
+      session.update!(status: :generating)
+
+      # First attempt: the provider fails, leaving a failed assistant row with
+      # no content — exactly the turn that must never be replayed.
+      allow_any_instance_of(Dradis::Plugins::Echo::Provider::Ollama)
+        .to receive(:generate)
+        .and_raise(Dradis::Plugins::Echo::Provider::HttpStreaming::Error, 'boom')
+      perform
+
+      failed = session.messages.assistant.last
+      expect(failed).to be_failed
+      expect(failed.content).to be_nil
+
+      # Retry: capture the context handed to the provider.
+      sent_context = nil
+      allow_any_instance_of(Dradis::Plugins::Echo::Provider::Ollama)
+        .to receive(:generate) do |_provider, **kwargs, &block|
+          sent_context = kwargs[:messages]
+          block.call('Recovered answer.')
+        end
+      session.update!(status: :generating)
+      perform
+
+      # The failed, nil-content turn is excluded — no poison-pill.
+      expect(sent_context.map { |turn| turn[:content] }).to all(be_present)
+      expect(sent_context).not_to include(a_hash_including(content: nil))
+
+      expect(session.reload).to be_idle
+      expect(session.messages.assistant.complete.last.content).to eq('Recovered answer.')
     end
   end
 end

@@ -59,6 +59,17 @@ describe Dradis::Plugins::Echo::Session do
         { role: 'assistant', content: 'Second' }
       ])
     end
+
+    it 'excludes streaming and failed turns so no nil-content turn is replayed' do
+      session = create(:echo_session)
+      create(:echo_message, session: session, role: :user, content: 'First')
+      create(:assistant_message, session: session, status: :streaming, content: nil)
+      create(:assistant_message, session: session, status: :failed, content: nil)
+
+      expect(session.to_provider_messages).to eq([
+        { role: 'user', content: 'First' }
+      ])
+    end
   end
 
   describe '.for_record' do
@@ -123,12 +134,37 @@ describe Dradis::Plugins::Echo::Session do
 
         expect(session.reload).to be_generating
         expect(stale.reload).to be_failed
-        expect(stale.metadata['error']).to eq('interrupted')
+        expect(stale.metadata['error']).to eq(Dradis::Plugins::Echo::Message::GENERIC_ERROR)
         expect(Dradis::Plugins::Echo::ReplyJob).to have_received(:perform_later).once
       end
 
       it 'leaves a fresh generating lock alone' do
         create(:assistant_message, session: session, status: :streaming, content: nil)
+        session.request_reply!
+        expect(Dradis::Plugins::Echo::ReplyJob).not_to have_received(:perform_later)
+      end
+
+      it 'leaves a live stream touched within the threshold alone' do
+        stale = create(:assistant_message, session: session, status: :streaming, content: nil)
+        stale.update_column(:updated_at, (read_timeout - 1.minute).ago)
+
+        session.request_reply!
+
+        expect(stale.reload).to be_streaming
+        expect(Dradis::Plugins::Echo::ReplyJob).not_to have_received(:perform_later)
+      end
+
+      it 'reclaims a generating session that has no streaming message once it is stale' do
+        session.update_column(:updated_at, (read_timeout + described_class::STUCK_MARGIN + 1.minute).ago)
+
+        session.request_reply!
+
+        expect(session.reload).to be_generating
+        expect(Dradis::Plugins::Echo::ReplyJob).to have_received(:perform_later).once
+      end
+
+      it 'leaves a freshly generating session with no streaming message alone' do
+        session.touch
         session.request_reply!
         expect(Dradis::Plugins::Echo::ReplyJob).not_to have_received(:perform_later)
       end

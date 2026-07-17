@@ -1,5 +1,10 @@
 module Dradis::Plugins::Echo
   class Message < ApplicationRecord
+    # User-facing text stored on a failed message. Deliberately generic so we
+    # never persist a provider's raw response body, hostname, or status line;
+    # the real error is logged server-side instead.
+    GENERIC_ERROR = "Roslin couldn't finish this response.".freeze
+
     enum :role, %i[user assistant]
     enum :status, %i[complete streaming failed], default: :complete
 

@@ -67,8 +67,11 @@ module Dradis::Plugins::Echo
       ReplyJob.perform_later(self) if enqueue
     end
 
+    # Only completed turns are safe to replay to a provider: a streaming row has
+    # no content yet, and a failed one carries a nil/partial body. Sending either
+    # would poison the next request with a `content: nil` turn.
     def to_provider_messages
-      messages.order(:created_at, :id).map do |message|
+      messages.where(status: :complete).order(:created_at, :id).map do |message|
         { role: message.role, content: message.content }
       end
     end
@@ -87,19 +90,29 @@ module Dradis::Plugins::Echo
 
     private
 
-    # A crashed ReplyJob leaves the session locked in `generating` with an
-    # orphaned streaming message. Once that message hasn't been touched past the
-    # provider read timeout (plus a margin), fail it and release the session so
-    # the next request_reply! can start fresh.
+    # A crashed ReplyJob leaves the session locked in `generating`. Two shapes:
+    #
+    #   1. An orphaned streaming message. ReplyJob touches the streaming row as
+    #      chunks arrive (a throttled liveness signal), so a message untouched
+    #      past the read timeout plus a margin is genuinely dead — not a slow but
+    #      live stream. Fail it and release the session.
+    #   2. No streaming message at all: enqueue raised after the status commit,
+    #      the worker was hard-killed before messages.create!, or the job was
+    #      lost from the queue. Here the session's own updated_at is the liveness
+    #      signal — once it's past the threshold, release the orphaned lock.
     def reclaim_stuck_generation!
       threshold = Provider::HttpStreaming::READ_TIMEOUT.seconds.ago - STUCK_MARGIN
-      stuck = messages.where(role: :assistant, status: :streaming).where(updated_at: ..threshold)
-      return unless stuck.exists?
+      streaming = messages.where(role: :assistant, status: :streaming)
+      stuck = streaming.where(updated_at: ..threshold)
 
-      stuck.find_each do |message|
-        message.update!(status: :failed, metadata: message.metadata.merge('error' => 'interrupted'))
+      if stuck.exists?
+        stuck.find_each do |message|
+          message.update!(status: :failed, metadata: message.metadata.merge('error' => Message::GENERIC_ERROR))
+        end
+        update!(status: :idle)
+      elsif streaming.none? && updated_at <= threshold
+        update!(status: :idle)
       end
-      update!(status: :idle)
     end
   end
 end
