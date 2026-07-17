@@ -29,6 +29,10 @@ describe 'moving an evidence', js: true do
     click_move_evidence
   end
 
+  after do
+    FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
+  end
+
   let(:content) { "#[Description]#\nTest Evidence\n" }
   let(:current_evidence) { @evidence = create(:evidence, content: content, node: @node_5) }
 
