@@ -24,12 +24,14 @@ function initIssuesChart() {
   let   highest     = 0;
   const data        = [];
   const x_domain    = [];
+  const colors      = [];
 
   Object.keys(tags).forEach(key => {
-    const count = issuesByTag[key] || 0;
-    highest = count > highest ? count : highest;
-    data.push({ letter: tags[key][0], frequency: count });
+    const issuesCount = issuesByTag[key] || 0;
+    highest = issuesCount > highest ? issuesCount : highest;
+    data.push({ letter: tags[key][0], frequency: issuesCount });
     x_domain.push(tags[key][0]);
+    colors.push(tags[key][1]);
   });
 
   const unassignedCount = issuesByTag['unassigned'] || 0;
@@ -75,16 +77,15 @@ function initIssuesChart() {
       .attr('class', 'counter')
       .text(d => d.frequency);
 
-  const tagCount = Object.keys(tags).length;
-  Object.keys(tags).forEach((key, i) => {
-    $($('.tick')[i]).attr('fill', tags[key][1]);
-    $($('.bar')[i]).attr('fill', tags[key][1]);
-    $($('.counter')[i]).attr('fill', tags[key][1]);
+  colors.forEach((color, i) => {
+    $($('.tick')[i]).attr('fill', color);
+    $($('.bar')[i]).attr('fill', color);
+    $($('.counter')[i]).attr('fill', color);
   });
 
-  $($('.tick')[tagCount]).addClass('untagged');
-  $($('.bar')[tagCount]).addClass('untagged');
-  $($('.counter')[tagCount]).addClass('untagged');
+  $($('.tick')[colors.length]).addClass('untagged');
+  $($('.bar')[colors.length]).addClass('untagged');
+  $($('.counter')[colors.length]).addClass('untagged');
 }
 
 document.addEventListener('turbo:frame-load', e => {
