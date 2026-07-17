@@ -93,5 +93,19 @@ describe Dradis::Plugins::Echo::Message do
       message.update_column(:user_id, nil)
       expect(render_message(message.reload)).to include('Deleted user')
     end
+
+    it 'shows only a generic summary for a failed message, never the stored error' do
+      message = create(
+        :assistant_message,
+        status: :failed,
+        content: nil,
+        metadata: { 'error' => 'boom: secret-host:443 raw provider body' }
+      )
+
+      html = render_message(message.reload)
+
+      expect(html).to include('Send another message to try again')
+      expect(html).not_to include('secret-host')
+    end
   end
 end

@@ -26,7 +26,7 @@
               <span class="echo-session-meta">
                 Started by <%= session.user&.name || 'a removed user' %> ·
                 updated <%= local_time_ago(session.updated_at) %> ·
-                <%= pluralize(session.messages.size, 'message') %>
+                <%= pluralize(@message_counts.fetch(session.id, 0), 'message') %>
               </span>
             </span>
             <% if session.generating? %>

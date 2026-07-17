@@ -29,8 +29,10 @@
     </div>
 
     <% if assistant && message.failed? %>
+      <%# Never render metadata['error'] here: the raw provider body/host is logged
+          server-side only. The view shows a fixed, generic summary. %>
       <div class="echo-error-line"><i class="fa-solid fa-circle-exclamation"></i><span>Roslin couldn&rsquo;t finish this response.</span></div>
-      <div class="echo-error-hint"><%= message.metadata['error'].to_s.presence || 'The request could not be completed.' %> Send another message to try again.</div>
+      <div class="echo-error-hint">Send another message to try again.</div>
     <% else %>
       <%# ReplyJob streams chunks into this container by dom_id(message, :content). Keep the
           spinner caption OUTSIDE it so appended chunks never overwrite the caption, and keep
