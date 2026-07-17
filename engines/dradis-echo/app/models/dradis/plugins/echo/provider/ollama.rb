@@ -15,7 +15,7 @@ module Dradis::Plugins::Echo
         next if event['done']
 
         chunk = event['response'].to_s
-        next if chunk.strip.empty?
+        next if chunk.empty?
 
         chunk = chunk.sub('<think>', '{thinking}').sub('</think>', '{/thinking}')
 
