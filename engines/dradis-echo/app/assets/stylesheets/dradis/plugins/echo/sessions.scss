@@ -178,12 +178,12 @@
   align-items: center;
   background-color: var(--brand-bg);
   border-radius: 50%;
-  color: #fff;
+  color: var(--brand-fg);
   display: flex;
   flex: 0 0 auto;
-  height: 35px;
+  height: 2.1875rem;
   justify-content: center;
-  width: 35px;
+  width: 2.1875rem;
 }
 
 // Streaming state — spinner + caption under the (possibly partial) content.
