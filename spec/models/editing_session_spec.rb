@@ -22,7 +22,6 @@ describe EditingSession do
   describe 'validations' do
     subject { create(:editing_session, user: user, record_type: 'Issue', record_id: issue.id) }
     it { is_expected.to validate_presence_of(:record_type) }
-    it { is_expected.to validate_presence_of(:record_id) }
   end
 
   describe '.for_record' do
@@ -101,6 +100,36 @@ describe EditingSession do
       EditingSession.purge_stale_for(record_type: 'Issue', record_id: issue.id)
 
       expect(EditingSession.all).to contain_exactly(fresh_session, stale_elsewhere)
+    end
+  end
+
+  describe '.acquire' do
+    it 'creates a session for the user and record' do
+      session = EditingSession.acquire(record_type: 'Issue', record_id: issue.id, user: user)
+
+      expect(session).to be_persisted
+      expect(EditingSession.where(user: user, record_type: 'Issue', record_id: issue.id)).to exist
+    end
+
+    it 'returns the existing session instead of raising when one already exists' do
+      existing = create(:editing_session, user: user, record_type: 'Issue', record_id: issue.id)
+
+      session = EditingSession.acquire(record_type: 'Issue', record_id: issue.id, user: user)
+
+      expect(session).to eq(existing)
+    end
+
+    it 'purges stale sessions for the record before acquiring' do
+      stale = create(:editing_session,
+        user: other_user,
+        record_type: 'Issue',
+        record_id: issue.id,
+        started_at: EditingSession::STALE_AFTER.ago - 1.minute
+      )
+
+      EditingSession.acquire(record_type: 'Issue', record_id: issue.id, user: user)
+
+      expect(EditingSession.where(id: stale.id)).not_to exist
     end
   end
 

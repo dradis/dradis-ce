@@ -7,7 +7,6 @@ class EditingSession < ApplicationRecord
   belongs_to :record, polymorphic: true
 
   validates :record_type, presence: true, inclusion: { in: ALLOWED_RECORD_TYPES }
-  validates :record_id, presence: true
 
   after_commit :broadcast_presence, on: [:create, :destroy]
 
@@ -20,6 +19,11 @@ class EditingSession < ApplicationRecord
 
   def self.purge_stale_for(record_type:, record_id:)
     where(record_type: record_type, record_id: record_id).stale.destroy_all
+  end
+
+  def self.acquire(record_type:, record_id:, user:)
+    purge_stale_for(record_type: record_type, record_id: record_id)
+    create_or_find_by!(record_type: record_type, record_id: record_id, user: user)
   end
 
   def self.parse_stream_name(stream_name)

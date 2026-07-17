@@ -12,12 +12,7 @@ class EditingPresenceChannel < ApplicationCable::Channel
 
       stream_from stream_name
 
-      EditingSession.purge_stale_for(record_type: @record_type, record_id: @record_id)
-      EditingSession.find_or_create_by!(
-        user: current_user,
-        record_type: @record_type,
-        record_id: @record_id
-      )
+      EditingSession.acquire(record_type: @record_type, record_id: @record_id, user: current_user)
     else
       reject
     end

@@ -42,12 +42,7 @@ module EditLockable
   end
 
   def acquire_edit_session(record)
-    EditingSession.purge_stale_for(record_type: record.class.name, record_id: record.id)
-    EditingSession.create_or_find_by!(
-      user: current_user,
-      record_type: record.class.name,
-      record_id: record.id
-    )
+    EditingSession.acquire(record_type: record.class.name, record_id: record.id, user: current_user)
   end
 
   def release_edit_session(record)
