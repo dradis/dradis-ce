@@ -39,6 +39,7 @@ v5.2.0 (July 2026)
       - Remove a stray leading blank line from streamed responses
       - Send only completed conversation turns to the AI provider, so a failed or in-progress reply can no longer break the next one
       - Show a generic message when a reply fails instead of surfacing the provider's raw error
+      - Return a graceful error instead of a server error when a chat session is started with a blank prompt
 
 v5.1.0 (May 2026)
   - DataTables: add sticky table toolbar that tracks below the navigation bar when scrolling

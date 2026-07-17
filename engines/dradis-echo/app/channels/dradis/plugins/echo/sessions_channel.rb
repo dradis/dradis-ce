@@ -1,10 +1,12 @@
 module Dradis::Plugins::Echo
   # Custom Turbo Streams channel for Echo sessions. Turbo's default channel
   # trusts any client holding a validly-signed stream name for the lifetime of
-  # that name — which never expires — so a user who loses project access keeps
-  # receiving the transcript. We re-check authorization at subscribe time
-  # instead: resolve the session behind the signed name and only stream if the
-  # subscriber may still :use its project, otherwise reject.
+  # that name — which never expires — so a user who loses project access could
+  # subscribe and keep receiving the transcript. We re-check authorization when
+  # a subscription is established: resolve the session behind the signed name
+  # and only stream if the subscriber may still :use its project, otherwise
+  # reject. Note this guards *new* subscriptions only; a connection opened while
+  # still authorized keeps streaming until it is torn down.
   #
   # Follows the documented turbo-rails custom-channel pattern
   # (Turbo::StreamsChannel).

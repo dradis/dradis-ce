@@ -3,19 +3,13 @@ module Dradis::Plugins::Echo
     include EventPublisher
     include ProjectScoped
     include RecordScoping
+    include TurboConfigCheck
     layout false
 
     before_action :set_type
-    before_action :set_record, only: [:index, :create]
+    before_action :set_record, only: [:create]
     before_action :check_turbo_config, only: [:show, :create]
     before_action :set_session, only: [:show]
-
-    def index
-      @sessions = Session.for_record(@record).order(created_at: :desc)
-
-      Prompt.seed_default_prompts(current_user) if current_user.prompts.empty?
-      @prompts = current_user.prompts.for(@type)
-    end
 
     def show; end
 
@@ -41,23 +35,16 @@ module Dradis::Plugins::Echo
         user: current_user
       )
       @session.messages.build(content: params[:prompt], role: :user, user: current_user)
-      @session.save!
 
-      publish_event('echo_session.created', session: { id: @session.id })
-
-      render :show
+      if @session.save
+        publish_event('echo_session.created', session: { id: @session.id })
+        render :show
+      else
+        head :unprocessable_entity
+      end
     end
 
     private
-
-    def check_turbo_config
-      @turbo_status = begin
-        ActionCable.server.pubsub.redis_connection_for_subscriptions.ping
-        true
-      rescue
-        false
-      end
-    end
 
     def record_params
       params.permit(:id, :prompt, :prompt_id, :project_id, :record, :type)
