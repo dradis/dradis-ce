@@ -96,4 +96,55 @@ describe 'Echo sessions' do
       }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
+
+  describe 'GET /addons/echo/projects/:project_id/sessions/:id' do
+    # The initial Send-button lock is server-rendered off generating? OR
+    # reply_pending?, so a freshly-created (idle, reply-owed) session comes back
+    # disabled with zero dependency on the composer_state broadcast that races
+    # the client's subscribe on a slow box (SEC-515). A subscribe race can't be
+    # reproduced in rack_test, so we assert the server-rendered invariant.
+    def composer_state
+      Nokogiri::HTML(response.body).at_css('[data-behavior="echo-composer-state"]')
+    end
+
+    def send_button
+      composer_state.at_css('button[type="submit"]')
+    end
+
+    it 'server-renders the Send button disabled for a reply_pending session' do
+      session = create(:echo_session, record: issue, user: user, status: :idle)
+      create(:echo_message, session: session, role: :user, user: user)
+      expect(session).to be_reply_pending
+
+      get "/addons/echo/projects/#{@project.id}/sessions/#{session.id}"
+
+      expect(response).to have_http_status(:ok)
+      expect(composer_state['data-generating']).to eq('true')
+      expect(send_button.attributes).to have_key('disabled')
+    end
+
+    it 'server-renders the Send button disabled for a generating session' do
+      session = create(:echo_session, record: issue, user: user, status: :generating)
+      create(:echo_message, session: session, role: :user, user: user)
+
+      get "/addons/echo/projects/#{@project.id}/sessions/#{session.id}"
+
+      expect(response).to have_http_status(:ok)
+      expect(composer_state['data-generating']).to eq('true')
+      expect(send_button.attributes).to have_key('disabled')
+    end
+
+    it 'server-renders the Send button enabled for an answered session' do
+      session = create(:echo_session, record: issue, user: user, status: :idle)
+      create(:echo_message, session: session, role: :user, user: user)
+      create(:assistant_message, session: session)
+      expect(session).not_to be_reply_pending
+
+      get "/addons/echo/projects/#{@project.id}/sessions/#{session.id}"
+
+      expect(response).to have_http_status(:ok)
+      expect(composer_state['data-generating']).to eq('false')
+      expect(send_button.attributes).not_to have_key('disabled')
+    end
+  end
 end

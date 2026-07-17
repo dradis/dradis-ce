@@ -6,16 +6,22 @@
 <%# Route-free and locals-only so it renders from ReplyJob. Carries the Send button %>
 <%# and the multiplayer hint; the session_controller reads data-generating to keep %>
 <%# the textarea disabled in step with the (server-rendered) button. %>
-<% generating = session.generating? %>
+<%# Lock on generating? OR reply_pending?: a freshly-created session is idle with a %>
+<%# reply owed, and the composer_state replace that flips it to generating races the %>
+<%# client's still-in-flight subscribe, so on a slow box that broadcast is dropped and %>
+<%# the button would stay enabled until a full re-render. Folding reply_pending? in %>
+<%# server-renders the initial lock with zero dependency on that racy broadcast; %>
+<%# subsequent transitions (by then subscribed) are still driven by broadcasts (SEC-515). %>
+<% locked = session.generating? || session.reply_pending? %>
 <%= tag.div id: dom_id(session, :composer_state),
-      data: { behavior: 'echo-composer-state', generating: generating } do %>
+      data: { behavior: 'echo-composer-state', generating: locked } do %>
   <div class="echo-composer-actions">
-    <% if generating %>
+    <% if locked %>
       <span class="echo-composer-hint"><i class="fa-solid fa-lock"></i> Roslin is responding — you can send once it finishes.</span>
     <% else %>
       <span class="echo-composer-hint">Anyone on this project can join the conversation.</span>
     <% end %>
-    <button type="submit" class="btn btn-primary"<%= ' disabled'.html_safe if generating %>>
+    <button type="submit" class="btn btn-primary"<%= ' disabled'.html_safe if locked %>>
       <i class="fa-solid fa-paper-plane me-1"></i> Send
     </button>
   </div>
