@@ -41,11 +41,10 @@ module Dradis::Plugins::Echo
 
     initializer 'echo.extend_note_model' do
       ActiveSupport.on_load :note_model do
-        # Sessions hang off a polymorphic record (a Note or Issue). Clean them
-        # up when the record is destroyed. Inherited by Issue < Note.
-        ::Note.send(:before_destroy) do
-          Dradis::Plugins::Echo::Session.for_record(self).destroy_all
-        end
+        # Sessions hang off a polymorphic record (a Note or Issue). The
+        # Sessionable concern owns the association and destroy cleanup;
+        # Issue < Note inherits it.
+        ::Note.include Dradis::Plugins::Echo::Sessionable
       end
     end
 

@@ -98,5 +98,17 @@ describe Dradis::Plugins::Echo::Session do
 
       expect { issue.destroy }.to change { described_class.exists?(session.id) }.to(false)
     end
+
+    # The gap the after_destroy sweep exists for: an Issue row destroyed while
+    # loaded as a Note (e.g. a Pro project.notes cascade). Loaded as Note, the
+    # polymorphic dependent: :destroy queries record_type 'Note' and misses the
+    # session, so the record_type 'Issue' sweep has to catch it.
+    it 'destroys record_type Issue sessions when the Issue row is destroyed loaded as a Note' do
+      issue = create(:issue)
+      session = create(:echo_session, record: issue)
+      note = Note.find(issue.id)
+
+      expect { note.destroy }.to change { described_class.exists?(session.id) }.to(false)
+    end
   end
 end
