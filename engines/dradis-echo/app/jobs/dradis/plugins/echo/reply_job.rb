@@ -2,6 +2,11 @@ module Dradis::Plugins::Echo
   class ReplyJob < ApplicationJob
     queue_as :dradis_project
 
+    # How often, at most, to touch the streaming message so Session's stuck-
+    # generation reclaim can tell a live-but-slow stream from a dead one without
+    # a database write per chunk.
+    TOUCH_INTERVAL = 5
+
     # Generates one assistant reply for a session: it streams the provider
     # response into a `streaming` message, persists the final text as
     # `complete` with model/provider metadata, then serializes — re-enqueueing
@@ -19,7 +24,10 @@ module Dradis::Plugins::Echo
 
       complete(agent, message, text, duration_ms)
       serialize(session, cutoff_id)
-    rescue => e
+    rescue Provider::HttpStreaming::Error => e
+      # A genuine provider/transport failure: surface it to the user as a failed
+      # message. Anything else (a disabled agent, a bug in our code) is left to
+      # propagate so it reaches Resque's failed queue instead of being hidden.
       fail_message(session, message, e)
     end
 
@@ -28,10 +36,17 @@ module Dradis::Plugins::Echo
     def stream_reply(agent, session, message, context)
       buffer = +''
       started = clock
+      last_touch = started
 
       agent.provider.generate(messages: context, model: agent.model_override) do |chunk|
         buffer << chunk
         broadcast_chunk(session, message, chunk)
+
+        # Throttled liveness signal for Session#reclaim_stuck_generation!.
+        if clock - last_touch >= TOUCH_INTERVAL
+          message.touch
+          last_touch = clock
+        end
       end
 
       [buffer, ((clock - started) * 1000).round]
@@ -86,10 +101,15 @@ module Dradis::Plugins::Echo
     end
 
     def fail_message(session, message, error)
+      Rails.logger.error(
+        "#{self.class.name} failed: #{error.class}: #{error.message}\n" \
+        "#{Array(error.backtrace).join("\n")}"
+      )
+
       if message
         message.update!(
           status: :failed,
-          metadata: message.metadata.merge('error' => error.message)
+          metadata: message.metadata.merge('error' => Message::GENERIC_ERROR)
         )
         broadcast_message(message)
       end

@@ -1,5 +1,6 @@
 require 'net/http'
 require 'json'
+require 'openssl'
 require 'uri'
 
 module Dradis::Plugins::Echo
@@ -7,6 +8,20 @@ module Dradis::Plugins::Echo
     extend ActiveSupport::Concern
 
     READ_TIMEOUT = 120
+
+    # Raised for any provider/transport failure (non-2xx responses, timeouts,
+    # dropped connections). Callers rescue this to tell a genuine provider
+    # problem apart from a bug in our own code, which must not be swallowed.
+    class Error < StandardError; end
+
+    # Low-level transport failures we translate into Error so callers only ever
+    # have to rescue Provider::HttpStreaming::Error.
+    NETWORK_ERRORS = [
+      Errno::ECONNREFUSED, Errno::ECONNRESET, Errno::EHOSTUNREACH, Errno::ETIMEDOUT,
+      EOFError, IOError, SocketError,
+      Net::OpenTimeout, Net::ReadTimeout, Net::WriteTimeout, Net::HTTPBadResponse,
+      OpenSSL::SSL::SSLError
+    ].freeze
 
     # Sends prompt to the provider and returns the response.
     #
@@ -65,7 +80,7 @@ module Dradis::Plugins::Echo
         unless response.is_a?(Net::HTTPSuccess)
           error_body = +''
           response.read_body { |chunk| error_body << chunk }
-          raise "#{self.class.name} API error (#{response.code}): #{error_body}"
+          raise Error, "#{self.class.name} API error (#{response.code}): #{error_body}"
         end
 
         response.read_body do |chunk|
@@ -83,6 +98,8 @@ module Dradis::Plugins::Echo
           end
         end
       end
+    rescue *NETWORK_ERRORS => e
+      raise Error, e.message
     end
 
     # Returns the URI for the provider's API endpoint.
