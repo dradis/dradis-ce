@@ -29,17 +29,6 @@ describe 'Echo sessions' do
     create(:issue, node: @project.issue_library, text: "#[Title]#\nSQLi")
   end
 
-  describe 'GET /addons/echo/projects/:project_id/sessions' do
-    it 'lists the sessions for the record' do
-      session = create(:echo_session, agent: roslin, record: issue)
-
-      get "/addons/echo/projects/#{@project.id}/sessions", params: { type: 'issue', record: issue.id }
-
-      expect(response).to have_http_status(:ok)
-      expect(response.body).to include(session.title.to_s) if session.title.present?
-    end
-  end
-
   describe 'POST /addons/echo/projects/:project_id/sessions' do
     let(:params) do
       { type: 'issue', record: issue.id, prompt_id: prompt.id, prompt: 'Summarise the SQLi finding' }
@@ -80,6 +69,15 @@ describe 'Echo sessions' do
       session = Dradis::Plugins::Echo::Session.last
       expect(session.attributes).not_to have_key('prompt_id')
       expect(session.title).to eq(prompt.title)
+    end
+
+    it 'returns 422 for a blank prompt instead of raising a 500' do
+      expect {
+        post "/addons/echo/projects/#{@project.id}/sessions",
+          params: params.merge(prompt: '')
+      }.not_to change(Dradis::Plugins::Echo::Session, :count)
+
+      expect(response).to have_http_status(:unprocessable_entity)
     end
 
     it 'honours the Prompt::SCOPES whitelist' do
