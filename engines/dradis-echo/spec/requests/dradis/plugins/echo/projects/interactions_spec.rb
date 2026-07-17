@@ -55,6 +55,12 @@ describe 'Echo interactions' do
       # href attributes HTML-escape the query separator (& -> &amp;); match escaped.
       expect(response.body).to include(ERB::Util.html_escape(new_conversation_link))
     end
+
+    it 'raises RecordNotFound (404) rather than a 500 for a missing or unknown type' do
+      expect {
+        get "/addons/echo/projects/#{@project.id}/interactions", params: { record: issue.id }
+      }.to raise_error(ActiveRecord::RecordNotFound)
+    end
   end
 
   describe 'the retired Roslin one-shot path' do
