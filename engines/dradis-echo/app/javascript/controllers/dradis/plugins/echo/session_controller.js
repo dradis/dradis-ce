@@ -34,22 +34,51 @@ export default class extends Controller {
   disconnect() {
     this.messagesObserver?.disconnect()
     this.stateObserver?.disconnect()
+    clearTimeout(this.sendErrorTimeout)
   }
 
   // Post over fetch so sending never navigates the Echo frame — the new user
-  // message and Roslin's reply both arrive over the socket. Clear the box on OK.
+  // message and Roslin's reply both arrive over the socket. Clear the box on OK;
+  // on a non-OK response or a network error, keep the text and warn the user so
+  // a failed send isn't silently swallowed.
   send(event) {
     event.preventDefault()
     if (this.#generating()) return
 
     const form = event.target
+    this.#clearSendError()
+
     fetch(form.action, {
       body: new FormData(form),
       headers: { "Accept": "text/vnd.turbo-stream.html", "X-CSRF-Token": this.#csrfToken() },
       method: "POST"
     }).then((response) => {
-      if (response.ok) form.reset()
-    })
+      if (response.ok) {
+        form.reset()
+      } else {
+        this.#showSendError()
+      }
+    }).catch(() => this.#showSendError())
+  }
+
+  // Surfaces a send failure inline without clearing the composer, so the user
+  // can retry the same text. Auto-dismisses; a fresh failure replaces it.
+  #showSendError() {
+    this.#clearSendError()
+
+    const alert = document.createElement("div")
+    alert.className = "alert alert-danger echo-send-error"
+    alert.setAttribute("role", "alert")
+    alert.dataset.behavior = "echo-send-error"
+    alert.textContent = "Your message couldn't be sent. Check your connection and try again."
+
+    this.element.insertBefore(alert, this.element.firstChild)
+    this.sendErrorTimeout = setTimeout(() => this.#clearSendError(), 8000)
+  }
+
+  #clearSendError() {
+    clearTimeout(this.sendErrorTimeout)
+    this.element.querySelector("[data-behavior~=echo-send-error]")?.remove()
   }
 
   // On a freshly-created session the server deliberately did NOT start
