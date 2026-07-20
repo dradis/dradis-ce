@@ -1,6 +1,9 @@
+<%# locals: (session:, record:, type:, active_session: nil) -%>
+<% is_active = active_session && session.id == active_session.id %>
 <%= link_to echo.project_session_path(current_project, session, type: type, record: record.id),
       id: dom_id(session),
-      class: 'echo-session-item',
+      class: class_names('echo-session-item', active: is_active),
+      aria: { current: is_active ? 'page' : nil },
       data: { turbo_frame: dom_id(record, :echo) } do %>
   <i class="echo-session-icon fa-solid fa-comments"></i>
   <span class="d-flex flex-column">
