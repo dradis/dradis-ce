@@ -49,6 +49,7 @@ module Dradis::Plugins::Echo
       @session.messages.build(content: params[:prompt], user: current_user)
 
       if @session.save
+        @sessions = Session.for_record(@record).order(updated_at: :desc)
         publish_event('echo_session.created', session: { id: @session.id })
         render :show
       else
@@ -68,7 +69,8 @@ module Dradis::Plugins::Echo
 
     def set_session
       @session = Session.find(record_params[:id])
-      @record = scoped_record(@session)
+      @record = scoped_record(@session.record)
+      @sessions = Session.for_record(@record).order(updated_at: :desc)
     end
 
     # Whitelists the record type against Prompt::SCOPES before it reaches a
