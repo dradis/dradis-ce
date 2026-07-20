@@ -12,10 +12,7 @@ module Dradis::Plugins::Echo
       Prompt.seed_default_prompts(current_user) if current_user.prompts.empty?
 
       @prompts = current_user.prompts.for(@type)
-      # Preload authors and gather every conversation's message count in one
-      # grouped query so the list doesn't fire a user lookup and a COUNT per row.
-      @sessions = Session.for_record(@record).includes(:user).order(updated_at: :desc)
-      @message_counts = Message.where(session: @sessions).group(:session_id).count
+      @sessions = Session.for_record(@record).order(updated_at: :desc)
     end
 
     def preview; end

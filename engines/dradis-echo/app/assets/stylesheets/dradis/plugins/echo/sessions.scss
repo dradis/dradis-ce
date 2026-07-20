@@ -4,18 +4,34 @@
 // interactions/show.html.erb. Tokens only (var(--*)); no hardcoded colors,
 // no ID selectors, no !important, no inline styles. px only for borders.
 
-// ---- Session list (interactions#index, above the prompt picker) ----
-.echo-section-label {
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
+// ---- Interactions layout (conversations and prompt picker side-by-side) ----
+.echo-interactions-layout {
+  display: flex;
+  gap: 1.5rem;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
 }
 
+.echo-interactions-conversations {
+  flex-shrink: 0;
+  width: 13rem;
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+}
+
+.echo-interactions-prompts {
+  flex: 1;
+}
+
+// ---- Session list (interactions#index, left column) ----
 .echo-session-list {
   margin-bottom: 1.5rem;
+  max-height: clamp(20rem, 70vh, 40rem);
+  overflow-y: auto;
 }
 
 .echo-session-item {
