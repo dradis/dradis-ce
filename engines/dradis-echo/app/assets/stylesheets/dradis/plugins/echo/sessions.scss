@@ -4,18 +4,52 @@
 // interactions/show.html.erb. Tokens only (var(--*)); no hardcoded colors,
 // no ID selectors, no !important, no inline styles. px only for borders.
 
-// ---- Session list (interactions#index, above the prompt picker) ----
-.echo-section-label {
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
+// ---- Interactions layout (conversations and prompt picker side-by-side) ----
+.echo-interactions-layout {
+  display: flex;
+  gap: 1.5rem;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
 }
 
+.echo-interactions-conversations {
+  flex-shrink: 0;
+  width: 13rem;
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+}
+
+.echo-conversations-column-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+
+  .echo-new-conversation-link {
+    color: var(--text-link);
+    font-size: 0.85rem;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover {
+      color: var(--text-link-hover);
+    }
+  }
+}
+
+.echo-interactions-panel {
+  flex: 1;
+}
+
+// ---- Session list (interactions#index, left column) ----
 .echo-session-list {
   margin-bottom: 1.5rem;
+  max-height: clamp(20rem, 70vh, 40rem);
+  overflow-y: auto;
 }
 
 .echo-session-item {
@@ -53,6 +87,11 @@
   .echo-session-title {
     font-weight: 600;
   }
+}
+
+.echo-session-item.active {
+  background-color: var(--secondary-bg-subtle);
+  border-color: var(--brand-bg);
 }
 
 .echo-session-empty {
@@ -93,17 +132,6 @@
   gap: 0.5rem;
   margin-bottom: 0.25rem;
   padding-bottom: 0.6rem;
-
-  .echo-back-link {
-    color: var(--text-link);
-    font-size: 0.85rem;
-    text-decoration: none;
-    white-space: nowrap;
-
-    &:hover {
-      color: var(--text-link-hover);
-    }
-  }
 
   .echo-conversation-agent {
     color: var(--text-muted);

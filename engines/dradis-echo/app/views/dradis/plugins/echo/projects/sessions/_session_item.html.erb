@@ -1,0 +1,18 @@
+<%# locals: (session:, record:, type:, active_session: nil) -%>
+<% is_active = active_session && session.id == active_session.id %>
+<%= link_to echo.project_session_path(current_project, session, type: type, record: record.id),
+      id: dom_id(session),
+      class: class_names('echo-session-item', active: is_active),
+      aria: { current: is_active ? 'page' : nil },
+      data: { turbo_frame: dom_id(record, :echo) } do %>
+  <i class="echo-session-icon fa-solid fa-comments"></i>
+  <span class="d-flex flex-column">
+    <span class="echo-session-title"><%= session.title.presence || "Session ##{session.id}" %></span>
+    <span class="echo-session-meta">Updated <%= local_time_ago(session.updated_at) %></span>
+  </span>
+  <% if session.generating? %>
+    <span class="echo-session-generating"><span class="spinner-border spinner-border-xs" role="status"></span> Roslin is responding</span>
+  <% else %>
+    <i class="echo-session-chevron fa-solid fa-chevron-right"></i>
+  <% end %>
+<% end %>

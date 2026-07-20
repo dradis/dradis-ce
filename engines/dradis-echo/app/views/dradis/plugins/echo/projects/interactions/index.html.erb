@@ -10,67 +10,41 @@
 
 <% if Dradis::Plugins::Echo::Agents::Roslin.enabled? %>
   <% if @prompts.any? %>
-    <%# The record's existing conversations, surfaced above the picker (Serial-position %>
-    <%# effect). Each row loads sessions#show into the Echo record frame. %>
-    <div class="echo-session-list" data-behavior="echo-sessions">
-      <div class="echo-section-label">Conversations</div>
-      <% if @sessions.any? %>
-        <% @sessions.each do |session| %>
-          <%= link_to echo.project_session_path(current_project, session, type: @type, record: @record.id),
-                id: dom_id(session),
-                class: 'echo-session-item',
-                data: { turbo_frame: dom_id(@record, :echo) } do %>
-            <i class="echo-session-icon fa-solid fa-comments"></i>
-            <span>
-              <span class="echo-session-title"><%= session.title.presence || "Session ##{session.id}" %></span><br>
-              <span class="echo-session-meta">
-                Started by <%= session.user&.name || 'a removed user' %> ·
-                updated <%= local_time_ago(session.updated_at) %> ·
-                <%= pluralize(@message_counts.fetch(session.id, 0), 'message') %>
-              </span>
-            </span>
-            <% if session.generating? %>
-              <span class="echo-session-generating"><span class="spinner-border spinner-border-xs" role="status"></span> Roslin is responding</span>
-            <% else %>
-              <i class="echo-session-chevron fa-solid fa-chevron-right"></i>
-            <% end %>
-          <% end %>
-        <% end %>
-      <% else %>
-        <div class="echo-session-empty">
-          <i class="fa-regular fa-comments me-1"></i> No conversations on this Issue yet — start one below.
+    <div class="echo-interactions-layout">
+      <%= render 'dradis/plugins/echo/projects/sessions/conversations_column',
+            record: @record, type: @type, sessions: @sessions %>
+
+      <div class="echo-interactions-panel">
+        <h5 class="mb-3">Start a new conversation</h5>
+        <p>
+          Interact with <i class="fa-solid fa-robot me-1"></i>Roslin by selecting a
+          <%= link_to 'saved prompt', echo.prompts_path, data: { turbo_frame: '_top' } %> to use with this Issue.
+        </p>
+        <p>
+          You can edit the prompt before sending it, any changes are one-off and
+          won't affect the saved prompt template.
+        </p>
+
+        <div class="row" data-controller="dradis--plugins--echo--prompt-selector">
+          <div class="col-12 mb-3">
+            <p class="form-label">Saved Prompts</p>
+            <select class="form-select">
+              <% @prompts.each do |prompt| %>
+                <option
+                  data-combobox-option-icon="fa-solid <%= prompt.icon %>"
+                  value="<%= echo.preview_project_interaction_path(current_project, prompt.id, type: @type, record: @record.id) %>">
+                  <%= prompt.title %>
+                </option>
+              <% end %>
+            </select>
+          </div>
+
+          <div class="col-12">
+            <p class="form-label">Selected Prompt</p>
+            <turbo-frame id="echo-prompt-preview" data-dradis--plugins--echo--prompt-selector-target="frame">
+            </turbo-frame>
+          </div>
         </div>
-      <% end %>
-    </div>
-
-    <div class="echo-section-label">Start a new conversation</div>
-    <p>
-      Interact with <i class="fa-solid fa-robot me-1"></i>Roslin by selecting a
-      <%= link_to 'saved prompt', echo.prompts_path, data: { turbo_frame: '_top' } %> to use with this Issue.
-    </p>
-    <p>
-      You can edit the prompt before sending it, any changes are one-off and
-      won't affect the saved prompt template.
-    </p>
-
-    <div class="row" data-controller="dradis--plugins--echo--prompt-selector">
-      <div class="col-12 mb-3">
-        <p class="form-label">Saved Prompts</p>
-        <select class="form-select">
-          <% @prompts.each do |prompt| %>
-            <option
-              data-combobox-option-icon="fa-solid <%= prompt.icon %>"
-              value="<%= echo.preview_project_interaction_path(current_project, prompt.id, type: @type, record: @record.id) %>">
-              <%= prompt.title %>
-            </option>
-          <% end %>
-        </select>
-      </div>
-
-      <div class="col-12">
-        <p class="form-label">Selected Prompt</p>
-        <turbo-frame id="echo-prompt-preview" data-dradis--plugins--echo--prompt-selector-target="frame">
-        </turbo-frame>
       </div>
     </div>
   <% else %>
