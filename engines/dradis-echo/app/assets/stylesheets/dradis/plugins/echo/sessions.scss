@@ -133,17 +133,6 @@
   margin-bottom: 0.25rem;
   padding-bottom: 0.6rem;
 
-  .echo-back-link {
-    color: var(--text-link);
-    font-size: 0.85rem;
-    text-decoration: none;
-    white-space: nowrap;
-
-    &:hover {
-      color: var(--text-link-hover);
-    }
-  }
-
   .echo-conversation-agent {
     color: var(--text-muted);
     font-size: 0.8rem;

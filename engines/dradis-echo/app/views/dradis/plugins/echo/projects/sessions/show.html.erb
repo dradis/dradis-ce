@@ -5,50 +5,54 @@
     </div>
   <% end %>
 
-  <%# Live transcript + composer state, both over the re-authorizing SessionsChannel %>
-  <%# (Slice 4): the socket re-checks project access on every subscribe. %>
-  <%= turbo_stream_from [@session, :messages], channel: Dradis::Plugins::Echo::SessionsChannel %>
-  <%= turbo_stream_from [@session, :composer_state], channel: Dradis::Plugins::Echo::SessionsChannel %>
+  <div class="echo-interactions-layout">
+    <%= render 'dradis/plugins/echo/projects/sessions/conversations_column',
+          record: @record, type: @type, sessions: @sessions, active_session: @session,
+          new_conversation_path: echo.project_interactions_path(current_project, type: @type, record: @record.id) %>
 
-  <%# reply-pending / reply-url drive the client-side generation trigger: on a %>
-  <%# freshly-created session (reply_pending?), the session controller POSTs to %>
-  <%# this reply URL from `connect`, i.e. after the SessionsChannel subscription %>
-  <%# is established, so ReplyJob's streaming container isn't broadcast before the %>
-  <%# socket is listening (SEC-506 Bug 4). Revisiting an answered session renders %>
-  <%# reply-pending=false, so no spurious generation is triggered. %>
-  <div class="echo-conversation" data-controller="dradis--plugins--echo--session"
-       data-dradis--plugins--echo--session-reply-url-value="<%= echo.project_session_reply_path(current_project, @session) %>"
-       data-dradis--plugins--echo--session-reply-pending-value="<%= @session.reply_pending? %>">
-    <div class="echo-conversation-header">
-      <%= link_to echo.project_interactions_path(current_project, type: @type, record: @record.id),
-            class: 'echo-back-link' do %>
-        <i class="fa-solid fa-arrow-left"></i> Conversations
-      <% end %>
-      <h5 class="echo-conversation-title">
-        <%= @session.title.presence || "Session ##{@session.id}" %>
-        <span class="echo-conversation-agent">· with <%= @session.agent.name %></span>
-      </h5>
+    <div class="echo-interactions-panel">
+      <%# Live transcript + composer state, both over the re-authorizing SessionsChannel %>
+      <%# (Slice 4): the socket re-checks project access on every subscribe. %>
+      <%= turbo_stream_from [@session, :messages], channel: Dradis::Plugins::Echo::SessionsChannel %>
+      <%= turbo_stream_from [@session, :composer_state], channel: Dradis::Plugins::Echo::SessionsChannel %>
+
+      <%# reply-pending / reply-url drive the client-side generation trigger: on a %>
+      <%# freshly-created session (reply_pending?), the session controller POSTs to %>
+      <%# this reply URL from `connect`, i.e. after the SessionsChannel subscription %>
+      <%# is established, so ReplyJob's streaming container isn't broadcast before the %>
+      <%# socket is listening (SEC-506 Bug 4). Revisiting an answered session renders %>
+      <%# reply-pending=false, so no spurious generation is triggered. %>
+      <div class="echo-conversation" data-controller="dradis--plugins--echo--session"
+           data-dradis--plugins--echo--session-reply-url-value="<%= echo.project_session_reply_path(current_project, @session) %>"
+           data-dradis--plugins--echo--session-reply-pending-value="<%= @session.reply_pending? %>">
+        <div class="echo-conversation-header">
+          <h5 class="echo-conversation-title">
+            <%= @session.title.presence || "Session ##{@session.id}" %>
+            <span class="echo-conversation-agent">· with <%= @session.agent.name %></span>
+          </h5>
+        </div>
+
+        <%# Broadcasts append to the literal `echo-messages` target (Message#broadcast_created), %>
+        <%# so this id must stay verbatim; only one session view is mounted per Echo frame. %>
+        <div id="echo-messages" class="echo-messages"
+             data-dradis--plugins--echo--session-target="messages">
+          <%= render partial: 'dradis/plugins/echo/projects/sessions/messages/message',
+                     collection: @session.messages.order(:created_at, :id), as: :message %>
+        </div>
+
+        <%= form_with url: echo.project_session_messages_path(current_project, @session), method: :post,
+              class: 'echo-composer',
+              data: { action: 'submit->dradis--plugins--echo--session#send' } do |f| %>
+          <%=
+            f.text_area :content,
+              class: 'form-control field-sizing-content',
+              placeholder: 'Message Roslin…',
+              rows: 2,
+              data: { 'dradis--plugins--echo--session-target': 'input' }
+          %>
+          <%= render 'dradis/plugins/echo/projects/sessions/composer_state', session: @session %>
+        <% end %>
+      </div>
     </div>
-
-    <%# Broadcasts append to the literal `echo-messages` target (Message#broadcast_created), %>
-    <%# so this id must stay verbatim; only one session view is mounted per Echo frame. %>
-    <div id="echo-messages" class="echo-messages"
-         data-dradis--plugins--echo--session-target="messages">
-      <%= render partial: 'dradis/plugins/echo/projects/sessions/messages/message',
-                 collection: @session.messages.order(:created_at, :id), as: :message %>
-    </div>
-
-    <%= form_with url: echo.project_session_messages_path(current_project, @session), method: :post,
-          class: 'echo-composer',
-          data: { action: 'submit->dradis--plugins--echo--session#send' } do |f| %>
-      <%=
-        f.text_area :content,
-          class: 'form-control field-sizing-content',
-          placeholder: 'Message Roslin…',
-          rows: 2,
-          data: { 'dradis--plugins--echo--session-target': 'input' }
-      %>
-      <%= render 'dradis/plugins/echo/projects/sessions/composer_state', session: @session %>
-    <% end %>
   </div>
 </turbo-frame>
