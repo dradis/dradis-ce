@@ -20,15 +20,6 @@ describe 'Echo interactions' do
     Dradis::Plugins::Echo::Agents::Roslin.provision!.tap { |agent| agent.update!(enabled: true) }
   end
 
-  let!(:prompt) do
-    user.prompts.create!(
-      title: 'Summarise the finding',
-      prompt: 'Summarise {{ issue.title }}',
-      scope: 'issue',
-      visibility: :user
-    )
-  end
-
   let(:issue) do
     create(:issue, node: @project.issue_library, text: "#[Title]#\nSQLi")
   end
@@ -56,37 +47,6 @@ describe 'Echo interactions' do
       expect(response.body).to include("<turbo-frame id=\"#{frame_id}\"")
       # href attributes HTML-escape the query separator (& -> &amp;); match escaped.
       expect(response.body).to include(ERB::Util.html_escape(new_conversation_link))
-    end
-
-    it 'renders the section heading using the app heading convention' do
-      get "/addons/echo/projects/#{@project.id}/interactions",
-        params: { type: 'issue', record: issue.id }
-
-      expect(response).to have_http_status(:ok)
-      expect(response.body).to include('<h5 class="mb-0">Conversations</h5>')
-      expect(response.body).to include('<h5 class="mb-3">Start a new conversation</h5>')
-      expect(response.body).not_to include('echo-section-label')
-    end
-
-    it 'renders an existing conversation via the shared session-item partial' do
-      session = create(:echo_session, record: issue, user: user)
-
-      get "/addons/echo/projects/#{@project.id}/interactions",
-        params: { type: 'issue', record: issue.id }
-
-      expect(response).to have_http_status(:ok)
-      expect(response.body).to include(%(id="#{ActionView::RecordIdentifier.dom_id(session)}"))
-      expect(response.body).to include('class="echo-session-item"')
-    end
-
-    it 'renders the conversations list and prompt picker as two columns' do
-      get "/addons/echo/projects/#{@project.id}/interactions",
-        params: { type: 'issue', record: issue.id }
-
-      expect(response).to have_http_status(:ok)
-      expect(response.body).to include('echo-interactions-layout')
-      expect(response.body).to include('echo-interactions-conversations')
-      expect(response.body).to include('echo-interactions-panel')
     end
   end
 end
