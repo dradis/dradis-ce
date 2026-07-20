@@ -33,7 +33,7 @@ describe 'Echo interactions' do
         params: { type: 'issue', record: issue.id }
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include('<h5 class="mb-3">Conversations</h5>')
+      expect(response.body).to include('<h5 class="mb-0">Conversations</h5>')
       expect(response.body).to include('<h5 class="mb-3">Start a new conversation</h5>')
       expect(response.body).not_to include('echo-section-label')
     end
@@ -56,7 +56,7 @@ describe 'Echo interactions' do
       expect(response).to have_http_status(:ok)
       expect(response.body).to include('echo-interactions-layout')
       expect(response.body).to include('echo-interactions-conversations')
-      expect(response.body).to include('echo-interactions-prompts')
+      expect(response.body).to include('echo-interactions-panel')
     end
   end
 end

@@ -23,7 +23,25 @@
   }
 }
 
-.echo-interactions-prompts {
+.echo-conversations-column-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+
+  .echo-new-conversation-link {
+    color: var(--text-link);
+    font-size: 0.85rem;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover {
+      color: var(--text-link-hover);
+    }
+  }
+}
+
+.echo-interactions-panel {
   flex: 1;
 }
 
@@ -69,6 +87,11 @@
   .echo-session-title {
     font-weight: 600;
   }
+}
+
+.echo-session-item.active {
+  background-color: var(--secondary-bg-subtle);
+  border-color: var(--brand-bg);
 }
 
 .echo-session-empty {

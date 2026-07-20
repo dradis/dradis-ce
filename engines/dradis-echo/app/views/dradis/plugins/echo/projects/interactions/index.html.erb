@@ -11,24 +11,10 @@
 <% if Dradis::Plugins::Echo::Agents::Roslin.enabled? %>
   <% if @prompts.any? %>
     <div class="echo-interactions-layout">
-      <div class="echo-interactions-conversations">
-        <h5 class="mb-3">Conversations</h5>
-        <%# The record's existing conversations, surfaced next to the picker (Serial- %>
-        <%# position effect). Each row loads sessions#show into the Echo record frame. %>
-        <div class="echo-session-list" data-behavior="echo-sessions">
-          <% if @sessions.any? %>
-            <%= render partial: 'dradis/plugins/echo/projects/sessions/session_item',
-                  collection: @sessions, as: :session,
-                  locals: { record: @record, type: @type } %>
-          <% else %>
-            <div class="echo-session-empty">
-              <i class="fa-regular fa-comments me-1"></i> No conversations on this Issue yet — start one below.
-            </div>
-          <% end %>
-        </div>
-      </div>
+      <%= render 'dradis/plugins/echo/projects/sessions/conversations_column',
+            record: @record, type: @type, sessions: @sessions %>
 
-      <div class="echo-interactions-prompts">
+      <div class="echo-interactions-panel">
         <h5 class="mb-3">Start a new conversation</h5>
         <p>
           Interact with <i class="fa-solid fa-robot me-1"></i>Roslin by selecting a
