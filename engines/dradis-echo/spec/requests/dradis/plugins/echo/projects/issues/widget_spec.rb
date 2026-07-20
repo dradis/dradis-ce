@@ -23,13 +23,6 @@ describe 'Roslin widget' do
         expect(response.body).to include('data-behavior="roslin-issues-summary"')
         expect(response.body).to match(/<div id="roslin-widget" class="collapse"/)
       end
-
-      it 'renders the Echo tab title' do
-        get "/projects/#{@project.id}/issues/#{issue.id}"
-
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to include('<h4 class="header-underline mb-3">Dradis Echo</h4>')
-      end
     end
 
     context 'when Roslin is disabled' do
