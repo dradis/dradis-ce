@@ -1,7 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Issues: add proactive edit locking that shows who else is currently editing a record
   - Upgraded gems:
-    - sqlite3, websocket-driver
+    - rails-html-sanitizer, sqlite3, websocket-driver
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]

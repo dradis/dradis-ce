@@ -339,6 +339,20 @@ pre {
   }
 }
 
+.progress {
+  --bs-progress-bg: var(--secondary-bg);
+
+  &.empty {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+
+    .progress-bar {
+      background-color: transparent;
+      width: 100%;
+    }
+  }
+}
+
 .required-input {
   color: $red;
 }
@@ -375,7 +389,7 @@ pre {
 }
 
 .text-primary {
-  color: $primary !important;
+  color: var(--text-link) !important;
 }
 
 .text-success {
