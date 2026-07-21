@@ -1,0 +1,11 @@
+class CreateEditingSessions < ActiveRecord::Migration[8.0]
+  def change
+    create_table :editing_sessions do |t|
+      t.references :user, null: false, foreign_key: true
+      t.references :record, polymorphic: true, null: false
+      t.datetime :started_at, null: false, precision: nil, default: -> { 'CURRENT_TIMESTAMP' }
+
+      t.index [:user_id, :record_type, :record_id], unique: true, name: 'index_editing_sessions_uniqueness'
+    end
+  end
+end

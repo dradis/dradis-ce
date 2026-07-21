@@ -1,0 +1,10 @@
+<% if editors.any? %>
+  <span class="editing-presence-label">Also editing</span>
+  <span class="editing-presence-avatars">
+    <% editors.each do |user| %>
+      <span class="editing-presence-avatar" title="<%= user.email %>">
+        <%= avatar_image(user, size: 28) %>
+      </span>
+    <% end %>
+  </span>
+<% end %>

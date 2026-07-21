@@ -2,6 +2,7 @@ class IssuesController < AuthenticatedController
   include ConflictResolver
   include ContentFromTemplate
   include DynamicFieldNamesCacher
+  include EditLockable
   include EventPublisher
   include IssuesHelper
   include LiquidEnabledResource
@@ -16,6 +17,7 @@ class IssuesController < AuthenticatedController
   before_action :set_columns, only: :index
 
   before_action :set_or_initialize_issue, except: [:import, :index]
+  before_action :check_edit_lock, only: :edit
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
   before_action :set_affected_nodes, only: [:show]
   before_action :set_form_cancel_path, only: [:new, :edit]
@@ -31,8 +33,8 @@ class IssuesController < AuthenticatedController
                         .group('nodes.id')
                         .sort_by { |node, _| node.label }
 
-    @first_node      = @affected_nodes.first
-    @first_evidence  = Evidence.where(node: @first_node, issue: @issue)
+    @first_node = @affected_nodes.first
+    @first_evidence = Evidence.where(node: @first_node, issue: @issue)
 
     load_conflicting_revisions(@issue)
   end
@@ -81,6 +83,7 @@ class IssuesController < AuthenticatedController
       updated_at_before_save = @issue.updated_at.to_i
 
       if @issue.update(issue_params)
+        release_edit_session(@issue)
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         format.html { redirect_to_main_or_qa }
