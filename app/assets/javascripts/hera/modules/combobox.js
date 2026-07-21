@@ -463,9 +463,7 @@ class ComboBox {
   // ==========================================================================
 
   setInitialSelection() {
-    let $initialOption = this.$comboboxOptions.filter(
-      `[data-value="${this.$target.val()}"]`,
-    );
+    let $initialOption = this.filterByDataValue(this.$comboboxOptions, 'value', this.$target.val());
 
     if (!$initialOption.length) {
       if (this.isMultiSelect) {
@@ -506,10 +504,8 @@ class ComboBox {
 
   updateMultiSelectUI($options) {
     $options.forEach(($option) => {
-      if (
-        this.$combobox.find(`[data-option-value="${$option.data('value')}"]`)
-          .length
-      ) {
+      const $existingTags = this.$combobox.find('[data-behavior~=combobox-multi-option]');
+      if (this.filterByDataValue($existingTags, 'option-value', $option.data('value')).length) {
         return;
       }
 
@@ -543,7 +539,7 @@ class ComboBox {
     if (this.isMultiSelect) {
       const currentValues = this.$target.val() || [];
       currentValues.forEach((value) => {
-        const $option = this.$comboboxOptions.filter(`[data-value="${value}"]`);
+        const $option = this.filterByDataValue(this.$comboboxOptions, 'value', value);
         if ($option.length) {
           $options.push($option);
         }
@@ -551,9 +547,7 @@ class ComboBox {
       this.$comboboxOptions.removeClass('selected');
       this.$combobox.find('[data-behavior~=combobox-multi-option]').remove();
     } else {
-      $options = this.$comboboxOptions.filter(
-        `[data-value="${this.$target.val()}"]`,
-      );
+      $options = this.filterByDataValue(this.$comboboxOptions, 'value', this.$target.val());
     }
 
     this.updateComboboxUI($options);
@@ -562,6 +556,15 @@ class ComboBox {
   // ==========================================================================
   // Utilities
   // ==========================================================================
+
+  // Matches by exact attribute value instead of building a CSS attribute
+  // selector, so values containing quotes or other selector metacharacters
+  // (eg. option labels sourced from user-editable field names) can't break
+  // or escape the match.
+  filterByDataValue($elements, dataKey, value) {
+    const attr = `data-${dataKey}`;
+    return $elements.filter((_, el) => el.getAttribute(attr) === String(value));
+  }
 
   showMenu() {
     this.$comboboxMenu.css('display', 'block');
