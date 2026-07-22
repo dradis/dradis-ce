@@ -12,7 +12,7 @@ module Dradis::Plugins::Echo
 
     # -- Callbacks ------------------------------------------------------------
     # User messages are authored in full, so they're never mid-stream.
-    before_validation :complete_user_messages
+    before_validation :complete_user_messages, if: :user?
 
     after_create_commit :broadcast_created
 
@@ -35,7 +35,7 @@ module Dradis::Plugins::Echo
     end
 
     def complete_user_messages
-      self.status = :complete if user?
+      self.status = :complete
     end
   end
 end

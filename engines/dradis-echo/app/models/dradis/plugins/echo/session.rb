@@ -8,7 +8,12 @@ module Dradis::Plugins::Echo
     belongs_to :user, optional: true
     has_many :messages, dependent: :destroy
 
+    delegate :project, to: :record
+
     # -- Scopes ---------------------------------------------------------------
+    # Can't use where(record: record): Rails builds record_type from the
+    # polymorphic_name ('Note') for an Issue, missing the forced 'Issue' rows.
+    # See record_type_for / the record= override below.
     scope :for_record, ->(record) {
       where(record_type: record_type_for(record), record_id: record.id)
     }
@@ -22,10 +27,6 @@ module Dradis::Plugins::Echo
     end
 
     # -- Instance Methods -----------------------------------------------------
-    def project
-      record.project
-    end
-
     def to_provider_messages
       messages.order(:created_at, :id).map do |message|
         { role: message.role, content: message.content }

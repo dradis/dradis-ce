@@ -99,16 +99,38 @@ describe Dradis::Plugins::Echo::Session do
       expect { issue.destroy }.to change { described_class.exists?(session.id) }.to(false)
     end
 
-    # The gap the after_destroy sweep exists for: an Issue row destroyed while
-    # loaded as a Note (e.g. a Pro project.notes cascade). Loaded as Note, the
-    # polymorphic dependent: :destroy queries record_type 'Note' and misses the
-    # session, so the record_type 'Issue' sweep has to catch it.
+    # The gap the Note-only after_destroy sweep (engine.rb) exists for: an Issue
+    # row destroyed while loaded as a Note (e.g. a Pro project.notes cascade).
+    # Loaded as Note, the polymorphic dependent: :destroy queries record_type
+    # 'Note' and misses the session, so the record_type 'Issue' sweep catches it.
     it 'destroys record_type Issue sessions when the Issue row is destroyed loaded as a Note' do
       issue = create(:issue)
       session = create(:echo_session, record: issue)
       note = Note.find(issue.id)
 
       expect { note.destroy }.to change { described_class.exists?(session.id) }.to(false)
+    end
+
+    # Guards the bug fix: the Issue sweep lives on Note only (engine.rb), not in
+    # the shared Sessionable concern. A future host with its own id sequence must
+    # not delete an unrelated Issue #N's sessions. Model that host on the
+    # categories table, sharing an id with a real Issue so the old in-concern
+    # sweep would have wrongly deleted the Issue's session.
+    it 'leaves unrelated Issue sessions alone when a non-Note Sessionable host is destroyed' do
+      issue = create(:issue)
+      issue_session = create(:echo_session, record: issue)
+
+      host_class = Class.new(ApplicationRecord) do
+        self.table_name = 'categories'
+        def self.name = 'EchoSessionableTestHost'
+        include Dradis::Plugins::Echo::Sessionable
+      end
+      # Force the host to share the Issue's id: the old in-concern sweep keyed on
+      # record_id: id, so a same-id host would have wrongly deleted the session.
+      host_class.where(id: issue.id).delete_all
+      host = host_class.create!(id: issue.id, name: 'echo-sessionable-host')
+
+      expect { host.destroy }.not_to change { described_class.exists?(issue_session.id) }
     end
   end
 end
