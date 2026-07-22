@@ -27,7 +27,7 @@ describe ActivityTrackingJob do #, type: :job do
           trackable = model
           trackable.destroy if action == :destroy
 
-          expect {
+          expect do
             described_class.new.perform(
               action: action.to_s,
               project_id: project.id,
@@ -35,7 +35,7 @@ describe ActivityTrackingJob do #, type: :job do
               trackable_type: trackable.class.to_s,
               user_id: user.id
             )
-          }.to change { Activity.count }.by(1)
+          end.to change { Activity.count }.by(1)
 
           activity = Activity.last
 

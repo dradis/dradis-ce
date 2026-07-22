@@ -86,9 +86,9 @@ class Comment < ApplicationRecord
     elsif resource.respond_to?(:project)
       scope.merge(resource.project.testers_for_mentions)
     else
-      ids = scope.select { |user|
+      ids = scope.select do |user|
         Ability.new(user).can?(:read, resource)
-      }.map(&:id)
+      end.map(&:id)
 
       # Ensure we return an ActiveRecord::Relation object
       scope.where(id: ids)

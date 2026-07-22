@@ -39,9 +39,9 @@ describe Comment do
       subscriptions = create_list(:subscription, 2, subscribable: commentable)
       comment = create(:comment, commentable: commentable)
 
-      expect {
+      expect do
         comment.notify(action: 'create', actor: comment.user, recipients: [])
-      }.to change { Notification.count }.by(2)
+      end.to change { Notification.count }.by(2)
     end
 
     it 'creates notifications when a comment has mentions' do
@@ -56,9 +56,9 @@ describe Comment do
         content: "Hello @#{mentioned.email} and @#{issue_owner.email}"
       )
 
-      expect {
+      expect do
         comment.notify(action: 'create', actor: comment.user, recipients: [])
-      }.to change { Notification.count }.by(3) \
+      end.to change { Notification.count }.by(3) \
       .and change { Subscription.count }.by(1)
 
       expect(Notification.where(action: 'mention').count).to eq(2)
@@ -73,9 +73,9 @@ describe Comment do
 
       allow_any_instance_of(Ability).to receive(:can?).with(:read, comment).and_return(false)
 
-      expect {
+      expect do
         comment.notify(action: 'create', actor: comment.user, recipients: [])
-      }.to change { Notification.count }.by(0)
+      end.to change { Notification.count }.by(0)
     end
   end
 end

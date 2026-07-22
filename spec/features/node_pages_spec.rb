@@ -60,19 +60,19 @@ describe 'node pages' do
           .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(3)
 
         expect(
-          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h|
+          ActiveJob::Base.queue_adapter.enqueued_jobs.map do |h|
             h[:job]
-          }.last(3)
+          end.last(3)
         ).to include *Array.new(3, ActivityTrackingJob)
         expect(
-          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+          ActiveJob::Base.queue_adapter.enqueued_jobs.map do |h1|
             h1[:args].map { |h2| h2['action'] }
-          }.flatten.last(3)
+          end.flatten.last(3)
         ).to include *Array.new(3, 'create')
         expect(
-          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+          ActiveJob::Base.queue_adapter.enqueued_jobs.map do |h1|
             h1[:args].map { |h2| h2['trackable_type'] }
-          }.flatten.last(3)
+          end.flatten.last(3)
         ).to include *Array.new(3, 'Node')
 
         expect(current_project.nodes.last(3).map(&:label)).to match_array([
@@ -147,19 +147,19 @@ describe 'node pages' do
         .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(3)
 
         expect(
-          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h|
+          ActiveJob::Base.queue_adapter.enqueued_jobs.map do |h|
             h[:job]
-          }.last(3)
+          end.last(3)
         ).to eq Array.new(3, ActivityTrackingJob)
         expect(
-          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+          ActiveJob::Base.queue_adapter.enqueued_jobs.map do |h1|
             h1[:args].map { |h2| h2['action'] }
-          }.flatten.last(3)
+          end.flatten.last(3)
         ).to eq Array.new(3, 'create')
         expect(
-          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+          ActiveJob::Base.queue_adapter.enqueued_jobs.map do |h1|
             h1[:args].map { |h2| h2['trackable_type'] }
-          }.flatten.last(3)
+          end.flatten.last(3)
         ).to eq Array.new(3, 'Node')
 
         expect(node.children.pluck(:label)).to match_array([

@@ -294,9 +294,9 @@ describe 'Card pages:' do
           new_list = create(:list)
           @card.update(list: new_list)
 
-          expect {
+          expect do
             visit project_board_list_card_path(current_project, @board, @list, @card)
-          }.to raise_error ActiveRecord::RecordNotFound
+          end.to raise_error ActiveRecord::RecordNotFound
         end
       end
     end

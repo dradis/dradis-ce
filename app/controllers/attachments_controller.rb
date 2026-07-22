@@ -8,7 +8,7 @@ class AttachmentsController < AuthenticatedController
   # Retrieve all the associated attachments for a given :node_id
   def index
     @attachments = Node.find(params[:node_id]).attachments
-    @attachments.each do |a| a.close end
+    @attachments.each { |a| a.close }
   end
 
   # Create a new attachment for a given :node_id using a file that has been

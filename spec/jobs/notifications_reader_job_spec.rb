@@ -14,13 +14,13 @@ describe NotificationsReaderJob  do #, type: :job do
 
           create(:notification, notifiable: project, action: :assign, actor: create(:user), recipient: user)
 
-          expect {
+          expect do
             described_class.new.perform(
               notifiable_type: project.class.to_s,
               notifiable_id: project.id,
               user_id: user.id
             )
-          }.to change{ Notification.unread.count }.by(-1)
+          end.to change{ Notification.unread.count }.by(-1)
         end
       end
     end
@@ -34,13 +34,13 @@ describe NotificationsReaderJob  do #, type: :job do
 
         create(:notification, notifiable: comment, action: :create, actor: create(:user), recipient: user)
 
-        expect {
+        expect do
           described_class.new.perform(
             notifiable_type: commentable.class.to_s,
             notifiable_id: commentable.id,
             user_id: user.id
           )
-        }.to change{ Notification.unread.count }.by(-1)
+        end.to change{ Notification.unread.count }.by(-1)
       end
     end
   end

@@ -75,9 +75,9 @@ describe Issue do
     let!(:evidence) { create(:evidence) }
 
     it 'creates an issue with a name containing "Auto-generated Issue"' do
-      expect {
+      expect do
         described_class.autogenerate_from(evidence)
-      }.to change(Issue, :count).by(1)
+      end.to change(Issue, :count).by(1)
 
       expect(Issue.last.title).to include('Auto-generated Issue')
     end
