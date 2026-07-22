@@ -1,6 +1,8 @@
 @ConsoleUpdater =
   jobId: ''
   parsing: false
+  failureCount: 0
+  maxFailures: 5
 
   updateConsole: ->
     unless ConsoleUpdater.parsing
@@ -21,4 +23,12 @@
       {item_id: ConsoleUpdater.jobId, after: after},
       null,
       'script'
-    )
+    ).done(->
+      ConsoleUpdater.failureCount = 0
+    ).fail ->
+      ConsoleUpdater.failureCount += 1
+
+      if ConsoleUpdater.failureCount < ConsoleUpdater.maxFailures
+        setTimeout(ConsoleUpdater.updateConsole, 2000)
+      else
+        $('#console').append('<p class="log text-error">Lost connection while checking progress. Please refresh the page to check the current status.</p>')
