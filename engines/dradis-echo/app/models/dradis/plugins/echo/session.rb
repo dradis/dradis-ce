@@ -42,10 +42,6 @@ module Dradis::Plugins::Echo
       )
     end
 
-    def project
-      record.project
-    end
-
     # The gate in front of ReplyJob: flips idle->generating and enqueues exactly
     # one job. A no-op while already generating, so repeated calls (a user
     # sending several messages) never double-enqueue — the running job re-checks
