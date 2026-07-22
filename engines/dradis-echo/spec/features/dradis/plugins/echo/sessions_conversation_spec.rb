@@ -25,7 +25,7 @@ describe 'Echo Sessions conversation UI', js: true do
   end
 
   # Bug 3: the frame-mechanism swap (data-behavior=fetch -> native lazy turbo-frame).
-  it 'lazy-loads the conversation list when the Echo tab is shown and returns to it via the back-link' do
+  it 'lazy-loads the conversation list when the Echo tab is shown and returns to it via the "+ New" link' do
     session = create(:echo_session, agent: roslin, record: issue, title: 'Earlier conversation')
     create(:echo_message, session: session, role: :user, content: 'my earlier question', user: @logged_in_as)
 
@@ -43,7 +43,7 @@ describe 'Echo Sessions conversation UI', js: true do
 
     # Back to the list: Turbo navigates the frame to interactions#index. Before the
     # fix this reported "Content missing" (index answered frameless).
-    find('.echo-back-link').click
+    find('.echo-new-conversation-link').click
     expect(page).to have_content('Earlier conversation')
     expect(page).to have_no_content('Content missing')
   end
