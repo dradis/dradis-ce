@@ -20,9 +20,9 @@ describe 'Echo session replies' do
     it 'enqueues a reply when one is pending (the newest message is a user turn)' do
       create(:echo_message, session: session, role: :user, content: 'What is the impact?', user: user)
 
-      expect {
+      expect do
         post "/addons/echo/projects/#{@project.id}/sessions/#{session.id}/reply"
-      }.to have_enqueued_job(Dradis::Plugins::Echo::ReplyJob).with(session)
+      end.to have_enqueued_job(Dradis::Plugins::Echo::ReplyJob).with(session)
 
       expect(response).to have_http_status(:ok)
     end
@@ -31,9 +31,9 @@ describe 'Echo session replies' do
       create(:echo_message, session: session, role: :user, content: 'What is the impact?', user: user)
       create(:assistant_message, session: session, content: 'It is high.')
 
-      expect {
+      expect do
         post "/addons/echo/projects/#{@project.id}/sessions/#{session.id}/reply"
-      }.not_to have_enqueued_job(Dradis::Plugins::Echo::ReplyJob)
+      end.not_to have_enqueued_job(Dradis::Plugins::Echo::ReplyJob)
 
       expect(response).to have_http_status(:ok)
     end
@@ -41,9 +41,9 @@ describe 'Echo session replies' do
     it 'denies a session whose record is outside the current project scope' do
       other_session = create(:echo_session, agent: agent, record: create(:issue, node: create(:node)))
 
-      expect {
+      expect do
         post "/addons/echo/projects/#{@project.id}/sessions/#{other_session.id}/reply"
-      }.to raise_error(ActiveRecord::RecordNotFound)
+      end.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end

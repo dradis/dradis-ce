@@ -18,10 +18,10 @@ describe 'Echo session messages' do
 
   describe 'POST /addons/echo/projects/:project_id/sessions/:session_id/messages' do
     it 'appends a user message and triggers a reply' do
-      expect {
+      expect do
         post "/addons/echo/projects/#{@project.id}/sessions/#{session.id}/messages",
           params: { content: 'What is the impact?' }
-      }.to change { session.messages.count }.by(1)
+      end.to change { session.messages.count }.by(1)
         .and have_enqueued_job(Dradis::Plugins::Echo::ReplyJob)
 
       expect(response).to have_http_status(:ok)
@@ -33,10 +33,10 @@ describe 'Echo session messages' do
     end
 
     it 'rejects a blank message without enqueuing a reply' do
-      expect {
+      expect do
         post "/addons/echo/projects/#{@project.id}/sessions/#{session.id}/messages",
           params: { content: '' }
-      }.not_to change(Dradis::Plugins::Echo::Message, :count)
+      end.not_to change(Dradis::Plugins::Echo::Message, :count)
 
       expect(response).to have_http_status(:unprocessable_entity)
     end
@@ -44,10 +44,10 @@ describe 'Echo session messages' do
     it 'denies a session whose record is outside the current project scope' do
       other_session = create(:echo_session, agent: agent, record: create(:issue, node: create(:node)))
 
-      expect {
+      expect do
         post "/addons/echo/projects/#{@project.id}/sessions/#{other_session.id}/messages",
           params: { content: 'Hello' }
-      }.to raise_error(ActiveRecord::RecordNotFound)
+      end.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end

@@ -57,23 +57,23 @@ describe 'Echo interactions' do
     end
 
     it 'raises RecordNotFound (404) rather than a 500 for a missing or unknown type' do
-      expect {
+      expect do
         get "/addons/echo/projects/#{@project.id}/interactions", params: { record: issue.id }
-      }.to raise_error(ActiveRecord::RecordNotFound)
+      end.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
   describe 'the retired Roslin one-shot path' do
     it 'no longer exposes a create route' do
-      expect {
+      expect do
         post "/addons/echo/projects/#{@project.id}/interactions", params: { type: 'issue', record: issue.id }
-      }.to raise_error(ActionController::RoutingError)
+      end.to raise_error(ActionController::RoutingError)
     end
 
     it 'no longer exposes a show route' do
-      expect {
+      expect do
         get "/addons/echo/projects/#{@project.id}/interactions/1", params: { type: 'issue', record: issue.id }
-      }.to raise_error(ActionController::RoutingError)
+      end.to raise_error(ActionController::RoutingError)
     end
   end
 end
