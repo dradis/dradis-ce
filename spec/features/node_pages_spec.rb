@@ -273,9 +273,9 @@ describe 'node pages' do
       include ActivityMacros
 
       let(:extra_setup) do
-        @note       = create(:note, node: @node)
-        @issue      = create(:issue, node: current_project.issue_library)
-        @evidence   = create(:evidence, issue: @issue, node: @node)
+        @note = create(:note, node: @node)
+        @issue = create(:issue, node: current_project.issue_library)
+        @evidence = create(:evidence, issue: @issue, node: @node)
         @other_node = create(:node, project: current_project)
         @activities = [@node, @note, @evidence].flat_map do |model|
           [
@@ -305,11 +305,11 @@ describe 'node pages' do
 
     context 'when the node has nested notes or evidence' do
       let(:extra_setup) do
-        @note           = create(:note, node: @node, text: "#[Title]#\nMy note")
-        @issue          = create(:issue, node: current_project.issue_library)
-        @evidence       = create(:evidence, issue: @issue, node: @node)
-        other_node      = create(:node, project: current_project)
-        @other_note     = create(:note,     node: other_node)
+        @note = create(:note, node: @node, text: "#[Title]#\nMy note")
+        @issue = create(:issue, node: current_project.issue_library)
+        @evidence = create(:evidence, issue: @issue, node: @node)
+        other_node = create(:node, project: current_project)
+        @other_note = create(:note, node: other_node)
         @other_evidence = create(:evidence, node: other_node)
       end
 
@@ -326,7 +326,7 @@ describe 'node pages' do
     it "shows the node's properties" do
       @properties.each do |key, value|
         should have_selector 'h4', text: key.to_s.capitalize
-        should have_selector 'p',  text: value
+        should have_selector 'p', text: value
       end
     end
   end

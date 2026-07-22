@@ -8,19 +8,19 @@ describe ActivityTrackingJob do #, type: :job do
 
   describe '#perform' do
     it 'creates activities' do
-      project   = create(:project)
-      parent_node  = create(:node, project: project)
+      project = create(:project)
+      parent_node = create(:node, project: project)
       parent_issue = create(:issue, node: project.issue_library)
 
-      node      = create(:node, project: project)
-      issue     = create(:issue, node: project.issue_library)
-      note      = create(:note, node: parent_node)
-      evidence  = create(:evidence, issue: parent_issue, node: parent_node)
-      comment   = create(:comment, commentable: parent_issue)
+      node = create(:node, project: project)
+      issue = create(:issue, node: project.issue_library)
+      note = create(:note, node: parent_node)
+      evidence = create(:evidence, issue: parent_issue, node: parent_node)
+      comment = create(:comment, commentable: parent_issue)
 
-      models  = [node, issue, note, evidence, comment]
+      models = [node, issue, note, evidence, comment]
       actions = [:create, :update, :destroy]
-      user    = create(:user)
+      user = create(:user)
 
       models.each do |model|
         actions.each do |action|

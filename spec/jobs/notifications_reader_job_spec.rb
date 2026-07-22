@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe NotificationsReaderJob  do #, type: :job do
+describe NotificationsReaderJob do #, type: :job do
   it 'uses correct queue' do
     expect(described_class.new.queue_name).to eq('dradis_project')
   end
@@ -20,7 +20,7 @@ describe NotificationsReaderJob  do #, type: :job do
               notifiable_id: project.id,
               user_id: user.id
             )
-          end.to change{ Notification.unread.count }.by(-1)
+          end.to change { Notification.unread.count }.by(-1)
         end
       end
     end
@@ -40,7 +40,7 @@ describe NotificationsReaderJob  do #, type: :job do
             notifiable_id: commentable.id,
             user_id: user.id
           )
-        end.to change{ Notification.unread.count }.by(-1)
+        end.to change { Notification.unread.count }.by(-1)
       end
     end
   end
