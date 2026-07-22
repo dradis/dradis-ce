@@ -35,9 +35,9 @@ describe 'Echo sessions' do
     end
 
     it 'creates a session with the first user message but defers the reply to the subscribed client' do
-      expect {
+      expect do
         post "/addons/echo/projects/#{@project.id}/sessions", params: params
-      }.to change(Dradis::Plugins::Echo::Session, :count).by(1)
+      end.to change(Dradis::Plugins::Echo::Session, :count).by(1)
         .and change(Dradis::Plugins::Echo::Message, :count).by(1)
 
       # The reply is triggered by the session Stimulus controller once it has
@@ -72,28 +72,28 @@ describe 'Echo sessions' do
     end
 
     it 'returns 422 for a blank prompt instead of raising a 500' do
-      expect {
+      expect do
         post "/addons/echo/projects/#{@project.id}/sessions",
           params: params.merge(prompt: '')
-      }.not_to change(Dradis::Plugins::Echo::Session, :count)
+      end.not_to change(Dradis::Plugins::Echo::Session, :count)
 
       expect(response).to have_http_status(:unprocessable_entity)
     end
 
     it 'honours the Prompt::SCOPES whitelist' do
-      expect {
+      expect do
         post "/addons/echo/projects/#{@project.id}/sessions",
           params: params.merge(type: 'node')
-      }.to raise_error(ActiveRecord::RecordNotFound)
+      end.to raise_error(ActiveRecord::RecordNotFound)
     end
 
     it 'denies a record outside the current project scope' do
       other_issue = create(:issue, node: create(:node))
 
-      expect {
+      expect do
         post "/addons/echo/projects/#{@project.id}/sessions",
           params: params.merge(record: other_issue.id)
-      }.to raise_error(ActiveRecord::RecordNotFound)
+      end.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
