@@ -56,6 +56,8 @@
       // Place initialization logic here
       // You already have access to the DOM element and the options via the instance,
       // e.g., this.element and this.options
+      this._fieldOptions = this.$element.data('field-options');
+
       this._buildContainer();
 
       this._previousContent = this.$element.val();
@@ -78,7 +80,7 @@
       // add Form
       this.options.$fields = $(this.options.tpl.fields);
       $('.textile-inner', this.options.$wrap).append(this.options.$fields);
-      this._loadFields(this.$element.val(), this.$element.data('allow-dropdown'));
+      this._loadFields(this.$element.val(), this._fieldOptions);
 
       // add Preview to container and load
       this.options.$preview = $(this.options.tpl.preview);
@@ -109,7 +111,7 @@
 
       // When auto-save populates data into source view refresh the form
       this.$element.on('load-preview', function() {
-        this._loadFields(this.$element.val());
+        this._loadFields(this.$element.val(), this._fieldOptions);
       }.bind(this));
 
       // Bind all form element actions within container
@@ -179,10 +181,10 @@
     },
 
     // Ajax form
-    _loadFields: function(data, allowDropdown) {
+    _loadFields: function(data, fieldOptions) {
       $.post({
         url: this.$element.data('paths').form_url,
-        data: {source: data, allow_dropdown: allowDropdown},
+        data: {source: data, field_options: fieldOptions},
         beforeSend: function(){
           this.options.$fields.addClass('loading-indicator').text('Loading...');
         }.bind(this),
@@ -256,7 +258,7 @@
 
       $('.textile-form').empty();
 
-      this._loadFields(this.$element.val(), false);
+      this._loadFields(this.$element.val(), this._fieldOptions);
 
       // Show Form pane
       this.options.$help.hide();
