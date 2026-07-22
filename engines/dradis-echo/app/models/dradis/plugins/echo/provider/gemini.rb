@@ -18,7 +18,6 @@ module Dradis::Plugins::Echo
             parts: [{ text: message[:content] }]
           }
         end
-        }
       }
     end
 
