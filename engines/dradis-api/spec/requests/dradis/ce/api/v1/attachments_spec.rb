@@ -113,13 +113,13 @@ describe 'Attachments API' do
     end
 
     describe 'POST /api/nodes/:node_id/attachments' do
-      let(:post_attachment) {
+      let(:post_attachment) do
         file = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/rails.png'))
         params = { files: [file] }
         url = "/api/nodes/#{node.id}/attachments"
 
         post url , params: params, env: @env
-      }
+      end
 
       it 'returns 201 when file saved' do
         post_attachment

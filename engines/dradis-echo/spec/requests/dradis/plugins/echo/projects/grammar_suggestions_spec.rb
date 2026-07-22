@@ -90,12 +90,12 @@ describe 'Grammar suggestions' do
     it 'returns 404 for an issue outside the current project scope' do
       other_issue = create(:issue, node: create(:node))
 
-      expect {
+      expect do
         post "/addons/echo/projects/#{@project.id}/grammar_suggestions", params: {
           commentable_type: 'Issue',
           commentable_id: other_issue.id
         }
-      }.to raise_error(ActiveRecord::RecordNotFound)
+      end.to raise_error(ActiveRecord::RecordNotFound)
     end
 
     it 'returns 422 for an invalid commentable_type' do
