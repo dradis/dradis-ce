@@ -24,6 +24,8 @@
       null,
       'script'
     ).done(->
+      # Reset on every success so the cap only trips on consecutive failures,
+      # not ones accumulated over the whole polling session.
       ConsoleUpdater.failureCount = 0
     ).fail ->
       ConsoleUpdater.failureCount += 1
