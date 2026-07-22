@@ -12,9 +12,12 @@ module Dradis::Plugins::Echo
     # array, so map each message into its contents structure.
     def build_body(messages:, model:)
       {
-        contents: messages.map { |message|
-          { role: ROLE_MAP.fetch(message[:role], message[:role]),
-            parts: [{ text: message[:content] }] }
+        contents: messages.map do |message|
+          {
+            role: ROLE_MAP.fetch(message[:role], message[:role]),
+            parts: [{ text: message[:content] }]
+          }
+        end
         }
       }
     end
