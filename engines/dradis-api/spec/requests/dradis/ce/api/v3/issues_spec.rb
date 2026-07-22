@@ -142,7 +142,7 @@ describe 'Issues API' do
         expect(response.status).to eq(201)
 
         retrieved_issue = JSON.parse(response.body)
-        database_issue  = current_project.issues.find(retrieved_issue['id'])
+        database_issue = current_project.issues.find(retrieved_issue['id'])
 
         expect(database_issue.tag_list).to eq(tag_name)
       end

@@ -52,7 +52,7 @@ class Comment < ApplicationRecord
     case action.to_s
     when 'create'
       subscribe_mentioned()
-      create_notifications(action: :mention, actor: actor,  recipients: mentions)
+      create_notifications(action: :mention, actor: actor, recipients: mentions)
 
       # We're finding subscribers that have not been mention here
       # using ActiveRecord because create_notifications expect recipients
