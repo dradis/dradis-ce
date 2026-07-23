@@ -18,9 +18,10 @@ describe FieldsHelper do
         expect(helper.render_dropdown?('Risk', '{{ issue.risk }}')).to eq(false)
       end
 
-      it 'returns false for a field with no matching options' do
+      it 'falls back to the pipe-value check when the field has no explicit options' do
         assign(:field_options, { 'Risk' => %w[High Medium Low] })
-        expect(helper.render_dropdown?('Status', 'Open')).to be_falsey
+        assign(:allow_dropdown, true)
+        expect(helper.render_dropdown?('Status', 'Open | Closed')).to eq(true)
       end
     end
 
