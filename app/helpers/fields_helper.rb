@@ -1,4 +1,8 @@
 module FieldsHelper
+  def dropdown_options(field_name, value)
+    list_field_options(field_name) || value.split(' | ')
+  end
+
   def render_dropdown?(field_name, value)
     if (options = list_field_options(field_name))
       value.blank? || options.include?(value)
@@ -9,17 +13,13 @@ module FieldsHelper
     end
   end
 
-  def dropdown_options(field_name, value)
-    list_field_options(field_name) || value.split(' | ')
-  end
-
   private
-
-  def list_field_options(field_name)
-    @field_options && @field_options[field_name]
-  end
 
   def has_liquid_filters?(text)
     HTML::Pipeline::Dradis::LiquidFilter::LIQUID_FILTER_PATTERNS.any? { |liquid_pattern| text.match?(liquid_pattern) }
+  end
+
+  def list_field_options(field_name)
+    @field_options && @field_options[field_name]
   end
 end
