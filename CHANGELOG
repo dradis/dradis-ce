@@ -4,6 +4,7 @@
   - Upgraded gems:
     - rails-html-sanitizer, sqlite3, websocket-driver
   - Bugs fixes:
+    - Notes: scrub invalid UTF-8 byte sequences from :text before saving
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:

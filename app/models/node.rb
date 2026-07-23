@@ -6,6 +6,7 @@
 # Attachment objects associated with them.
 class Node < ApplicationRecord
   include Properties
+  include ScrubsInvalidEncoding
   include Types
 
   acts_as_tree counter_cache: true, order: :label
@@ -53,6 +54,7 @@ class Node < ApplicationRecord
   before_save do |record|
     record.position = 0 unless record.position
   end
+  scrub_invalid_encoding_for :label
 
   # -- Validations ----------------------------------------------------------
   validates :label, presence: true, length: { maximum: DB_MAX_STRING_LENGTH }

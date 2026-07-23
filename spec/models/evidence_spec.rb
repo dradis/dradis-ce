@@ -57,7 +57,7 @@ describe Evidence do
   describe '#fields' do
     before do
       issue = create(:issue)
-      node  = create(:node, label: 'Node Label')
+      node = create(:node, label: 'Node Label')
       @evidence = Evidence.new(
         node_id: node.id, issue_id: issue.id, content: "#[Output]#\nResistance is futile\n\n"
       )
@@ -98,4 +98,7 @@ describe Evidence do
       end
     end
   end
+
+  let(:record) { build(:evidence) }
+  it_behaves_like 'a model that scrubs invalid encoding', :content
 end

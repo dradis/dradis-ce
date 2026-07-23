@@ -2,6 +2,7 @@ class Card < ApplicationRecord
   include Commentable
   include HasFields
   include RevisionTracking
+  include ScrubsInvalidEncoding
   include Subscribable
 
   dradis_has_fields_for :description
@@ -22,6 +23,7 @@ class Card < ApplicationRecord
   after_destroy :add_board_id_to_version
   after_destroy :adjust_link
   after_save :subscribe_new_assignees
+  scrub_invalid_encoding_for :name
 
   # -- Validations ----------------------------------------------------------
   validates :description, length: { maximum: DB_MAX_TEXT_LENGTH }
@@ -86,7 +88,7 @@ class Card < ApplicationRecord
 
   def local_fields
     {
-      'List'  => list.name.parameterize(preserve_case: true, separator: '_'),
+      'List' => list.name.parameterize(preserve_case: true, separator: '_'),
       'Title' => name
     }
   end

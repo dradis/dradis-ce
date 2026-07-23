@@ -50,7 +50,7 @@ describe Node do
     it { should have_many(:issues).through(:evidence) }
 
     it 'returns unique issues even if node and issue are associated through multiple evidence' do
-      node  = create(:node)
+      node = create(:node)
       issue = create(:issue, node: node.project.issue_library)
 
       create(:evidence, node: node, issue: issue)
@@ -99,7 +99,7 @@ describe Node do
   end
 
   describe '#position' do
-    it { should respond_to(:position)  }
+    it { should respond_to(:position) }
     it { should respond_to(:position=) }
 
     it 'assigns a default 0 position if none is provided' do
@@ -410,7 +410,7 @@ describe Node do
 
     context 'when the node has notes & evidence' do
       before do
-        note     = create(:note,     node: node)
+        note = create(:note, node: node)
         evidence = create(:evidence, node: node)
         @activities.push(
           create(:update_activity, trackable: note),
@@ -426,4 +426,7 @@ describe Node do
     end
 
   end
+
+  let(:record) { node }
+  it_behaves_like 'a model that scrubs invalid encoding', :label
 end

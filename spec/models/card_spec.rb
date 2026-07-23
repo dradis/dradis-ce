@@ -103,4 +103,8 @@ describe Card do
       expect(create(:card, list: @list3).fields['List']).to eq('TestList')
     end
   end
+
+  let(:record) { build(:card) }
+  it_behaves_like 'a model that scrubs invalid encoding', :description
+  it_behaves_like 'a model that scrubs invalid encoding', :name
 end
