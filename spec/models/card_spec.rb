@@ -104,7 +104,7 @@ describe Card do
     end
   end
 
-  let(:record) { build(:card) }
+  let(:record) { create(:card) }
   it_behaves_like 'a model that scrubs invalid encoding', :description
   it_behaves_like 'a model that scrubs invalid encoding', :name
 end

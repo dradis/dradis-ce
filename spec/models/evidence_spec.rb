@@ -99,6 +99,6 @@ describe Evidence do
     end
   end
 
-  let(:record) { build(:evidence) }
+  let(:record) { create(:evidence) }
   it_behaves_like 'a model that scrubs invalid encoding', :content
 end
