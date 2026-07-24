@@ -32,14 +32,17 @@ module Dradis::Plugins::Echo
 
     # The signed name encodes `[session, :messages]`, i.e.
     # "<session-gid-param>:messages". A tampered name fails verification and
-    # yields nil, which we treat as unauthorized.
+    # yields nil (never reaching locate), so the only raise path left is a
+    # session deleted between signing and subscribe — RecordNotFound, which we
+    # treat as unauthorized. Narrower than a blanket rescue so genuine bugs
+    # (NoMethodError etc.) still surface.
     def session_from_stream_name
       name = verified_stream_name_from_params
       return unless name
 
       record = GlobalID::Locator.locate(name.split(':').first)
       record if record.is_a?(Session)
-    rescue StandardError
+    rescue ActiveRecord::RecordNotFound
       nil
     end
   end

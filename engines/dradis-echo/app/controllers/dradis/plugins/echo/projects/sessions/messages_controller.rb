@@ -23,7 +23,7 @@ module Dradis::Plugins::Echo
 
     def set_session
       @session = Session.find(params[:session_id])
-      scoped_record(@session.record)
+      scoped_record(@session)
     end
   end
 end

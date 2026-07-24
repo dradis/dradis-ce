@@ -29,6 +29,40 @@ describe 'Echo sessions' do
     create(:issue, node: @project.issue_library, text: "#[Title]#\nSQLi")
   end
 
+  describe 'GET /addons/echo/projects/:project_id/sessions' do
+    it 'lists the record-scoped sessions and prompts' do
+      prompt # a prompt must exist for the sessions list to render
+      session = Dradis::Plugins::Echo::Session.create!(
+        agent: roslin, record: issue, title: 'Existing session', user: user
+      )
+
+      get "/addons/echo/projects/#{@project.id}/sessions",
+        params: { type: 'issue', record: issue.id }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include('Existing session')
+      expect(response.body).to include(
+        ActionView::RecordIdentifier.dom_id(session)
+      )
+    end
+
+    it 'honours the Prompt::SCOPES whitelist' do
+      expect do
+        get "/addons/echo/projects/#{@project.id}/sessions",
+          params: { type: 'node', record: issue.id }
+      end.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it 'denies a record outside the current project scope' do
+      other_issue = create(:issue, node: create(:node))
+
+      expect do
+        get "/addons/echo/projects/#{@project.id}/sessions",
+          params: { type: 'issue', record: other_issue.id }
+      end.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
   describe 'POST /addons/echo/projects/:project_id/sessions' do
     let(:params) do
       { type: 'issue', record: issue.id, prompt_id: prompt.id, prompt: 'Summarise the SQLi finding' }

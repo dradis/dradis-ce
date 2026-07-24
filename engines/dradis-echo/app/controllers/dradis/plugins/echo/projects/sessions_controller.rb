@@ -6,10 +6,18 @@ module Dradis::Plugins::Echo
     include TurboConfigCheck
     layout false
 
-    before_action :set_type
-    before_action :set_record, only: [:create]
+    before_action :set_type, only: [:create, :index]
+    before_action :set_record, only: [:create, :index]
     before_action :check_turbo_config, only: [:show, :create]
     before_action :set_session, only: [:show]
+
+    # Lists the record's past sessions plus the prompts available to start a new
+    # one. Roslin-disabled and prompts empty-state warnings are handled by the
+    # view.
+    def index
+      @sessions = Session.for_record(@record)
+      @prompts = current_user.prompts.for(@type)
+    end
 
     def show; end
 
@@ -51,19 +59,21 @@ module Dradis::Plugins::Echo
     end
 
     def set_record
-      raise ActiveRecord::RecordNotFound if @type.blank?
-
       @record = current_project.send(@type.to_s.pluralize).find(record_params[:record])
     end
 
     def set_session
       @session = Session.find(record_params[:id])
-      @record = scoped_record(@session.record)
+      @record = scoped_record(@session)
     end
 
+    # Whitelists the record type against Prompt::SCOPES before it reaches a
+    # dynamic `current_project.send(@type.pluralize)` dispatch. An unknown type
+    # is an out-of-scope request, not a 500 — raise the same RecordNotFound the
+    # scoped lookups do.
     def set_type
-      allowed = Prompt::SCOPES.map(&:to_s)
-      @type = allowed.include?(record_params[:type]) ? record_params[:type].to_sym : nil
+      @type = record_params[:type]&.to_sym
+      raise ActiveRecord::RecordNotFound unless Prompt::SCOPES.include?(@type)
     end
   end
 end
