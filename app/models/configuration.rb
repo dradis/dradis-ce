@@ -15,6 +15,11 @@ class Configuration < ApplicationRecord
   # -- Class Methods --------------------------------------------------------
   # --------------------------------------------------------------- Misc admin:
 
+  def self.editing_session_stale_after
+    create_with(value: 1440)
+      .find_or_create_by(name: 'admin:editing_session_stale_after').value.to_i
+  end
+
   def self.max_deleted_inline
     create_with(value: 15)
       .find_or_create_by(name: 'admin:max_deleted_inline').value.to_i

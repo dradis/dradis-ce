@@ -55,7 +55,7 @@ describe EditingSession do
         user: other_user,
         record_type: 'Issue',
         record_id: issue.id,
-        started_at: EditingSession::STALE_AFTER.ago - 1.minute
+        started_at: EditingSession.stale_after.ago - 1.minute
       )
 
       expect(EditingSession.for_record(issue).active).to eq([fresh_session])
@@ -74,14 +74,14 @@ describe EditingSession do
         user: other_user,
         record_type: 'Issue',
         record_id: issue.id,
-        started_at: EditingSession::STALE_AFTER.ago - 1.minute
+        started_at: EditingSession.stale_after.ago - 1.minute
       )
       other_issue = create(:issue, node: project.issue_library)
       stale_elsewhere = create(:editing_session,
         user: other_user,
         record_type: 'Issue',
         record_id: other_issue.id,
-        started_at: EditingSession::STALE_AFTER.ago - 1.minute
+        started_at: EditingSession.stale_after.ago - 1.minute
       )
 
       EditingSession.purge_stale_for(record_type: 'Issue', record_id: issue.id)
@@ -111,12 +111,24 @@ describe EditingSession do
         user: other_user,
         record_type: 'Issue',
         record_id: issue.id,
-        started_at: EditingSession::STALE_AFTER.ago - 1.minute
+        started_at: EditingSession.stale_after.ago - 1.minute
       )
 
       EditingSession.acquire(record_type: 'Issue', record_id: issue.id, user: user)
 
       expect(EditingSession.where(id: stale.id)).not_to exist
+    end
+  end
+
+  describe '.stale_after' do
+    it 'defaults to 1 day' do
+      expect(EditingSession.stale_after).to eq(1.day)
+    end
+
+    it 'is configurable instance-wide via Configuration' do
+      Configuration.find_or_create_by(name: 'admin:editing_session_stale_after').update(value: 30)
+
+      expect(EditingSession.stale_after).to eq(30.minutes)
     end
   end
 
