@@ -37,15 +37,14 @@
 
   <div class="form-actions sticky">
     <%= render partial: 'qa/state_button', locals: { f: f, record: @issue } %>
+    or
+    <%=
+      link_to 'Cancel',
+      @form_cancel_path,
+      class: 'cancel-link',
+      data: {
+        behavior: 'clear-local-auto-save'
+      }
+      %>
   </div>
-  or
-  <%=
-    link_to 'Cancel',
-    @form_cancel_path,
-    class: 'cancel-link',
-    data: {
-      behavior: 'clear-local-auto-save'
-    }
-    %>
-</div>
 <% end %>
