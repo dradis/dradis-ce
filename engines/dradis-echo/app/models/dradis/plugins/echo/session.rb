@@ -36,7 +36,7 @@ module Dradis::Plugins::Echo
     def broadcast_composer_state
       broadcast_replace_to(
         [self, :composer_state],
-        target: ActionView::RecordIdentifier.dom_id(self, :composer_state),
+        target: [self, :composer_state],
         partial: 'dradis/plugins/echo/projects/sessions/composer_state',
         locals: { session: self }
       )

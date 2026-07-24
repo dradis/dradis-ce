@@ -48,12 +48,12 @@ describe Dradis::Plugins::Echo::ReplyJob do
 
     it 'streams each chunk to the message content target' do
       perform
-      target = ActionView::RecordIdentifier.dom_id(session.messages.assistant.last, :content)
+      message = session.messages.assistant.last
 
       expect(Turbo::StreamsChannel).to have_received(:broadcast_append_to)
-        .with([session, :messages], target: target, content: 'Hello ')
+        .with([session, :messages], target: [message, :content], content: 'Hello ')
       expect(Turbo::StreamsChannel).to have_received(:broadcast_append_to)
-        .with([session, :messages], target: target, content: 'world')
+        .with([session, :messages], target: [message, :content], content: 'world')
     end
 
     it 'releases the session back to idle' do

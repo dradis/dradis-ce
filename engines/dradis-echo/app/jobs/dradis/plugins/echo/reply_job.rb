@@ -38,7 +38,7 @@ module Dradis::Plugins::Echo
       started = clock
       last_touch = started
 
-      agent.provider.generate(messages: context, model: agent.model_override) do |chunk|
+      agent.provider.generate(messages: context, model: agent.model_override.presence) do |chunk|
         buffer << chunk
         broadcast_chunk(session, message, chunk)
 
@@ -55,7 +55,7 @@ module Dradis::Plugins::Echo
     def broadcast_chunk(session, message, chunk)
       Turbo::StreamsChannel.broadcast_append_to(
         [session, :messages],
-        target: ActionView::RecordIdentifier.dom_id(message, :content),
+        target: [message, :content],
         content: ERB::Util.html_escape(chunk)
       )
     end
