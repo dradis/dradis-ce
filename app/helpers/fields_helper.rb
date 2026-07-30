@@ -1,15 +1,12 @@
 module FieldsHelper
   def dropdown_options(field_name, value)
-    list_field_options(field_name) || value.split(' | ')
-  end
+    options = list_field_options(field_name)
 
-  def render_dropdown?(field_name, value)
-    if (options = list_field_options(field_name))
-      value.blank? || options.include?(value)
-    else
-      @allow_dropdown &&
-      !has_liquid_filters?(value) &&
-      value.split(' | ').count > 1
+    if options
+      options if value.blank? || options.include?(value)
+    elsif @allow_dropdown && !has_liquid_filters?(value)
+      values = value.split(' | ')
+      values if values.count > 1
     end
   end
 

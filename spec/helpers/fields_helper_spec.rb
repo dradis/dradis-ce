@@ -1,61 +1,50 @@
 require 'rails_helper'
 
 describe FieldsHelper do
-  describe '#render_dropdown?' do
+  describe '#dropdown_options' do
     context 'when the field has explicit list options' do
-      it 'returns true when the value is blank' do
+      it 'returns the options when the value is blank' do
         assign(:field_options, { 'Risk' => %w[High Medium Low] })
-        expect(helper.render_dropdown?('Risk', '')).to eq(true)
+        expect(helper.dropdown_options('Risk', '')).to eq(%w[High Medium Low])
       end
 
-      it 'returns true when the value matches one of the options' do
+      it 'returns the options when the value matches one of them' do
         assign(:field_options, { 'Risk' => %w[High Medium Low] })
-        expect(helper.render_dropdown?('Risk', 'High')).to eq(true)
+        expect(helper.dropdown_options('Risk', 'High')).to eq(%w[High Medium Low])
       end
 
-      it 'returns false when the value does not match any of the options' do
+      it 'returns nil when the value does not match any of the options' do
         assign(:field_options, { 'Risk' => %w[High Medium Low] })
-        expect(helper.render_dropdown?('Risk', '{{ issue.risk }}')).to eq(false)
+        expect(helper.dropdown_options('Risk', '{{ issue.risk }}')).to be_nil
       end
 
-      it 'falls back to the pipe-value check when the field has no explicit options' do
+      it 'falls back to the pipe-value check for a different field with no explicit options' do
         assign(:field_options, { 'Risk' => %w[High Medium Low] })
         assign(:allow_dropdown, true)
-        expect(helper.render_dropdown?('Status', 'Open | Closed')).to eq(true)
+        expect(helper.dropdown_options('Status', 'Open | Closed')).to eq(['Open', 'Closed'])
       end
     end
 
     context 'when the field has no explicit list options' do
-      it 'returns false when the value is not pipe-separated' do
+      it 'returns nil when the value is not pipe-separated' do
         assign(:allow_dropdown, true)
-        expect(helper.render_dropdown?('OS', 'Linux')).to eq(false)
+        expect(helper.dropdown_options('OS', 'Linux')).to be_nil
       end
 
-      it 'returns false when dropdowns are not allowed, even if pipe-separated' do
+      it 'returns nil when dropdowns are not allowed, even if pipe-separated' do
         assign(:allow_dropdown, false)
-        expect(helper.render_dropdown?('OS', 'Linux | OSX | Windows')).to eq(false)
+        expect(helper.dropdown_options('OS', 'Linux | OSX | Windows')).to be_nil
       end
 
-      it 'returns true when dropdowns are allowed and the value is pipe-separated' do
+      it 'returns the split values when dropdowns are allowed and the value is pipe-separated' do
         assign(:allow_dropdown, true)
-        expect(helper.render_dropdown?('OS', 'Linux | OSX | Windows')).to eq(true)
+        expect(helper.dropdown_options('OS', 'Linux | OSX | Windows')).to eq(['Linux', 'OSX', 'Windows'])
       end
 
-      it 'returns false when the pipe-separated value contains Liquid filters' do
+      it 'returns nil when the pipe-separated value contains Liquid filters' do
         assign(:allow_dropdown, true)
-        expect(helper.render_dropdown?('OS', "{{ os | join: ' | ' }}")).to eq(false)
+        expect(helper.dropdown_options('OS', "{{ os | join: ' | ' }}")).to be_nil
       end
-    end
-  end
-
-  describe '#dropdown_options' do
-    it 'returns the explicit list options for the given field, when present' do
-      assign(:field_options, { 'Risk' => %w[High Medium Low] })
-      expect(helper.dropdown_options('Risk', 'High')).to eq(%w[High Medium Low])
-    end
-
-    it 'falls back to splitting the value on pipes, when no explicit options exist' do
-      expect(helper.dropdown_options('OS', 'Linux | OSX | Windows')).to eq(['Linux', 'OSX', 'Windows'])
     end
   end
 end
