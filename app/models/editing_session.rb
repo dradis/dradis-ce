@@ -8,6 +8,9 @@ class EditingSession < ApplicationRecord
 
   scope :active, -> { where(created_at: stale_after.ago..) }
   scope :by_others, ->(user) { where.not(user: user) }
+  # `where(record: record)` won't work here: Issue is an STI subclass of Note,
+  # so Rails' polymorphic query would look up record_type: 'Note' (the base
+  # class), not 'Issue' (what we actually store, see .acquire below).
   scope :for_record, ->(record) {
     where(record_type: record.class.name, record_id: record.id)
   }
