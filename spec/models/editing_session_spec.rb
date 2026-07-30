@@ -90,9 +90,9 @@ describe EditingSession do
     end
   end
 
-  describe '.acquire' do
+  describe '.acquire!' do
     it 'creates a session for the user and record' do
-      session = EditingSession.acquire(record_type: 'Issue', record_id: issue.id, user: user)
+      session = EditingSession.acquire!(record_type: 'Issue', record_id: issue.id, user: user)
 
       expect(session).to be_persisted
       expect(EditingSession.where(user: user, record_type: 'Issue', record_id: issue.id)).to exist
@@ -101,7 +101,7 @@ describe EditingSession do
     it 'returns the existing session instead of raising when one already exists' do
       existing = create(:editing_session, user: user, record_type: 'Issue', record_id: issue.id)
 
-      session = EditingSession.acquire(record_type: 'Issue', record_id: issue.id, user: user)
+      session = EditingSession.acquire!(record_type: 'Issue', record_id: issue.id, user: user)
 
       expect(session).to eq(existing)
     end
@@ -114,7 +114,7 @@ describe EditingSession do
         created_at: EditingSession.stale_after.ago - 1.minute
       )
 
-      EditingSession.acquire(record_type: 'Issue', record_id: issue.id, user: user)
+      EditingSession.acquire!(record_type: 'Issue', record_id: issue.id, user: user)
 
       expect(EditingSession.where(id: stale.id)).not_to exist
     end

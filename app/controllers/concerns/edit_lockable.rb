@@ -4,7 +4,7 @@ module EditLockable
   protected
 
   def acquire_edit_session(record)
-    EditingSession.acquire(record_type: record.class.name, record_id: record.id, user: current_user)
+    EditingSession.acquire!(record_type: record.class.name, record_id: record.id, user: current_user)
   end
 
   def check_edit_lock
