@@ -137,4 +137,34 @@ describe 'EditLockable concern' do
       expect(EditingSession.for_record(issue).where(user: user_a)).to exist
     end
   end
+
+  describe 'DELETE project_issue_editing_session_path' do
+    before do
+      create(:editing_session,
+        user: user_a,
+        record_type: 'Issue',
+        record_id: issue.id
+      )
+    end
+
+    it 'releases the current user\'s editing session' do
+      login_as_user(user_a)
+      delete project_issue_editing_session_path(project, issue)
+
+      expect(EditingSession.for_record(issue).where(user: user_a)).not_to exist
+    end
+
+    it 'does not release another user\'s editing session' do
+      create(:editing_session,
+        user: user_b,
+        record_type: 'Issue',
+        record_id: issue.id
+      )
+
+      login_as_user(user_a)
+      delete project_issue_editing_session_path(project, issue)
+
+      expect(EditingSession.for_record(issue).where(user: user_b)).to exist
+    end
+  end
 end
