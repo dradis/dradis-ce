@@ -6,12 +6,12 @@ class EditingSession < ApplicationRecord
 
   validates :record_type, presence: true, inclusion: { in: ALLOWED_RECORD_TYPES }
 
-  scope :active, -> { where(started_at: stale_after.ago..) }
+  scope :active, -> { where(created_at: stale_after.ago..) }
   scope :by_others, ->(user) { where.not(user: user) }
   scope :for_record, ->(record) {
     where(record_type: record.class.name, record_id: record.id)
   }
-  scope :stale, -> { where(started_at: ...stale_after.ago) }
+  scope :stale, -> { where(created_at: ...stale_after.ago) }
 
   def self.acquire(record_type:, record_id:, user:)
     purge_stale_for(record_type: record_type, record_id: record_id)

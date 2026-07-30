@@ -49,13 +49,13 @@ describe EditingSession do
         user: user,
         record_type: 'Issue',
         record_id: issue.id,
-        started_at: 1.minute.ago
+        created_at: 1.minute.ago
       )
       create(:editing_session,
         user: other_user,
         record_type: 'Issue',
         record_id: issue.id,
-        started_at: EditingSession.stale_after.ago - 1.minute
+        created_at: EditingSession.stale_after.ago - 1.minute
       )
 
       expect(EditingSession.for_record(issue).active).to eq([fresh_session])
@@ -68,20 +68,20 @@ describe EditingSession do
         user: user,
         record_type: 'Issue',
         record_id: issue.id,
-        started_at: 1.minute.ago
+        created_at: 1.minute.ago
       )
       create(:editing_session,
         user: other_user,
         record_type: 'Issue',
         record_id: issue.id,
-        started_at: EditingSession.stale_after.ago - 1.minute
+        created_at: EditingSession.stale_after.ago - 1.minute
       )
       other_issue = create(:issue, node: project.issue_library)
       stale_elsewhere = create(:editing_session,
         user: other_user,
         record_type: 'Issue',
         record_id: other_issue.id,
-        started_at: EditingSession.stale_after.ago - 1.minute
+        created_at: EditingSession.stale_after.ago - 1.minute
       )
 
       EditingSession.purge_stale_for(record_type: 'Issue', record_id: issue.id)
@@ -111,7 +111,7 @@ describe EditingSession do
         user: other_user,
         record_type: 'Issue',
         record_id: issue.id,
-        started_at: EditingSession.stale_after.ago - 1.minute
+        created_at: EditingSession.stale_after.ago - 1.minute
       )
 
       EditingSession.acquire(record_type: 'Issue', record_id: issue.id, user: user)

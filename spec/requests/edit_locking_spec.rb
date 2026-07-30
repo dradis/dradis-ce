@@ -51,7 +51,7 @@ describe 'EditLockable concern' do
           user: user_a,
           record_type: 'Issue',
           record_id: issue.id,
-          started_at: EditingSession.stale_after.ago - 1.minute
+          created_at: EditingSession.stale_after.ago - 1.minute
         )
       end
 
