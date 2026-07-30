@@ -2,7 +2,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - rails-html-sanitizer, sqlite3, websocket-driver
+    - rails, rails-html-sanitizer, sqlite3, websocket-driver
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
