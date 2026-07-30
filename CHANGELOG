@@ -4,6 +4,8 @@
   - Upgraded gems:
     - rails, rails-html-sanitizer, sqlite3, websocket-driver
   - Bugs fixes:
+    - Logs: index the logs table so progress lookups and cleanup stay fast as it grows
+    - Uploads/Exports: retry progress polling automatically after a failed request, and show an error if it keeps failing
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
