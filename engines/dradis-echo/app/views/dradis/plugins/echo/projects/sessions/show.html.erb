@@ -5,15 +5,12 @@
     </div>
   <% end %>
 
-  <%# Live transcript + composer state. Slice 5 adds `channel: SessionsChannel` %>
-  <%# so the socket re-authorizes on subscribe. %>
+  <%# Live transcript + composer state. A later slice wires the custom %>
+  <%# SessionsChannel (`channel:`) so the socket re-authorizes on subscribe. %>
   <%= turbo_stream_from [@session, :messages] %>
   <%= turbo_stream_from [@session, :composer_state] %>
 
-  <div id="echo-messages" data-behavior="echo-messages">
-    <%= render partial: 'dradis/plugins/echo/projects/sessions/messages/message',
-               collection: @session.messages.order(:created_at, :id), as: :message %>
-  </div>
+  <%= render 'dradis/plugins/echo/projects/sessions/messages', messages: @messages %>
 
   <%= render 'dradis/plugins/echo/projects/sessions/composer_state', session: @session %>
 

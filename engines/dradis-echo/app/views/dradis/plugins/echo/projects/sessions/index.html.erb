@@ -4,7 +4,7 @@
       <div class="list-group mb-3" id="echo-sessions" data-behavior="echo-sessions">
         <% @sessions.each do |session| %>
           <%= link_to session.title.presence || "Session ##{session.id}",
-                echo.project_session_path(current_project, session, type: @type, record: @record.id),
+                echo.project_session_path(current_project, session),
                 id: dom_id(session),
                 class: 'list-group-item list-group-item-action',
                 data: { turbo_frame: dom_id(@record, :echo) } %>

@@ -1,0 +1,7 @@
+<%# locals: (messages:) -%>
+<%# The live transcript container. ReplyJob and Message#broadcast_created append %>
+<%# new turns into #echo-messages, so its id must stay stable across renders. %>
+<div id="echo-messages" data-behavior="echo-messages">
+  <%= render partial: 'dradis/plugins/echo/projects/sessions/messages/message',
+             collection: messages, as: :message %>
+</div>
