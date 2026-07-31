@@ -18,7 +18,7 @@ class EditingSession < ApplicationRecord
 
   def self.acquire!(record_type:, record_id:, user:)
     purge_stale_for(record_type: record_type, record_id: record_id)
-    create_or_find_by!(record_type: record_type, record_id: record_id, user: user)
+    create_or_find_by!(record_type: record_type, record_id: record_id) { |session| session.user = user }
   end
 
   def self.purge_stale_for(record_type:, record_id:)

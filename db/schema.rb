@@ -145,8 +145,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_22_100000) do
     t.string "record_type", null: false
     t.integer "record_id", null: false
     t.datetime "created_at", null: false
-    t.index ["record_type", "record_id"], name: "index_editing_sessions_on_record"
-    t.index ["user_id", "record_type", "record_id"], name: "index_editing_sessions_uniqueness", unique: true
+    t.index ["record_type", "record_id"], name: "index_editing_sessions_uniqueness", unique: true
     t.index ["user_id"], name: "index_editing_sessions_on_user_id"
   end
 

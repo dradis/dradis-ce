@@ -99,10 +99,12 @@ describe 'EditLockable concern' do
         expect(response.body).to include('Edit issue')
       end
 
-      it 'creates a session for the bypassing user' do
+      it 'does not create a new session, leaving the original owner as the lock holder' do
         login_as_user(user_b)
         get edit_project_issue_path(project, issue, force: 'true')
-        expect(EditingSession.for_record(issue).where(user: user_b)).to exist
+
+        expect(EditingSession.for_record(issue).count).to eq(1)
+        expect(EditingSession.for_record(issue).first.user).to eq(user_a)
       end
     end
   end
@@ -154,17 +156,14 @@ describe 'EditLockable concern' do
       expect(EditingSession.for_record(issue).where(user: user_a)).not_to exist
     end
 
-    it 'does not release another user\'s editing session' do
-      create(:editing_session,
-        user: user_b,
-        record_type: 'Issue',
-        record_id: issue.id
-      )
+    it 'does not release another user\'s editing session on a different record' do
+      other_issue = create(:issue, node: project.issue_library)
+      create(:editing_session, user: user_b, record_type: 'Issue', record_id: other_issue.id)
 
       login_as_user(user_a)
       delete project_issue_editing_session_path(project, issue)
 
-      expect(EditingSession.for_record(issue).where(user: user_b)).to exist
+      expect(EditingSession.for_record(other_issue).where(user: user_b)).to exist
     end
   end
 end

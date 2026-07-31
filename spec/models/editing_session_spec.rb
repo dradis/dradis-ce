@@ -37,9 +37,10 @@ describe EditingSession do
   describe '.by_others' do
     it 'excludes sessions belonging to the given user' do
       create(:editing_session, user: user, record_type: 'Issue', record_id: issue.id)
-      other_session = create(:editing_session, user: other_user, record_type: 'Issue', record_id: issue.id)
+      other_issue = create(:issue, node: project.issue_library)
+      other_session = create(:editing_session, user: other_user, record_type: 'Issue', record_id: other_issue.id)
 
-      expect(EditingSession.for_record(issue).by_others(user)).to eq([other_session])
+      expect(EditingSession.by_others(user)).to contain_exactly(other_session)
     end
   end
 
@@ -51,27 +52,22 @@ describe EditingSession do
         record_id: issue.id,
         created_at: 1.minute.ago
       )
+      other_issue = create(:issue, node: project.issue_library)
       create(:editing_session,
         user: other_user,
         record_type: 'Issue',
-        record_id: issue.id,
+        record_id: other_issue.id,
         created_at: EditingSession.stale_after.ago - 1.minute
       )
 
-      expect(EditingSession.for_record(issue).active).to eq([fresh_session])
+      expect(EditingSession.active).to eq([fresh_session])
     end
   end
 
   describe '.purge_stale_for' do
     it 'destroys stale sessions for the given record only' do
-      fresh_session = create(:editing_session,
-        user: user,
-        record_type: 'Issue',
-        record_id: issue.id,
-        created_at: 1.minute.ago
-      )
       create(:editing_session,
-        user: other_user,
+        user: user,
         record_type: 'Issue',
         record_id: issue.id,
         created_at: EditingSession.stale_after.ago - 1.minute
@@ -86,7 +82,7 @@ describe EditingSession do
 
       EditingSession.purge_stale_for(record_type: 'Issue', record_id: issue.id)
 
-      expect(EditingSession.all).to contain_exactly(fresh_session, stale_elsewhere)
+      expect(EditingSession.all).to contain_exactly(stale_elsewhere)
     end
   end
 
@@ -104,6 +100,15 @@ describe EditingSession do
       session = EditingSession.acquire!(record_type: 'Issue', record_id: issue.id, user: user)
 
       expect(session).to eq(existing)
+    end
+
+    it 'returns the existing owner session instead of creating one for another user' do
+      existing = create(:editing_session, user: user, record_type: 'Issue', record_id: issue.id)
+
+      session = EditingSession.acquire!(record_type: 'Issue', record_id: issue.id, user: other_user)
+
+      expect(session).to eq(existing)
+      expect(EditingSession.for_record(issue).count).to eq(1)
     end
 
     it 'purges stale sessions for the record before acquiring' do
@@ -133,10 +138,10 @@ describe EditingSession do
   end
 
   describe 'unique constraint' do
-    it 'prevents duplicate sessions for the same user and record at the database level' do
+    it 'prevents more than one session for the same record at the database level' do
       create(:editing_session, user: user, record_type: 'Issue', record_id: issue.id)
 
-      duplicate = EditingSession.new(user: user, record_type: 'Issue', record_id: issue.id)
+      duplicate = EditingSession.new(user: other_user, record_type: 'Issue', record_id: issue.id)
       expect { duplicate.save(validate: false) }.to raise_error(ActiveRecord::RecordNotUnique)
     end
   end
