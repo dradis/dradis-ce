@@ -1,5 +1,5 @@
 <%# locals: (message:) -%>
-<%# Minimal render — Slice 5 restyles. Must render from `render partial:` with %>
+<%# Minimal render. Must render from `render partial:` with %>
 <%# only `message:` in locals, so no controller-context helpers here. %>
 <div id="<%= dom_id(message) %>" class="echo-message echo-message-<%= message.role %>" data-status="<%= message.status %>">
   <p class="echo-message-author">

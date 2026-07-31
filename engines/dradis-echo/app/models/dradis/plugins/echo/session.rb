@@ -33,15 +33,15 @@ module Dradis::Plugins::Echo
       end
     end
 
+    # FIXME - ISSUE/NOTE INHERITANCE
+    #
     # Because Issue descends from Note but doesn't use STI, Rails's default
     # polymorphic setter stores 'Note' when you assign an Issue. Force 'Issue'
     # here so the record loads back as the right class. Mirrors
     # Comment#commentable= (app/models/comment.rb).
-    #
-    # FIXME - ISSUE/NOTE INHERITANCE
     def record=(new_record)
       super
-      self.record_type = 'Issue' if new_record.is_a?(Issue)
+      self.record_type = self.class.record_type_for(new_record) if new_record
       new_record
     end
   end

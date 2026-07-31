@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :echo_message, class: 'Dradis::Plugins::Echo::Message' do
     association :session, factory: :echo_session
+    user
     role { :user }
     content { 'Hello, Echo.' }
 
