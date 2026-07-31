@@ -30,15 +30,15 @@ class EvidenceController < NestedNodeResourceController
     respond_to do |format|
       if @evidence.save
         track_created(@evidence)
-        format.html {
+        format.html do
           redirect_to [current_project, @evidence.node, @evidence],
             notice: "Evidence added for node #{@evidence.node.label}."
-        }
+        end
       else
-        format.html {
+        format.html do
           initialize_nodes_sidebar
           render 'new'
-        }
+        end
       end
       format.js
     end
@@ -65,10 +65,10 @@ class EvidenceController < NestedNodeResourceController
         end
 
       else
-        format.html {
+        format.html do
           initialize_nodes_sidebar
           render 'edit'
-        }
+        end
       end
       format.js
     end
@@ -78,7 +78,7 @@ class EvidenceController < NestedNodeResourceController
     respond_to do |format|
       if @evidence.destroy
         track_destroyed(@evidence)
-        format.html {
+        format.html do
           notice = "Successfully deleted evidence for '#{@evidence.issue.title}.'"
           # Evidence can be deleted from 3 places:
           # 1. from the issue evidence tab
@@ -91,13 +91,13 @@ class EvidenceController < NestedNodeResourceController
           else
             redirect_back fallback_location: project_node_path(current_project, @node), notice: notice
           end
-        }
+        end
         format.js
       else
-        format.html {
+        format.html do
           redirect_to [current_project, @node, @evidence],
             notice: "Error while deleting evidence: #{@evidence.errors}"
-        }
+        end
         format.js
       end
     end
@@ -136,7 +136,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def set_auto_save_key
-    @auto_save_key =  if @evidence&.persisted?
+    @auto_save_key = if @evidence&.persisted?
       "evidence-#{@evidence.id}"
     elsif params[:template]
       "node-#{@node.id}-evidence-#{params[:template]}"

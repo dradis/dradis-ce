@@ -297,23 +297,6 @@ Style/BlockComments:
   Exclude:
     - 'app/models/attachment.rb'
 
-# Offense count: 11
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, ProceduralMethods, FunctionalMethods, IgnoredMethods.
-# SupportedStyles: line_count_based, semantic, braces_for_chaining
-# ProceduralMethods: benchmark, bm, bmbm, create, each_with_object, measure, new, realtime, tap, with_object
-# FunctionalMethods: let, let!, subject, watch
-# IgnoredMethods: lambda, proc, it
-Style/BlockDelimiters:
-  Exclude:
-    - 'app/controllers/attachments_controller.rb'
-    - 'app/controllers/evidence_controller.rb'
-    - 'app/controllers/issues/merge_controller.rb'
-    - 'engines/dradis-api/spec/requests/dradis/ce/api/v1/attachments_spec.rb'
-    - 'engines/dradis-api/spec/requests/dradis/ce/api/v1/issues_spec.rb'
-    - 'spec/factories/attachments.rb'
-    - 'spec/features/issues_spec.rb'
-
 # Offense count: 19
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.

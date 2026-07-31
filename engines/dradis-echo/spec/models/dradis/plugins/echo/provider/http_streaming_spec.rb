@@ -27,12 +27,12 @@ describe Dradis::Plugins::Echo::Provider::HttpStreaming do
   describe '#parse_sse_response' do
     it 'raises an error for non-2xx responses' do
       stub_http(body: 'Unauthorized', code: '401')
-      expect {
+      expect do
         provider.send(:parse_sse_response,
                       URI('https://api.anthropic.com/v1/messages'),
                       headers: {},
                       body: {})
-      }.to raise_error(RuntimeError, /API error \(401\)/)
+      end.to raise_error(RuntimeError, /API error \(401\)/)
     end
 
     it 'parses SSE lines and yields text chunks' do
@@ -66,12 +66,12 @@ describe Dradis::Plugins::Echo::Provider::HttpStreaming do
       sse_body = "data: not-valid-json\ndata: {\"type\":\"message_start\"}\n\n"
       stub_http(body: sse_body)
 
-      expect {
+      expect do
         provider.send(:parse_sse_response,
                       URI('https://api.anthropic.com/v1/messages'),
                       headers: {},
                       body: {}) { |_chunk| }
-      }.not_to raise_error
+      end.not_to raise_error
     end
   end
 

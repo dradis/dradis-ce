@@ -1,7 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Issues: prevent editing a record while another user is already editing it
   - Upgraded gems:
-    - rails-html-sanitizer, sqlite3, websocket-driver
+    - rails, rails-html-sanitizer, sqlite3, websocket-driver
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
