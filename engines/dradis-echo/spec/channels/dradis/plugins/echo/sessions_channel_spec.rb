@@ -19,7 +19,7 @@ describe Dradis::Plugins::Echo::SessionsChannel, type: :channel do
     expect(subscription).to have_stream_from(stream_name)
   end
 
-  it 'rejects a user whose :use on the record project is denied' do
+  it "rejects a user whose :use on the session's project is denied" do
     allow_any_instance_of(Ability).to receive(:can?).and_return(false)
 
     subscribe(signed_stream_name: signed_name)

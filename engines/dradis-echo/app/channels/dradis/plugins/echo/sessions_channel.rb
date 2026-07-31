@@ -27,7 +27,7 @@ module Dradis::Plugins::Echo
     private
 
     def authorized?(session)
-      Ability.new(current_user).can?(:use, session.record.project)
+      Ability.new(current_user).can?(:use, session.project)
     end
 
     # The signed name encodes `[session, :messages]`, i.e.
