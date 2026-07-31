@@ -12,7 +12,7 @@ Dradis::Plugins::Echo::Engine.routes.draw do
         resources :grammar_corrections, only: [:create]
         resources :grammar_suggestions, only: [:create]
 
-        resources :sessions, only: [:index, :show, :create] do
+        resources :sessions, only: [:show, :create] do
           scope module: 'sessions' do
             resource :reply, only: [:create]
             resources :messages, only: [:create]
