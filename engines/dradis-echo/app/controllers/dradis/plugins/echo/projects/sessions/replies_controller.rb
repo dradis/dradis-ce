@@ -1,10 +1,8 @@
 module Dradis::Plugins::Echo
   class Projects::Sessions::RepliesController < AuthenticatedController
+    include HasSession
     include ProjectScoped
-    include RecordScoping
     layout false
-
-    before_action :set_session
 
     # Starts generation for a freshly-created session. The session Stimulus
     # controller POSTs here from `connect`, i.e. after the browser has subscribed
@@ -16,13 +14,6 @@ module Dradis::Plugins::Echo
     def create
       @session.request_reply! if @session.reply_pending?
       head :ok
-    end
-
-    private
-
-    def set_session
-      @session = Session.find(params[:session_id])
-      scoped_record(@session)
     end
   end
 end

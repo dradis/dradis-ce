@@ -19,7 +19,9 @@ module Dradis::Plugins::Echo
       @prompts = current_user.prompts.for(@type)
     end
 
-    def show; end
+    def show
+      @messages = @session.messages.order(:created_at, :id)
+    end
 
     # Starts a conversation from a saved prompt. The Prompt is read only here, at
     # the controller boundary — we copy its title and never store a FK, so a
@@ -34,6 +36,8 @@ module Dradis::Plugins::Echo
     # render `show` in the reply_pending? state and let the session Stimulus
     # controller POST to RepliesController once it has connected.
     def create
+      return head :unprocessable_entity if params[:prompt].blank?
+
       prompt = current_user.prompts.for(@type).find(params[:prompt_id])
 
       @session = Session.new(
@@ -42,7 +46,7 @@ module Dradis::Plugins::Echo
         title: prompt.title,
         user: current_user
       )
-      @session.messages.build(content: params[:prompt], role: :user, user: current_user)
+      @session.messages.build(content: params[:prompt], user: current_user)
 
       if @session.save
         publish_event('echo_session.created', session: { id: @session.id })

@@ -33,12 +33,15 @@ describe 'Echo session messages' do
     end
 
     it 'rejects a blank message without enqueuing a reply' do
+      # params.expect(:content) treats a blank required scalar as missing and
+      # raises ParameterMissing (a 400 in production, before the reply gate is
+      # ever reached) rather than persisting an invalid message.
       expect do
         post "/addons/echo/projects/#{@project.id}/sessions/#{session.id}/messages",
           params: { content: '' }
-      end.not_to change(Dradis::Plugins::Echo::Message, :count)
+      end.to raise_error(ActionController::ParameterMissing)
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(session.messages.count).to eq(0)
     end
 
     it 'denies a session whose record is outside the current project scope' do
