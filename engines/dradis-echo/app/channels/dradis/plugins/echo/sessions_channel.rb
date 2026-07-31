@@ -40,8 +40,7 @@ module Dradis::Plugins::Echo
       name = verified_stream_name_from_params
       return unless name
 
-      record = GlobalID::Locator.locate(name.split(':').first)
-      record if record.is_a?(Session)
+      GlobalID::Locator.locate(name.split(':').first, only: Session)
     rescue ActiveRecord::RecordNotFound
       nil
     end

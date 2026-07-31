@@ -46,6 +46,20 @@ describe Dradis::Plugins::Echo::Message do
     end
   end
 
+  describe 'role derivation' do
+    it 'derives the user role from the author when none is given' do
+      message = build(:echo_message, role: nil)
+      message.valid?
+      expect(message.role).to eq('user')
+    end
+
+    it 'leaves an explicit assistant role untouched' do
+      message = build(:assistant_message)
+      message.valid?
+      expect(message.role).to eq('assistant')
+    end
+  end
+
   describe 'metadata' do
     it 'is stored as JSON' do
       message = create(:echo_message, metadata: { 'model' => 'qwen2.5:14b' })

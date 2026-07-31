@@ -3,10 +3,11 @@ module Dradis::Plugins::Echo
   # Turbo Streams only work if Action Cable can reach its backend, so the view
   # can warn the user when it can't.
   #
-  # Only the Redis adapter needs a reachable external server, so we ping just
-  # that one and memoize the result. Every other adapter (async in development,
-  # test in specs) is always treated as healthy — no spurious "can't contact
-  # Redis" alert and no per-request Redis round-trip.
+  # Only a Redis-backed adapter needs a reachable external server, so we ping
+  # just those (duck-typed on the subscription connection) and memoize the
+  # result. Every other adapter (async in development, test in specs) is always
+  # treated as healthy — no spurious "can't contact Redis" alert and no
+  # per-request Redis round-trip.
   module TurboConfigCheck
     extend ActiveSupport::Concern
 
@@ -20,7 +21,7 @@ module Dradis::Plugins::Echo
 
     def turbo_backend_reachable?
       adapter = ActionCable.server.pubsub
-      return true unless adapter.is_a?(ActionCable::SubscriptionAdapter::Redis)
+      return true unless adapter.respond_to?(:redis_connection_for_subscriptions)
 
       adapter.redis_connection_for_subscriptions.ping
       true

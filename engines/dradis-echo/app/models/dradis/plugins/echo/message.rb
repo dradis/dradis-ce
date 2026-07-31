@@ -16,6 +16,12 @@ module Dradis::Plugins::Echo
     belongs_to :user, optional: true
 
     # -- Callbacks ------------------------------------------------------------
+    # The author is the source of truth for a user turn, so controllers don't
+    # repeat `role: :user` on every build. ReplyJob still sets `role: :assistant`
+    # explicitly (assistant messages carry no user). Runs before the predicate
+    # callbacks below so `user?` sees the derived role.
+    before_validation :set_role_from_user
+
     # User messages are authored in full, so they're never mid-stream.
     before_validation :complete_user_messages, if: :user?
 
@@ -44,6 +50,10 @@ module Dradis::Plugins::Echo
 
     def complete_user_messages
       self.status = :complete
+    end
+
+    def set_role_from_user
+      self.role ||= :user if user.present?
     end
   end
 end
