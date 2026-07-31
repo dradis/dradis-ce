@@ -39,6 +39,15 @@ describe Dradis::Plugins::Echo::Session do
     end
   end
 
+  describe '#project' do
+    it 'delegates to the record (the authorization seam)' do
+      note = create(:note)
+      session = create(:echo_session, record: note)
+
+      expect(session.project).to eq(note.project)
+    end
+  end
+
   describe '#to_provider_messages' do
     it 'returns role/content hashes ordered by creation' do
       session = create(:echo_session)
