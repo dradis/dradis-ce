@@ -43,3 +43,6 @@
 # Random
 .DS_Store
 *.swp
+
+# Local SQLite databases
+/db/*.sqlite3*
