@@ -12,8 +12,6 @@ module Dradis::Plugins::Echo
     belongs_to :user, optional: true
     has_many :messages, dependent: :destroy
 
-    delegate :project, to: :record
-
     # -- Scopes ---------------------------------------------------------------
     # Can't use where(record: record): Rails builds record_type from the
     # polymorphic_name ('Note') for an Issue, missing the forced 'Issue' rows.

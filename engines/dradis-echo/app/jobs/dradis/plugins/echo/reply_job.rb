@@ -38,7 +38,7 @@ module Dradis::Plugins::Echo
       started = clock
       last_touch = started
 
-      agent.provider.generate(messages: context, model: agent.model_override.presence) do |chunk|
+      agent.provider.generate(messages: context, model: agent.resolved_model) do |chunk|
         buffer << chunk
         broadcast_chunk(session, message, chunk)
 
@@ -66,7 +66,7 @@ module Dradis::Plugins::Echo
         status: :complete,
         metadata: message.metadata.merge(
           'duration_ms' => duration_ms,
-          'model' => agent.model_override.presence || agent.provider.model,
+          'model' => agent.resolved_model,
           'provider' => agent.provider.type_name
         )
       )
