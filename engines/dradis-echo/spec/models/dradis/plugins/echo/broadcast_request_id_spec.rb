@@ -2,13 +2,12 @@ require 'rails_helper'
 
 Dir[Dradis::Plugins::Echo::Engine.root.join('spec/factories/*.rb')].sort.each { |f| require f }
 
-# SEC-506 Bug 1/2 regression: turbo-rails 2.0.4 broadcastable.rb:503 reverse_merges
-# `request_id: Turbo.current_request_id` into every broadcast partial's locals. In a
-# real request the RequestId middleware sets a non-nil id, so it reaches the partial;
-# in a job / rack_test it's nil and .compact drops it. Both Echo broadcast-target
-# partials use strict locals, so unless they tolerate `request_id`, the broadcasts
-# that fire *inside SessionsController#create* (Message#broadcast_created and, via
-# request_reply!, Session#broadcast_composer_state) raise StrictLocalsError → 500.
+# Regression: turbo-rails reverse_merges `request_id: Turbo.current_request_id` into
+# every broadcast partial's locals — non-nil in a real request, dropped in a
+# job/rack_test. Both Echo broadcast-target partials use strict locals, so unless they
+# tolerate `request_id`, the broadcasts that fire inside SessionsController#create
+# (Message#broadcast_created and Session#broadcast_composer_state) raise
+# StrictLocalsError → 500.
 #
 # A plain request spec can't catch this (nil request_id), which is why it slipped
 # through. We force a non-nil id with Turbo.with_request_id so the render exercises

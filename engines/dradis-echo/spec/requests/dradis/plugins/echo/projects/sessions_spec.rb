@@ -40,9 +40,9 @@ describe 'Echo sessions' do
       end.to change(Dradis::Plugins::Echo::Session, :count).by(1)
         .and change(Dradis::Plugins::Echo::Message, :count).by(1)
 
-      # The reply is triggered by the session Stimulus controller once it has
-      # subscribed, not by create — otherwise the streaming container broadcasts
-      # before the socket is listening and never renders live (SEC-506 Bug 4).
+      # The reply is triggered by the session Stimulus controller once subscribed,
+      # not by create — otherwise the streaming container broadcasts before the
+      # socket is listening and never renders live.
       expect(Dradis::Plugins::Echo::ReplyJob).not_to have_been_enqueued
 
       session = Dradis::Plugins::Echo::Session.last
@@ -100,9 +100,9 @@ describe 'Echo sessions' do
   describe 'GET /addons/echo/projects/:project_id/sessions/:id' do
     # The initial Send-button lock is server-rendered off generating? OR
     # reply_pending?, so a freshly-created (idle, reply-owed) session comes back
-    # disabled with zero dependency on the composer_state broadcast that races
-    # the client's subscribe on a slow box (SEC-515). A subscribe race can't be
-    # reproduced in rack_test, so we assert the server-rendered invariant.
+    # disabled without depending on the composer_state broadcast that races the
+    # client's subscribe. That race can't be reproduced in rack_test, so we assert
+    # the server-rendered invariant.
     def composer_state
       Nokogiri::HTML(response.body).at_css('[data-behavior="echo-composer-state"]')
     end

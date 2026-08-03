@@ -5,12 +5,10 @@ module Dradis::Plugins::Echo
     layout false
 
     # Starts generation for a freshly-created session. The session Stimulus
-    # controller POSTs here from `connect`, i.e. after the browser has subscribed
-    # to the SessionsChannel, so the streaming container ReplyJob broadcasts lands
-    # on a listening socket (SEC-506 Bug 4). Guarded by reply_pending? so a
-    # reconnect, a second viewer, or a stray POST on an already-answered session
-    # can never spawn an unsolicited reply — request_reply! only fires while a
-    # reply is genuinely owed.
+    # controller POSTs here from `connect` — after subscribing to the
+    # SessionsChannel — so ReplyJob's streaming container lands on a listening
+    # socket. reply_pending? guards against a reconnect or stray POST spawning an
+    # unsolicited reply on an already-answered session.
     def create
       @session.request_reply! if @session.reply_pending?
       head :ok

@@ -2,12 +2,10 @@ require 'rails_helper'
 
 Dir[Dradis::Plugins::Echo::Engine.root.join('spec/factories/*.rb')].sort.each { |f| require f }
 
-# Regression coverage for SEC-506 Bug 3: the Echo tab loads interactions#index
-# into a native <turbo-frame id="echo_issue_<id>">, and the session's "+ New"
-# link navigates that same frame back to interactions#index. If index answers
-# frameless, Turbo reports "the response did not contain the expected
-# <turbo-frame>" and the tab shows "Content missing". So the index response must
-# carry the record's Echo frame verbatim.
+# Regression: the Echo tab loads interactions#index into a native
+# <turbo-frame id="echo_issue_<id>">, and the "+ New" link navigates that same
+# frame back. If index answers frameless, Turbo reports "Content missing", so the
+# index response must carry the record's Echo frame verbatim.
 describe 'Echo interactions' do
   let(:user) { create(:user) }
 

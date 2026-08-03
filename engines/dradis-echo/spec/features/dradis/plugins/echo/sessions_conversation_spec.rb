@@ -2,10 +2,9 @@ require 'rails_helper'
 
 Dir[Dradis::Plugins::Echo::Engine.root.join('spec/factories/*.rb')].sort.each { |f| require f }
 
-# SEC-506 live-browser acceptance for the Echo Sessions conversation UI. These are
-# the flows the rack_test request specs structurally cannot exercise (the documented
-# live-JS/Turbo gap): the Bootstrap tab-show that triggers the native lazy frame, and
-# the Turbo-frame back-navigation between sessions#show and interactions#index.
+# Live-browser acceptance for the Echo Sessions conversation UI: the flows rack_test
+# request specs can't exercise — the Bootstrap tab-show that triggers the native lazy
+# frame, and Turbo-frame back-navigation between sessions#show and interactions#index.
 describe 'Echo Sessions conversation UI', js: true do
   before { login_to_project_as_user }
 

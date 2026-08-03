@@ -1,17 +1,13 @@
 <%# locals: (session:, request_id: nil) -%>
-<%# request_id is accepted-and-ignored: turbo-rails injects request_id into every %>
-<%# broadcast partial's locals (broadcastable.rb:503); non-nil in-request, so strict %>
-<%# locals must tolerate it or broadcast_composer_state 500s (SEC-506 Bug 1). %>
-<%# Broadcast on every idle<->generating transition (Session#broadcast_composer_state). %>
-<%# Route-free and locals-only so it renders from ReplyJob. Carries the Send button %>
-<%# and the multiplayer hint; the session_controller reads data-generating to keep %>
-<%# the textarea disabled in step with the (server-rendered) button. %>
-<%# Lock on generating? OR reply_pending?: a freshly-created session is idle with a %>
-<%# reply owed, and the composer_state replace that flips it to generating races the %>
-<%# client's still-in-flight subscribe, so on a slow box that broadcast is dropped and %>
-<%# the button would stay enabled until a full re-render. Folding reply_pending? in %>
-<%# server-renders the initial lock with zero dependency on that racy broadcast; %>
-<%# subsequent transitions (by then subscribed) are still driven by broadcasts (SEC-515). %>
+<%# request_id is accepted-and-ignored: turbo-rails injects it into every broadcast %>
+<%# partial's locals (non-nil in-request), so strict locals must tolerate it or %>
+<%# broadcast_composer_state 500s. Route-free and locals-only so it renders from %>
+<%# ReplyJob on every idle<->generating transition; session_controller reads %>
+<%# data-generating to keep the textarea in step with the server-rendered button. %>
+<%# Lock on generating? OR reply_pending?: the composer_state replace that flips a %>
+<%# freshly-created session to generating can race the client's in-flight subscribe %>
+<%# and be dropped; folding reply_pending? in server-renders the initial lock without %>
+<%# depending on that broadcast. Later transitions are subscribed and broadcast-driven. %>
 <% locked = session.generating? || session.reply_pending? %>
 <%= tag.div id: dom_id(session, :composer_state),
       data: { behavior: 'echo-composer-state', generating: locked } do %>

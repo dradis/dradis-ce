@@ -12,10 +12,8 @@
     <h4 class="header-underline mb-3">Dradis Echo</h4>
 
     <%# Native lazy frame: loads interactions#index when the Echo tab becomes %>
-    <%# visible. index.html.erb answers with a matching <turbo-frame>, so the %>
-    <%# initial load, prompt->show and back->index all Turbo-frame-match the same %>
-    <%# frame id (SEC-506: a data-behavior=fetch inner-HTML inject left the frame %>
-    <%# empty, so a native back-navigation to index found no frame to match). %>
+    <%# visible. index.html.erb answers with a matching <turbo-frame>, so initial %>
+    <%# load, prompt->show and back->index all Turbo-frame-match the same id. %>
     <turbo-frame id="<%= dom_id(@issue, :echo) %>"
                  src="<%= echo.project_interactions_path(current_project, type: :issue, record: @issue.id) %>"
                  loading="lazy">
