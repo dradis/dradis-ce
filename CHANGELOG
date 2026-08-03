@@ -1,16 +1,16 @@
 [v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+  - Echo: add multiplayer chat sessions on Issues — start a conversation from a saved prompt, follow up with more messages, and watch Roslin's reply stream live to everyone viewing
   - Upgraded gems:
     - rails, rails-html-sanitizer, sqlite3, websocket-driver
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Echo:
+      - Preserve line breaks in streamed Ollama responses for models that emit them as standalone tokens
+      - Remove a stray leading blank line from streamed responses
+      - Send only completed conversation turns to the AI provider, so a failed or in-progress reply can no longer break the next one
+      - Show a generic message when a reply fails instead of surfacing the provider's raw error
+      - Return a graceful error instead of a server error when a chat session is started with a blank prompt
     - Bug tracker items:
       - [item]
-  - Echo enhancements:
-    - [Echo entity]:
-      - [future tense verb] [Echo enhancement]
   - New integrations:
     - [integration]
   - Integration enhancements:
@@ -33,15 +33,6 @@ v5.2.0 (July 2026)
   - UI: add dark mode support to the login and setup wizard pages
   - Upgraded gems:
     - concurrent-ruby, crass, faraday, msgpack, net-imap, nokogiri, puma
-  - Echo enhancements:
-    - Roslin: add multiplayer chat sessions on Issues — start a conversation from a saved prompt, follow up with more messages, and watch Roslin's reply stream live to everyone viewing
-  - Bugs fixes:
-    - Echo:
-      - Preserve line breaks in streamed Ollama responses for models that emit them as standalone tokens
-      - Remove a stray leading blank line from streamed responses
-      - Send only completed conversation turns to the AI provider, so a failed or in-progress reply can no longer break the next one
-      - Show a generic message when a reply fails instead of surfacing the provider's raw error
-      - Return a graceful error instead of a server error when a chat session is started with a blank prompt
 
 v5.1.0 (May 2026)
   - DataTables: add sticky table toolbar that tracks below the navigation bar when scrolling
