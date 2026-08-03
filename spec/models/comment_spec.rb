@@ -8,7 +8,7 @@ describe Comment do
   it { should validate_presence_of :content }
 
   it 'subscribes the comment author to the commentable' do
-    user  = create(:user)
+    user = create(:user)
     issue = create(:issue)
     expect do
       Comment.create(commentable: issue, content: 'rspec content', user: user)
@@ -17,16 +17,16 @@ describe Comment do
 
   describe '#mentions' do
     it 'detects mentions' do
-      user1   = create(:user, email: 'foo@dradis.test')
-      user2   = create(:user, email: 'bar@dradis.test')
+      user1 = create(:user, email: 'foo@dradis.test')
+      user2 = create(:user, email: 'bar@dradis.test')
       comment = create(:comment, content: 'Hello @foo@dradis.test and hello @bar@dradis.test')
 
       expect(comment.mentions).to match_array [user1, user2]
     end
 
     it 'detects admins in mentions' do
-      user1   = create(:user, :admin, email: 'admin@dradis.test')
-      user2   = create(:user, email: 'foo@dradis.test')
+      user1 = create(:user, :admin, email: 'admin@dradis.test')
+      user2 = create(:user, email: 'foo@dradis.test')
       comment = create(:comment, content: 'Hello @admin@dradis.test and @foo@dradis.test')
 
       expect(comment.mentions).to match_array [user1, user2]
@@ -39,9 +39,9 @@ describe Comment do
       subscriptions = create_list(:subscription, 2, subscribable: commentable)
       comment = create(:comment, commentable: commentable)
 
-      expect {
+      expect do
         comment.notify(action: 'create', actor: comment.user, recipients: [])
-      }.to change { Notification.count }.by(2)
+      end.to change { Notification.count }.by(2)
     end
 
     it 'creates notifications when a comment has mentions' do
@@ -56,9 +56,9 @@ describe Comment do
         content: "Hello @#{mentioned.email} and @#{issue_owner.email}"
       )
 
-      expect {
+      expect do
         comment.notify(action: 'create', actor: comment.user, recipients: [])
-      }.to change { Notification.count }.by(3) \
+      end.to change { Notification.count }.by(3) \
       .and change { Subscription.count }.by(1)
 
       expect(Notification.where(action: 'mention').count).to eq(2)
@@ -73,9 +73,9 @@ describe Comment do
 
       allow_any_instance_of(Ability).to receive(:can?).with(:read, comment).and_return(false)
 
-      expect {
+      expect do
         comment.notify(action: 'create', actor: comment.user, recipients: [])
-      }.to change { Notification.count }.by(0)
+      end.to change { Notification.count }.by(0)
     end
   end
 end

@@ -3,7 +3,7 @@
     - [future tense verb] [feature]
   - Cards: add option to move a task to a different list
   - Upgraded gems:
-    - sqlite3, websocket-driver
+    - rails, rails-html-sanitizer, sqlite3, websocket-driver
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]

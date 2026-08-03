@@ -93,9 +93,9 @@ describe Dradis::Plugins::Echo::Provider do
     it 'raises NotImplementedError on the base class' do
       provider = build(:provider)
       # Ollama overrides #generate, so test the base class directly
-      expect {
+      expect do
         Dradis::Plugins::Echo::Provider.new.generate(prompt: 'test')
-      }.to raise_error(NotImplementedError)
+      end.to raise_error(NotImplementedError)
     end
   end
 

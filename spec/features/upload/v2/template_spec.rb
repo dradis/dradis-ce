@@ -20,9 +20,9 @@ describe 'Dradis::Plugins::Projects::Upload::V2::Template::Importer', skip: true
   end
 
   let(:importer_class) { Dradis::Plugins::Projects::Upload::Template }
-  let(:with_comments) {
+  let(:with_comments) do
     Rails.root.join('spec', 'fixtures', 'files', 'templates', 'with_comments.xml')
-  }
+  end
 
   context 'uploading a template with comments' do
     it 'imports the comments' do
