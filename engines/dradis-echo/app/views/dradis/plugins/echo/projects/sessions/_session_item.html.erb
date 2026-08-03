@@ -6,13 +6,14 @@
       aria: { current: is_active ? 'page' : nil },
       data: { turbo_frame: dom_id(record, :echo) } do %>
   <i class="echo-session-icon fa-solid fa-comments"></i>
-  <span class="d-flex flex-column">
-    <span class="echo-session-title"><%= session.title.presence || "Session ##{session.id}" %></span>
+  <span class="echo-session-body">
+    <span class="echo-session-row">
+      <span class="echo-session-title"><%= session.title.presence || "Session ##{session.id}" %></span>
+      <% if session.generating? %>
+        <%= spinner_tag spinner_class: 'spinner-border-sm text-primary', inline: true %>
+      <% end %>
+      <i class="echo-session-chevron fa-solid fa-chevron-right"></i>
+    </span>
     <span class="echo-session-meta">Updated <%= local_time_ago(session.updated_at) %></span>
   </span>
-  <% if session.generating? %>
-    <span class="echo-session-generating"><span class="spinner-border spinner-border-xs" role="status"></span> Roslin is responding</span>
-  <% else %>
-    <i class="echo-session-chevron fa-solid fa-chevron-right"></i>
-  <% end %>
 <% end %>

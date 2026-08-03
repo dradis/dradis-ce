@@ -68,9 +68,16 @@
     background-color: var(--secondary-bg);
   }
 
+  .echo-session-body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-width: 0;
+  }
+
   .echo-session-chevron {
     color: var(--text-muted);
-    margin-left: auto;
+    flex-shrink: 0;
   }
 
   .echo-session-icon {
@@ -84,8 +91,23 @@
     font-size: 0.75rem;
   }
 
+  .echo-session-row {
+    align-items: center;
+    display: flex;
+    gap: 0.5rem;
+
+    .spinner-container {
+      flex-shrink: 0;
+    }
+  }
+
   .echo-session-title {
+    flex: 1 1 auto;
     font-weight: 600;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
@@ -98,16 +120,6 @@
   color: var(--text-muted);
   font-size: 0.9rem;
   padding: 0.5rem 0.25rem 1rem;
-}
-
-.echo-session-generating {
-  align-items: center;
-  color: var(--text-link);
-  display: inline-flex;
-  font-size: 0.75rem;
-  font-weight: 600;
-  gap: 0.35rem;
-  margin-left: auto;
 }
 
 // ---- Conversation surface (sessions#show) ----
