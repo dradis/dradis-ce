@@ -4,16 +4,14 @@
       <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-table-columns fa-fw"></i> <%= @list.name %></a>
       <div class="dropdown-menu">
         <% @lists.each do |list| %>
-          <% if list.id == @list.id %>
+          <%= link_to_if(
+            list.id != @list.id,
+            list.name,
+            project_board_list_card_position_path(current_project, @board, @list, @card, new_list_id: list.id),
+            method: :post,
+            class: 'dropdown-item'
+          ) do %>
             <a href="javascript:void(0)" class="dropdown-item disabled"><%= list.name %></a>
-          <% else %>
-            <%= link_to(
-              project_board_list_card_position_path(current_project, @board, @list, @card, new_list_id: list.id),
-              method: :post,
-              class: 'dropdown-item'
-            ) do %>
-              <%= list.name %>
-            <% end %>
           <% end %>
         <% end %>
       </div>
