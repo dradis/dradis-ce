@@ -1,5 +1,5 @@
 <% if @issues.any? %>
-  <%= tag.div id: 'issue-chart', data: @chart_data %>
+  <%= tag.div id: 'issue-chart', data: @chart_data.merge(behavior: 'issue-chart') %>
 
   <div id="issues-accordion" role="tablist">
     <%= render 'projects/issues/summary/tags_accordion' %>
