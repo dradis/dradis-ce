@@ -82,7 +82,7 @@ export default class extends Controller {
   }
 
   // On a freshly-created session the server deliberately did NOT start
-  // generation (SEC-506 Bug 4): had it, ReplyJob's streaming-container broadcast
+  // generation: had it, ReplyJob's streaming-container broadcast
   // would have raced ahead of this element's <turbo-cable-stream-source>
   // subscription and been dropped. Now that we're connected — and thus
   // subscribed — POST to start the reply, so every chunk lands on a listening

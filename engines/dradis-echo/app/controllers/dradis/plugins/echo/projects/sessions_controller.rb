@@ -22,7 +22,7 @@ module Dradis::Plugins::Echo
     # We deliberately do NOT call request_reply! here: on initial creation the
     # browser hasn't subscribed to the SessionsChannel yet, so an immediate
     # generation would broadcast the streaming container before the socket is
-    # listening and the reply would never render live (SEC-506 Bug 4). Instead we
+    # listening and the reply would never render live. Instead we
     # render `show` in the reply_pending? state and let the session Stimulus
     # controller POST to RepliesController once it has connected.
     def create

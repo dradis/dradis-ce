@@ -2,7 +2,7 @@ require 'rails_helper'
 
 Dir[Dradis::Plugins::Echo::Engine.root.join('spec/factories/*.rb')].sort.each { |f| require f }
 
-# SEC-506 Bug 1/2 regression: turbo-rails 2.0.4 broadcastable.rb:503 reverse_merges
+# Regression test: turbo-rails 2.0.4 broadcastable.rb:503 reverse_merges
 # `request_id: Turbo.current_request_id` into every broadcast partial's locals. In a
 # real request the RequestId middleware sets a non-nil id, so it reaches the partial;
 # in a job / rack_test it's nil and .compact drops it. Both Echo broadcast-target

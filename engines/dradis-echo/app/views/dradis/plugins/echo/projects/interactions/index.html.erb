@@ -1,6 +1,6 @@
 <%# Wrapped in the record's Echo frame so this response Turbo-frame-matches the %>
 <%# native lazy frame in issues/_show-content.html.erb and the back-link in %>
-<%# sessions/show.html.erb (both navigate dom_id(@record, :echo)) — SEC-506. %>
+<%# sessions/show.html.erb (both navigate dom_id(@record, :echo)). %>
 <turbo-frame id="<%= dom_id(@record, :echo) %>">
 <% unless @turbo_status %>
   <div class="alert alert-danger">

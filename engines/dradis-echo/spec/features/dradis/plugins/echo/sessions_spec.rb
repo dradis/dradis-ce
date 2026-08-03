@@ -44,7 +44,7 @@ describe 'Echo sessions' do
 
   # Generation is now started by the session Stimulus controller once it has
   # subscribed, not by sessions#create — otherwise ReplyJob's streaming container
-  # broadcasts before the socket is listening (SEC-506 Bug 4). rack_test has no
+  # broadcasts before the socket is listening. rack_test has no
   # JS, so drive that reply-trigger POST explicitly and run the job inline.
   def start_session
     visit echo.preview_project_interaction_path(@project.id, prompt.id, type: 'issue', record: issue.id)
