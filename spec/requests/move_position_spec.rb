@@ -52,7 +52,7 @@ describe 'move position' do
     let(:invalid_prev_id) { another_list.id }
     let(:invalid_next_id) { another_list.id }
     subject do
-      post move_project_board_list_path(current_project, board, list_2), params: params
+      post project_board_list_position_path(current_project, board, list_2), params: params
     end
 
     include_examples 'validates move params'

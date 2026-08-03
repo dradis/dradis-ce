@@ -4,7 +4,7 @@
       <% board.ordered_lists.each do |list| %>
         <% cache ['board-list', list] do %>
 
-          <li class="list" data-list-id="<%= list.id %>" data-move-url="<%= move_project_board_list_path(current_project, board, list) %>">
+          <li class="list" data-list-id="<%= list.id %>" data-move-url="<%= project_board_list_position_path(current_project, board, list) %>">
             <div class="list-header">
               <h4>
                 <%= list.name %>

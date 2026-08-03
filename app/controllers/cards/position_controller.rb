@@ -1,7 +1,7 @@
 class Cards::PositionController < AuthenticatedController
   include EventPublisher
+  include LinkedListMoveValidator
   include ProjectScoped
-  include ValidateMove
 
   before_action :set_current_board_and_list
   before_action :set_card

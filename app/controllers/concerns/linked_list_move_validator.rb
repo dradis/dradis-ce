@@ -1,4 +1,4 @@
-module ValidateMove
+module LinkedListMoveValidator
   extend ActiveSupport::Concern
 
   protected
