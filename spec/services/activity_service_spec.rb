@@ -6,7 +6,7 @@ describe ActivityService do
   let(:user) { create(:user) }
   let(:project) { create(:project) }
 
-  let(:payload) {
+  let(:payload) do
     {
       action: 'test',
       project: {
@@ -20,7 +20,7 @@ describe ActivityService do
         name: user.name
       }
     }
-  }
+  end
 
   it 'enqueues ActivityTrackingJob for subscribed events' do
     expect do

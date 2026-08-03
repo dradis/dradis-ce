@@ -28,14 +28,14 @@ shared_examples 'creates an Activity' do |action, klass = nil|
         ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h| h[:job] }
       ).to include ActivityTrackingJob
       expect(
-        ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+        ActiveJob::Base.queue_adapter.enqueued_jobs.map do |h1|
           h1[:args].map { |h2| h2['action'] }
-        }.flatten
+        end.flatten
       ).to include 'create'
       expect(
-        ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+        ActiveJob::Base.queue_adapter.enqueued_jobs.map do |h1|
           h1[:args].map { |h2| h2['trackable_type'] }
-        }.flatten
+        end.flatten
       ).to include klass.to_s
     else
       expect { submit_form }.to have_enqueued_job(ActivityTrackingJob).with(
