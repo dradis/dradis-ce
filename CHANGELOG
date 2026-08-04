@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Cards: add option to move a task to a different list
   - Echo: add multiplayer chat sessions on Issues — start a conversation from a saved prompt, follow up with more messages, and watch Roslin's reply stream live to everyone viewing
   - Upgraded gems:
     - rails, rails-html-sanitizer, sqlite3, websocket-driver
