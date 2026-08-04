@@ -33,9 +33,25 @@ describe Dradis::Plugins::Echo::Provider::Gemini do
   end
 
   describe '#build_body' do
-    it 'wraps the prompt in the Gemini content structure' do
-      body = provider.send(:build_body, prompt: 'Hello', model: 'gemini-2.0-flash')
+    it 'wraps a single user message in the Gemini content structure' do
+      body = provider.send(:build_body,
+                           messages: [{ role: 'user', content: 'Hello' }],
+                           model: 'gemini-2.0-flash')
       expect(body[:contents]).to eq([{ role: 'user', parts: [{ text: 'Hello' }] }])
+    end
+
+    it 'maps the assistant role to model and keeps user turns' do
+      messages = [
+        { role: 'user', content: 'Hello' },
+        { role: 'assistant', content: 'Hi there' },
+        { role: 'user', content: 'How are you?' }
+      ]
+      body = provider.send(:build_body, messages: messages, model: 'gemini-2.0-flash')
+      expect(body[:contents]).to eq([
+        { role: 'user', parts: [{ text: 'Hello' }] },
+        { role: 'model', parts: [{ text: 'Hi there' }] },
+        { role: 'user', parts: [{ text: 'How are you?' }] }
+      ])
     end
   end
 

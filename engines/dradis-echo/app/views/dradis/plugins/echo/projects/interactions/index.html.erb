@@ -1,3 +1,7 @@
+<%# Wrapped in the record's Echo frame so this response Turbo-frame-matches the %>
+<%# native lazy frame in issues/_show-content.html.erb and the back-link in %>
+<%# sessions/show.html.erb (both navigate dom_id(@record, :echo)). %>
+<turbo-frame id="<%= dom_id(@record, :echo) %>">
 <% unless @turbo_status %>
   <div class="alert alert-danger">
     There was an error contacting Redis: please make sure the Redis server is running.
@@ -6,33 +10,41 @@
 
 <% if Dradis::Plugins::Echo::Agents::Roslin.enabled? %>
   <% if @prompts.any? %>
-    <p>
-      Interact with <i class="fa-solid fa-robot me-1"></i>Roslin by selecting a
-      <%= link_to 'saved prompt', echo.prompts_path, data: { turbo_frame: '_top' } %> to use with this Issue.
-    </p>
-    <p>
-      You can edit the prompt before sending it, any changes are one-off and
-      won't affect the saved prompt template.
-    </p>
+    <div class="echo-interactions-layout">
+      <%= render 'dradis/plugins/echo/projects/sessions/conversations_column',
+            record: @record, type: @type, sessions: @sessions %>
 
-    <div class="row" data-controller="dradis--plugins--echo--prompt-selector">
-      <div class="col-12 mb-3">
-        <p class="form-label">Saved Prompts</p>
-        <select class="form-select">
-          <% @prompts.each do |prompt| %>
-            <option
-              data-combobox-option-icon="fa-solid <%= prompt.icon %>"
-              value="<%= echo.preview_project_interaction_path(current_project, prompt.id, type: @type, record: @record.id) %>">
-              <%= prompt.title %>
-            </option>
-          <% end %>
-        </select>
-      </div>
+      <div class="echo-interactions-panel">
+        <h5 class="mb-3">Start a new conversation</h5>
+        <p>
+          Interact with <i class="fa-solid fa-robot me-1"></i>Roslin by selecting a
+          <%= link_to 'saved prompt', echo.prompts_path, data: { turbo_frame: '_top' } %> to use with this Issue.
+        </p>
+        <p>
+          You can edit the prompt before sending it, any changes are one-off and
+          won't affect the saved prompt template.
+        </p>
 
-      <div class="col-12">
-        <p class="form-label">Selected Prompt</p>
-        <turbo-frame id="echo-prompt-preview" data-dradis--plugins--echo--prompt-selector-target="frame">
-        </turbo-frame>
+        <div class="row" data-controller="dradis--plugins--echo--prompt-selector">
+          <div class="col-12 mb-3">
+            <p class="form-label">Saved Prompts</p>
+            <select class="form-select">
+              <% @prompts.each do |prompt| %>
+                <option
+                  data-combobox-option-icon="fa-solid <%= prompt.icon %>"
+                  value="<%= echo.preview_project_interaction_path(current_project, prompt.id, type: @type, record: @record.id) %>">
+                  <%= prompt.title %>
+                </option>
+              <% end %>
+            </select>
+          </div>
+
+          <div class="col-12">
+            <p class="form-label">Selected Prompt</p>
+            <turbo-frame id="echo-prompt-preview" data-dradis--plugins--echo--prompt-selector-target="frame">
+            </turbo-frame>
+          </div>
+        </div>
       </div>
     </div>
   <% else %>
@@ -60,3 +72,4 @@
     or adapt them to your audience.
   </p>
 <% end %>
+</turbo-frame>
