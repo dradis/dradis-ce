@@ -333,7 +333,25 @@
     // --------------------------------------------------- Other event handlers
 
     _serializedFormData: function() {
-      return $('[name^=item_form]', this.options.$fields).serializeArray();
+      const data = $('[name^=item_form]', this.options.$fields).serializeArray();
+
+      // A blank select (no value chosen yet) should still serialize as the
+      // pipe-separated list of its options, not an empty string, so the
+      // source view keeps showing the available choices until one is picked.
+      $('select[name^=item_form]', this.options.$fields).each((_, select) => {
+        const $select = $(select);
+
+        if ($select.val() !== '') return;
+
+        const options = $select.find('option[value!=""]').map((_, option) => option.value).get();
+
+        if (options.length < 2) return;
+
+        const entry = data.find((item) => item.name === $select.attr('name'));
+        if (entry) entry.value = options.join(' | ');
+      });
+
+      return data;
     },
 
     _setDefaultView: function() {
