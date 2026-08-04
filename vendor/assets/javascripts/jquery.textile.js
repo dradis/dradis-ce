@@ -57,6 +57,7 @@
       // You already have access to the DOM element and the options via the instance,
       // e.g., this.element and this.options
       this._fieldOptions = this.$element.data('field-options');
+      this._allowDropdown = this.$element.data('allow-dropdown');
 
       this._buildContainer();
 
@@ -80,7 +81,7 @@
       // add Form
       this.options.$fields = $(this.options.tpl.fields);
       $('.textile-inner', this.options.$wrap).append(this.options.$fields);
-      this._loadFields(this.$element.val(), this.$element.data('allow-dropdown'), this._fieldOptions);
+      this._loadFields(this.$element.val(), this._allowDropdown, this._fieldOptions);
 
       // add Preview to container and load
       this.options.$preview = $(this.options.tpl.preview);
@@ -111,7 +112,7 @@
 
       // When auto-save populates data into source view refresh the form
       this.$element.on('load-preview', function() {
-        this._loadFields(this.$element.val(), undefined, this._fieldOptions);
+        this._loadFields(this.$element.val(), this._allowDropdown, this._fieldOptions);
       }.bind(this));
 
       // Bind all form element actions within container
@@ -258,7 +259,7 @@
 
       $('.textile-form').empty();
 
-      this._loadFields(this.$element.val(), false, this._fieldOptions);
+      this._loadFields(this.$element.val(), this._allowDropdown, this._fieldOptions);
 
       // Show Form pane
       this.options.$help.hide();
