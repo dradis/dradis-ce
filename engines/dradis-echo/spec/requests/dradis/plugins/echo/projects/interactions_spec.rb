@@ -7,12 +7,7 @@ Dir[Dradis::Plugins::Echo::Engine.root.join('spec/factories/*.rb')].sort.each { 
 # frame back. If index answers frameless, Turbo reports "Content missing", so the
 # index response must carry the record's Echo frame verbatim.
 describe 'Echo interactions' do
-  let(:user) { create(:user) }
-
-  before do
-    login_as_user(user)
-    @project = Project.new
-  end
+  before { login_to_project_as_user }
 
   let!(:roslin) do
     Dradis::Plugins::Echo::Agents::Roslin.provision!.tap { |agent| agent.update!(enabled: true) }

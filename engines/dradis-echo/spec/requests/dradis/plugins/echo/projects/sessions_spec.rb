@@ -5,12 +5,9 @@ Dir[Dradis::Plugins::Echo::Engine.root.join('spec/factories/*.rb')].sort.each { 
 describe 'Echo sessions' do
   include ActiveJob::TestHelper
 
-  let(:user) { create(:user) }
+  let(:user) { @logged_in_as }
 
-  before do
-    login_as_user(user)
-    @project = Project.new
-  end
+  before { login_to_project_as_user }
 
   let!(:roslin) do
     Dradis::Plugins::Echo::Agents::Roslin.provision!.tap { |agent| agent.update!(enabled: true) }

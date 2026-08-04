@@ -10,7 +10,10 @@ describe Dradis::Plugins::Echo::SessionsChannel, type: :channel do
   let(:signed_name) { Turbo::StreamsChannel.signed_stream_name([session, :messages]) }
   let(:stream_name) { Turbo::StreamsChannel.verified_stream_name(signed_name) }
 
-  before { stub_connection(current_user: user) }
+  before do
+    session.project.assign_owner(user)
+    stub_connection(current_user: user)
+  end
 
   it 'accepts the subscription and streams the transcript for an authorized user' do
     subscribe(signed_stream_name: signed_name)

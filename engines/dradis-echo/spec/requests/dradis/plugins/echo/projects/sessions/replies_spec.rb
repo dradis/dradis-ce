@@ -5,12 +5,9 @@ Dir[Dradis::Plugins::Echo::Engine.root.join('spec/factories/*.rb')].sort.each { 
 describe 'Echo session replies' do
   include ActiveJob::TestHelper
 
-  let(:user) { create(:user) }
+  let(:user) { @logged_in_as }
 
-  before do
-    login_as_user(user)
-    @project = Project.new
-  end
+  before { login_to_project_as_user }
 
   let(:agent) { create(:agent, enabled: true) }
   let(:issue) { create(:issue, node: @project.issue_library, text: "#[Title]#\nSQLi") }

@@ -11,11 +11,10 @@ Dir[Dradis::Plugins::Echo::Engine.root.join('spec/factories/*.rb')].sort.each { 
 describe 'Echo sessions' do
   include ActiveJob::TestHelper
 
-  let(:user) { create(:user) }
+  let(:user) { @logged_in_as }
 
   before do
-    login_as_user(user)
-    @project = Project.new
+    login_to_project_as_user
 
     # Capture the context handed to the provider each turn so we can assert the
     # follow-up carried the full history forward.
