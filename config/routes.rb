@@ -56,9 +56,9 @@ Rails.application.routes.draw do
 
     resources :boards do
       resources :lists, except: [:index] do
-        resource :position, only: [:create], controller: 'lists/position'
+        resource :position, only: [:update], controller: 'lists/position'
         resources :cards, except: [:index] do
-          resource :position, only: [:create], controller: 'cards/position'
+          resource :position, only: [:update], controller: 'cards/position'
           resources :revisions, only: [:index, :show]
         end
       end

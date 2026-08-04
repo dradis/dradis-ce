@@ -9,7 +9,7 @@ class Cards::PositionController < AuthenticatedController
   before_action :set_prev_item_and_next_item
   before_action :validate_move_params
 
-  def create
+  def update
     Card.transaction do
       List.move(@card, prev_item: @prev_item, next_item: @next_item)
 
@@ -47,15 +47,6 @@ class Cards::PositionController < AuthenticatedController
     move_params[:new_list_id].present? &&
       move_params[:prev_id].blank? &&
       move_params[:next_id].blank?
-  end
-
-  # Override EventPublisher#event_action_payload: the RESTful action is
-  # 'create', but moving a card is semantically an update.
-  #
-  # FIXME: Replace with ActivityService action registration once
-  # convention-over-configuration approach is implemented.
-  def event_action_payload
-    super.merge(action: 'update')
   end
 
   def move_params

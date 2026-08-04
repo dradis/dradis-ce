@@ -8,7 +8,7 @@ class Lists::PositionController < AuthenticatedController
   before_action :set_prev_item_and_next_item
   before_action :validate_move_params
 
-  def create
+  def update
     Board.move(@list, prev_item: @prev_item, next_item: @next_item)
 
     track_updated(@list)

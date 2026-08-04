@@ -87,6 +87,14 @@ class Card < ApplicationRecord
 
   def local_event_payload
     {
+      board: {
+        id: board.id,
+        name: board.name
+      },
+      list: {
+        id: list.id,
+        name: list.name
+      },
       name: name,
       project: {
         id: project.id,

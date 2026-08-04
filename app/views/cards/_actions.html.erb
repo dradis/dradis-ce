@@ -8,7 +8,7 @@
             list.id != @list.id,
             list.name,
             project_board_list_card_position_path(current_project, @board, @list, @card, new_list_id: list.id),
-            method: :post,
+            method: :patch,
             class: 'dropdown-item'
           ) do %>
             <a href="javascript:void(0)" class="dropdown-item disabled"><%= list.name %></a>

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Cards::PositionController#create (move to list)' do
+describe 'Cards::PositionController#update (move to list)' do
   before { login_to_project_as_user }
 
   let(:board) { create(:board, node: current_project.methodology_library, project: current_project) }
@@ -14,7 +14,7 @@ describe 'Cards::PositionController#create (move to list)' do
   let(:last_card_in_target) { create(:card, list: target_list) }
 
   let(:submit) do
-    post project_board_list_card_position_path(current_project, board, source_list, card_b),
+    patch project_board_list_card_position_path(current_project, board, source_list, card_b),
       params: { new_list_id: target_list.id }
   end
 
@@ -58,7 +58,7 @@ describe 'Cards::PositionController#create (move to list)' do
 
   context 'when moving the first card in the source list' do
     let(:submit) do
-      post project_board_list_card_position_path(current_project, board, source_list, card_a),
+      patch project_board_list_card_position_path(current_project, board, source_list, card_a),
         params: { new_list_id: target_list.id }
     end
 
@@ -70,7 +70,7 @@ describe 'Cards::PositionController#create (move to list)' do
 
   context 'when moving the last card in the source list' do
     let(:submit) do
-      post project_board_list_card_position_path(current_project, board, source_list, card_c),
+      patch project_board_list_card_position_path(current_project, board, source_list, card_c),
         params: { new_list_id: target_list.id }
     end
 
@@ -82,7 +82,7 @@ describe 'Cards::PositionController#create (move to list)' do
 
   context 'when the target list is the same as the source list' do
     let(:submit) do
-      post project_board_list_card_position_path(current_project, board, source_list, card_c),
+      patch project_board_list_card_position_path(current_project, board, source_list, card_c),
         params: { new_list_id: source_list.id }
     end
 
