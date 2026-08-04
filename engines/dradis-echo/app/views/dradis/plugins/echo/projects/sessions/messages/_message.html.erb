@@ -1,0 +1,43 @@
+<%# locals: (message:, request_id: nil) -%>
+<%# request_id is accepted-and-ignored: turbo-rails injects it into every broadcast %>
+<%# partial's locals (non-nil in a real request), so strict locals must tolerate it %>
+<%# or the in-request broadcast_created 500s with StrictLocalsError. Renders from %>
+<%# `render partial:` with only `message:` in locals, so no controller-context %>
+<%# helpers here. Author line is keyed off `role`, never off user presence. %>
+<% assistant = message.assistant? %>
+<%= tag.div id: dom_id(message),
+      class: ['echo-message', assistant ? 'echo-message-assistant' : 'echo-message-user',
+              ('echo-message-streaming' if assistant && message.streaming?),
+              ('echo-message-failed'    if assistant && message.failed?),
+              ('echo-message-deleted'   if !assistant && message.user.nil?)].compact,
+      data: { status: message.status } do %>
+  <% if assistant %>
+    <span class="echo-avatar-agent">
+      <i class="fa-solid <%= message.failed? ? 'fa-triangle-exclamation' : 'fa-robot' %>"></i>
+    </span>
+  <% else %>
+    <%= avatar_image(message.user, size: 35) %>
+  <% end %>
+
+  <div class="echo-message-body">
+    <div>
+      <span class="user"><%= assistant ? message.session.agent.name : (message.user&.name || 'Deleted user') %></span>
+      <span class="time"><%= local_time_ago(message.created_at) %></span>
+    </div>
+
+    <% if assistant && message.failed? %>
+      <%# Never render metadata['error'] here: the raw provider body/host is logged
+          server-side only. The view shows a fixed, generic summary. %>
+      <div class="echo-error-line"><i class="fa-solid fa-circle-exclamation"></i><span>Roslin couldn&rsquo;t finish this response.</span></div>
+      <div class="echo-error-hint">Send another message to try again.</div>
+    <% else %>
+      <%# ReplyJob streams chunks into this container by dom_id(message, :content). Keep the
+          spinner caption OUTSIDE it so appended chunks never overwrite the caption, and keep
+          the container on one line — .echo-message-content uses white-space: break-spaces. %>
+      <div id="<%= dom_id(message, :content) %>" class="echo-message-content"><%= message.content %></div>
+      <% if assistant && message.streaming? %>
+        <div class="echo-streaming-caption"><span class="spinner-border spinner-border-xs" role="status"></span> Roslin is responding&hellip;</div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

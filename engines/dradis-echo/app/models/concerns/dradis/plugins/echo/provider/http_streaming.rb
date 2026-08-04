@@ -1,5 +1,6 @@
 require 'net/http'
 require 'json'
+require 'openssl'
 require 'uri'
 
 module Dradis::Plugins::Echo
@@ -8,21 +9,37 @@ module Dradis::Plugins::Echo
 
     READ_TIMEOUT = 120
 
-    # Sends prompt to the provider and returns the response.
+    # Raised for any provider/transport failure (non-2xx responses, timeouts,
+    # dropped connections). Callers rescue this to tell a genuine provider
+    # problem apart from a bug in our own code, which must not be swallowed.
+    class Error < StandardError; end
+
+    # Low-level transport failures we translate into Error so callers only ever
+    # have to rescue Provider::HttpStreaming::Error.
+    NETWORK_ERRORS = [
+      Errno::ECONNREFUSED, Errno::ECONNRESET, Errno::EHOSTUNREACH, Errno::ETIMEDOUT,
+      EOFError, IOError, SocketError,
+      Net::OpenTimeout, Net::ReadTimeout, Net::WriteTimeout, Net::HTTPBadResponse,
+      OpenSSL::SSL::SSLError
+    ].freeze
+
+    # Sends the conversation to the provider and returns the response.
     #
     # With a block: yields each text chunk as it arrives, enabling streaming UX
-    # (e.g. InteractionJob broadcasts each chunk to the browser via Turbo).
+    # (e.g. ReplyJob broadcasts each chunk to the browser via Turbo).
     #
     # Without a block: accumulates all chunks and returns the complete response
     # as a string once the API finishes, for use outside a streaming context.
     #
+    # Accepts a multi-turn messages: array ([{ role:, content: }]).
+    #
     # Subclasses must implement: #build_uri, #build_headers, #build_body,
     # #extract_text. Optionally override #end_of_stream_marker.
-    def generate(prompt:, model: nil, &block)
+    def generate(messages:, model: nil, &block)
       resolved_model = model.presence || self.model
       uri = build_uri(resolved_model)
       headers = build_headers
-      body = build_body(prompt: prompt, model: resolved_model)
+      body = build_body(messages: messages, model: resolved_model)
 
       buffer = block ? nil : +''
 
@@ -61,7 +78,7 @@ module Dradis::Plugins::Echo
         unless response.is_a?(Net::HTTPSuccess)
           error_body = +''
           response.read_body { |chunk| error_body << chunk }
-          raise "#{self.class.name} API error (#{response.code}): #{error_body}"
+          raise Error, "#{self.class.name} API error (#{response.code}): #{error_body}"
         end
 
         response.read_body do |chunk|
@@ -79,6 +96,8 @@ module Dradis::Plugins::Echo
           end
         end
       end
+    rescue *NETWORK_ERRORS => e
+      raise Error, e.message
     end
 
     # Returns the URI for the provider's API endpoint.
@@ -93,7 +112,7 @@ module Dradis::Plugins::Echo
     end
 
     # Returns the request body hash for the provider's API.
-    def build_body(prompt:, model:)
+    def build_body(messages:, model:)
       raise NotImplementedError, "#{self.class.name} must implement #build_body"
     end
 

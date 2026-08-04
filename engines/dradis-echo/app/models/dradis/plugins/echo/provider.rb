@@ -40,7 +40,7 @@ module Dradis::Plugins::Echo
 
     # -- Instance Methods -----------------------------------------------------
 
-    def generate(prompt:, model: nil, &block)
+    def generate(messages:, model: nil, &block)
       raise NotImplementedError, "#{self.class.name} must implement #generate"
     end
 
