@@ -1,5 +1,9 @@
 v5.3.0 (August 2026)
   - Cards: add option to move a task to a different list
+  - Integration enhancements:
+    - Burp: Add Type as an available Issue field
+    - CSV: Add support for the Mappings Manager
+    - Projects: Fix error handling of the package upload when an invalid template is found
   - Upgraded gems:
     - rails, rails-html-sanitizer, sqlite3, websocket-driver
 
