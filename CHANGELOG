@@ -1,34 +1,7 @@
-[v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+v5.3.0 (August 2026)
   - Cards: add option to move a task to a different list
   - Upgraded gems:
     - rails, rails-html-sanitizer, sqlite3, websocket-driver
-  - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
-    - Bug tracker items:
-      - [item]
-  - Echo enhancements:
-    - [Echo entity]:
-      - [future tense verb] [Echo enhancement]
-  - New integrations:
-    - [integration]
-  - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
-  - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
-  - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v5.2.0 (July 2026)
   - UI: add dark mode support to the login and setup wizard pages
