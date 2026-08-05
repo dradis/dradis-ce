@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.authors = ['Daniel Martin']
   spec.homepage = 'https://dradis.com/support/'
 
-  spec.files = Dir['**/*'].select { |f| File.file?(f) }
+  spec.files = system('git', 'rev-parse', '--is-inside-work-tree', out: File::NULL, err: File::NULL) ? `git ls-files`.split($\) : []
   spec.executables = spec.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   spec.test_files = spec.files.grep(%r{^(test|spec|features)/})
 
