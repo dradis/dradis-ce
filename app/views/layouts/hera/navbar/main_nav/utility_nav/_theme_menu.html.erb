@@ -11,17 +11,17 @@
   </a>
   <ul class="dropdown-menu dropdown-menu-end white-label-bg">
     <li>
-      <button class="dropdown-item white-label-text<%= ' active' if dradis_theme == 'auto' %>" data-action="click->theme#select" data-theme-name-param="auto" data-theme-target="autoItem">
+      <button class="<%= class_names('dropdown-item white-label-text', active: dradis_theme == 'auto') %>" data-action="click->theme#select" data-theme-name-param="auto" data-theme-target="autoItem">
         <i class="fa-solid fa-circle-half-stroke fa-fw me-1"></i>Auto
       </button>
     </li>
     <li>
-      <button class="dropdown-item white-label-text<%= ' active' if dradis_theme == 'light' %>" data-action="click->theme#select" data-theme-name-param="light" data-theme-target="lightItem">
+      <button class="<%= class_names('dropdown-item white-label-text', active: dradis_theme == 'light') %>" data-action="click->theme#select" data-theme-name-param="light" data-theme-target="lightItem">
         <i class="fa-solid fa-sun fa-fw me-1"></i>Light
       </button>
     </li>
     <li>
-      <button class="dropdown-item white-label-text<%= ' active' if dradis_theme == 'dark' %>" data-action="click->theme#select" data-theme-name-param="dark" data-theme-target="darkItem">
+      <button class="<%= class_names('dropdown-item white-label-text', active: dradis_theme == 'dark') %>" data-action="click->theme#select" data-theme-name-param="dark" data-theme-target="darkItem">
         <i class="fa-solid fa-moon fa-fw me-1"></i>Dark
       </button>
     </li>
