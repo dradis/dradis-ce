@@ -89,7 +89,7 @@ describe 'Notes API' do
     describe 'GET /api/nodes/:node_id/notes/:id' do
       before do
         @note = node.notes.create!(
-          text:     "#[Title]#\nMy note\n#[foo]#\nbar\n#[fizz]#\nbuzz",
+          text: "#[Title]#\nMy note\n#[foo]#\nbar\n#[fizz]#\nbuzz",
           category: category,
         )
         get "/api/nodes/#{node.id}/notes/#{@note.id}", env: @env

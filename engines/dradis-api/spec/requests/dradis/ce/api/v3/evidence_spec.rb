@@ -5,7 +5,7 @@ describe 'Evidence API' do
   include_context 'project scoped API'
   include_context 'https'
 
-  let(:node)  { create(:node, project: current_project) }
+  let(:node) { create(:node, project: current_project) }
   let(:issue) { create(:issue, node: current_project.issue_library) }
 
   context 'as unauthenticated user' do
@@ -95,10 +95,10 @@ describe 'Evidence API' do
 
     describe 'GET /api/nodes/:node_id/evidence/:id' do
       before do
-        @issue    = create(:issue, node: current_project.issue_library)
+        @issue = create(:issue, node: current_project.issue_library)
         @evidence = node.evidence.create!(
           content: "#[foo]#\nbar\n#[fizz]#\nbuzz",
-          issue:   @issue,
+          issue: @issue,
         )
         get "/api/nodes/#{node.id}/evidence/#{@evidence.id}", env: @env
       end
