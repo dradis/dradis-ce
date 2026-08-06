@@ -147,6 +147,17 @@ describe 'Evidence API' do
           let(:submit_form) { post_evidence }
           include_examples 'creates an Activity', :create, Evidence
           include_examples 'sets the whodunnit', :create, Evidence
+
+          it 'sets the author to the authenticated user' do
+            post_evidence
+            expect(node.evidence.last.author).to eq @logged_in_as.email
+          end
+
+          it 'ignores a client-supplied author param' do
+            params[:evidence][:author] = 'attacker@evil.com'
+            post_evidence
+            expect(node.evidence.last.author).to eq @logged_in_as.email
+          end
         end
 
         context 'with params for an invalid evidence' do
@@ -227,6 +238,17 @@ describe 'Evidence API' do
           let(:model) { evidence }
           include_examples 'creates an Activity', :update
           include_examples 'sets the whodunnit', :update
+
+          it 'preserves the original author' do
+            put_evidence
+            expect(evidence.reload.author).to eq 'factory_bot'
+          end
+
+          it 'ignores a client-supplied author param' do
+            params[:evidence][:author] = 'attacker@evil.com'
+            put_evidence
+            expect(evidence.reload.author).to eq 'factory_bot'
+          end
         end
 
         context 'with params for an invalid evidence' do
