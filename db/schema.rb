@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_21_000001) do
+ActiveRecord::Schema[8.0].define(version: 2026_07_14_000002) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -118,6 +118,21 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_21_000001) do
     t.index ["provider_id"], name: "index_dradis_plugins_echo_agents_on_provider_id"
   end
 
+  create_table "dradis_plugins_echo_messages", force: :cascade do |t|
+    t.integer "session_id", null: false
+    t.integer "parent_id"
+    t.integer "user_id"
+    t.integer "role", default: 0, null: false
+    t.integer "status", default: 0, null: false
+    t.text "content"
+    t.text "metadata"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["parent_id"], name: "index_dradis_plugins_echo_messages_on_parent_id"
+    t.index ["session_id"], name: "index_dradis_plugins_echo_messages_on_session_id"
+    t.index ["user_id"], name: "index_dradis_plugins_echo_messages_on_user_id"
+  end
+
   create_table "dradis_plugins_echo_prompts", force: :cascade do |t|
     t.string "title", null: false
     t.string "icon", null: false
@@ -138,6 +153,20 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_21_000001) do
     t.string "type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "dradis_plugins_echo_sessions", force: :cascade do |t|
+    t.integer "agent_id", null: false
+    t.integer "user_id"
+    t.string "record_type", null: false
+    t.integer "record_id", null: false
+    t.integer "status", default: 0, null: false
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["agent_id"], name: "index_dradis_plugins_echo_sessions_on_agent_id"
+    t.index ["record_type", "record_id"], name: "index_dradis_plugins_echo_sessions_on_record"
+    t.index ["user_id"], name: "index_dradis_plugins_echo_sessions_on_user_id"
   end
 
   create_table "evidence", force: :cascade do |t|
@@ -301,7 +330,12 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_21_000001) do
   add_foreign_key "comments", "inline_threads"
   add_foreign_key "comments", "users", on_delete: :nullify
   add_foreign_key "dradis_plugins_echo_agents", "dradis_plugins_echo_providers", column: "provider_id"
+  add_foreign_key "dradis_plugins_echo_messages", "dradis_plugins_echo_messages", column: "parent_id"
+  add_foreign_key "dradis_plugins_echo_messages", "dradis_plugins_echo_sessions", column: "session_id"
+  add_foreign_key "dradis_plugins_echo_messages", "users", on_delete: :nullify
   add_foreign_key "dradis_plugins_echo_prompts", "users"
+  add_foreign_key "dradis_plugins_echo_sessions", "dradis_plugins_echo_agents", column: "agent_id"
+  add_foreign_key "dradis_plugins_echo_sessions", "users", on_delete: :nullify
   add_foreign_key "inline_threads", "users"
   add_foreign_key "inline_threads", "users", column: "resolved_by_id"
   add_foreign_key "mapping_fields", "mappings"

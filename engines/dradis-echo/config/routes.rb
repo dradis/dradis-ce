@@ -4,12 +4,21 @@ Dradis::Plugins::Echo::Engine.routes.draw do
     resources :providers, except: [:show]
 
     resources :projects, only: [] do
-      resources :interactions, only: [:index, :show, :create], controller: 'projects/interactions' do
-        get :preview, on: :member
-      end
+      scope module: 'projects' do
+        resources :interactions, only: [:index] do
+          get :preview, on: :member
+        end
 
-      resources :grammar_corrections, only: [:create], controller: 'projects/grammar_corrections'
-      resources :grammar_suggestions, only: [:create], controller: 'projects/grammar_suggestions'
+        resources :grammar_corrections, only: [:create]
+        resources :grammar_suggestions, only: [:create]
+
+        resources :sessions, only: [:show, :create] do
+          scope module: 'sessions' do
+            resource :reply, only: [:create]
+            resources :messages, only: [:create]
+          end
+        end
+      end
     end
 
     resources :prompts, except: [:show]

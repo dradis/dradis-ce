@@ -5,7 +5,7 @@ FactoryBot.define do
     model { 'qwen2.5:14b' }
 
     factory :anthropic_provider, class: 'Dradis::Plugins::Echo::Provider::Anthropic' do
-      address { 'https://api.anthropic.com/v1/messages' }
+      address { 'https://api.anthropic.com/v1' }
       api_key { 'sk-ant-test' }
       model { 'claude-sonnet-4-6' }
     end

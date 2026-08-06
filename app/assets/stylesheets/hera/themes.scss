@@ -7,6 +7,7 @@
 @mixin dark-theme {
   // Backgrounds
   --brand-bg: #{$brand-500};
+  --brand-fg: #{$white};
   --nav-active-bg: #{$brand-600};
   --primary-bg: #{$grey-900};
   --primary-bg-subtle: #{$grey-800};
@@ -105,6 +106,7 @@
 :root {
   // Backgrounds
   --brand-bg: #{$brand-500};
+  --brand-fg: #{$white};
   --nav-active-bg: #{$brand-500};
   --primary-bg: #{$white};
   --primary-bg-subtle: #{darken($white, 1%)}; // darken($primary-bg, 1%)
