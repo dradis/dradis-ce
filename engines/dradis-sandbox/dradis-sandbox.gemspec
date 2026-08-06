@@ -16,7 +16,7 @@ Gem::Specification.new do |gem|
   gem.summary       = 'Dradis CE Sandbox'
   gem.homepage      = 'https://dradis.com/ce/'
 
-  gem.files         = system('git', 'rev-parse', '--is-inside-work-tree', out: File::NULL, err: File::NULL) ? `git ls-files`.split($\) : []
+  gem.files         = Dir['{app,config,db,lib}/**/*', 'README.md']
   gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
