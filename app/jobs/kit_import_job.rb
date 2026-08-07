@@ -11,9 +11,6 @@ class KitImportJob < ApplicationJob
   rescue_from(StandardError) do |e|
     logger.info "An error occurred: #{e.message}"
     logger.debug e.backtrace.join("\n")
-    # The import Log only streams to the in-browser console; also surface the
-    # failure on the Rails log (stdout / log files) so it's visible on the server.
-    Rails.logger.error("KitImportJob failed: #{e.full_message}")
   end
 
   def perform(file_or_folder, logger:, user_id: nil, mapping_options: {})
@@ -59,7 +56,6 @@ class KitImportJob < ApplicationJob
 
     unless @word_rtp
       logger.info { '  - No report template properties found; skipping.' }
-      Rails.logger.warn("KitImportJob: no word RTP found for project #{@project.id}; skipping RTP assignment")
       return
     end
 
@@ -232,10 +228,6 @@ class KitImportJob < ApplicationJob
         # whether or not the template shipped a properties seed. Only the word
         # plugin may set this, so excel/html_export templates can't clobber it.
         @word_rtp = rtp if plugin_name == 'word' && rtp
-
-        if plugin_name == 'word' && rtp.nil?
-          Rails.logger.warn("KitImportJob: word template #{template_file} produced no RTP")
-        end
       end
     end
   end
