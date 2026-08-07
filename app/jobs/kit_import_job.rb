@@ -9,8 +9,11 @@ class KitImportJob < ApplicationJob
   queue_as :dradis_upload
 
   rescue_from(StandardError) do |e|
-    logger.info "An error ocurred: #{e.message}"
+    logger.info "An error occurred: #{e.message}"
     logger.debug e.backtrace.join("\n")
+    # The import Log only streams to the in-browser console; also surface the
+    # failure on the Rails log (stdout / log files) so it's visible on the server.
+    Rails.logger.error("KitImportJob failed: #{e.full_message}")
   end
 
   def perform(file_or_folder, logger:, user_id: nil)
@@ -39,7 +42,7 @@ class KitImportJob < ApplicationJob
       import_rules
       import_mappings
 
-      assign_project_rtp
+      assign_project_rtp if @project
     end
 
   ensure
@@ -53,7 +56,15 @@ class KitImportJob < ApplicationJob
   def assign_project_rtp
     logger.info { 'Assigning RTP to project...' }
 
-    @project.update_attribute :report_template_properties_id, @word_rtp.id if @word_rtp
+    unless @word_rtp
+      logger.info { '  - No report template properties found; skipping.' }
+      Rails.logger.warn("KitImportJob: no word RTP found for project #{@project.id}; skipping RTP assignment")
+      return
+    end
+
+    # update! (not update_attribute) so a failed write raises and is logged by
+    # rescue_from rather than silently returning false.
+    @project.update!(report_template_properties_id: @word_rtp.id)
   end
 
   def copy_file(file, destination)
@@ -76,6 +87,15 @@ class KitImportJob < ApplicationJob
       # and not the container folder.
       folder = File.join(source, '.')
       FileUtils.cp_r folder, working_dir
+    end
+  end
+
+  def get_report_template_files(integration)
+    temp_integration_path = File.join(working_dir, 'kit', 'templates', 'reports', integration, '*')
+
+    # Only allow certain file extensions
+    Dir[temp_integration_path].select do |f|
+      f.end_with?(*REPORT_TEMPLATE_FILE_EXTENSIONS[integration])
     end
   end
 
@@ -144,12 +164,7 @@ class KitImportJob < ApplicationJob
       word
     }.each do |plugin|
       dest = "#{templates_dirs['reports']}/#{plugin}/"
-      temp_plugin_path = "#{working_dir}/kit/templates/reports/#{plugin}/*"
-
-      # Only allow certain file extensions
-      files = Dir[temp_plugin_path].select do |f|
-        f.end_with?(*REPORT_TEMPLATE_FILE_EXTENSIONS[plugin])
-      end
+      files = get_report_template_files(plugin)
 
       FileUtils.mkdir_p(dest)
       FileUtils.cp(files, dest)
@@ -160,25 +175,35 @@ class KitImportJob < ApplicationJob
     logger.info { 'Adding properties to report template files...' }
 
     Dradis::Plugins.with_feature(:rtp).each do |plugin|
-      Dir.glob(File.join(templates_dirs['reports'], plugin.plugin_name.to_s, '*')) do |template|
+      plugin_name = plugin.plugin_name.to_s
+
+      # Iterate the kit's own template files (not the whole instance reports
+      # directory) so we only attach properties to templates from this kit.
+      get_report_template_files(plugin_name).each do |template|
+        template_file = File.basename(template)
         basename = File.basename(template, '.*')
-        reports_dir = "#{working_dir}/kit/templates/reports"
-        default_properties = "#{reports_dir}/#{plugin.plugin_name}/#{basename}.rb"
+        default_properties = File.join(File.dirname(template), "#{basename}.rb")
 
-        if File.exist?(default_properties)
-          load default_properties
+        rtp =
+          if File.exist?(default_properties)
+            load default_properties
+            ReportTemplateProperties.find_by(
+              plugin_name: plugin_name,
+              template_file: template_file
+            )
+          else
+            ReportTemplateProperties.find_or_initialize_by(
+              template_file: template_file
+            ).tap { |report| report.update!(plugin_name: plugin_name) }
+          end
 
-          # Save this for later to assign to a project
-          @word_rtp = ReportTemplateProperties.where(
-            plugin_name: 'word',
-            template_file: File.basename(template)
-          ).first
-        else
-          ReportTemplateProperties.find_or_initialize_by(
-            template_file: File.basename(template)
-          ).update!(
-            plugin_name: plugin.plugin_name
-          )
+        # Save the word RTP so the imported project can be linked to it later,
+        # whether or not the template shipped a properties seed. Only the word
+        # plugin may set this, so excel/html_export templates can't clobber it.
+        @word_rtp = rtp if plugin_name == 'word' && rtp
+
+        if plugin_name == 'word' && rtp.nil?
+          Rails.logger.warn("KitImportJob: word template #{template_file} produced no RTP")
         end
       end
     end
