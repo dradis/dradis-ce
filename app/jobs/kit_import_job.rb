@@ -16,8 +16,9 @@ class KitImportJob < ApplicationJob
     Rails.logger.error("KitImportJob failed: #{e.full_message}")
   end
 
-  def perform(file_or_folder, logger:, user_id: nil)
+  def perform(file_or_folder, logger:, user_id: nil, mapping_options: {})
     @current_user = user_id ? User.find(user_id) : User.first
+    @mapping_options = mapping_options
     @logger = logger
     @project = nil
     @templates_dirs = TEMPLATE_TYPES.map do |template_type|
@@ -40,7 +41,7 @@ class KitImportJob < ApplicationJob
     if defined?(Dradis::Pro)
       import_report_template_properties
       import_rules
-      import_mappings
+      import_mappings_from_kit
 
       assign_project_rtp if @project
     end
@@ -51,7 +52,7 @@ class KitImportJob < ApplicationJob
   end
 
   private
-  attr_reader :current_user, :logger, :templates_dirs, :working_dir
+  attr_reader :current_user, :logger, :mapping_options, :templates_dirs, :working_dir
 
   def assign_project_rtp
     logger.info { 'Assigning RTP to project...' }
@@ -90,6 +91,28 @@ class KitImportJob < ApplicationJob
     end
   end
 
+  def copy_mappings
+    Dradis::Plugins.with_feature(:rtp).each do |integration|
+      integration_name = integration.plugin_name.to_s
+      old_rtp_id = mapping_options[integration_name]
+      next unless old_rtp_id
+
+      files = get_report_template_files(integration_name)
+
+      files.each do |template|
+        new_rtp = ReportTemplateProperties.find_by(
+          plugin_name: integration_name,
+          template_file: File.basename(template)
+        )
+
+        next unless new_rtp
+
+        # copy mappings from existing rtp to new rtp
+        new_rtp.copy_mappings_from!(old_rtp_id)
+      end
+    end
+  end
+
   def get_report_template_files(integration)
     temp_integration_path = File.join(working_dir, 'kit', 'templates', 'reports', integration, '*')
 
@@ -99,10 +122,18 @@ class KitImportJob < ApplicationJob
     end
   end
 
-  def import_mappings
+  def import_mappings_from_kit
+    action = mapping_options[:action]
+    return if action == :manual
+
     logger.info { 'Adding Mappings...' }
-    mappings_seed = "#{working_dir}/kit/mappings_seed.rb"
-    load mappings_seed if File.exist?(mappings_seed)
+
+    if action == :seed
+      mappings_seed = "#{working_dir}/kit/mappings_seed.rb"
+      load mappings_seed if File.exist?(mappings_seed)
+    elsif action == :copy
+      copy_mappings
+    end
   end
 
   def import_methodology_templates
