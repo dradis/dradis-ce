@@ -14,6 +14,7 @@ v5.3.0 (August 2026)
       - Send only completed conversation turns to the AI provider, so a failed or in-progress reply can no longer break the next one
       - Show a generic message when a reply fails instead of surfacing the provider's raw error
       - Return a graceful error instead of a server error when a chat session is started with a blank prompt
+    - Kit import: correctly associate the imported project with its Word report template when multiple export integrations are enabled
   - REST/JSON API enhancements:
     - Return a 404 instead of a server error for project-scoped endpoints requested without a valid project
     - Set the author field to the authenticated user when creating notes and evidence
