@@ -89,7 +89,7 @@ describe 'Notes API' do
     describe 'GET /api/nodes/:node_id/notes/:id' do
       before do
         @note = node.notes.create!(
-          text:     "#[Title]#\nMy note\n#[foo]#\nbar\n#[fizz]#\nbuzz",
+          text: "#[Title]#\nMy note\n#[foo]#\nbar\n#[fizz]#\nbuzz",
           category: category,
         )
         get "/api/nodes/#{node.id}/notes/#{@note.id}", env: @env
@@ -131,6 +131,17 @@ describe 'Notes API' do
           let(:submit_form) { post_note }
           include_examples 'creates an Activity', :create, Note
           include_examples 'sets the whodunnit', :create, Note
+
+          it 'sets the author to the authenticated user' do
+            post_note
+            expect(node.notes.last.author).to eq @logged_in_as.email
+          end
+
+          it 'ignores a client-supplied author param' do
+            params[:note][:author] = 'attacker@evil.com'
+            post_note
+            expect(node.notes.last.author).to eq @logged_in_as.email
+          end
 
           context 'specifying a category' do
             before { params[:note][:category_id] = category.id }
@@ -233,6 +244,17 @@ describe 'Notes API' do
           let(:model) { note }
           include_examples 'creates an Activity', :update
           include_examples 'sets the whodunnit', :update
+
+          it 'preserves the original author' do
+            put_note
+            expect(note.reload.author).to eq 'factory-girl'
+          end
+
+          it 'ignores a client-supplied author param' do
+            params[:note][:author] = 'attacker@evil.com'
+            put_note
+            expect(note.reload.author).to eq 'factory-girl'
+          end
 
           it 'returns the attributes of the updated note as JSON' do
             put_note
