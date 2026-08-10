@@ -14,6 +14,8 @@ v5.3.0 (August 2026)
       - Send only completed conversation turns to the AI provider, so a failed or in-progress reply can no longer break the next one
       - Show a generic message when a reply fails instead of surfacing the provider's raw error
       - Return a graceful error instead of a server error when a chat session is started with a blank prompt
+    - REST API:
+      - Return a 404 instead of a server error for project-scoped endpoints requested without a valid project
 
 v5.2.0 (July 2026)
   - UI: add dark mode support to the login and setup wizard pages
