@@ -226,7 +226,7 @@ class KitImportJob < ApplicationJob
           else
             ReportTemplateProperties.find_or_initialize_by(
               template_file: template_file
-            ).tap { |report| report.update!(plugin_name: plugin_name) }
+            ).tap { |rtp| rtp.update!(plugin_name: plugin_name) }
           end
 
         # Save the word RTP so the imported project can be linked to it later,
