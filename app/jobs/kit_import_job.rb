@@ -194,6 +194,11 @@ class KitImportJob < ApplicationJob
       files = get_report_template_files(plugin)
 
       FileUtils.mkdir_p(dest)
+      # Deliberately not using NamingService/copy_file here: report template
+      # files are copied under their own name (overwriting any existing file
+      # of the same name) so the filename stays a stable identity that
+      # import_report_template_properties can look up the RTP by. Renaming on
+      # collision would break that lookup.
       FileUtils.cp(files, dest)
     end
   end
