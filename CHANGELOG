@@ -1,6 +1,10 @@
-[v#.#.#] ([month] [YYYY])
+v5.3.0 (August 2026)
   - Cards: add option to move a task to a different list
   - Echo: add multiplayer chat sessions on Issues — start a conversation from a saved prompt, follow up with more messages, and watch Roslin's reply stream live to everyone viewing
+  - Integration enhancements:
+    - Burp: Add Type as an available Issue field
+    - CSV: Add support for the Mappings Manager
+    - Projects: Fix error handling of the package upload when an invalid template is found
   - Upgraded gems:
     - rails, rails-html-sanitizer, sqlite3, websocket-driver
   - Bugs fixes:
@@ -12,25 +16,6 @@
       - Return a graceful error instead of a server error when a chat session is started with a blank prompt
     - REST API:
       - Return a 404 instead of a server error for project-scoped endpoints requested without a valid project
-    - Bug tracker items:
-      - [item]
-  - New integrations:
-    - [integration]
-  - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
-  - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
-  - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v5.2.0 (July 2026)
   - UI: add dark mode support to the login and setup wizard pages
