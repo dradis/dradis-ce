@@ -1,234 +1,3 @@
-GIT
-  remote: https://github.com/dradis/dradis-acunetix.git
-  revision: 02a6b20a4692966971df15b5644784cbfd4190d1
-  branch: release-5.3.0
-  specs:
-    dradis-acunetix (5.3.0)
-      dradis-plugins (>= 4.0)
-      nokogiri (~> 1.3)
-
-GIT
-  remote: https://github.com/dradis/dradis-brakeman.git
-  revision: 65ffa6c6df415a65160a621cbc1a05e37e45b12e
-  branch: release-5.3.0
-  specs:
-    dradis-brakeman (5.3.0)
-      dradis-plugins (>= 4.0)
-
-GIT
-  remote: https://github.com/dradis/dradis-burp.git
-  revision: 03ee31526e5a8bfd45fd770ca0567dcd4f0f5a7e
-  branch: release-5.3.0
-  specs:
-    dradis-burp (5.3.0)
-      dradis-plugins (>= 4.0)
-      nokogiri (~> 1.3)
-
-GIT
-  remote: https://github.com/dradis/dradis-calculator_cvss.git
-  revision: d0dce768247ef4a0268ac4f03ca7aea64362f55b
-  branch: release-5.3.0
-  specs:
-    dradis-calculator_cvss (5.3.0)
-      dradis-plugins (>= 4.0)
-
-GIT
-  remote: https://github.com/dradis/dradis-calculator_dread.git
-  revision: d9ad9a73129c06fca4f9a32b262a803ea204cbc6
-  branch: release-5.3.0
-  specs:
-    dradis-calculator_dread (5.3.0)
-      dradis-plugins (>= 4.0)
-
-GIT
-  remote: https://github.com/dradis/dradis-calculator_mitre.git
-  revision: fab491a4c7b0b7c638a64cf4ae88db5ee0aa9a06
-  branch: release-5.3.0
-  specs:
-    dradis-calculator_mitre (5.3.0)
-      dradis-plugins (>= 4.0)
-
-GIT
-  remote: https://github.com/dradis/dradis-coreimpact.git
-  revision: cc392d9696af9cb277e6e800afa4639d7350be71
-  branch: release-5.3.0
-  specs:
-    dradis-coreimpact (5.3.0)
-      dradis-plugins (>= 4.0)
-
-GIT
-  remote: https://github.com/dradis/dradis-csv.git
-  revision: 274717a203df51a25cf6415bcb238e3cf68b4d03
-  branch: release-5.3.0
-  specs:
-    dradis-csv (5.3.0)
-      dradis-plugins (>= 4.0)
-
-GIT
-  remote: https://github.com/dradis/dradis-csv_export.git
-  revision: cfab40da466066f77eff1b0652db7923c25f2cc5
-  branch: release-5.3.0
-  specs:
-    dradis-csv_export (5.3.0)
-      dradis-plugins (>= 4.8.0)
-
-GIT
-  remote: https://github.com/dradis/dradis-html_export.git
-  revision: ce8f919e0d86a1f6bedd3d95991893eb713b570d
-  branch: release-5.3.0
-  specs:
-    dradis-html_export (5.3.0)
-      RedCloth (~> 4.3.2)
-      dradis-plugins (>= 4.8.0)
-      rails_autolink (~> 1.1)
-
-GIT
-  remote: https://github.com/dradis/dradis-metasploit.git
-  revision: bcf225eb94ca852f745284522b8f76f71c7d5211
-  branch: release-5.3.0
-  specs:
-    dradis-metasploit (5.3.0)
-      dradis-plugins (>= 4.0)
-      nokogiri (~> 1.3)
-
-GIT
-  remote: https://github.com/dradis/dradis-nessus.git
-  revision: ce0f81112214e0c0fcdeb3bf1a5e11007d01148a
-  branch: release-5.3.0
-  specs:
-    dradis-nessus (5.3.0)
-      dradis-plugins (>= 4.0)
-      nokogiri
-
-GIT
-  remote: https://github.com/dradis/dradis-netsparker.git
-  revision: 41032f749a1ac954602b2a7a609817f0ab9afa7a
-  branch: release-5.3.0
-  specs:
-    dradis-netsparker (5.3.0)
-      dradis-plugins (>= 4.0)
-      nokogiri (>= 1.12.5)
-
-GIT
-  remote: https://github.com/dradis/dradis-nexpose.git
-  revision: 984597199e2e9734de723b495cc033ebdd876926
-  branch: release-5.3.0
-  specs:
-    dradis-nexpose (5.3.0)
-      dradis-plugins (>= 4.0)
-      nokogiri (~> 1.3)
-
-GIT
-  remote: https://github.com/dradis/dradis-nikto.git
-  revision: cd0f04c9cfb8c7116563065f423b42d9bd3298af
-  branch: release-5.3.0
-  specs:
-    dradis-nikto (5.3.0)
-      dradis-plugins (>= 4.0)
-      nokogiri (~> 1.3)
-
-GIT
-  remote: https://github.com/dradis/dradis-nipper.git
-  revision: 761bbf65cd96c260ff5ff1c86004d48a75a0106b
-  branch: release-5.3.0
-  specs:
-    dradis-nipper (5.3.0)
-      dradis-plugins (>= 4.0)
-
-GIT
-  remote: https://github.com/dradis/dradis-nmap.git
-  revision: 531c0b480400260df61407036f80dfc4ec399ce4
-  branch: release-5.3.0
-  specs:
-    dradis-nmap (5.3.0)
-      dradis-plugins (>= 4.0)
-      ruby-nmap (~> 0.7)
-
-GIT
-  remote: https://github.com/dradis/dradis-ntospider.git
-  revision: 1b998f5e534b9ff3119c06dd3b303f8930bfbed5
-  branch: release-5.3.0
-  specs:
-    dradis-ntospider (5.3.0)
-      dradis-plugins (>= 4.0)
-
-GIT
-  remote: https://github.com/dradis/dradis-openvas.git
-  revision: d7756da06ebe83ab89e92d9f95fe3b42ad1ab839
-  branch: release-5.3.0
-  specs:
-    dradis-openvas (5.3.0)
-      dradis-plugins (>= 4.0)
-
-GIT
-  remote: https://github.com/dradis/dradis-pentera.git
-  revision: defca0327541ff20af8f9d5b3373f5a9b0c798f3
-  branch: release-5.3.0
-  specs:
-    dradis-pentera (5.3.0)
-      dradis-plugins (>= 4.0)
-
-GIT
-  remote: https://github.com/dradis/dradis-plugins.git
-  revision: d00dd60571c1dae89fa8787dbaa99f0b60fd93c0
-  branch: release-5.3.0
-  specs:
-    dradis-plugins (5.3.0)
-
-GIT
-  remote: https://github.com/dradis/dradis-projects.git
-  revision: 379ed4958d2f6084be27841971ef18bea68a5187
-  branch: release-5.3.0
-  specs:
-    dradis-projects (5.3.0)
-      dradis-plugins (>= 4.8.0)
-      rubyzip
-
-GIT
-  remote: https://github.com/dradis/dradis-qualys.git
-  revision: ba50b180996c9e82879c4ff02b95eac3888f3dd4
-  branch: release-5.3.0
-  specs:
-    dradis-qualys (5.3.0)
-      dradis-plugins (>= 4.0)
-      nokogiri (~> 1.3)
-
-GIT
-  remote: https://github.com/dradis/dradis-saint.git
-  revision: 9d15072809daa52aad5a244a734fd793731d1a8a
-  branch: release-5.3.0
-  specs:
-    dradis-saint (5.3.0)
-      dradis-plugins (>= 4.0)
-      nokogiri
-      rake (~> 13.0)
-
-GIT
-  remote: https://github.com/dradis/dradis-veracode.git
-  revision: ed8a9ba61423dacc538b61a4117e7fff9faeb3cc
-  branch: release-5.3.0
-  specs:
-    dradis-veracode (5.3.0)
-      dradis-plugins (>= 4.0)
-
-GIT
-  remote: https://github.com/dradis/dradis-wpscan.git
-  revision: 70a2cd98bde4a9a2ef60e65c249c8d5dc844b79a
-  branch: release-5.3.0
-  specs:
-    dradis-wpscan (5.3.0)
-      dradis-plugins (>= 4.0)
-      multi_json
-
-GIT
-  remote: https://github.com/dradis/dradis-zap.git
-  revision: 8dc3c0574734cc8ee751e2f8c24063d40895cf78
-  branch: release-5.3.0
-  specs:
-    dradis-zap (5.3.0)
-      dradis-plugins (>= 4.0)
-      nokogiri (~> 1.3)
-
 PATH
   remote: engines/dradis-api
   specs:
@@ -372,6 +141,75 @@ GEM
     date (3.5.1)
     diff-lcs (1.5.0)
     differ (0.1.2)
+    dradis-acunetix (5.3.0)
+      dradis-plugins (>= 4.0)
+      nokogiri (~> 1.3)
+    dradis-brakeman (5.3.0)
+      dradis-plugins (>= 4.0)
+    dradis-burp (5.3.0)
+      dradis-plugins (>= 4.0)
+      nokogiri (~> 1.3)
+    dradis-calculator_cvss (5.3.0)
+      dradis-plugins (>= 4.0)
+    dradis-calculator_dread (5.3.0)
+      dradis-plugins (>= 4.0)
+    dradis-calculator_mitre (5.3.0)
+      dradis-plugins (>= 4.0)
+    dradis-coreimpact (5.3.0)
+      dradis-plugins (>= 4.0)
+    dradis-csv (5.3.0)
+      dradis-plugins (>= 4.0)
+    dradis-csv_export (5.3.0)
+      dradis-plugins (>= 4.8.0)
+    dradis-html_export (5.3.0)
+      RedCloth (~> 4.3.2)
+      dradis-plugins (>= 4.8.0)
+      rails_autolink (~> 1.1)
+    dradis-metasploit (5.3.0)
+      dradis-plugins (>= 4.0)
+      nokogiri (~> 1.3)
+    dradis-nessus (5.3.0)
+      dradis-plugins (>= 4.0)
+      nokogiri
+    dradis-netsparker (5.3.0)
+      dradis-plugins (>= 4.0)
+      nokogiri (>= 1.12.5)
+    dradis-nexpose (5.3.0)
+      dradis-plugins (>= 4.0)
+      nokogiri (~> 1.3)
+    dradis-nikto (5.3.0)
+      dradis-plugins (>= 4.0)
+      nokogiri (~> 1.3)
+    dradis-nipper (5.3.0)
+      dradis-plugins (>= 4.0)
+    dradis-nmap (5.3.0)
+      dradis-plugins (>= 4.0)
+      ruby-nmap (~> 0.7)
+    dradis-ntospider (5.3.0)
+      dradis-plugins (>= 4.0)
+    dradis-openvas (5.3.0)
+      dradis-plugins (>= 4.0)
+    dradis-pentera (5.3.0)
+      dradis-plugins (>= 4.0)
+    dradis-plugins (5.3.0)
+    dradis-projects (5.3.0)
+      dradis-plugins (>= 4.8.0)
+      rubyzip
+    dradis-qualys (5.3.0)
+      dradis-plugins (>= 4.0)
+      nokogiri (~> 1.3)
+    dradis-saint (5.3.0)
+      dradis-plugins (>= 4.0)
+      nokogiri
+      rake (~> 13.0)
+    dradis-veracode (5.3.0)
+      dradis-plugins (>= 4.0)
+    dradis-wpscan (5.3.0)
+      dradis-plugins (>= 4.0)
+      multi_json
+    dradis-zap (5.3.0)
+      dradis-plugins (>= 4.0)
+      nokogiri (~> 1.3)
     drb (2.2.3)
     erb (6.0.4)
     erubi (1.13.1)
@@ -783,35 +621,35 @@ DEPENDENCIES
   coffee-rails (~> 5.0)
   csv
   differ (~> 0.1.2)
-  dradis-acunetix!
+  dradis-acunetix (~> 5.3.0)
   dradis-api!
-  dradis-brakeman!
-  dradis-burp!
-  dradis-calculator_cvss!
-  dradis-calculator_dread!
-  dradis-calculator_mitre!
-  dradis-coreimpact!
-  dradis-csv!
-  dradis-csv_export!
+  dradis-brakeman (~> 5.3.0)
+  dradis-burp (~> 5.3.0)
+  dradis-calculator_cvss (~> 5.3.0)
+  dradis-calculator_dread (~> 5.3.0)
+  dradis-calculator_mitre (~> 5.3.0)
+  dradis-coreimpact (~> 5.3.0)
+  dradis-csv (~> 5.3.0)
+  dradis-csv_export (~> 5.3.0)
   dradis-echo!
-  dradis-html_export!
-  dradis-metasploit!
-  dradis-nessus!
-  dradis-netsparker!
-  dradis-nexpose!
-  dradis-nikto!
-  dradis-nipper!
-  dradis-nmap!
-  dradis-ntospider!
-  dradis-openvas!
-  dradis-pentera!
-  dradis-plugins!
-  dradis-projects!
-  dradis-qualys!
-  dradis-saint!
-  dradis-veracode!
-  dradis-wpscan!
-  dradis-zap!
+  dradis-html_export (~> 5.3.0)
+  dradis-metasploit (~> 5.3.0)
+  dradis-nessus (~> 5.3.0)
+  dradis-netsparker (~> 5.3.0)
+  dradis-nexpose (~> 5.3.0)
+  dradis-nikto (~> 5.3.0)
+  dradis-nipper (~> 5.3.0)
+  dradis-nmap (~> 5.3.0)
+  dradis-ntospider (~> 5.3.0)
+  dradis-openvas (~> 5.3.0)
+  dradis-pentera (~> 5.3.0)
+  dradis-plugins (~> 5.3.0)
+  dradis-projects (~> 5.3.0)
+  dradis-qualys (~> 5.3.0)
+  dradis-saint (~> 5.3.0)
+  dradis-veracode (~> 5.3.0)
+  dradis-wpscan (~> 5.3.0)
+  dradis-zap (~> 5.3.0)
   factory_bot_rails (~> 6.5)
   font-awesome-sass (~> 6.4.0)
   foreman
