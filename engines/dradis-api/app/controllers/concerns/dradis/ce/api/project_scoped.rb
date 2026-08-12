@@ -11,7 +11,7 @@ module Dradis::CE::API
     protected
 
     def set_project
-      current_project
+      raise ActiveRecord::RecordNotFound if current_project.nil?
     end
 
     def current_project
