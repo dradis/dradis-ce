@@ -7,7 +7,7 @@ FactoryBot.define do
     end
 
     trait :with_properties do
-      properties {
+      properties do
         {
           'network': 'blue',
           'ip': [
@@ -38,7 +38,7 @@ FactoryBot.define do
             ]
           }
         }
-      }
+      end
     end
   end
 end

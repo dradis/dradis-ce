@@ -59,7 +59,7 @@ describe Dradis::Plugins::Echo::Provider do
     it 'returns the default for each subclass' do
       expect(described_class::Ollama.default_address).to eq('http://localhost:11434')
       expect(described_class::OpenAI.default_address).to eq('https://api.openai.com/v1')
-      expect(described_class::Anthropic.default_address).to eq('https://api.anthropic.com/v1/messages')
+      expect(described_class::Anthropic.default_address).to eq('https://api.anthropic.com/v1')
       expect(described_class::Gemini.default_address).to include('generativelanguage.googleapis.com')
     end
   end
@@ -93,9 +93,9 @@ describe Dradis::Plugins::Echo::Provider do
     it 'raises NotImplementedError on the base class' do
       provider = build(:provider)
       # Ollama overrides #generate, so test the base class directly
-      expect {
-        Dradis::Plugins::Echo::Provider.new.generate(prompt: 'test')
-      }.to raise_error(NotImplementedError)
+      expect do
+        Dradis::Plugins::Echo::Provider.new.generate(messages: [{ role: 'user', content: 'test' }])
+      end.to raise_error(NotImplementedError)
     end
   end
 

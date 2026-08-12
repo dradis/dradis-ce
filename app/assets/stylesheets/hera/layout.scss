@@ -123,6 +123,14 @@ footer {
   font-size: 0.9rem;
   padding: 0.5rem;
   text-align: center;
+
+  a {
+    color: $brand-500;
+
+    &:hover {
+      color: $brand-900;
+    }
+  }
 }
 
 header {

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 describe HTML::Pipeline::Dradis::Sanitize do
-  let(:context) {
+  let(:context) do
     { whitelist: HTML::Pipeline::Dradis::Sanitize::ALLOWLIST }
-  }
+  end
   let(:pipeline_filters) { [HTML::Pipeline::SanitizationFilter] }
   let(:pipeline) { HTML::Pipeline.new(pipeline_filters, context) }
 

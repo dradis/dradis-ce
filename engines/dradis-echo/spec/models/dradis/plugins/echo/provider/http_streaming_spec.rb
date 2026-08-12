@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Dradis::Plugins::Echo::Provider::HttpStreaming do
   let(:provider) do
     Dradis::Plugins::Echo::Provider::Anthropic.new(
-      address: 'https://api.anthropic.com/v1/messages',
+      address: 'https://api.anthropic.com/v1',
       api_key: 'sk-ant-test',
       model: 'claude-sonnet-4-6',
       name: 'Test'
@@ -27,12 +27,12 @@ describe Dradis::Plugins::Echo::Provider::HttpStreaming do
   describe '#parse_sse_response' do
     it 'raises an error for non-2xx responses' do
       stub_http(body: 'Unauthorized', code: '401')
-      expect {
+      expect do
         provider.send(:parse_sse_response,
                       URI('https://api.anthropic.com/v1/messages'),
                       headers: {},
                       body: {})
-      }.to raise_error(RuntimeError, /API error \(401\)/)
+      end.to raise_error(Dradis::Plugins::Echo::Provider::HttpStreaming::Error, /API error \(401\)/)
     end
 
     it 'parses SSE lines and yields text chunks' do
@@ -66,12 +66,12 @@ describe Dradis::Plugins::Echo::Provider::HttpStreaming do
       sse_body = "data: not-valid-json\ndata: {\"type\":\"message_start\"}\n\n"
       stub_http(body: sse_body)
 
-      expect {
+      expect do
         provider.send(:parse_sse_response,
                       URI('https://api.anthropic.com/v1/messages'),
                       headers: {},
                       body: {}) { |_chunk| }
-      }.not_to raise_error
+      end.not_to raise_error
     end
   end
 
@@ -81,7 +81,7 @@ describe Dradis::Plugins::Echo::Provider::HttpStreaming do
       sse_body = "data: #{JSON.generate(delta_event)}\n\n"
       stub_http(body: sse_body)
 
-      result = provider.generate(prompt: 'test')
+      result = provider.generate(messages: [{ role: 'user', content: 'test' }])
       expect(result).to eq('Hello')
     end
 
@@ -91,9 +91,29 @@ describe Dradis::Plugins::Echo::Provider::HttpStreaming do
       stub_http(body: sse_body)
 
       chunks = []
-      result = provider.generate(prompt: 'test') { |chunk| chunks << chunk }
+      result = provider.generate(messages: [{ role: 'user', content: 'test' }]) { |chunk| chunks << chunk }
       expect(chunks).to eq(['Hello'])
       expect(result).to be_nil
+    end
+
+    it 'streams a multi-turn messages array' do
+      delta_event = { 'type' => 'content_block_delta', 'delta' => { 'type' => 'text_delta', 'text' => 'Hello' } }
+      sse_body = "data: #{JSON.generate(delta_event)}\n\n"
+      stub_http(body: sse_body)
+
+      messages = [
+        { role: 'user', content: 'Hi' },
+        { role: 'assistant', content: 'Hello' },
+        { role: 'user', content: 'Again' }
+      ]
+      expect(provider).to receive(:build_body)
+        .with(messages: messages, model: 'claude-sonnet-4-6').and_call_original
+
+      expect(provider.generate(messages: messages)).to eq('Hello')
+    end
+
+    it 'raises when messages: is not given' do
+      expect { provider.generate }.to raise_error(ArgumentError)
     end
   end
 end

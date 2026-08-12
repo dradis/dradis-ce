@@ -1,0 +1,19 @@
+<%# locals: (session:, record:, type:, active_session: nil) -%>
+<% is_active = active_session && session.id == active_session.id %>
+<%= link_to echo.project_session_path(current_project, session, type: type, record: record.id),
+      id: dom_id(session),
+      class: class_names('echo-session-item', active: is_active),
+      aria: { current: is_active ? 'page' : nil },
+      data: { turbo_frame: dom_id(record, :echo) } do %>
+  <i class="echo-session-icon fa-solid fa-comments"></i>
+  <span class="echo-session-body">
+    <span class="echo-session-row">
+      <span class="echo-session-title"><%= session.title.presence || "Session ##{session.id}" %></span>
+      <% if session.generating? %>
+        <%= spinner_tag spinner_class: 'spinner-border-sm text-primary', inline: true %>
+      <% end %>
+      <i class="echo-session-chevron fa-solid fa-chevron-right"></i>
+    </span>
+    <span class="echo-session-meta">Updated <%= local_time_ago(session.updated_at) %></span>
+  </span>
+<% end %>

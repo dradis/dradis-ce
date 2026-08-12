@@ -13,14 +13,14 @@ describe 'Card pages:' do
 
   context 'as authenticated user' do
     let(:add_users) do
-      @first_user  = create(:user)
+      @first_user = create(:user)
       @second_user = create(:user)
     end
 
     before do
       login_to_project_as_user
       @board = create(:board, project: current_project, node: current_project.methodology_library)
-      @list  = create(:list, board: @board)
+      @list = create(:list, board: @board)
     end
 
     describe 'when in new page', js: true do
@@ -246,7 +246,7 @@ describe 'Card pages:' do
 
       describe "clicking 'delete'" do
         before { PaperTrail.enabled = true }
-        after  { PaperTrail.enabled = false }
+        after { PaperTrail.enabled = false }
 
         let(:submit_form) do
           within('.actions', match: :first) do
@@ -294,9 +294,9 @@ describe 'Card pages:' do
           new_list = create(:list)
           @card.update(list: new_list)
 
-          expect {
+          expect do
             visit project_board_list_card_path(current_project, @board, @list, @card)
-          }.to raise_error ActiveRecord::RecordNotFound
+          end.to raise_error ActiveRecord::RecordNotFound
         end
       end
     end
