@@ -4,6 +4,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
+    - Textile: stop mis-parsing inline code (@...@) that contains an email address
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
