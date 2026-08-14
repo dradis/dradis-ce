@@ -2,11 +2,13 @@ require 'rails_helper'
 
 describe Lockable do
   let(:user) { create(:user) }
-  let(:project) { Project.new }
+  let(:project) { create(:project) }
   let(:issue) { create(:issue, node: project.issue_library) }
 
   describe '.allowed_types' do
     it 'includes models that have included the concern' do
+      Issue # allowed_types is only populated once the model is autoloaded
+
       expect(Lockable.allowed_types).to include('Issue')
     end
   end
