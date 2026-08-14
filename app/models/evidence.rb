@@ -6,6 +6,8 @@ class Evidence < ApplicationRecord
 
   dradis_has_fields_for :content
 
+  enum :state, [ :draft, :ready_for_review, :published ]
+
   # -- Relationships --------------------------------------------------------
   belongs_to :issue, touch: true
   belongs_to :node, touch: true

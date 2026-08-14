@@ -101,11 +101,45 @@ describe 'evidence' do
       expect(page).to have_selector '#evidence_issue_id + .combobox'
     end
 
+    describe 'the state button' do
+      it 'updates the evidence state' do
+        click_button 'Toggle Dropdown'
+        choose 'evidence_state_ready_for_review', allow_label_click: true
+
+        submit_form
+
+        expect(@evidence.reload.state).to eq 'ready_for_review'
+      end
+
+      context 'when the user is not a reviewer' do
+        before do
+          other_user = create(:user)
+          allow_any_instance_of(Project).to receive(:reviewers).and_return(User.where(id: other_user.id))
+          visit edit_project_node_evidence_path(current_project, @node, @evidence)
+        end
+
+        it 'disables the published option' do
+          click_button 'Toggle Dropdown'
+
+          expect(page).to have_field 'evidence_state_published', disabled: true, visible: :all
+        end
+      end
+    end
+
     context 'when editing the evidence from an issue' do
       it 'should redirect back to issue show page' do
         visit edit_project_node_evidence_path(current_project, @node, @evidence, return_to: 'issue')
         submit_form
         expect(page).to have_current_path(project_issue_path(current_project, @evidence.issue))
+      end
+    end
+
+    context 'when editing the evidence from the QA evidence tab' do
+      it 'should redirect back to the QA evidence tab' do
+        @evidence.issue.update!(state: :ready_for_review)
+        visit edit_project_node_evidence_path(current_project, @node, @evidence, return_to: 'qa')
+        submit_form
+        expect(page).to have_current_path(project_qa_issue_path(current_project, @evidence.issue, tab: 'evidence-tab'))
       end
     end
 

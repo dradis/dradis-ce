@@ -1,6 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
+  - QA: add an Evidence tab to review and publish evidence independently of its issue
   - Upgraded gems:
     - sqlite3
   - Bugs fixes:
