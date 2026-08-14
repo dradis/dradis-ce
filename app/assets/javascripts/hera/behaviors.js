@@ -93,11 +93,11 @@ document.addEventListener('turbo:load', function () {
         new LocalAutoSave(this);
       });
 
-    // Release the edit lock when the Cancel link is used to leave an edit form
+    // Release the record lock when the Cancel link is used to leave an edit form
     $(parentElement)
-      .find('[data-behavior~=release-edit-lock]')
+      .find('[data-behavior~=record-locking]')
       .each(function () {
-        new ReleaseEditLock(this);
+        new RecordLocking(this);
       });
 
     // Fetch content

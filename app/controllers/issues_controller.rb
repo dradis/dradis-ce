@@ -2,10 +2,10 @@ class IssuesController < AuthenticatedController
   include ConflictResolver
   include ContentFromTemplate
   include DynamicFieldNamesCacher
-  include EditLockable
   include EventPublisher
   include IssuesHelper
   include LiquidEnabledResource
+  include LockableResource
   include Mentioned
   include MultipleDestroy
   include NotificationsReader
@@ -17,10 +17,11 @@ class IssuesController < AuthenticatedController
   before_action :set_columns, only: :index
 
   before_action :set_or_initialize_issue, except: [:import, :index]
-  before_action :check_edit_lock, only: :edit
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
   before_action :set_affected_nodes, only: [:show]
   before_action :set_form_cancel_path, only: [:new, :edit]
+  # Must run after :set_form_cancel_path; the lockout page links back to it.
+  before_action :check_edit_lock, only: :edit
   before_action :set_tags, except: [:destroy]
 
   def index
@@ -131,6 +132,10 @@ class IssuesController < AuthenticatedController
 
   def liquid_resource_assigns
     { 'issue' => IssueDrop.new(@issue) }
+  end
+
+  def lockable_record
+    @issue
   end
 
   def redirect_to_main_or_qa

@@ -1,7 +1,7 @@
-class ReleaseEditLock {
+class RecordLocking {
   constructor(link) {
     this.link = link;
-    this.path = link.dataset.releaseEditLockPath;
+    this.path = link.dataset.recordLockingPath;
 
     this.behaviors();
   }

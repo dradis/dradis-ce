@@ -43,8 +43,8 @@
       @form_cancel_path,
       class: 'cancel-link',
       data: {
-        behavior: class_names('clear-local-auto-save', 'release-edit-lock': @issue.persisted?),
-        'release-edit-lock-path': @issue.persisted? ? project_issue_editing_session_path(current_project, @issue) : nil
+        behavior: class_names('clear-local-auto-save', 'record-locking': @issue.persisted?),
+        'record-locking-path': @issue.persisted? ? project_issue_editing_session_path(current_project, @issue) : nil
       }
       %>
   </div>

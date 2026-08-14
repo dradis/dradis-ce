@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'EditLockable concern' do
+describe 'LockableResource concern' do
   let(:user_a) { create(:user) }
   let(:user_b) { create(:user) }
   let(:project) { Project.new }
@@ -68,7 +68,7 @@ describe 'EditLockable concern' do
       end
     end
 
-    context 'when the request has a cross-origin referer' do
+    context 'when rendering the lockout page' do
       before do
         create(:editing_session,
           user: user_a,
@@ -77,9 +77,11 @@ describe 'EditLockable concern' do
         )
       end
 
-      it 'does not use the referer as the back path' do
+      it 'links back to the record instead of following the referer' do
         login_as_user(user_b)
         get edit_project_issue_path(project, issue), headers: { 'HTTP_REFERER' => 'https://evil.example.com/phish' }
+
+        expect(response.body).to include(project_issue_path(project, issue))
         expect(response.body).not_to include('https://evil.example.com/phish')
       end
     end

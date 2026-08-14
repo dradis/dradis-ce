@@ -1,5 +1,5 @@
 class Issues::EditingSessionsController < AuthenticatedController
-  include EditLockable
+  include LockableResource
   include ProjectScoped
 
   def destroy

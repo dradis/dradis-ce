@@ -15,6 +15,7 @@ class Configuration < ApplicationRecord
   # -- Class Methods --------------------------------------------------------
   # --------------------------------------------------------------- Misc admin:
 
+  # This settings is in minutes. The default value is 1440 minutes = 24 hours.
   def self.editing_session_stale_after
     create_with(value: 1440)
       .find_or_create_by(name: 'admin:editing_session_stale_after').value.to_i

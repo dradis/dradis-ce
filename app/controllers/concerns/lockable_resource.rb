@@ -1,4 +1,4 @@
-module EditLockable
+module LockableResource
   extend ActiveSupport::Concern
 
   protected
@@ -8,24 +8,22 @@ module EditLockable
   end
 
   def check_edit_lock
-    record = lockable_record
-    competing_sessions = EditingSession.for_record(record).active.by_others(current_user)
+    competing_sessions = EditingSession.for_record(lockable_record).active.by_others(current_user).includes(:user)
 
     if competing_sessions.any? && params[:force] != 'true'
-      @locked_by = competing_sessions.includes(:user).map(&:user)
-      @locked_record = record
-      @back_path = url_from(request.referer) || root_path
+      @locked_by = competing_sessions.map(&:user)
+      # Make the record accessible in the view
+      @locked_record = lockable_record
       render 'shared/edit_locked'
       return
     end
 
-    acquire_edit_session(record)
+    acquire_edit_session(lockable_record)
   end
 
+  # Controllers that lock a record must return it here.
   def lockable_record
-    @lockable_record ||=
-      instance_variable_get("@#{controller_name.singularize}") ||
-        send("set_or_initialize_#{controller_name.singularize}")
+    raise NotImplementedError, "#{self.class.name} must implement #lockable_record"
   end
 
   def release_edit_session(record)
