@@ -1,8 +1,10 @@
 <table class="table table-striped mb-0"
   data-behavior="dradis-datatable"
+  data-can-publish="<%= can?(:publish, current_project) %>"
   data-default-columns="<%= @default_columns.to_json %>"
   data-item-name=<%= "issue_#{@issue.id}_evidence" %>
   data-local-storage-key="project.ce.<%= dom_id(current_project) %>.<%= "issue_#{@issue.id}_evidence_datatable" %>"
+  data-state-icons="<%= state_icons.to_json %>"
   >
   <thead>
     <tr>
@@ -15,7 +17,9 @@
   </thead>
   <tbody>
     <% @affected_nodes.each do |node| %>
-      <% node.evidence.where(issue_id: @issue.id).each do |evidence| %>
+      <% node_evidence = node.evidence.where(issue_id: @issue.id)
+         node_evidence = node_evidence.ready_for_review if local_assigns[:qa] %>
+      <% node_evidence.each do |evidence| %>
         <tr id="evidence-<%= evidence.id %>">
           <td class="select-checkbox" data-behavior="select-checkbox"></td>
           <% @all_columns.each do |column| %>
@@ -23,7 +27,10 @@
               sort, display =
               case column
               when 'Label'
-                [evidence.node.label, link_to(evidence.node.label, [current_project, node, evidence])]
+                label_path = local_assigns[:qa] ? project_qa_issue_evidence_path(current_project, @issue, evidence) : [current_project, node, evidence]
+                [evidence.node.label, link_to(evidence.node.label, label_path)]
+              when 'State'
+                [evidence.state_before_type_cast, evidence.state.humanize]
               when 'Created'
                 [evidence.created_at.to_i, local_time_ago(evidence.created_at)]
               when 'Created by'
@@ -37,7 +44,7 @@
             <td data-sort="<%= sort %>"><%= display %></td>
           <% end  %>
           <td class="column-actions">
-            <%= link_to edit_project_node_evidence_path(current_project, node, evidence, return_to: :issue) do %>
+            <%= link_to edit_project_node_evidence_path(current_project, node, evidence, return_to: local_assigns[:qa] ? :qa : :issue) do %>
               <i class="fa-solid fa-pencil"></i> Edit
             <% end %>
             <%= link_to [current_project, node, evidence],

@@ -125,7 +125,9 @@ Rails.application.routes.draw do
     end
 
     namespace :qa do
-      resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable]
+      resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable] do
+        resources :evidence, only: [:index, :show, :update], controller: 'issues/evidence', concerns: [:multiple_update]
+      end
     end
 
     get 'search' => 'search#index'

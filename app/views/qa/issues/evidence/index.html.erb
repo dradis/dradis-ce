@@ -1,0 +1,20 @@
+<% if @affected_nodes.any? %>
+  <% cache ['qa-issue-evidence-tab', @issue, @issue.evidence] do %>
+    <div data-behavior="datatable-paths"
+      data-table-state-url="<%= multiple_update_project_qa_issue_evidence_index_path(current_project, @issue) %>">
+      <%= render 'issues/evidence/table', qa: true %>
+    </div>
+  <% end %>
+<% else %>
+  <div class="empty-state mt-3">
+    <div class="empty-state-icon">
+      <%= image_tag "icons/#{rand(9)}.svg" %>
+    </div>
+    <div class="empty-state-body">
+      <div class="container">
+        <h4 class="empty-state-title">You don't have any evidence to review yet.</h4>
+        <p class="empty-state-body-text">Once there's evidence marked as 'ready for review' on this issue you'll be able to go through it here, make any necessary changes, and publish.</p>
+      </div>
+    </div>
+  </div>
+<% end %>

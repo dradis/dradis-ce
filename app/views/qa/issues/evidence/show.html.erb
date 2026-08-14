@@ -1,0 +1,40 @@
+<% content_for :title, 'Quality Assurance' %>
+
+<% content_for :breadcrumbs do %>
+  <%= render 'breadcrumbs' %>
+<% end %>
+
+<% content_for :sidebar do %>
+  <%= render partial: 'qa/sidebar', locals:
+    {
+      index_path: project_qa_issue_evidence_index_path(current_project, @issue),
+      name: 'evidence_for_review',
+      records: @evidence_for_review
+    }
+  %>
+<% end %>
+
+<div class="row p-0">
+  <div class="col-12">
+    <div class="content-container">
+      <% cache ['qa-evidence-content', @evidence] do %>
+        <div class="note-text-inner">
+          <h4 class="mb-4 header-underline align-items-center">
+            <span class="text-truncate" title="<%= @evidence.node.label %>"><%= @evidence.node.label %></span>
+            <span class="actions">
+              <span class="action">
+                <%= link_to edit_project_node_evidence_path(current_project, @evidence.node, @evidence, return_to: 'qa') do %>
+                  <i class="fa-solid fa-pencil fa-fw"></i> Edit
+                <% end %>
+              </span>
+            </span>
+          </h4>
+          <%= render partial: 'shared/textile_content', locals: { record: @evidence, preview_path: preview_project_node_evidence_path(current_project, @evidence.node, @evidence) } %>
+          <div class="author-info">
+            <span class="ms-auto">Author: <%= @evidence.author || 'n/a' %></span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

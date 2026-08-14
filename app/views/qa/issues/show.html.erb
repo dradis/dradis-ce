@@ -14,38 +14,66 @@
   %>
 <% end %>
 
+<ul class="tabs-container nav nav-tabs main-tabs">
+  <li class="nav-item">
+    <a href="#info-tab" data-bs-toggle="tab" class="nav-link active">
+      <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a href="#evidence-tab" class="nav-link" data-bs-toggle="tab">
+      <i class="fa-solid fa-laptop"></i> Evidence <span class="badge bg-primary text-white" data-behavior="evidence-count"><%= @issue.evidence.ready_for_review.count %></span>
+    </a>
+  </li>
+</ul>
+
 <div class="row p-0">
   <div class="col-12">
     <div class="content-container">
-      <% cache ['issue-content', @issue] do %>
-        <div class="note-text-inner"
-             data-behavior="inline-threads-container"
-             data-inline-threads-path="<%= inline_threads_path(format: :json, inline_thread: { commentable_type: @issue.class, commentable_id: @issue.id }) %>"
-             data-inline-threads-base-path="<%= inline_threads_path %>"
-             data-commentable-type="<%= @issue.class %>"
-             data-commentable-id="<%= @issue.id %>">
-          <h4 class="mb-4 header-underline align-items-center">
-            <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
-            <%= render partial: 'shared/liquid_loading' %>
-            <span class="actions">
-              <span class="action">
-                <%= link_to edit_project_qa_issue_path(current_project, @issue) do %>
-                  <i class="fa-solid fa-pencil fa-fw"></i> Edit
-                <% end %>
-              </span>
-              <span class="action">
-                <%= link_to project_issue_revisions_path(current_project, @issue, qa: true) do %>
-                  <i class="fa-solid fa-history fa-fw"></i> View History
-                <% end %>
-              </span>
-            </span>
-          </h4>
-          <%= render partial: 'shared/textile_content', locals: { record: @issue, preview_path: preview_project_issue_path(current_project, @issue) } %>
-          <div class="author-info">
-            <span class="ms-auto">Author: <%= @issue.author || 'n/a' %></span>
-          </div>
+      <div class="tab-content">
+        <div class="tab-pane active" id="info-tab">
+          <% cache ['issue-content', @issue] do %>
+            <div class="note-text-inner"
+                 data-behavior="inline-threads-container"
+                 data-inline-threads-path="<%= inline_threads_path(format: :json, inline_thread: { commentable_type: @issue.class, commentable_id: @issue.id }) %>"
+                 data-inline-threads-base-path="<%= inline_threads_path %>"
+                 data-commentable-type="<%= @issue.class %>"
+                 data-commentable-id="<%= @issue.id %>">
+              <h4 class="mb-4 header-underline align-items-center">
+                <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
+                <%= render partial: 'shared/liquid_loading' %>
+                <span class="actions">
+                  <span class="action">
+                    <%= link_to edit_project_qa_issue_path(current_project, @issue) do %>
+                      <i class="fa-solid fa-pencil fa-fw"></i> Edit
+                    <% end %>
+                  </span>
+                  <span class="action">
+                    <%= link_to project_issue_revisions_path(current_project, @issue, qa: true) do %>
+                      <i class="fa-solid fa-history fa-fw"></i> View History
+                    <% end %>
+                  </span>
+                </span>
+              </h4>
+              <%= render partial: 'shared/textile_content', locals: { record: @issue, preview_path: preview_project_issue_path(current_project, @issue) } %>
+              <div class="author-info">
+                <span class="ms-auto">Author: <%= @issue.author || 'n/a' %></span>
+              </div>
+            </div>
+          <% end %>
         </div>
-      <% end %>
+
+        <div class="tab-pane" id="evidence-tab">
+          <%=
+            content_tag :div,
+            spinner_tag,
+            data: {
+              behavior: 'fetch',
+              path: project_qa_issue_evidence_index_path(current_project, @issue)
+            }
+          %>
+        </div>
+      </div>
     </div>
 
     <div class="offcanvas offcanvas-end" tabindex="-1" data-behavior="inline-thread-panel" data-bs-backdrop="false" data-bs-scroll="true" aria-labelledby="inlineThreadPanelLabel">
