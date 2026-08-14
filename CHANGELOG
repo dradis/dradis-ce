@@ -1,7 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Issues: prevent editing a record while another user is already editing it
   - Upgraded gems:
-    - [gem]
+    - sqlite3
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]

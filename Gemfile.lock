@@ -545,11 +545,11 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (2.9.5)
+    sqlite3 (2.9.6)
       mini_portile2 (~> 2.8.0)
-    sqlite3 (2.9.5-arm64-darwin)
-    sqlite3 (2.9.5-x86_64-darwin)
-    sqlite3 (2.9.5-x86_64-linux-gnu)
+    sqlite3 (2.9.6-arm64-darwin)
+    sqlite3 (2.9.6-x86_64-darwin)
+    sqlite3 (2.9.6-x86_64-linux-gnu)
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringio (3.2.0)
@@ -695,7 +695,7 @@ DEPENDENCIES
   simple_form
   spring
   sprockets-rails (>= 3.0.0)
-  sqlite3 (~> 2.9.5)
+  sqlite3 (~> 2.9.6)
   stimulus-rails
   terser (~> 1.1)
   thor (~> 1.4.0)
