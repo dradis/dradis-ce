@@ -35,7 +35,6 @@ module HTML
         # syntax) so we never corrupt markup we don't render as text.
         EMAIL_INLINE_CODE_PATTERN = /@([\w+\-.]+@[\w-]+(?:\.[\w-]+)+)@/
         EMAIL_PLACEHOLDER_PREFIX = 'dradisemailcode'
-        EMAIL_PLACEHOLDER_PATTERN = /#{EMAIL_PLACEHOLDER_PREFIX}[a-f0-9]{16}/
 
         def call
           text, placeholders = protect_email_inline_code(@text)
@@ -64,34 +63,40 @@ module HTML
           [protected_text, placeholders]
         end
 
-        def restore_attribute_value(value, placeholders)
-          value.gsub(EMAIL_PLACEHOLDER_PATTERN) { |token| "@#{placeholders.fetch(token)}@" }
+        def restore_attribute_value(value, placeholders, placeholder_pattern)
+          value.gsub(placeholder_pattern) { |token| "@#{placeholders.fetch(token)}@" }
         end
 
+        # Matches only the placeholder keys generated for this render, not the
+        # general placeholder shape, so user text that happens to look like a
+        # placeholder (e.g. a pasted 'dradisemailcode...' string) is left
+        # untouched instead of raising KeyError on the fetch below.
         def restore_email_placeholders(html, placeholders, code_wrap:)
           return html if placeholders.empty?
+
+          placeholder_pattern = Regexp.union(placeholders.keys)
 
           fragment = Nokogiri::HTML::DocumentFragment.parse(html)
 
           fragment.xpath('.//text()').each do |node|
-            next unless node.content.match?(EMAIL_PLACEHOLDER_PATTERN)
+            next unless node.content.match?(placeholder_pattern)
 
             wrap_in_code = code_wrap && node.ancestors('pre').none?
-            node.replace(restore_text_node(node.content, placeholders, wrap_in_code))
+            node.replace(restore_text_node(node.content, placeholders, placeholder_pattern, wrap_in_code))
           end
 
           fragment.css('*').each do |element|
             element.attribute_nodes.each do |attribute|
-              next unless attribute.value.match?(EMAIL_PLACEHOLDER_PATTERN)
-              attribute.value = restore_attribute_value(attribute.value, placeholders)
+              next unless attribute.value.match?(placeholder_pattern)
+              attribute.value = restore_attribute_value(attribute.value, placeholders, placeholder_pattern)
             end
           end
 
           fragment.to_html
         end
 
-        def restore_text_node(text, placeholders, wrap_in_code)
-          CGI.escapeHTML(text).gsub(EMAIL_PLACEHOLDER_PATTERN) do |token|
+        def restore_text_node(text, placeholders, placeholder_pattern, wrap_in_code)
+          CGI.escapeHTML(text).gsub(placeholder_pattern) do |token|
             email = placeholders.fetch(token)
             wrap_in_code ? "<code>#{email}</code>" : "@#{email}@"
           end

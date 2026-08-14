@@ -55,4 +55,10 @@ describe HTML::Pipeline::Dradis::TextileFilter do
     expect(described_class.call(source, {}).to_s).to eq(result)
   end
 
+  it 'passes through text that shape-collides with the internal placeholder scheme' do
+    source = 'Token dradisemailcodeaaaaaaaaaaaaaaaa and contact @admin@starfleet.com@ for access.'
+    result = '<div><p>Token dradisemailcodeaaaaaaaaaaaaaaaa and contact <code>admin@starfleet.com</code> for access.</p></div>'
+    expect(described_class.call(source, {}).to_s).to eq(result)
+  end
+
 end
