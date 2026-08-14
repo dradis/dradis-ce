@@ -11,7 +11,7 @@ describe 'evidence' do
   end
 
   example 'show page with wrong Node ID in URL' do
-    node     = create(:node)
+    node = create(:node)
     evidence = create(:evidence, node: node)
     wrong_node = create(:node)
     expect do
@@ -21,9 +21,9 @@ describe 'evidence' do
 
   describe 'show page' do
     before(:each) do
-      e_text    = "#[Foobar]#\nBarfoo\n\n#[Fizzbuzz]#\nBuzzfizz"
-      i_text    = "#[Issue Title]#\nIssue info"
-      @issue    = create(:issue,    node: @node, text: i_text)
+      e_text = "#[Foobar]#\nBarfoo\n\n#[Fizzbuzz]#\nBuzzfizz"
+      i_text = "#[Issue Title]#\nIssue info"
+      @issue = create(:issue, node: @node, text: i_text)
       @evidence = create(:evidence, node: @node, issue: @issue, content: e_text)
       create_activities
       create_comments
@@ -35,14 +35,14 @@ describe 'evidence' do
 
     it 'shows information about the Evidence' do
       should have_selector 'h5', text: 'Foobar'
-      should have_selector 'p',  text: 'Barfoo'
+      should have_selector 'p', text: 'Barfoo'
       should have_selector 'h5', text: 'Fizzbuzz'
-      should have_selector 'p',  text: 'Buzzfizz'
+      should have_selector 'p', text: 'Buzzfizz'
     end
 
     it "shows information about the evidence's Issue" do
       should have_selector 'h5', text: 'Issue Title'
-      should have_selector 'p',  text: 'Issue info'
+      should have_selector 'p', text: 'Issue info'
     end
 
     it_behaves_like 'a page with a comments feed hook'
@@ -282,7 +282,7 @@ describe 'evidence' do
     end
 
     context 'when a NoteTemplate is specified' do
-      let(:params)  { { template: 'sample_evidence' } }
+      let(:params) { { template: 'sample_evidence' } }
 
       it 'pre-populates the textarea with the template contents' do
         click_link 'Fields'

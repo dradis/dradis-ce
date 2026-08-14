@@ -67,7 +67,7 @@ describe Evidence do
   describe '#fields' do
     before do
       issue = create(:issue)
-      node  = create(:node, label: 'Node Label')
+      node = create(:node, label: 'Node Label')
       @evidence = Evidence.new(
         node_id: node.id, issue_id: issue.id, content: "#[Output]#\nResistance is futile\n\n"
       )

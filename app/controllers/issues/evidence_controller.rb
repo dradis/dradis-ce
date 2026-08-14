@@ -105,7 +105,7 @@ class Issues::EvidenceController < AuthenticatedController
   end
 
   def set_auto_save_key
-    @auto_save_key =  if params[:template]
+    @auto_save_key = if params[:template]
       "issue-#{params[:issue_id]}-evidence-#{params[:template]}"
     elsif params[:from_rtp]
       "issue-#{params[:issue_id]}-rtp-evidence"
