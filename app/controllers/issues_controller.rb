@@ -84,7 +84,7 @@ class IssuesController < AuthenticatedController
       updated_at_before_save = @issue.updated_at.to_i
 
       if @issue.update(issue_params)
-        release_edit_session(@issue)
+        @issue.release_edit_session(current_user)
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         format.html { redirect_to_main_or_qa }

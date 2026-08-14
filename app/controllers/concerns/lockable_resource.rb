@@ -3,10 +3,6 @@ module LockableResource
 
   protected
 
-  def acquire_edit_session(record)
-    EditingSession.acquire!(record_type: record.class.name, record_id: record.id, user: current_user)
-  end
-
   def check_edit_lock
     competing_sessions = EditingSession.for_record(lockable_record).active.by_others(current_user).includes(:user)
 
@@ -18,15 +14,11 @@ module LockableResource
       return
     end
 
-    acquire_edit_session(lockable_record)
+    lockable_record.acquire_edit_session(current_user)
   end
 
   # Controllers that lock a record must return it here.
   def lockable_record
     raise NotImplementedError, "#{self.class.name} must implement #lockable_record"
-  end
-
-  def release_edit_session(record)
-    EditingSession.for_record(record).where(user: current_user).destroy_all
   end
 end

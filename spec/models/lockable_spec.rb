@@ -19,6 +19,31 @@ describe Lockable do
     end
   end
 
+  describe '#acquire_edit_session' do
+    it 'creates a session under the record\'s own class name' do
+      issue.acquire_edit_session(user)
+
+      expect(EditingSession.where(record_type: 'Issue', record_id: issue.id, user: user)).to exist
+    end
+  end
+
+  describe '#release_edit_session' do
+    it 'destroys the given user\'s session for the record' do
+      create(:editing_session, user: user, record_type: 'Issue', record_id: issue.id)
+
+      expect { issue.release_edit_session(user) }.to change { EditingSession.count }.by(-1)
+    end
+
+    it 'leaves another user\'s session for the record alone' do
+      other_user = create(:user)
+      session = create(:editing_session, user: other_user, record_type: 'Issue', record_id: issue.id)
+
+      issue.release_edit_session(user)
+
+      expect(EditingSession.all).to eq([session])
+    end
+  end
+
   describe 'destroying the record' do
     it 'destroys its editing sessions' do
       create(:editing_session, user: user, record_type: 'Issue', record_id: issue.id)

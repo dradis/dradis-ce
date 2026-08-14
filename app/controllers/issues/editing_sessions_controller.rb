@@ -1,9 +1,8 @@
 class Issues::EditingSessionsController < AuthenticatedController
-  include LockableResource
   include ProjectScoped
 
   def destroy
-    release_edit_session(issue)
+    issue.release_edit_session(current_user)
     head :no_content
   end
 

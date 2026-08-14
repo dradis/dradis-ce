@@ -15,7 +15,15 @@ module Lockable
     before_destroy :destroy_editing_sessions
   end
 
+  def acquire_edit_session(user)
+    EditingSession.acquire!(record_type: self.class.name, record_id: id, user: user)
+  end
+
   def destroy_editing_sessions
     EditingSession.for_record(self).destroy_all
+  end
+
+  def release_edit_session(user)
+    EditingSession.for_record(self).where(user: user).destroy_all
   end
 end
