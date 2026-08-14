@@ -695,7 +695,7 @@ DEPENDENCIES
   simple_form
   spring
   sprockets-rails (>= 3.0.0)
-  sqlite3 (~> 2.9.5)
+  sqlite3 (~> 2.9.6)
   stimulus-rails
   terser (~> 1.1)
   thor (~> 1.4.0)
