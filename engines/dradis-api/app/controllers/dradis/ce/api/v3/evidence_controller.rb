@@ -17,6 +17,7 @@ module Dradis::CE::API
 
       def create
         @evidence = @node.evidence.build(evidence_params)
+        @evidence.author = current_user.email
         if @evidence.save
           track_created(@evidence)
           render status: 201, location: node_evidence_path(@node, @evidence)

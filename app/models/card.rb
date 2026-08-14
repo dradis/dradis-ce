@@ -1,5 +1,6 @@
 class Card < ApplicationRecord
   include Commentable
+  include Eventable
   include HasFields
   include RevisionTracking
   include Subscribable
@@ -84,9 +85,27 @@ class Card < ApplicationRecord
     end
   end
 
+  def local_event_payload
+    {
+      board: {
+        id: board.id,
+        name: board.name
+      },
+      list: {
+        id: list.id,
+        name: list.name
+      },
+      name: name,
+      project: {
+        id: project.id,
+        name: project.name
+      }
+    }
+  end
+
   def local_fields
     {
-      'List'  => list.name.parameterize(preserve_case: true, separator: '_'),
+      'List' => list.name.parameterize(preserve_case: true, separator: '_'),
       'Title' => name
     }
   end

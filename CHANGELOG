@@ -1,7 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Issues: prevent editing a record while another user is already editing it
   - Upgraded gems:
-    - rails, rails-html-sanitizer, sqlite3, websocket-driver
+    - [gem]
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
@@ -28,14 +28,31 @@
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
-v5.2.0 (July 2026)
-  - UI: add dark mode support to the login and setup wizard pages
+v5.3.0 (August 2026)
+  - Cards: add option to move a task to a different list
+  - Echo: add multiplayer chat sessions on Issues — start a conversation from a saved prompt, follow up with more messages, and watch Roslin's reply stream live to everyone viewing
+  - Integration enhancements:
+    - Burp: Add Type as an available Issue field
+    - CSV: Add support for the Mappings Manager
+    - Projects: Fix error handling of the package upload when an invalid template is found
   - Upgraded gems:
-    - concurrent-ruby, crass, faraday, msgpack, net-imap, nokogiri, puma
+    - rails, rails-html-sanitizer, sqlite3, websocket-driver
   - Bugs fixes:
     - Echo:
       - Preserve line breaks in streamed Ollama responses for models that emit them as standalone tokens
       - Remove a stray leading blank line from streamed responses
+      - Send only completed conversation turns to the AI provider, so a failed or in-progress reply can no longer break the next one
+      - Show a generic message when a reply fails instead of surfacing the provider's raw error
+      - Return a graceful error instead of a server error when a chat session is started with a blank prompt
+    - Kit import: correctly associate the imported project with its Word report template when multiple export integrations are enabled
+  - REST/JSON API enhancements:
+    - Return a 404 instead of a server error for project-scoped endpoints requested without a valid project
+    - Set the author field to the authenticated user when creating notes and evidence
+
+v5.2.0 (July 2026)
+  - UI: add dark mode support to the login and setup wizard pages
+  - Upgraded gems:
+    - concurrent-ruby, crass, faraday, msgpack, net-imap, nokogiri, puma
 
 v5.1.0 (May 2026)
   - DataTables: add sticky table toolbar that tracks below the navigation bar when scrolling

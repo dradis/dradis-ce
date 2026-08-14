@@ -212,6 +212,12 @@ document.addEventListener('turbo:load', function () {
     initBehaviors(document.querySelector('body'));
   });
 
+  // Native <turbo-frame> navigations (including loading="lazy") don't fire
+  // turbo:load
+  document.addEventListener('turbo:frame-load', function (event) {
+    initBehaviors(event.target);
+  });
+
   // Because this is an event and not a data-driven behavior, we can leave it
   // out of initBehaviors and attach the listener to document directly.
   //

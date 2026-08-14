@@ -1,0 +1,23 @@
+<%# locals: (record:, type:, sessions:, active_session: nil, new_conversation_path: nil) -%>
+<div class="echo-interactions-conversations">
+  <div class="echo-conversations-column-header">
+    <h5 class="mb-0">Conversations</h5>
+    <% if new_conversation_path %>
+      <%= link_to new_conversation_path, class: 'echo-new-conversation-link',
+            data: { turbo_frame: dom_id(record, :echo) } do %>
+        <i class="fa-solid fa-plus"></i> New
+      <% end %>
+    <% end %>
+  </div>
+  <div class="echo-session-list" data-behavior="echo-sessions">
+    <% if sessions.any? %>
+      <%= render partial: 'dradis/plugins/echo/projects/sessions/session_item',
+            collection: sessions, as: :session,
+            locals: { record: record, type: type, active_session: active_session } %>
+    <% else %>
+      <div class="echo-session-empty">
+        <i class="fa-regular fa-comments me-1"></i> No conversations on this Issue yet — start one below.
+      </div>
+    <% end %>
+  </div>
+</div>
