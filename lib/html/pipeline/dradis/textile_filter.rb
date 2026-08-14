@@ -36,6 +36,15 @@ module HTML
         EMAIL_INLINE_CODE_PATTERN = /@([\w+\-.]+@[\w-]+(?:\.[\w-]+)+)@/
         EMAIL_PLACEHOLDER_PREFIX = 'dradisemailcode'
 
+        # A contiguous non-whitespace run containing '://' is a URL, whether
+        # bare or the target of Textile link syntax ("text":URL). RedCloth
+        # already handles an embedded '@...@' correctly in both cases on its
+        # own, so we leave those alone rather than protecting them: bare
+        # URLs stay one unbroken string for AutolinkFilter to link as a
+        # whole, instead of being split into link/code fragments by an
+        # email we protected and later restored as <code>.
+        BARE_URL_PATTERN = %r{\S*://\S+}
+
         def call
           text, placeholders = protect_email_inline_code(@text)
           parser = RedCloth.new(text, [:filter_html, :no_span_caps])
@@ -52,11 +61,15 @@ module HTML
         private
 
         def protect_email_inline_code(text)
+          url_ranges = text.to_enum(:scan, BARE_URL_PATTERN).map { Regexp.last_match.begin(0)...Regexp.last_match.end(0) }
           placeholders = {}
 
           protected_text = text.gsub(EMAIL_INLINE_CODE_PATTERN) do
+            match = Regexp.last_match
+            next match[0] if url_ranges.any? { |range| range.cover?(match.begin(0)) }
+
             token = "#{EMAIL_PLACEHOLDER_PREFIX}#{SecureRandom.hex(8)}"
-            placeholders[token] = Regexp.last_match(1)
+            placeholders[token] = match[1]
             token
           end
 

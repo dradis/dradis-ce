@@ -61,4 +61,10 @@ describe HTML::Pipeline::Dradis::TextileFilter do
     expect(described_class.call(source, {}).to_s).to eq(result)
   end
 
+  it 'leaves an email address inside a bare URL untouched so it stays one string for AutolinkFilter' do
+    source = 'http://evil.com/@admin@starfleet.com@/login'
+    result = '<div><p>http://evil.com/@admin@starfleet.com@/login</p></div>'
+    expect(described_class.call(source, {}).to_s).to eq(result)
+  end
+
 end

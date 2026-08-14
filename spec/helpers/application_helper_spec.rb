@@ -15,6 +15,12 @@ describe ApplicationHelper do
       expect(helper.markup('https://www.owasp.org/index.php/Test_HTTP_Methods_(OTG-CONFIG-006)')).to include('<a href="https://www.owasp.org/index.php/Test_HTTP_Methods_(OTG-CONFIG-006)">')
     end
 
+    it 'autolinks a bare URL containing an email address as one whole link' do
+      expect(helper.markup('http://evil.com/@admin@starfleet.com@/login')).to include(
+        '<a href="http://evil.com/@admin@starfleet.com@/login">http://evil.com/@admin@starfleet.com@/login</a>'
+      )
+    end
+
     it 'correctly parses bold tags' do
       expect(helper.markup('The word *duck* should be bold.')).to include('<strong>duck</strong>')
     end
