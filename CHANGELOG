@@ -2,7 +2,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - [gem]
+    - sqlite3
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
