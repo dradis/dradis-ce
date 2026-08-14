@@ -22,6 +22,13 @@ describe EditingSession do
   describe 'validations' do
     subject { create(:editing_session, user: user, record_type: 'Issue', record_id: issue.id) }
     it { is_expected.to validate_presence_of(:record_type) }
+
+    it 'rejects a record type that has not included Lockable' do
+      session = EditingSession.new(user: user, record_type: 'Node', record_id: issue.id)
+
+      expect(session).not_to be_valid
+      expect(session.errors[:record_type]).to be_present
+    end
   end
 
   describe '.for_record' do

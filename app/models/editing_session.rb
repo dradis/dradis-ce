@@ -1,10 +1,10 @@
 class EditingSession < ApplicationRecord
-  ALLOWED_RECORD_TYPES = %w[Issue].freeze
-
   belongs_to :user
   belongs_to :record, polymorphic: true
 
-  validates :record_type, presence: true, inclusion: { in: ALLOWED_RECORD_TYPES }
+  # Evaluated lazily: Lockable.allowed_types is populated as each model is
+  # loaded and includes the concern, which may happen after this class.
+  validates :record_type, presence: true, inclusion: { in: ->(_) { Lockable.allowed_types } }
 
   scope :active, -> { where(created_at: stale_after.ago..) }
   scope :by_others, ->(user) { where.not(user: user) }
