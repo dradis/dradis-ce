@@ -44,7 +44,7 @@
             <td data-sort="<%= sort %>"><%= display %></td>
           <% end  %>
           <td class="column-actions">
-            <%= link_to edit_project_node_evidence_path(current_project, node, evidence, return_to: local_assigns[:qa] ? :qa : :issue) do %>
+            <%= link_to evidence_edit_path(evidence, qa: local_assigns[:qa]) do %>
               <i class="fa-solid fa-pencil"></i> Edit
             <% end %>
             <%= link_to [current_project, node, evidence],

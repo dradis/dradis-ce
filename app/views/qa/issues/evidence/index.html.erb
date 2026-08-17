@@ -1,7 +1,8 @@
 <% if @affected_nodes.any? %>
   <% cache ['qa-issue-evidence-tab', @issue, @issue.evidence] do %>
     <div data-behavior="datatable-paths"
-      data-table-state-url="<%= multiple_update_project_qa_issue_evidence_index_path(current_project, @issue) %>">
+      data-table-state-url="<%= multiple_update_project_qa_issue_evidence_index_path(current_project, @issue) %>"
+      data-table-return-to="qa">
       <%= render 'issues/evidence/table', qa: true %>
     </div>
   <% end %>

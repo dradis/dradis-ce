@@ -10,7 +10,7 @@ class NodesController < NestedNodeResourceController
 
   # GET /nodes/<id>
   def show
-    @activities       = @node.nested_activities.latest
+    @activities = @node.nested_activities.latest
   end
 
   # GET /nodes/<id>/edit
@@ -65,7 +65,7 @@ class NodesController < NestedNodeResourceController
   # POST /nodes/sort
   def sort
     params[:nodes].each_with_index do |id, index|
-      current_project.nodes.update_all({position: index+1}, {id: id})
+      current_project.nodes.update_all({ position: index + 1 }, { id: id })
     end
     head :ok
   end
@@ -123,11 +123,11 @@ class NodesController < NestedNodeResourceController
     rtp = current_project.report_template_properties
     rtp_default_evidence_fields = rtp ? rtp.evidence_fields.default.field_names : []
 
-    @note_columns     = note_dynamic_fields | extra_field_names
-    @evidence_columns = rtp_default_evidence_fields | evidence_dynamic_fields | extra_field_names
+    @note_columns = note_dynamic_fields | extra_field_names
+    @evidence_columns = rtp_default_evidence_fields | evidence_dynamic_fields | extra_field_names | ['State']
 
     @default_note_columns = default_field_names
-    @default_evidence_columns = rtp_default_evidence_fields.presence || default_field_names
+    @default_evidence_columns = (rtp_default_evidence_fields.presence || default_field_names) | ['State']
   end
 
   def node_params

@@ -4,11 +4,11 @@ class QA::Issues::EvidenceController < AuthenticatedController
   include ProjectScoped
   include Publishable
 
-  before_action :set_issue
+  before_action :set_issue, only: [:edit, :index, :show, :update]
   before_action :set_affected_nodes, only: :index
   before_action :set_columns, only: :index
-  before_action :set_evidence, only: [:show, :update]
-  before_action :set_evidence_for_review, only: :show
+  before_action :set_evidence, only: [:edit, :show, :update]
+  before_action :set_evidence_for_review, only: [:edit, :show]
   before_action :validate_state, only: [:multiple_update, :update]
 
   def index
@@ -16,6 +16,11 @@ class QA::Issues::EvidenceController < AuthenticatedController
   end
 
   def show; end
+
+  def edit
+    @node = @evidence.node
+    @form_preview_path = preview_project_node_evidence_path(current_project, @node, @evidence)
+  end
 
   def update
     if @evidence.update(state: @state, updated_at: Time.now)
@@ -28,6 +33,7 @@ class QA::Issues::EvidenceController < AuthenticatedController
   end
 
   def multiple_update
+    @issue = current_project.issues.find(params[:issue_id])
     @evidence = Evidence.where(id: params[:ids], issue: @issue)
 
     respond_to do |format|
@@ -36,7 +42,13 @@ class QA::Issues::EvidenceController < AuthenticatedController
           track_state_change(evidence)
         end
 
-        format.html { redirect_to project_qa_issue_evidence_index_path(current_project, @issue), notice: 'State updated successfully.' }
+        format.html do
+          if params[:return_to] == 'qa'
+            redirect_to project_qa_issue_evidence_index_path(current_project, @issue), notice: 'State updated successfully.'
+          else
+            redirect_to project_issue_path(current_project, @issue, tab: 'evidence-tab'), notice: 'State updated successfully.'
+          end
+        end
       else
         format.html { render :index, alert: @evidence.errors.full_messages.join('; ') }
       end
@@ -97,7 +109,7 @@ class QA::Issues::EvidenceController < AuthenticatedController
     if Evidence.states.keys.include?(params[:state])
       @state = params[:state]
     else
-      redirect_to project_qa_issue_evidence_index_path(current_project, @issue), alert: 'Something fishy is going on...'
+      redirect_to project_qa_issue_evidence_index_path(current_project, params[:issue_id]), alert: 'Something fishy is going on...'
     end
   end
 end
