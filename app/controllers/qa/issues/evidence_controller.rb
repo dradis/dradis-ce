@@ -1,6 +1,6 @@
 class QA::Issues::EvidenceController < AuthenticatedController
-  include ActivityTracking
   include DynamicFieldNamesCacher
+  include EventPublisher
   include ProjectScoped
   include Publishable
 
@@ -24,7 +24,7 @@ class QA::Issues::EvidenceController < AuthenticatedController
 
   def update
     if @evidence.update(state: @state, updated_at: Time.now)
-      track_state_change(@evidence)
+      publish_event('evidence.updated', @evidence.to_event_payload)
 
       redirect_to(*next_evidence_or_index_path)
     else
@@ -39,7 +39,7 @@ class QA::Issues::EvidenceController < AuthenticatedController
     respond_to do |format|
       if @evidence.update(state: @state)
         @evidence.each do |evidence|
-          track_state_change(evidence)
+          publish_event('evidence.updated', evidence.to_event_payload)
         end
 
         format.html do
@@ -56,6 +56,10 @@ class QA::Issues::EvidenceController < AuthenticatedController
   end
 
   private
+
+  def event_action_payload
+    super.merge(action: 'state_change')
+  end
 
   def evidence_params
     params.permit(:state)
