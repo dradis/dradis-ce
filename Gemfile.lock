@@ -667,6 +667,7 @@ DEPENDENCIES
   liquid
   listen
   local_time (>= 2.0.0)
+  mail (>= 2.9.1)
   matrix
   mini_racer
   net-imap (>= 0.6.4.1)

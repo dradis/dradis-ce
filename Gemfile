@@ -140,6 +140,7 @@ gem 'whenever', require: false
 gem 'net-smtp'
 gem 'net-pop'
 gem 'net-imap', '>= 0.6.4.1'
+gem 'mail', '>= 2.9.1'
 
 gem 'puma', '~> 7.2.1'
 
