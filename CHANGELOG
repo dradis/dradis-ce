@@ -2,7 +2,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - [gem]
+    - sqlite3
   - Bugs fixes:
     - Textile: stop mis-parsing inline code (@...@) that contains an email address
     - [entity]:
