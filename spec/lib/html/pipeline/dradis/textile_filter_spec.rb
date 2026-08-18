@@ -55,15 +55,33 @@ describe HTML::Pipeline::Dradis::TextileFilter do
     expect(described_class.call(source, {}).to_s).to eq(result)
   end
 
-  it 'passes through text that shape-collides with the internal placeholder scheme' do
-    source = 'Token dradisemailcodeaaaaaaaaaaaaaaaa and contact @admin@starfleet.com@ for access.'
-    result = '<div><p>Token dradisemailcodeaaaaaaaaaaaaaaaa and contact <code>admin@starfleet.com</code> for access.</p></div>'
-    expect(described_class.call(source, {}).to_s).to eq(result)
-  end
-
   it 'leaves an email address inside a bare URL untouched so it stays one string for AutolinkFilter' do
     source = 'http://evil.com/@admin@starfleet.com@/login'
     result = '<div><p>http://evil.com/@admin@starfleet.com@/login</p></div>'
+    expect(described_class.call(source, {}).to_s).to eq(result)
+  end
+
+  it 'degrades gracefully, without raising, when input already contains the internal sentinel character' do
+    source = "Weird\uFDD0input and contact @admin@starfleet.com@ for access."
+    result = '<div><p>Weird@input and contact <code>admin@starfleet.com</code> for access.</p></div>'
+    expect(described_class.call(source, {}).to_s).to eq(result)
+  end
+
+  it 'leaves an unterminated inline-code span untouched' do
+    source = '@unterminated@inline.code'
+    result = '<div><p>@unterminated@inline.code</p></div>'
+    expect(described_class.call(source, {}).to_s).to eq(result)
+  end
+
+  it 'leaves adjacent double @ markers untouched' do
+    source = '@@multipleinline@@'
+    result = '<div><p>@@multipleinline@@</p></div>'
+    expect(described_class.call(source, {}).to_s).to eq(result)
+  end
+
+  it 'leaves mismatched @ markers untouched' do
+    source = '@@@mismatched@@'
+    result = '<div><p>@@@mismatched@@</p></div>'
     expect(described_class.call(source, {}).to_s).to eq(result)
   end
 
