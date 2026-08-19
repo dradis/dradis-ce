@@ -1,5 +1,3 @@
-require_relative 'email_inline_code_protection'
-
 HTML::Pipeline.require_dependency('redcloth', 'RedCloth')
 
 module HTML
