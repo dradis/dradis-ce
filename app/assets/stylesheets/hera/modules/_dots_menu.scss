@@ -12,12 +12,12 @@
     font-weight: 400 !important;
 
     &:hover {
-      color: $text-link !important;
+      color: var(--text-link) !important;
       background-color: initial !important;
     }
 
     &:not(:first-child) {
-      border-top: 1px solid $border-color;
+      border-top: 1px solid var(--border-color);
       margin-top: 0.3rem;
       padding-top: 0.3rem;
     }
@@ -46,7 +46,7 @@
   &:hover,
   &.show {
     .dropdown-toggle {
-      color: $text-link-hover;
+      color: var(--text-link-hover);
     }
   }
 }

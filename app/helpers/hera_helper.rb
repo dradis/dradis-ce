@@ -26,7 +26,7 @@ module HeraHelper
     if tag
       options[:style] = "color: #{tag.color}"
     elsif !model.is_a?(Node)
-      options[:style] = 'color: #222'
+      options[:style] = 'color: var(--untagged-color)'
     end
 
     content_tag :i, nil, options
@@ -61,7 +61,8 @@ module HeraHelper
 
   def navbar_brand
     if !defined?(Dradis::Pro)
-      link_to main_app.project_path(current_project), class: 'navbar-brand' do
+      project = defined?(current_project) ? current_project : Project.new
+      link_to main_app.project_path(project), class: 'navbar-brand' do
         image_tag 'logo_small.png', alt: 'Dradis CE logo', class: 'p-lg-0'
       end
     else

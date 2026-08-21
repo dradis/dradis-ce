@@ -1,0 +1,11 @@
+<% if inline_thread %>
+  <% commentable = inline_thread.commentable %>
+  <% title = commentable.title.present? ? commentable.title : "#{commentable.class.name} ##{commentable.id}" %>
+  <%= presenter.verb %> an inline comment thread on <%= link_to title, project_qa_issue_path(commentable.project, commentable) %>.
+<% else %>
+  <% if activity.action == 'destroy' %>
+    deleted an inline comment thread.
+  <% else %>
+    <%= presenter.verb %> an inline comment thread which has since been deleted.
+  <% end %>
+<% end %>

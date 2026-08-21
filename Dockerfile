@@ -44,7 +44,6 @@ COPY . .
 
 # Copy sample files
 COPY config/database.yml.template config/database.yml
-COPY config/smtp.yml.template config/smtp.yml
 
 # Prepare application folders
 # app/views/tmp is needed for HTML exporter report creation

@@ -1,4 +1,6 @@
 class SubscriptionsController < AuthenticatedController
+  before_action :authorize_subscribable
+
   layout false
 
   def index
@@ -21,6 +23,10 @@ class SubscriptionsController < AuthenticatedController
   end
 
   private
+
+  def authorize_subscribable
+    authorize! :read, subscribable.try(:project) || subscribable
+  end
 
   def subscribe
     subscription = Subscription.new(subscription_params)

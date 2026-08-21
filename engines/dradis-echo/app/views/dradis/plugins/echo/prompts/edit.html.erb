@@ -1,0 +1,13 @@
+<% content_for :title, "Edit #{@prompt.title}" %>
+
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to 'Dashboard', main_app.root_path %></li>
+    <li class="breadcrumb-item"><%= link_to 'Echo', prompts_path %></li>
+    <li class="breadcrumb-item active"><%= @prompt.title %></li>
+  </ol>
+<% end %>
+<div class="content-container">
+  <h4 class="header-underline">Edit <%= @prompt.title %></h4>
+  <%= render 'form' %>
+</div>

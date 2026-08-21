@@ -15,15 +15,35 @@
     }
 
     &.text-success {
-      color: lighten($text-success, 15%) !important;
+      color: $green-400 !important;
     }
 
     &.text-warning {
-      color: lighten($text-warning, 15%) !important;
+      color: $yellow-400 !important;
     }
 
     &.text-error {
-      color: lighten($text-error, 15%) !important;
+      color: $red-300 !important;
     }
+  }
+}
+
+@mixin comment-item {
+  .gravatar {
+    padding-top: 3px;
+
+    &:not(.gravatar-inline) {
+      float: none;
+      margin-right: 0.5rem;
+    }
+  }
+
+  .user {
+    font-weight: 600;
+  }
+
+  .time {
+    color: $text-muted;
+    font-size: 0.75rem;
   }
 }

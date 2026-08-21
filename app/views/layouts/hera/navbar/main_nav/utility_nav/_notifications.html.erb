@@ -1,0 +1,28 @@
+<li class="nav-item notifications dropdown">
+  <% if content_for?(:notifications) %>
+    <%= yield(:notifications) %>
+  <% else %>
+    <%
+      notifications_url = local_assigns[:project_id] ?
+        main_app.project_notifications_path(local_assigns[:project_id]) :
+        main_app.notifications_path
+    %>
+    <%= link_to notifications_url,
+      class: class_names('nav-link dropdown-toggle no-caret', local_assigns[:link_class]),
+      id: 'notifications',
+      data: {
+        id: 'notifications',
+        bs_toggle: 'dropdown',
+        behavior: 'notifications-dropdown close-collapse',
+        project_id: local_assigns[:project_id]
+      }.compact,
+      role: 'button',
+      title: 'Notifications',
+      'aria-expanded': 'false' do %>
+      <i class="notifications-bell fa-solid fa-bell d-none d-lg-inline" title="Notifications"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i>
+      <span class="d-inline d-lg-none">Notifications</span>
+    <% end %>
+  <% end %>
+  <div class="<%= class_names('dropdown-menu dropdown-menu-end', local_assigns[:dropdown_class]) %>" data-url="<%= main_app.notifications_path %>" aria-labelledby="notifications">
+  </div>
+</li>

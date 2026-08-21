@@ -14,7 +14,7 @@
 // this is for activities in the projects#show feed
 .activity-feed {
   .activity {
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid var(--border-color);
     overflow: hidden;
     padding: 1rem 0;
 
@@ -26,7 +26,7 @@
       display: block;
 
       .time {
-        color: $text-muted;
+        color: var(--text-muted);
         font-size: 0.8rem;
       }
     }
@@ -59,7 +59,7 @@
       justify-content: center;
 
       time {
-        background-color: $primary-bg;
+        background-color: var(--primary-bg);
         font-size: 1.5rem;
         padding: 1rem 0;
       }
@@ -98,15 +98,15 @@
           }
 
           &:hover {
-            background-color: darken($primary-bg, 3%);
+            background-color: var(--primary-bg-subtle);
             border-bottom-left-radius: 5px;
-            border-color: $border-color;
+            border-color: var(--border-color);
             border-top-left-radius: 5px;
           }
         }
 
         &:before {
-          border-left: 1px solid $border-color;
+          border-left: 1px solid var(--border-color);
           bottom: 0;
           content: '';
           margin-left: -1px;

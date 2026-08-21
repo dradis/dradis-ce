@@ -1,0 +1,22 @@
+<%# Starts a new session from the selected prompt. The response renders sessions#show %>
+<%# into the Echo record frame, replacing the picker with the live conversation. %>
+<%= form_with url: echo.project_sessions_path(current_project), method: :post,
+              data: { turbo_frame: dom_id(@record, :echo) } do |f| %>
+  <%= f.hidden_field :type, value: @type %>
+  <%= f.hidden_field :record, value: @record.id %>
+  <%= f.hidden_field :prompt_id, value: prompt.id %>
+
+  <div class="input-group">
+    <%=
+      f.text_area :prompt,
+        value: liquid_parse(prompt.prompt),
+        class: 'form-control field-sizing-content',
+        placeholder: 'Enter your prompt here...',
+        rows: 6
+    %>
+  </div>
+
+  <div class="form-actions sticky pt-1">
+    <%= f.submit 'Start with this prompt', class: 'btn btn-primary mt-2' %>
+  </div>
+<% end %>

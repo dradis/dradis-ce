@@ -4,5 +4,3 @@
 require_relative 'config/application'
 
 Rails.application.load_tasks
-
-load('packaging/rake_rules.rb') unless ENV['PACKAGING']

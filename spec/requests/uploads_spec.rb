@@ -40,7 +40,7 @@ describe 'upload requests' do
         FileUtils.rm(small_file)
       end
 
-      it 'imports the uploaded template', js: true do
+      it 'imports the uploaded template' do
         attachments_path = Attachment.pwd.join(@uploads_node.id.to_s)
         attachment_file  = attachments_path.join('temp').to_s
 

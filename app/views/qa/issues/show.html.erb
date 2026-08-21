@@ -18,7 +18,12 @@
   <div class="col-12">
     <div class="content-container">
       <% cache ['issue-content', @issue] do %>
-        <div class="note-text-inner">
+        <div class="note-text-inner"
+             data-behavior="inline-threads-container"
+             data-inline-threads-path="<%= inline_threads_path(format: :json, inline_thread: { commentable_type: @issue.class, commentable_id: @issue.id }) %>"
+             data-inline-threads-base-path="<%= inline_threads_path %>"
+             data-commentable-type="<%= @issue.class %>"
+             data-commentable-id="<%= @issue.id %>">
           <h4 class="mb-4 header-underline align-items-center">
             <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
             <%= render partial: 'shared/liquid_loading' %>
@@ -41,6 +46,16 @@
           </div>
         </div>
       <% end %>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" data-behavior="inline-thread-panel" data-bs-backdrop="false" data-bs-scroll="true" aria-labelledby="inlineThreadPanelLabel">
+      <div class="offcanvas-header">
+        <h6 class="offcanvas-title">Thread</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body pt-0">
+        <%= turbo_frame_tag 'inline_thread_content', data: { behavior: 'inline-thread-content' } %>
+      </div>
     </div>
 
     <div class="content-container">

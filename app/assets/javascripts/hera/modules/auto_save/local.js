@@ -47,9 +47,13 @@ class LocalAutoSave {
   handleTextChange() {
     clearTimeout(this.debounceTimeout);
 
-    this.debounceTimeout = setTimeout(function() {
+    if (document.body.dataset.env === 'test') {
       this.setData();
-    }.bind(this), this.debounceTimer);
+    } else {
+      this.debounceTimeout = setTimeout(function() {
+        this.setData();
+      }.bind(this), this.debounceTimer);
+    }
   }
 
   getData() {

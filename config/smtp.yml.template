@@ -1,6 +1,10 @@
-# This file is a template for configuring SMTP for Dradis. The actual settings
-# will be read from config/smtp.yml.
-# For a guide in configuring the mailer and a full list of options, see:
+# This file is a template for configuring SMTP for Dradis VM deployments.
+# Copy to config/smtp.yml and fill in your settings.
+#
+# Docker deployments should use environment variables instead. See:
+# https://dradis.com/support/guides/customization/mail_server.html
+#
+# For a full list of ActionMailer options, see:
 # https://guides.rubyonrails.org/action_mailer_basics.html#action-mailer-configuration
 
 default: &default

@@ -56,7 +56,7 @@ document.addEventListener('turbo:load', function(){
         .call(xAxis);
     x_axis.selectAll("text").style("fill", "inherit");
     x_axis.selectAll("path").style("stroke", "none");
-    x_axis.selectAll("text").last().style("fill", "#000");
+    x_axis.selectAll("text").last().classed("untagged", true);
 
     var bars = svg.append('g');
 
@@ -88,8 +88,8 @@ document.addEventListener('turbo:load', function(){
       i++;
     }
 
-    $($('.tick')[tags.length]).attr('fill', '#ccc');
-    $($('.bar')[tags.length]).attr('fill', '#ccc');
-    $($('.counter')[tags.length]).attr('fill', '#ccc');
+    $($('.tick')[i]).addClass('untagged');
+    $($('.bar')[i]).addClass('untagged');
+    $($('.counter')[i]).addClass('untagged');
   }
 });

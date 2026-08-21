@@ -43,7 +43,14 @@
   }
 
   select {
-    background-color: $primary-bg;
-    margin: 0 1.5rem 2.25rem 1.5rem;
+    background-color: var(--primary-bg);
+    border-color: var(--border-color);
+    border-radius: $border-radius;
+    margin: 0 1.5rem 1rem 1rem;
+
+    &:focus,
+    &:hover {
+      border-color: var(--border-color);
+    }
   }
 }

@@ -75,9 +75,9 @@ describe Issue do
     let!(:evidence) { create(:evidence) }
 
     it 'creates an issue with a name containing "Auto-generated Issue"' do
-      expect {
+      expect do
         described_class.autogenerate_from(evidence)
-      }.to change(Issue, :count).by(1)
+      end.to change(Issue, :count).by(1)
 
       expect(Issue.last.title).to include('Auto-generated Issue')
     end
@@ -130,7 +130,7 @@ describe Issue do
     it "returns the issue's activities" do
       # this requires some hackery, because by default it won't work because
       # Issue and Note don't use proper single-table inheritance :(
-      node  = create(:node)
+      node = create(:node)
       issue = create(:issue, node: node)
       activities = create_list(:activity, 2, trackable: issue)
 

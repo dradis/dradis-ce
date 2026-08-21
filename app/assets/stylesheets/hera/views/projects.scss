@@ -4,12 +4,16 @@ body.projects {
       display: flex;
       flex-wrap: wrap;
 
+      &.loading {
+        background: image_url('loading.gif') no-repeat center;
+      }
+
       .pie-chart {
         width: 50%;
       }
 
-      &.loading {
-        background: image_url('loading.gif') no-repeat center;
+      svg.legend text {
+        fill: var(--text-default);
       }
     }
 
@@ -36,6 +40,12 @@ body.projects {
       justify-content: center;
       align-items: center;
 
+      .bar.untagged,
+      .counter.untagged,
+      .tick.untagged {
+        fill: var(--untagged-color);
+      }
+
       svg text {
         font-size: 14px;
       }
@@ -49,11 +59,23 @@ body.projects {
 
         .card-body {
           .list-group-item {
+            background-color: var(--primary-bg);
             border: none;
+            border-color: var(--border-color);
+            color: var(--text-default);
             transition: background-color 0.2s ease-in-out;
 
+            &.active {
+              color: $white;
+
+              &:hover {
+                border-color: var(--border-color);
+                color: var(--text-link);
+              }
+            }
+
             &:hover {
-              background-color: darken($primary-bg, 3%);
+              background-color: var(--primary-bg-subtle);
             }
 
             li {
@@ -75,14 +97,15 @@ body.projects {
         }
 
         &.untagged {
-          border-color: #222;
-
-          .card-body li {
-            color: #222;
-          }
+          border-color: var(--untagged-color);
 
           .card-header {
-            background-color: #222;
+            background-color: var(--untagged-color);
+            color: var(--untagged-text);
+          }
+
+          .fa-bug {
+            color: var(--untagged-color);
           }
         }
       }

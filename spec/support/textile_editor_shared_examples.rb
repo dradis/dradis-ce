@@ -1,3 +1,10 @@
+shared_examples 'a .textile form' do
+  it 'renders the textile editor' do
+    visit action_path
+    expect(page).to have_css('textarea.textile', visible: :all)
+  end
+end
+
 shared_examples 'a form with a help button' do
   describe "clicking the 'help' button", js: true do
     before { find('form .btn-help').click }
@@ -56,12 +63,12 @@ shared_examples 'a textile form view' do |klass|
   end
 
   it 'remove fields in the form', js: true do
-    expect {
+    expect do
       find('[data-behavior=textile-form-field]', match: :first).hover
       within '[data-behavior~=textile-form-field]', match: :first do
         click_link 'Delete'
       end
-    }.to change { all('.textile-form-field').count }.by(-1)
+    end.to change { all('.textile-form-field').count }.by(-1)
   end
 
   it 'saves the item when submitted', js: true do

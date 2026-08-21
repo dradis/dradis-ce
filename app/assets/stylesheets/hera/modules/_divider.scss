@@ -1,0 +1,40 @@
+.divider {
+  align-items: center;
+  display: flex;
+  margin: 0.25rem 0;
+
+  &::before,
+  &::after {
+    border-top: 1px solid var(--border-color);
+    content: '';
+    flex: 1;
+  }
+
+  &:has(.divider-label) {
+    gap: 0.5rem;
+  }
+
+  .divider-label {
+    color: var(--text-default);
+    font-size: $text-small;
+
+    &.lead {
+      font-size: 1.25rem;
+    }
+  }
+
+  &.divider-lg {
+    margin: 1.25rem 0;
+  }
+
+  &.divider-xl {
+    margin: 2rem 0;
+  }
+}
+
+.divider-vertical {
+  border-right: 1px solid var(--border-color);
+  display: initial;
+  margin: 0.25rem;
+  width: 0;
+}

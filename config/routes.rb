@@ -1,13 +1,30 @@
 Rails.application.routes.draw do
   get 'up', to: ->(env) { [204, {}, ['']] }
 
+  # ------------------------------------------------------------ Show Don't Gate
+  if !defined?(Dradis::Pro)
+    # Static pages
+    get 'projects', to: 'static_pages#projects_index', as: :static_projects
+    get 'projects/1/addons/issuelib', to: 'static_pages#issuelib_index', as: :static_issuelib
+    get 'projects/1/addons/issuelib/import', to: 'static_pages#issuelib_import', as: :static_issuelib_import
+    get 'projects/1/addons/remediationtracker', to: 'static_pages#remediationtracker_index', as: :static_remediationtracker
+  end
+
   # ------------------------------------------------------------ Authentication
   # Sign in / sign out
-  get '/login'  => 'sessions#new'
+  get '/login' => 'sessions#new'
   get '/logout' => 'sessions#destroy'
   resource :session
 
   resources :comments
+
+  resources :inline_threads, only: [:index, :show, :create, :destroy], controller: 'inline_threads' do
+    resource :resolution, only: [:create, :destroy], controller: 'inline_threads/resolutions'
+    resources :comments, only: [:create], controller: 'inline_threads/comments'
+  end
+
+  # --------------------------------------------------------- User preferences
+  resource :preferences, only: [:update]
 
   # ------------------------------------------------------------ Project routes
   concern :multiple_destroy do
@@ -39,9 +56,9 @@ Rails.application.routes.draw do
 
     resources :boards do
       resources :lists, except: [:index] do
-        member { post :move }
+        resource :position, only: [:update], controller: 'lists/position'
         resources :cards, except: [:index] do
-          member { post :move }
+          resource :position, only: [:update], controller: 'cards/position'
           resources :revisions, only: [:index, :show]
         end
       end
@@ -115,12 +132,12 @@ Rails.application.routes.draw do
     get 'trash' => 'revisions#trash'
 
     # ------------------------------------------------------- Export Manager
-    get  '/export' => 'export#index', as: :export_manager
+    get '/export' => 'export#index', as: :export_manager
 
     # ------------------------------------------------------- Upload Manager
-    get  '/upload'        => 'upload#index',  as: :upload_manager
-    post '/upload'        => 'upload#create'
-    post '/upload/parse'  => 'upload#parse'
+    get '/upload' => 'upload#index', as: :upload_manager
+    post '/upload' => 'upload#create'
+    post '/upload/parse' => 'upload#parse'
   end
 
   resources :console, only: [] do
@@ -158,10 +175,6 @@ Rails.application.routes.draw do
 
   if defined?(Dradis::Pro)
   else
-    # Static pages
-    get 'projects/1/addons/issuelib', to: 'static_pages#issuelib_index', as: :static_issuelib
-    get 'projects/1/addons/issuelib/import', to: 'static_pages#issuelib_import', as: :static_issuelib_import
-
     root to: 'setup/passwords#new'
   end
 

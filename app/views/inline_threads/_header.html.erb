@@ -1,0 +1,36 @@
+<div class="d-flex align-items-center gap-2 mb-3" id="thread_<%= inline_thread.id %>_header">
+  <% if inline_thread.resolved? %>
+    <span class="badge bg-success">Resolved</span>
+  <% else %>
+    <span class="badge bg-warning text-dark">Open</span>
+  <% end %>
+  <% if inline_thread.outdated? %>
+    <span class="badge bg-secondary">Outdated</span>
+  <% end %>
+
+  <div class="ms-auto d-flex gap-2">
+    <% if inline_thread.open? %>
+      <%= button_to inline_thread_resolution_path(inline_thread),
+            method: :post,
+            class: 'btn btn-sm btn-outline-primary' do %>
+        <i class="fa-solid fa-check me-1"></i>Resolve
+      <% end %>
+    <% else %>
+      <%= button_to inline_thread_resolution_path(inline_thread),
+            method: :delete,
+            class: 'btn btn-sm btn-outline-secondary' do %>
+        <i class="fa-solid fa-rotate-left me-1"></i>Reopen
+      <% end %>
+    <% end %>
+
+    <% if inline_thread.user_id == current_user.id %>
+      <%= button_to inline_thread_path(inline_thread),
+            method: :delete,
+            class: 'btn btn-sm btn-outline-danger',
+            form: { data: { behavior: 'delete-thread-form' } },
+            data: { turbo_confirm: 'Delete this thread and all its comments?' } do %>
+        <i class="fa-solid fa-xmark me-1"></i>Delete
+      <% end %>
+    <% end %>
+  </div>
+</div>

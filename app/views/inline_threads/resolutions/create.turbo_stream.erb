@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "thread_#{@inline_thread.id}_header" do %>
+  <%= render 'inline_threads/header', inline_thread: @inline_thread %>
+<% end %>

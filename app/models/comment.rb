@@ -6,6 +6,7 @@ class Comment < ApplicationRecord
 
   # -- Relationships --------------------------------------------------------
   belongs_to :commentable, polymorphic: true
+  belongs_to :inline_thread, optional: true
   belongs_to :user, optional: true
 
   # -- Callbacks ------------------------------------------------------------
@@ -51,7 +52,7 @@ class Comment < ApplicationRecord
     case action.to_s
     when 'create'
       subscribe_mentioned()
-      create_notifications(action: :mention, actor: actor,  recipients: mentions)
+      create_notifications(action: :mention, actor: actor, recipients: mentions)
 
       # We're finding subscribers that have not been mention here
       # using ActiveRecord because create_notifications expect recipients
@@ -85,9 +86,9 @@ class Comment < ApplicationRecord
     elsif resource.respond_to?(:project)
       scope.merge(resource.project.testers_for_mentions)
     else
-      ids = scope.select { |user|
+      ids = scope.select do |user|
         Ability.new(user).can?(:read, resource)
-      }.map(&:id)
+      end.map(&:id)
 
       # Ensure we return an ActiveRecord::Relation object
       scope.where(id: ids)
@@ -95,11 +96,13 @@ class Comment < ApplicationRecord
   end
 
   def to_xml(xml_builder, version: 3)
-    xml_builder.content do
-      xml_builder.cdata!(content)
+    xml_builder.comment do
+      xml_builder.content do
+        xml_builder.cdata!(content)
+      end
+      xml_builder.author(user&.email)
+      xml_builder.created_at(created_at.to_i)
     end
-    xml_builder.author(user&.email)
-    xml_builder.created_at(created_at.to_i)
   end
 
   private

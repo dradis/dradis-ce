@@ -4,19 +4,38 @@
 
 <h1>Finally, have you used Dradis before?</h1>
 
+<h2 class="text-center fs-6 mt-4 mb-0">No? Choose a kit to get started</h2>
+
 <div class="row">
-  <div class="col-8 offset-2 col-md-6 offset-md-0 mt-3">
+  <div class="col-12 mt-3">
     <%= button_to setup_kit_path(kit: :welcome), class: 'btn btn-experience' do %>
-      <p>No,<br>
-        I'm a new user</p>
-      <span>We will populate the instance with some sample data to show you the way.<i class="fa-solid fa-long-arrow-right"></i></span>
+      <p>Infra Pentest</p>
+      <span>We'll set up a sample infrastructure assessment with hosts, services, and vulnerabilities to get you started.<i class="fa-solid fa-long-arrow-right"></i></span>
     <% end %>
   </div>
-  <div class="col-8 offset-2 col-md-6 offset-md-0 mt-3">
+  <div class="col-12 mt-3">
+    <%= button_to setup_kit_path(kit: :owasp), class: 'btn btn-experience' do %>
+      <p>OWASP Test</p>
+      <span>We'll create a web application security test with OWASP findings and evidence so you can see how it all fits together.<i class="fa-solid fa-long-arrow-right"></i></span>
+    <% end %>
+  </div>
+  <div class="col-12 mt-3">
+    <%= button_to setup_kit_path(kit: :redteam), class: 'btn btn-experience' do %>
+      <p>Red Team</p>
+      <span>We'll build out a sample adversary simulation with attack paths, C2 activity, and objectives to show you the workflow.<i class="fa-solid fa-long-arrow-right"></i></span>
+    <% end %>
+  </div>
+</div>
+
+<div class="divider divider-xl">
+  <span class="divider-label">or</span>
+</div>
+
+<div class="row">
+  <div class="col-12">
     <%= button_to setup_kit_path(kit: :none), class: 'btn btn-experience' do %>
-      <p>Yes,<br>
-        I got this!</p>
-      <span>Since you know what you are doing, we'll let you jump right into a fresh instance.<i class="fa-solid fa-long-arrow-right"></i></span>
+      <p>Yes, I've used Dradis before. I got this!</p>
+      <span>Since you know what you are doing, we'll let you jump right into a fresh instance with no prepopulated data.<i class="fa-solid fa-long-arrow-right"></i></span>
     <% end %>
   </div>
 </div>

@@ -1,0 +1,866 @@
+<%
+  # -- Data preparation --
+  impact_map     = { 'Very High' => 5, 'High' => 4, 'Moderate' => 3, 'Low' => 2, 'Very Low' => 1 }
+  likelihood_map = { 'Very High' => 5, 'High' => 4, 'Moderate' => 3, 'Low' => 2, 'Very Low' => 1 }
+
+  # Compute risk from Impact x Likelihood (the Risk field is a Liquid template,
+  # not a plain value, so we calculate it here in ERB).
+  def compute_risk(impact, likelihood, impact_map, likelihood_map)
+    imp = impact_map[impact.to_s.strip] || 0
+    lik = likelihood_map[likelihood.to_s.strip] || 0
+    score = imp * lik
+    case
+    when score >= 20 then 'Critical'
+    when score >= 15 then 'High'
+    when score >= 8  then 'Moderate'
+    when score >= 3  then 'Low'
+    else                  'Info'
+    end
+  end
+
+  def compute_risk_score(impact, likelihood, impact_map, likelihood_map)
+    imp = impact_map[impact.to_s.strip] || 0
+    lik = likelihood_map[likelihood.to_s.strip] || 0
+    imp * lik
+  end
+
+  risk_color = {
+    'Critical' => '#dc3545',
+    'High'     => '#fd7e14',
+    'Moderate' => '#ffc107',
+    'Low'      => '#0dcaf0',
+    'Info'     => '#6c757d'
+  }
+
+  risk_order = { 'Critical' => 0, 'High' => 1, 'Moderate' => 2, 'Low' => 3, 'Info' => 4 }
+
+  sorted_issues = issues.sort_by { |i|
+    risk_order[compute_risk(i.fields['Impact'], i.fields['Likelihood'], impact_map, likelihood_map)] || 99
+  }
+
+  # Group counts
+  risk_counts   = Hash.new(0)
+  domain_counts = Hash.new(0)
+  status_counts = Hash.new(0)
+
+  issues.each do |issue|
+    computed_risk = compute_risk(issue.fields['Impact'], issue.fields['Likelihood'], impact_map, likelihood_map)
+    risk_counts[computed_risk]                                 += 1
+    domain_counts[issue.fields['OWASP Domain'].to_s.strip]    += 1
+    status_counts[issue.fields['Remediation Status'].to_s.strip] += 1
+  end
+
+  # Heatmap: [impact_index][likelihood_index] = count
+  heatmap = Array.new(5) { Array.new(5, 0) }
+  heatmap_issues = Array.new(5) { Array.new(5) { [] } }
+  issues.each do |issue|
+    imp = impact_map[issue.fields['Impact'].to_s.strip]
+    lik = likelihood_map[issue.fields['Likelihood'].to_s.strip]
+    next unless imp && lik
+    heatmap[imp - 1][lik - 1] += 1
+    heatmap_issues[imp - 1][lik - 1] << issue.fields['Title']
+  end
+
+  heatmap_colors = [
+    ['#6c757d', '#6c757d', '#0dcaf0', '#0dcaf0', '#ffc107'],
+    ['#6c757d', '#0dcaf0', '#0dcaf0', '#ffc107', '#ffc107'],
+    ['#0dcaf0', '#0dcaf0', '#ffc107', '#fd7e14', '#fd7e14'],
+    ['#0dcaf0', '#ffc107', '#fd7e14', '#fd7e14', '#dc3545'],
+    ['#ffc107', '#fd7e14', '#fd7e14', '#dc3545', '#dc3545']
+  ]
+
+  impact_labels     = ['Very Low', 'Low', 'Moderate', 'High', 'Very High']
+  likelihood_labels = ['Very Low', 'Low', 'Moderate', 'High', 'Very High']
+
+  statuses       = ['Open', 'In Progress', 'Partially Remediated', 'Accepted Risk', 'Remediated']
+  status_colors  = { 'Open' => '#dc3545', 'In Progress' => '#fd7e14', 'Partially Remediated' => '#ffc107', 'Accepted Risk' => '#6c757d', 'Remediated' => '#198754' }
+  domain_colors  = { 'Web' => '#0d6efd', 'API' => '#6f42c1', 'Mobile' => '#20c997' }
+
+  risk_levels = ['Critical', 'High', 'Moderate', 'Low', 'Info']
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DRADIS Contact Report — Security Assessment</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YcnS/1p8TQ6QBlwCP/5QUUZ3mGOEisMGjJyT"
+        crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <style>
+    /* ===== CIC Base ===== */
+    :root {
+      --cic-bg:        #0a0e17;
+      --cic-surface:   #111827;
+      --cic-border:    #1e2a3a;
+      --cic-grid:      rgba(34, 197, 94, 0.04);
+      --cic-green:     #22c55e;
+      --cic-amber:     #f59e0b;
+      --cic-red:       #ef4444;
+      --cic-cyan:      #06b6d4;
+      --cic-text:      #d1d5db;
+      --cic-text-dim:  #6b7280;
+      --cic-heading:   #f9fafb;
+      --cic-mono:      'Courier New', Courier, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      background-color: var(--cic-bg);
+      background-image:
+        linear-gradient(var(--cic-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--cic-grid) 1px, transparent 1px);
+      background-size: 3rem 3rem;
+      color: var(--cic-text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ===== Typography ===== */
+    h1, h2, h3, h4 { color: var(--cic-heading); }
+
+    h1 {
+      border-bottom: 2px solid var(--cic-green);
+      font-family: var(--cic-mono);
+      font-size: 1.5rem;
+      letter-spacing: 0.15em;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-family: var(--cic-mono);
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    a { color: var(--cic-cyan); text-decoration: none; }
+    a:hover { color: var(--cic-green); text-decoration: underline; }
+
+    /* ===== Layout ===== */
+    .cic-container {
+      margin: 0 auto;
+      max-width: 72rem;
+      padding: 0 1.5rem;
+    }
+
+    .cic-header {
+      background: linear-gradient(180deg, #0f1726 0%, var(--cic-bg) 100%);
+      border-bottom: 2px solid var(--cic-green);
+      padding: 2rem 0;
+      position: relative;
+    }
+
+    .cic-header::before {
+      color: var(--cic-green);
+      content: '◆ DRADIS ONLINE';
+      font-family: var(--cic-mono);
+      font-size: 0.7rem;
+      left: 1.5rem;
+      letter-spacing: 0.3em;
+      opacity: 0.6;
+      position: absolute;
+      top: 0.75rem;
+    }
+
+    .cic-header-title {
+      color: var(--cic-green);
+      font-family: var(--cic-mono);
+      font-size: 2rem;
+      letter-spacing: 0.2em;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    .cic-header-subtitle {
+      color: var(--cic-text-dim);
+      font-family: var(--cic-mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      margin-top: 0.5rem;
+    }
+
+    .cic-section {
+      background: var(--cic-surface);
+      border: 1px solid var(--cic-border);
+      border-radius: 0.5rem;
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .cic-section::before {
+      background: var(--cic-green);
+      border-radius: 0.5rem 0 0 0;
+      content: '';
+      height: 2px;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 4rem;
+    }
+
+    /* ===== Stats Grid ===== */
+    .stat-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    }
+
+    .stat-card {
+      background: var(--cic-bg);
+      border: 1px solid var(--cic-border);
+      border-radius: 0.375rem;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .stat-card .stat-value {
+      font-family: var(--cic-mono);
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .stat-card .stat-label {
+      color: var(--cic-text-dim);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      margin-top: 0.25rem;
+      text-transform: uppercase;
+    }
+
+    /* ===== Risk Badge ===== */
+    .risk-badge {
+      border-radius: 0.25rem;
+      display: inline-block;
+      font-family: var(--cic-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.6rem;
+      text-transform: uppercase;
+    }
+
+    /* ===== Heatmap ===== */
+    .heatmap-grid {
+      display: grid;
+      gap: 3px;
+      grid-template-columns: 5rem repeat(5, 1fr);
+    }
+
+    .heatmap-cell {
+      align-items: center;
+      border-radius: 0.25rem;
+      color: #fff;
+      display: flex;
+      font-family: var(--cic-mono);
+      font-size: 1.1rem;
+      font-weight: 700;
+      justify-content: center;
+      min-height: 3.5rem;
+      position: relative;
+    }
+
+    .heatmap-cell.empty { background: transparent; }
+
+    .heatmap-label {
+      align-items: center;
+      color: var(--cic-text-dim);
+      display: flex;
+      font-family: var(--cic-mono);
+      font-size: 0.65rem;
+      justify-content: flex-end;
+      letter-spacing: 0.05em;
+      min-height: 3.5rem;
+      padding-right: 0.5rem;
+      text-align: right;
+      text-transform: uppercase;
+    }
+
+    .heatmap-col-label {
+      color: var(--cic-text-dim);
+      font-family: var(--cic-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      padding-top: 0.5rem;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .heatmap-axis-label {
+      color: var(--cic-text-dim);
+      font-family: var(--cic-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      margin-top: 0.75rem;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .heatmap-tooltip {
+      display: none;
+    }
+
+    .heatmap-cell:hover .heatmap-tooltip {
+      background: rgba(0, 0, 0, 0.92);
+      border: 1px solid var(--cic-border);
+      border-radius: 0.25rem;
+      color: var(--cic-text);
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 400;
+      left: 50%;
+      max-width: 16rem;
+      padding: 0.5rem;
+      position: absolute;
+      top: -0.5rem;
+      transform: translate(-50%, -100%);
+      white-space: pre-line;
+      z-index: 10;
+    }
+
+    /* ===== Charts Row ===== */
+    .charts-row {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: 48rem) {
+      .charts-row { grid-template-columns: 1fr; }
+    }
+
+    .chart-wrap {
+      background: var(--cic-bg);
+      border: 1px solid var(--cic-border);
+      border-radius: 0.375rem;
+      padding: 1rem;
+    }
+
+    .chart-wrap canvas {
+      max-height: 18rem;
+    }
+
+    /* ===== Findings ===== */
+    .finding-card {
+      background: var(--cic-surface);
+      border: 1px solid var(--cic-border);
+      border-left: 4px solid var(--cic-border);
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+      padding: 1.5rem;
+    }
+
+    .finding-card .finding-header {
+      align-items: flex-start;
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .finding-title {
+      color: var(--cic-heading);
+      font-family: var(--cic-mono);
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      margin: 0;
+    }
+
+    .finding-meta {
+      color: var(--cic-text-dim);
+      display: flex;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .finding-meta span { font-family: var(--cic-mono); }
+    .finding-meta strong { color: var(--cic-text); }
+
+    .field-block { margin-bottom: 1.25rem; }
+
+    .field-block-label {
+      border-bottom: 1px solid var(--cic-border);
+      color: var(--cic-green);
+      font-family: var(--cic-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.25rem;
+      text-transform: uppercase;
+    }
+
+    .field-block-content {
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .field-block-content p { margin: 0 0 0.5rem; }
+    .field-block-content ul, .field-block-content ol { padding-left: 1.5rem; }
+    .field-block-content code {
+      background: var(--cic-bg);
+      border-radius: 0.2rem;
+      font-size: 0.85em;
+      padding: 0.1rem 0.4rem;
+    }
+    .field-block-content pre {
+      background: var(--cic-bg);
+      border: 1px solid var(--cic-border);
+      border-radius: 0.375rem;
+      font-size: 0.8rem;
+      overflow-x: auto;
+      padding: 1rem;
+    }
+
+    /* ===== Evidence Table ===== */
+    .evidence-table {
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      width: 100%;
+    }
+
+    .evidence-table th {
+      background: var(--cic-bg);
+      border: 1px solid var(--cic-border);
+      color: var(--cic-green);
+      font-family: var(--cic-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      padding: 0.6rem 0.75rem;
+      text-transform: uppercase;
+    }
+
+    .evidence-table td {
+      border: 1px solid var(--cic-border);
+      padding: 0.6rem 0.75rem;
+      vertical-align: top;
+    }
+
+    .evidence-table tr:nth-child(even) td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* ===== TOC ===== */
+    .toc-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .toc-list li {
+      border-bottom: 1px solid var(--cic-border);
+      padding: 0.5rem 0;
+    }
+
+    .toc-list li:last-child { border-bottom: none; }
+
+    .toc-list .toc-risk {
+      display: inline-block;
+      font-family: var(--cic-mono);
+      font-size: 0.7rem;
+      min-width: 5rem;
+      text-align: center;
+    }
+
+    .toc-list .toc-id {
+      color: var(--cic-text-dim);
+      font-family: var(--cic-mono);
+      font-size: 0.75rem;
+      margin-left: 0.75rem;
+    }
+
+    /* ===== Footer ===== */
+    .cic-footer {
+      border-top: 1px solid var(--cic-border);
+      margin-top: 3rem;
+      padding: 2rem 0;
+      text-align: center;
+    }
+
+    .cic-footer .footer-tagline {
+      color: var(--cic-green);
+      font-family: var(--cic-mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .cic-footer .footer-version {
+      color: var(--cic-text-dim);
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    /* ===== Scanline effect (subtle) ===== */
+    body::after {
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.03) 2px,
+        rgba(0, 0, 0, 0.03) 4px
+      );
+      content: '';
+      height: 100%;
+      left: 0;
+      pointer-events: none;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 9999;
+    }
+
+    /* ===== Print ===== */
+    @media print {
+      body { background: #fff; color: #000; }
+      body::after { display: none; }
+      .cic-header { background: #f8f9fa; border-bottom-color: #000; }
+      .cic-header-title { color: #000; }
+      .cic-section { border-color: #ccc; break-inside: avoid; }
+      .finding-card { break-inside: avoid; }
+      .stat-card { border-color: #ccc; }
+      h1 { border-bottom-color: #000; color: #000; }
+      h2, h3, h4 { color: #000; }
+      a { color: #000; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="cic-header">
+    <div class="cic-container">
+      <div class="cic-header-title">DRADIS Contact Report</div>
+      <div class="cic-header-subtitle">
+        Security Assessment &mdash; Classification: CONFIDENTIAL &mdash;
+        Generated: <%= Time.now.strftime('%Y-%m-%d %H:%M UTC') %>
+      </div>
+    </div>
+  </header>
+
+  <main class="cic-container" style="padding-top: 2rem; padding-bottom: 2rem;">
+
+    <!-- ===== EXECUTIVE SUMMARY ===== -->
+    <section class="cic-section">
+      <h1>Executive Summary</h1>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-value" style="color: var(--cic-green);"><%= issues.length %></div>
+          <div class="stat-label">Total Contacts</div>
+        </div>
+        <% risk_levels.each do |level| %>
+          <div class="stat-card">
+            <div class="stat-value" style="color: <%= risk_color[level] %>;"><%= risk_counts[level] %></div>
+            <div class="stat-label"><%= level %></div>
+          </div>
+        <% end %>
+        <div class="stat-card">
+          <div class="stat-value" style="color: var(--cic-cyan);"><%= nodes.length %></div>
+          <div class="stat-label">Hosts Affected</div>
+        </div>
+      </div>
+
+      <!-- Remediation summary -->
+      <div class="stat-grid" style="margin-top: 1rem;">
+        <% statuses.each do |st| %>
+          <div class="stat-card">
+            <div class="stat-value" style="color: <%= status_colors[st] || '#6c757d' %>;"><%= status_counts[st] %></div>
+            <div class="stat-label"><%= st %></div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+
+    <!-- ===== RISK HEATMAP ===== -->
+    <section class="cic-section">
+      <h1>Risk Heatmap &mdash; Impact vs. Likelihood</h1>
+      <div style="max-width: 42rem; margin: 0 auto;">
+        <div style="display: flex; align-items: center;">
+          <div style="writing-mode: vertical-rl; transform: rotate(180deg); font-family: var(--cic-mono); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cic-text-dim); margin-right: 0.5rem;">
+            Impact &uarr;
+          </div>
+          <div style="flex: 1;">
+            <div class="heatmap-grid">
+              <!-- Header row -->
+              <div></div>
+              <% likelihood_labels.each do |ll| %>
+                <div class="heatmap-col-label"><%= ll %></div>
+              <% end %>
+
+              <!-- Data rows (top = Very High impact, bottom = Very Low) -->
+              <% (4).downto(0) do |imp_idx| %>
+                <div class="heatmap-label"><%= impact_labels[imp_idx] %></div>
+                <% (0..4).each do |lik_idx| %>
+                  <%
+                    count = heatmap[imp_idx][lik_idx]
+                    bg    = heatmap_colors[imp_idx][lik_idx]
+                    ttips = heatmap_issues[imp_idx][lik_idx]
+                  %>
+                  <div class="heatmap-cell"
+                       style="background: <%= count > 0 ? bg : 'rgba(255,255,255,0.03)' %>; opacity: <%= count > 0 ? 1 : 0.4 %>;">
+                    <%= count > 0 ? count : '&mdash;'.html_safe %>
+                    <% if count > 0 %>
+                      <div class="heatmap-tooltip"><%= ttips.join("\n") %></div>
+                    <% end %>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="heatmap-axis-label">Likelihood &rarr;</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CHARTS ===== -->
+    <section class="cic-section">
+      <h1>Threat Distribution</h1>
+      <div class="charts-row">
+        <div class="chart-wrap">
+          <h2 style="font-size: 0.85rem;">Issues by OWASP Domain</h2>
+          <canvas id="domainChart"></canvas>
+        </div>
+        <div class="chart-wrap">
+          <h2 style="font-size: 0.85rem;">Remediation Status</h2>
+          <canvas id="statusChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TABLE OF CONTACTS ===== -->
+    <section class="cic-section">
+      <h1>DRADIS Contacts &mdash; Summary</h1>
+      <ul class="toc-list">
+        <% sorted_issues.each do |issue| %>
+          <%
+            risk  = compute_risk(issue.fields['Impact'], issue.fields['Likelihood'], impact_map, likelihood_map)
+            color = risk_color[risk] || '#6c757d'
+          %>
+          <li>
+            <span class="toc-risk risk-badge" style="background: <%= color %>20; color: <%= color %>; border: 1px solid <%= color %>50;">
+              <%= risk %>
+            </span>
+            <a href="#contact-<%= issue.id %>"><%= h issue.fields['Title'] %></a>
+            <span class="toc-id">
+              <%= h issue.fields['OWASP Top 10'] %>
+              &middot; <%= h issue.fields['OWASP Domain'] %>
+            </span>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+
+    <!-- ===== DETAILED FINDINGS ===== -->
+    <section>
+      <h1>Detailed DRADIS Contacts</h1>
+
+      <% sorted_issues.each do |issue| %>
+        <%
+          risk  = compute_risk(issue.fields['Impact'], issue.fields['Likelihood'], impact_map, likelihood_map)
+          score = compute_risk_score(issue.fields['Impact'], issue.fields['Likelihood'], impact_map, likelihood_map)
+          color = risk_color[risk] || '#6c757d'
+        %>
+        <div class="finding-card" id="contact-<%= issue.id %>" style="border-left-color: <%= color %>;">
+          <div class="finding-header">
+            <h3 class="finding-title"><%= h issue.fields['Title'] %></h3>
+            <span class="risk-badge" style="background: <%= color %>20; color: <%= color %>; border: 1px solid <%= color %>50; white-space: nowrap;">
+              <%= risk %>
+            </span>
+          </div>
+
+          <div class="finding-meta">
+            <span><strong>OWASP Top 10:</strong> <%= h issue.fields['OWASP Top 10'] %></span>
+            <span><strong>Domain:</strong> <%= h issue.fields['OWASP Domain'] %></span>
+            <span><strong>Impact:</strong> <%= h issue.fields['Impact'] %></span>
+            <span><strong>Likelihood:</strong> <%= h issue.fields['Likelihood'] %></span>
+            <span><strong>Risk Score:</strong> <%= score %></span>
+            <span><strong>Status:</strong> <%= h issue.fields['Remediation Status'] %></span>
+          </div>
+
+          <% if issue.fields['Description Short'].present? %>
+            <div class="field-block">
+              <div class="field-block-label">Description</div>
+              <div class="field-block-content"><%= markup(issue.fields['Description Short'], liquid: true) %></div>
+            </div>
+          <% end %>
+
+          <% if issue.fields['Description Long'].present? %>
+            <div class="field-block">
+              <div class="field-block-label">Detailed Analysis</div>
+              <div class="field-block-content"><%= markup(issue.fields['Description Long'], liquid: true) %></div>
+            </div>
+          <% end %>
+
+          <% if issue.fields['References'].present? %>
+            <div class="field-block">
+              <div class="field-block-label">References</div>
+              <div class="field-block-content"><%= markup(issue.fields['References'], liquid: true) %></div>
+            </div>
+          <% end %>
+
+          <!-- Evidence -->
+          <%
+            visible_evidence = issue.evidence.select { |e| e.fields['Show'] == 'Yes' }
+          %>
+          <% if visible_evidence.any? %>
+            <div class="field-block">
+              <div class="field-block-label">Affected Hosts &amp; Evidence</div>
+              <table class="evidence-table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Host</th>
+                    <th>Output</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% visible_evidence.each do |evidence| %>
+                    <tr>
+                      <td style="font-family: var(--cic-mono); font-size: 0.8rem;">
+                        <%= h evidence.node.label %>
+                      </td>
+                      <td>
+                        <div class="field-block-content">
+                          <%= markup(evidence.fields['Output'], liquid: true) %>
+                        </div>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </section>
+
+    <!-- ===== PRO-ONLY: CONTENT BLOCKS ===== -->
+    <% if defined?(Dradis::Pro) %>
+      <%
+        pro_section_types = ['Document Control', 'Engagement Overview', 'Key Findings', 'Risk Posture', 'Recommendations']
+      %>
+      <% pro_section_types.each do |section_type| %>
+        <% section_blocks = content_service.all_content_blocks.select { |b| b.fields['Type'] == section_type } %>
+        <% next if section_blocks.empty? %>
+        <section class="cic-section">
+          <h1><%= h section_type %></h1>
+          <% section_blocks.each do |block| %>
+            <div class="field-block-content">
+              <%= markup(block.fields['Description'], liquid: true) %>
+            </div>
+          <% end %>
+        </section>
+      <% end %>
+
+      <% appendix_blocks = content_service.all_content_blocks.select { |b| b.fields['Type'] == 'Appendix' } %>
+      <% unless appendix_blocks.empty? %>
+        <section class="cic-section">
+          <h1>Appendix</h1>
+          <% appendix_blocks.each do |block| %>
+            <div class="field-block" style="margin-bottom: 2rem;">
+              <h2><%= markup(block.fields['Title'], liquid: true) %></h2>
+              <div class="field-block-content">
+                <%= markup(block.fields['Description'], liquid: true) %>
+              </div>
+            </div>
+          <% end %>
+        </section>
+      <% end %>
+    <% end %>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="cic-footer">
+    <div class="cic-container">
+      <div class="footer-tagline">So Say We All</div>
+      <div class="footer-version"><%= title %></div>
+    </div>
+  </footer>
+
+  <!-- ===== CHARTS JS ===== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var chartDefaults = Chart.defaults;
+      chartDefaults.color = '#9ca3af';
+      chartDefaults.borderColor = '#1e2a3a';
+      chartDefaults.font.family = "'Courier New', Courier, monospace";
+
+      // -- Domain Doughnut --
+      var domainCtx = document.getElementById('domainChart');
+      if (domainCtx) {
+        new Chart(domainCtx.getContext('2d'), {
+          type: 'doughnut',
+          data: {
+            labels: [<%= domain_counts.keys.map { |k| "'#{h(k)}'" }.join(', ') %>],
+            datasets: [{
+              data: [<%= domain_counts.values.join(', ') %>],
+              backgroundColor: [<%= domain_counts.keys.map { |k| "'#{domain_colors[k] || '#6c757d'}'" }.join(', ') %>],
+              borderColor: '#111827',
+              borderWidth: 2
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            cutout: '55%',
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: { padding: 16, usePointStyle: true, pointStyle: 'rectRounded' }
+              }
+            }
+          }
+        });
+      }
+
+      // -- Status Horizontal Bar --
+      var statusCtx = document.getElementById('statusChart');
+      if (statusCtx) {
+        var statusLabels = [<%= statuses.map { |s| "'#{h(s)}'" }.join(', ') %>];
+        var statusData   = [<%= statuses.map { |s| status_counts[s] }.join(', ') %>];
+        var statusBg     = [<%= statuses.map { |s| "'#{status_colors[s] || '#6c757d'}'" }.join(', ') %>];
+
+        new Chart(statusCtx.getContext('2d'), {
+          type: 'bar',
+          data: {
+            labels: statusLabels,
+            datasets: [{
+              data: statusData,
+              backgroundColor: statusBg,
+              borderRadius: 4,
+              barThickness: 28
+            }]
+          },
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+              legend: { display: false }
+            },
+            scales: {
+              x: {
+                beginAtZero: true,
+                ticks: { stepSize: 1, precision: 0 },
+                grid: { color: 'rgba(255,255,255,0.04)' }
+              },
+              y: {
+                grid: { display: false }
+              }
+            }
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

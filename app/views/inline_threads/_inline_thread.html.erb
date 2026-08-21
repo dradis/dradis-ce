@@ -1,0 +1,16 @@
+<div class="inline-thread" id="inline_thread_<%= inline_thread.id %>" data-behavior="inline-thread" data-thread-id="<%= inline_thread.id %>">
+  <%= render 'inline_threads/header', inline_thread: inline_thread %>
+  <blockquote>
+    <%= inline_thread.quoted_text %>
+  </blockquote>
+
+  <div class="border-top" id="thread_<%= inline_thread.id %>_comments">
+    <% inline_thread.comments.each do |comment| %>
+      <%= render 'inline_threads/inline_comment', comment: comment %>
+    <% end %>
+  </div>
+
+  <hr class="mt-0">
+
+  <%= render 'inline_threads/reply_form', inline_thread: inline_thread %>
+</div>

@@ -48,7 +48,8 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :test
 
   # Set host to be used by links generated in mailer templates.
-  # config.action_mailer.default_url_options = { host: "example.com" }
+  config.action_mailer.default_options = { from: 'from@dradisframework.dev' }
+  config.action_mailer.default_url_options = { host: 'dradisframework.dev' }
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
@@ -60,6 +61,12 @@ Rails.application.configure do
   config.active_support.disallowed_deprecation_warnings = []
 
   config.assets.precompile += %w( hera/test.css hera/test.js )
+
+  # Turbo Stream broadcasts render partials outside a request (e.g. Echo's live
+  # session transcript), where the Sprockets middleware environment isn't in
+  # scope. With assets compiled on demand in test, resolve them lazily instead
+  # of failing the strict "precompiled?" check that only makes sense in prod.
+  config.assets.check_precompiled_asset = false
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true

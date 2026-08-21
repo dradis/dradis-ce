@@ -1,10 +1,12 @@
 class Issue < Note
   include Commentable
   include Eventable
+  include InlineCommentable
   # FIXME - ISSUE/NOTE INHERITANCE
   # Commentable.allowed_types << base.name doesn't work for Issue because it's
   # an STI model, so we manually allow the class here.
   Commentable.allowed_types << 'Issue'
+  InlineCommentable.allowed_types << 'Issue'
 
   include Subscribable
   Subscribable.allowed_types << 'Issue'
@@ -43,6 +45,16 @@ class Issue < Note
   # FIXME - ISSUE/NOTE INHERITANCE
   def comments(*params)
     Comment.where(commentable_type: 'Issue', commentable_id: self.id)
+  end
+
+  # `has_many :inline_threads` doesn't work as normal here, because
+  # we're not using proper single-table inheritance. (By default it will search
+  # for threads where commentable_type is "Note" instead of "Issue".) So
+  # we need to override Issue#inline_threads with a hack.
+  #
+  # FIXME - ISSUE/NOTE INHERITANCE
+  def inline_threads(*params)
+    InlineThread.where(commentable_type: 'Issue', commentable_id: self.id)
   end
 
   # `has_many :subscriptions` doesn't work as normal here, because we're not

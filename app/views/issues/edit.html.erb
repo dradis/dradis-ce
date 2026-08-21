@@ -10,6 +10,8 @@
   </nav>
 <% end %>
 
+<%= render_view_hooks 'issues/edit-content' %>
+
 <div class="content-container" id="issues_editor">
   <div class="note-text-inner">
     <h4 class="header-underline">Edit issue (<%= @issue.state.humanize %>)</h4>

@@ -8,13 +8,14 @@ module Setup
     def create
       case @kit
       when :none
-        ;
-      when :welcome
-        kit_folder = Rails.root.join('lib', 'tasks', 'templates', 'welcome').to_s
-        logger = Log.new.info('Loading Welcome kit...')
+        Tag::DEFAULT_TAGS.each { |name| Tag.create!(name: name) } unless defined?(Dradis::Pro)
+      when :owasp, :redteam, :welcome
+        kit_folder = Rails.root.join('lib', 'tasks', 'templates', @kit.to_s)
+        logger = Log.new.info("Loading #{title(@kit)} kit...")
+
         # Before we import the Kit we need at least 1 user
         User.create!(email: 'adama@dradis.com') unless defined?(Dradis::Pro)
-        KitImportJob.perform_later(kit_folder, logger: logger)
+        KitImportJob.perform_later(kit_folder.to_s, logger: logger)
       end
 
       mark_as_done
@@ -41,11 +42,15 @@ module Setup
     end
 
     def set_kit
-      if %w{none welcome}.include?(params[:kit])
+      if %w{none owasp redteam welcome}.include?(params[:kit])
         @kit = params[:kit].to_sym
       else
         render :new
       end
+    end
+
+    def title(kit)
+      { owasp: 'OWASP', redteam: 'Red Team', welcome: 'Welcome' }[kit]
     end
   end
 end

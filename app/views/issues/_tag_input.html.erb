@@ -9,7 +9,7 @@
           <%= @issue.tags.first.display_name %>
         </span>
       <% else %>
-        <span class="tag" style="color: #555">
+        <span class="tag" style="color: var(--untagged-color)">
           <i class="fa-solid fa-tag fa-fw"></i>
           No tag
         </span>
@@ -22,7 +22,7 @@
           <%= h(tag.display_name) %>
         <% end %>
       <% end %>
-      <%= link_to 'javascript:void(0)', class: 'js-taglink dropdown-item',  style: "color: #555", data: { tag: "" } do %>
+      <%= link_to 'javascript:void(0)', class: 'js-taglink dropdown-item',  style: "color: var(--untagged-color)", data: { tag: "" } do %>
         <i class="fa-solid fa-tag fa-fw me-1"></i>
         No tag
       <% end %>
