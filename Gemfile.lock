@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/dradis/dradis-calculator_stride.git
-  revision: ce53570371df7e8141cd5f3500026662dc2ba895
+  revision: 4cb6fe08d65c25cd936f701ace6e2337b9d23031
   branch: stride
   specs:
     dradis-calculator_stride (4.19.0)
