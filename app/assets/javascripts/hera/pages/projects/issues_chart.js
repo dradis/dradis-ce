@@ -94,8 +94,4 @@ function buildLegend(container, data, colors) {
     .text(d => d.letter);
 }
 
-document.addEventListener('turbo:frame-load', e => {
-  if (e.target.id === 'issues-summary') {
-    initIssuesChart();
-  }
-});
+document.addEventListener('turbo:load', initIssuesChart);
