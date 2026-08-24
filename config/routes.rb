@@ -81,8 +81,6 @@ Rails.application.routes.draw do
       resources :revisions, only: [:index, :show]
     end
 
-    resource :issues_summary, only: [:show], controller: 'projects/issues_summary'
-
     resources :methodologies do
       collection { post :preview }
       member do
