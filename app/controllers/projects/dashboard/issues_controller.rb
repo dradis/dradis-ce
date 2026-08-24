@@ -1,8 +1,8 @@
-class Projects::IssuesSummaryController < AuthenticatedController
+class Projects::Dashboard::IssuesController < AuthenticatedController
   include IssuesDimensionGrouping
   include ProjectScoped
 
-  def show
+  def index
     @issues = current_project.issues.includes(:tags).sort
     @tags = current_project.tags
 

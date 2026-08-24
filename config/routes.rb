@@ -81,7 +81,9 @@ Rails.application.routes.draw do
       resources :revisions, only: [:index, :show]
     end
 
-    resource :issues_summary, only: [:show], controller: 'projects/issues_summary'
+    namespace :dashboard, module: 'projects/dashboard' do
+      resources :issues, only: [:index]
+    end
 
     resources :methodologies do
       collection { post :preview }
