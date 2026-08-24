@@ -557,10 +557,7 @@ class ComboBox {
   // Utilities
   // ==========================================================================
 
-  // Matches by exact attribute value instead of building a CSS attribute
-  // selector, so values containing quotes or other selector metacharacters
-  // (eg. option labels sourced from user-editable field names) can't break
-  // or escape the match.
+  // Matches by exact attribute value, so quotes in the value can't break a selector.
   filterByDataValue($elements, dataKey, value) {
     const attr = `data-${dataKey}`;
     return $elements.filter((_, el) => el.getAttribute(attr) === String(value));
