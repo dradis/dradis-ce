@@ -6,15 +6,14 @@ class EditingSession < ApplicationRecord
   # loaded and includes the concern, which may happen after this class.
   validates :record_type, presence: true, inclusion: { in: ->(_) { Lockable.allowed_types } }
 
-  scope :active, -> { where(created_at: stale_after.ago..) }
-  scope :by_others, ->(user) { where.not(user: user) }
-  # `where(record: record)` won't work here: Issue is an STI subclass of Note,
+  # `find_by(record: record)` won't work here: Issue is an STI subclass of Note,
   # so Rails' polymorphic query would look up record_type: 'Note' (the base
   # class), not 'Issue' (what we actually store, see .acquire! below).
-  scope :for_record, ->(record) {
-    where(record_type: record.class.name, record_id: record.id)
-  }
-  scope :stale, -> { where(created_at: ...stale_after.ago) }
+  # The uniqueness index on [record_type, record_id] guarantees at most one
+  # session per record, so this returns a single record rather than a relation.
+  def self.for_record(record)
+    find_by(record_type: record.class.name, record_id: record.id)
+  end
 
   def self.acquire!(record_type:, record_id:, user:)
     purge_stale_for(record_type: record_type, record_id: record_id)
@@ -22,10 +21,14 @@ class EditingSession < ApplicationRecord
   end
 
   def self.purge_stale_for(record_type:, record_id:)
-    where(record_type: record_type, record_id: record_id).stale.destroy_all
+    where(record_type: record_type, record_id: record_id, created_at: ...expiry.ago).destroy_all
   end
 
-  def self.stale_after
-    Configuration.editing_session_stale_after.minutes
+  def self.expiry
+    Configuration.editing_session_expiry.minutes
+  end
+
+  def active?
+    created_at >= self.class.expiry.ago
   end
 end

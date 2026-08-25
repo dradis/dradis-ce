@@ -16,9 +16,9 @@ class Configuration < ApplicationRecord
   # --------------------------------------------------------------- Misc admin:
 
   # This settings is in minutes. The default value is 1440 minutes = 24 hours.
-  def self.editing_session_stale_after
+  def self.editing_session_expiry
     create_with(value: 1440)
-      .find_or_create_by(name: 'admin:editing_session_stale_after').value.to_i
+      .find_or_create_by(name: 'admin:editing_session_expiry').value.to_i
   end
 
   def self.max_deleted_inline

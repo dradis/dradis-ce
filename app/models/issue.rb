@@ -9,7 +9,6 @@ class Issue < Note
   InlineCommentable.allowed_types << 'Issue'
 
   include Lockable
-  Lockable.allowed_types << 'Issue'
 
   include Subscribable
   Subscribable.allowed_types << 'Issue'

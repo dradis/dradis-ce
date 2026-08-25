@@ -46,8 +46,7 @@ describe 'Edit locking multi-actor flow' do
       expect(page).to have_content('Issue updated.')
     end
 
-    user_a = User.find_by(email: 'user-a@example.com')
-    expect(EditingSession.for_record(issue).where(user: user_a)).not_to exist
+    expect(EditingSession.for_record(issue)).to be_nil
   end
 
   it 'releases the lock when the editor clicks cancel', js: true do
@@ -61,15 +60,13 @@ describe 'Edit locking multi-actor flow' do
       expect(page).to have_current_path(project_issue_path(project, issue))
     end
 
-    user_a = User.find_by(email: 'user-a@example.com')
-
     # The lock release request is fired with `fetch(..., { keepalive: true })`
     # alongside the Cancel link's navigation, so it may still be in flight
     # once the browser lands on the next page.
     Timeout.timeout(Capybara.default_max_wait_time) do
-      sleep 0.1 while EditingSession.for_record(issue).where(user: user_a).exists?
+      sleep 0.1 while EditingSession.for_record(issue)
     end
 
-    expect(EditingSession.for_record(issue).where(user: user_a)).not_to exist
+    expect(EditingSession.for_record(issue)).to be_nil
   end
 end

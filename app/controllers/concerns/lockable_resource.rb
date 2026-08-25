@@ -4,10 +4,10 @@ module LockableResource
   protected
 
   def check_edit_lock
-    competing_sessions = EditingSession.for_record(lockable_record).active.by_others(current_user).includes(:user)
+    session = EditingSession.for_record(lockable_record)
 
-    if competing_sessions.any? && params[:force] != 'true'
-      @locked_by = competing_sessions.map(&:user)
+    if session&.active? && session.user != current_user && params[:force] != 'true'
+      @locked_by = session.user
       # Make the record accessible in the view
       @locked_record = lockable_record
       render 'shared/edit_locked'

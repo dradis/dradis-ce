@@ -1,5 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - Issues: prevent editing a record while another user is already editing it
+  - Issues: warn user if another user is currently editing the record
   - Upgraded gems:
     - sqlite3
   - Bugs fixes:

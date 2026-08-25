@@ -32,42 +32,40 @@ describe EditingSession do
   end
 
   describe '.for_record' do
-    it 'returns sessions for the given record' do
+    it 'returns the session for the given record' do
       session = create(:editing_session, user: user, record_type: 'Issue', record_id: issue.id)
       other_issue = create(:issue, node: project.issue_library)
       create(:editing_session, user: user, record_type: 'Issue', record_id: other_issue.id)
 
-      expect(EditingSession.for_record(issue)).to eq([session])
+      expect(EditingSession.for_record(issue)).to eq(session)
+    end
+
+    it 'returns nil when there is no session for the record' do
+      expect(EditingSession.for_record(issue)).to be_nil
     end
   end
 
-  describe '.by_others' do
-    it 'excludes sessions belonging to the given user' do
-      create(:editing_session, user: user, record_type: 'Issue', record_id: issue.id)
-      other_issue = create(:issue, node: project.issue_library)
-      other_session = create(:editing_session, user: other_user, record_type: 'Issue', record_id: other_issue.id)
-
-      expect(EditingSession.by_others(user)).to contain_exactly(other_session)
-    end
-  end
-
-  describe '.active' do
-    it 'excludes sessions older than the staleness threshold' do
-      fresh_session = create(:editing_session,
+  describe '#active?' do
+    it 'is true when created within the expiry window' do
+      session = create(:editing_session,
         user: user,
         record_type: 'Issue',
         record_id: issue.id,
         created_at: 1.minute.ago
       )
-      other_issue = create(:issue, node: project.issue_library)
-      create(:editing_session,
-        user: other_user,
+
+      expect(session.active?).to be true
+    end
+
+    it 'is false once past the expiry window' do
+      session = create(:editing_session,
+        user: user,
         record_type: 'Issue',
-        record_id: other_issue.id,
-        created_at: EditingSession.stale_after.ago - 1.minute
+        record_id: issue.id,
+        created_at: EditingSession.expiry.ago - 1.minute
       )
 
-      expect(EditingSession.active).to eq([fresh_session])
+      expect(session.active?).to be false
     end
   end
 
@@ -77,14 +75,14 @@ describe EditingSession do
         user: user,
         record_type: 'Issue',
         record_id: issue.id,
-        created_at: EditingSession.stale_after.ago - 1.minute
+        created_at: EditingSession.expiry.ago - 1.minute
       )
       other_issue = create(:issue, node: project.issue_library)
       stale_elsewhere = create(:editing_session,
         user: other_user,
         record_type: 'Issue',
         record_id: other_issue.id,
-        created_at: EditingSession.stale_after.ago - 1.minute
+        created_at: EditingSession.expiry.ago - 1.minute
       )
 
       EditingSession.purge_stale_for(record_type: 'Issue', record_id: issue.id)
@@ -115,7 +113,7 @@ describe EditingSession do
       session = EditingSession.acquire!(record_type: 'Issue', record_id: issue.id, user: other_user)
 
       expect(session).to eq(existing)
-      expect(EditingSession.for_record(issue).count).to eq(1)
+      expect(EditingSession.where(record_type: 'Issue', record_id: issue.id).count).to eq(1)
     end
 
     it 'purges stale sessions for the record before acquiring' do
@@ -123,7 +121,7 @@ describe EditingSession do
         user: other_user,
         record_type: 'Issue',
         record_id: issue.id,
-        created_at: EditingSession.stale_after.ago - 1.minute
+        created_at: EditingSession.expiry.ago - 1.minute
       )
 
       EditingSession.acquire!(record_type: 'Issue', record_id: issue.id, user: user)
@@ -132,15 +130,15 @@ describe EditingSession do
     end
   end
 
-  describe '.stale_after' do
+  describe '.expiry' do
     it 'defaults to 1 day' do
-      expect(EditingSession.stale_after).to eq(1.day)
+      expect(EditingSession.expiry).to eq(1.day)
     end
 
     it 'is configurable instance-wide via Configuration' do
-      Configuration.find_or_create_by(name: 'admin:editing_session_stale_after').update(value: 30)
+      Configuration.find_or_create_by(name: 'admin:editing_session_expiry').update(value: 30)
 
-      expect(EditingSession.stale_after).to eq(30.minutes)
+      expect(EditingSession.expiry).to eq(30.minutes)
     end
   end
 

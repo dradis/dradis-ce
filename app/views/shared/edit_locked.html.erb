@@ -15,17 +15,15 @@
       anyway and risk overwriting their changes.
     </p>
 
-    <% @locked_by.each do |user| %>
-      <div class="editor">
-        <%= avatar_image(user, size: 48) %>
-        <div class="editor-info">
-          <span class="editor-name"><%= user.name %></span>
-          <span class="editor-status">
-            <span class="pulse"></span> Currently editing
-          </span>
-        </div>
+    <div class="editor">
+      <%= avatar_image(@locked_by, size: 48) %>
+      <div class="editor-info">
+        <span class="editor-name"><%= @locked_by.name %></span>
+        <span class="editor-status">
+          <span class="pulse"></span> Currently editing
+        </span>
       </div>
-    <% end %>
+    </div>
 
     <div class="actions">
       <%= link_to @form_cancel_path, class: 'btn btn-primary' do %>

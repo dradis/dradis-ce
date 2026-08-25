@@ -8,6 +8,7 @@ module Lockable
 
     has_many :editing_sessions, as: :record
 
+    # FIXME - ISSUE/NOTE INHERITANCE
     # We can't rely on `dependent: :destroy` above: for models that descend
     # from another AR class (see Issue) it would look for sessions with the
     # base class' name in record_type and silently leave orphans behind.
@@ -20,10 +21,11 @@ module Lockable
   end
 
   def destroy_editing_sessions
-    EditingSession.for_record(self).destroy_all
+    EditingSession.for_record(self)&.destroy
   end
 
   def release_edit_session(user)
-    EditingSession.for_record(self).where(user: user).destroy_all
+    session = EditingSession.for_record(self)
+    session.destroy if session&.user == user
   end
 end
