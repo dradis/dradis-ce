@@ -15,9 +15,9 @@ class Configuration < ApplicationRecord
   # -- Class Methods --------------------------------------------------------
   # --------------------------------------------------------------- Misc admin:
 
-  # This settings is in minutes. The default value is 1440 minutes = 24 hours.
+  # This settings is in minutes. The default value is 180 minutes = 3 hours.
   def self.editing_session_expiry
-    create_with(value: 1440)
+    create_with(value: 180)
       .find_or_create_by(name: 'admin:editing_session_expiry').value.to_i
   end
 

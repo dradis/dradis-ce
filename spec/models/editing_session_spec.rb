@@ -3,7 +3,7 @@ require 'rails_helper'
 describe EditingSession do
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
-  let(:project) { Project.new }
+  let(:project) { create(:project) }
   let(:issue) { create(:issue, node: project.issue_library) }
 
   describe 'associations' do
@@ -131,8 +131,8 @@ describe EditingSession do
   end
 
   describe '.expiry' do
-    it 'defaults to 1 day' do
-      expect(EditingSession.expiry).to eq(1.day)
+    it 'defaults to 3 hours' do
+      expect(EditingSession.expiry).to eq(3.hours)
     end
 
     it 'is configurable instance-wide via Configuration' do

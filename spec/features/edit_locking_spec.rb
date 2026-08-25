@@ -1,13 +1,12 @@
 require 'rails_helper'
 
 describe 'Edit locking multi-actor flow' do
-  let(:project) { Project.new }
+  let(:project) { create(:project) }
   let(:issue) { create(:issue, node: project.issue_library) }
   let(:password) { 'spec-password' }
 
   before do
-    Configuration.find_or_create_by(name: 'admin:password')
-      .update!(value: BCrypt::Password.create(password))
+    Configuration.find_or_create_by(name: 'admin:password').update!(value: BCrypt::Password.create(password))
   end
 
   def sign_in_as(username)
