@@ -19,8 +19,8 @@ class IssuesController < AuthenticatedController
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
   before_action :set_affected_nodes, only: [:show]
   before_action :set_form_cancel_path, only: [:new, :edit]
-  before_action :set_tags, except: [:destroy]
   before_action :set_send_to_integrations, only: [:new, :edit, :show]
+  before_action :set_tags, except: [:destroy]
 
   def index
   end
@@ -190,12 +190,6 @@ class IssuesController < AuthenticatedController
     @issuelib = current_project.issue_library
   end
 
-  def set_send_to_integrations
-    ticketing_integrations = Dradis::Plugins::with_feature(:ticketing)
-    sync_integrations = Dradis::Plugins::with_feature(:issue_sync)
-    @send_to_integrations = sync_integrations + ticketing_integrations
-  end
-
   # Once a valid @issuelib is set by the previous filter we look for the Issue we
   # are going to be working with based on the :id passed by the user.
   def set_or_initialize_issue
@@ -208,6 +202,12 @@ class IssuesController < AuthenticatedController
     else
       @issue = Issue.new(node: @issuelib)
     end
+  end
+
+  def set_send_to_integrations
+    ticketing_integrations = Dradis::Plugins::with_feature(:ticketing)
+    sync_integrations = Dradis::Plugins::with_feature(:issue_sync)
+    @send_to_integrations = sync_integrations + ticketing_integrations
   end
 
   def set_tags
