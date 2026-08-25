@@ -126,6 +126,23 @@ describe Issue do
     end
   end
 
+  describe '#evidence_by_node' do
+    let(:issue) { create(:issue, node: project.issue_library) }
+    let(:node_a) { create(:node, label: '10.0.0.1') }
+    let(:node_b) { create(:node, label: '10.0.0.2') }
+
+    let!(:evidence_a) { create(:evidence, issue: issue, node: node_a) }
+    let!(:evidence_b) { create(:evidence, issue: issue, node: node_b) }
+
+    it 'defaults to grouping all of the issue\'s evidence by node' do
+      expect(issue.evidence_by_node).to eq([[node_a, [evidence_a]], [node_b, [evidence_b]]])
+    end
+
+    it 'groups a given evidence collection by node, instead of the unscoped default' do
+      expect(issue.evidence_by_node([evidence_b])).to eq([[node_b, [evidence_b]]])
+    end
+  end
+
   describe '#activities' do
     it "returns the issue's activities" do
       # this requires some hackery, because by default it won't work because

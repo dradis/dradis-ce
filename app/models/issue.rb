@@ -107,8 +107,8 @@ class Issue < Note
     self.title <=> other.title
   end
 
-  # This method groups all the available evidence associated with this Issue
-  # into a Hash where the keys are the nodes. E.g.:
+  # This method groups the given evidence collection (this Issue's evidence
+  # by default) into a Hash where the keys are the nodes. E.g.:
   # {
   #   <node 1> => [<evidence 1.1>, <evidence 1.2>],
   #   <node 2> => [<evidence 2.1>]
@@ -116,10 +116,15 @@ class Issue < Note
   #
   # This is useful in a number of views to present or hide information about
   # all the instances for a given issue and node/host.
-  def evidence_by_node()
+  #
+  # Callers that need to respect an export's Published/All scope (e.g. report
+  # exporters) should pass in a pre-scoped collection, such as one obtained
+  # from the content service's Evidence#evidence_for, rather than relying on
+  # the unscoped default.
+  def evidence_by_node(evidence_collection = evidence.includes(:node))
     results = Hash.new { |h, k| h[k] = [] }
 
-    self.evidence.includes(:node).each do |evidence|
+    evidence_collection.each do |evidence|
       results[evidence.node] << evidence
     end
 
