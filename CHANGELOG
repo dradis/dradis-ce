@@ -1,7 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Issues: warn user if another user is currently editing the record
   - Upgraded gems:
-    - sqlite3
+    - mail, sqlite3
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]

@@ -36,8 +36,7 @@
   <%= render 'issues/tag_input', f: f %>
 
   <div class="form-actions sticky">
-    <%= render partial: 'qa/state_button', locals: { f: f, record: @issue } %>
-    or
+    <%= render partial: 'qa/state_button', locals: { f: f, record: @issue } %> or
     <%=
       link_to 'Cancel',
       @form_cancel_path,
