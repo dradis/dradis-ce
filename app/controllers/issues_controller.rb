@@ -207,7 +207,7 @@ class IssuesController < AuthenticatedController
   def set_send_to_integrations
     ticketing_integrations = Dradis::Plugins::with_feature(:ticketing)
     sync_integrations = Dradis::Plugins::with_feature(:issue_sync)
-    @send_to_integrations = sync_integrations + ticketing_integrations
+    @send_to_integrations = sync_integrations | ticketing_integrations
   end
 
   def set_tags
