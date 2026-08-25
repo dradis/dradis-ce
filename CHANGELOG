@@ -3,7 +3,7 @@
     - [future tense verb] [feature]
   - QA: Add QA states to evidence
   - Upgraded gems:
-    - sqlite3
+    - mail, sqlite3
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
