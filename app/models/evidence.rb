@@ -2,12 +2,11 @@ class Evidence < ApplicationRecord
   include Commentable
   include Eventable
   include HasFields
+  include Reviewable
   include RevisionTracking
   include Subscribable
 
   dradis_has_fields_for :content
-
-  enum :state, [ :draft, :ready_for_review, :published ]
 
   # -- Relationships --------------------------------------------------------
   belongs_to :issue, touch: true

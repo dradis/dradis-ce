@@ -27,6 +27,7 @@
 class Note < ApplicationRecord
   include Commentable
   include HasFields
+  include Reviewable
   include RevisionTracking
   include Subscribable
 
@@ -37,11 +38,11 @@ class Note < ApplicationRecord
   # FIXME - ISSUE?/NOTE INHERITANCE
   # Issues have QA states but notes don't currently use states.
   # Since Issue is an extension of Note, notes have a state column too.
-  # We need to define the enum here so that states can be referenced whether
-  # the Note or the Issue is pulled when calling Activity.includes(:trackable).
-  # (Since we're not using STI, .includes only joins the class of the most recent
-  # Activity instead of pulling the correct class (Note/Issue) for each activity)
-  enum :state, [ :draft, :ready_for_review, :published ]
+  # We need to define the enum (via Reviewable) here so that states can be
+  # referenced whether the Note or the Issue is pulled when calling
+  # Activity.includes(:trackable). (Since we're not using STI, .includes only
+  # joins the class of the most recent Activity instead of pulling the correct
+  # class (Note/Issue) for each activity)
 
   # -- Relationships --------------------------------------------------------
   belongs_to :category
