@@ -20,6 +20,7 @@ class IssuesController < AuthenticatedController
   before_action :set_affected_nodes, only: [:show]
   before_action :set_form_cancel_path, only: [:new, :edit]
   before_action :set_tags, except: [:destroy]
+  before_action :set_send_to_integrations, only: [:new, :edit, :show]
 
   def index
   end
@@ -31,8 +32,8 @@ class IssuesController < AuthenticatedController
                         .group('nodes.id')
                         .sort_by { |node, _| node.label }
 
-    @first_node      = @affected_nodes.first
-    @first_evidence  = Evidence.where(node: @first_node, issue: @issue)
+    @first_node = @affected_nodes.first
+    @first_evidence = Evidence.where(node: @first_node, issue: @issue)
 
     load_conflicting_revisions(@issue)
   end
@@ -187,6 +188,12 @@ class IssuesController < AuthenticatedController
 
   def set_issuelib
     @issuelib = current_project.issue_library
+  end
+
+  def set_send_to_integrations
+    ticketing_integrations = Dradis::Plugins::with_feature(:ticketing)
+    sync_integrations = Dradis::Plugins::with_feature(:issue_sync)
+    @send_to_integrations = sync_integrations + ticketing_integrations
   end
 
   # Once a valid @issuelib is set by the previous filter we look for the Issue we
