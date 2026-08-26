@@ -107,9 +107,8 @@ class Issue < Note
     self.title <=> other.title
   end
 
-  # This method groups the evidence associated with this Issue (optionally scoped by state)
-  # into a Hash where the keys are
-  # the nodes. E.g.:
+  # This method groups all the available evidence associated with this Issue
+  # into a Hash where the keys are the nodes. E.g.:
   # {
   #   <node 1> => [<evidence 1.1>, <evidence 1.2>],
   #   <node 2> => [<evidence 2.1>]
@@ -117,13 +116,10 @@ class Issue < Note
   #
   # This is useful in a number of views to present or hide information about
   # all the instances for a given issue and node/host.
-  def evidence_by_node(scope = :all)
-    evidence_collection = scope.to_sym == :published ? evidence.published : evidence
-    evidence_collection = evidence_collection.includes(:node)
-
+  def evidence_by_node()
     results = Hash.new { |h, k| h[k] = [] }
 
-    evidence_collection.each do |evidence|
+    self.evidence.includes(:node).each do |evidence|
       results[evidence.node] << evidence
     end
 

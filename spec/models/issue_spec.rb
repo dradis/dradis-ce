@@ -126,23 +126,6 @@ describe Issue do
     end
   end
 
-  describe '#evidence_by_node' do
-    let(:issue) { create(:issue, node: project.issue_library) }
-    let(:node_a) { create(:node, label: '10.0.0.1') }
-    let(:node_b) { create(:node, label: '10.0.0.2') }
-
-    let!(:evidence_a) { create(:evidence, issue: issue, node: node_a, state: :published) }
-    let!(:evidence_b) { create(:evidence, issue: issue, node: node_b, state: :draft) }
-
-    it 'defaults to grouping all of the issue\'s evidence by node, regardless of state' do
-      expect(issue.evidence_by_node).to eq([[node_a, [evidence_a]], [node_b, [evidence_b]]])
-    end
-
-    it 'groups only published evidence by node when scope is :published' do
-      expect(issue.evidence_by_node(:published)).to eq([[node_a, [evidence_a]]])
-    end
-  end
-
   describe '#activities' do
     it "returns the issue's activities" do
       # this requires some hackery, because by default it won't work because
