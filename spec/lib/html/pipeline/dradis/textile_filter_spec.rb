@@ -85,4 +85,10 @@ describe HTML::Pipeline::Dradis::TextileFilter do
     expect(described_class.call(source, {}).to_s).to eq(result)
   end
 
+  it 'does not protect a bare email address that is not wrapped in @...@' do
+    source = 'Contact admin@starfleet.com for access.'
+    result = '<div><p>Contact admin@starfleet.com for access.</p></div>'
+    expect(described_class.call(source, {}).to_s).to eq(result)
+  end
+
 end

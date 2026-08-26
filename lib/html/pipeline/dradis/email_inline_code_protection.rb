@@ -11,17 +11,24 @@ module HTML
       # that RedCloth may treat as (part of) the closer, so it either
       # abandons the whole span or mis-parses it (e.g. a dotted local
       # part like '@first.last@starfleet.com@' gets truncated). We avoid
-      # this entirely by hiding every email's inner '@' behind a sentinel
-      # character before RedCloth ever sees it, regardless of whether it's
-      # sitting inside a Textile '@...@' span at all. RedCloth then never
-      # sees more than one '@' in a row, so it decides on its own
+      # this entirely by hiding, behind a sentinel character, the inner
+      # '@' of any email address that's itself wrapped in a '@...@' span
+      # before RedCloth ever sees it. RedCloth then never sees more than
+      # one '@' in a row within the span, so it decides on its own
       # (correctly) whether to render inline code, leave it literal in a
       # `bc.` block, or leave it literal with inline code disabled -- we
       # don't need to special-case any of that. Callers just swap the
       # sentinel back for '@' once RedCloth (and any formatter) is done.
       module EmailInlineCodeProtection
         # The URI::MailTo::EMAIL_REGEXP uses anchors: \A/\z that we don't need.
-        EMAIL_PATTERN = /#{URI::MailTo::EMAIL_REGEXP.source.delete_prefix('\A').delete_suffix('\z')}/
+        EMAIL_INNER_PATTERN = URI::MailTo::EMAIL_REGEXP.source.delete_prefix('\A').delete_suffix('\z')
+
+        # Only match emails sandwiched between a literal '@' on each side --
+        # i.e. an actual Textile '@...@' inline-code span -- rather than every
+        # email address anywhere in the text. The boundary '@'s are matched
+        # via lookaround so they're left in place for RedCloth to pair up as
+        # the span's own opening/closing markers.
+        EMAIL_PATTERN = /(?<=@)#{EMAIL_INNER_PATTERN}(?=@)/
 
         # U+FDD0 is a Unicode noncharacter: the standard guarantees it can
         # never legitimately appear in interchanged text, so it's safe to
