@@ -14,9 +14,7 @@ describe Evidence do
 
   describe 'state' do
     it 'defaults to draft' do
-      evidence = create(:evidence, node: create(:node))
-
-      expect(evidence.state).to eq('draft')
+      expect(Evidence.new.state).to eq('draft')
     end
   end
 
