@@ -131,15 +131,15 @@ describe Issue do
     let(:node_a) { create(:node, label: '10.0.0.1') }
     let(:node_b) { create(:node, label: '10.0.0.2') }
 
-    let!(:evidence_a) { create(:evidence, issue: issue, node: node_a) }
-    let!(:evidence_b) { create(:evidence, issue: issue, node: node_b) }
+    let!(:evidence_a) { create(:evidence, issue: issue, node: node_a, state: :published) }
+    let!(:evidence_b) { create(:evidence, issue: issue, node: node_b, state: :draft) }
 
-    it 'defaults to grouping all of the issue\'s evidence by node' do
+    it 'defaults to grouping all of the issue\'s evidence by node, regardless of state' do
       expect(issue.evidence_by_node).to eq([[node_a, [evidence_a]], [node_b, [evidence_b]]])
     end
 
-    it 'groups a given evidence collection by node, instead of the unscoped default' do
-      expect(issue.evidence_by_node([evidence_b])).to eq([[node_b, [evidence_b]]])
+    it 'groups only published evidence by node when scope is :published' do
+      expect(issue.evidence_by_node(:published)).to eq([[node_a, [evidence_a]]])
     end
   end
 
