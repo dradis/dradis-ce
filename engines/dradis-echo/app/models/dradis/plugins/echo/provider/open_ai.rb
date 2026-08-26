@@ -8,10 +8,10 @@ module Dradis::Plugins::Echo
 
     private
 
-    def build_body(prompt:, model:)
+    def build_body(messages:, model:)
       {
         model: model,
-        messages: [{ role: 'user', content: prompt }],
+        messages: messages,
         stream: true
       }
     end

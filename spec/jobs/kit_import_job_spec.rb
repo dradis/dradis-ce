@@ -75,6 +75,20 @@ RSpec.describe KitImportJob do
       expect(Methodology.find('OWASPv4_Testing_Methodology_copy-01')).to_not be_nil
     end
 
+    it 'overwrites report template files in place if one with the same name already exists' do
+      word_dir = Rails.root.join('tmp', 'rspec', 'reports', 'word')
+      FileUtils.mkdir_p word_dir
+      FileUtils.touch word_dir.join('dradis_welcome_template.v0.5.docm')
+
+      described_class.new.perform(@tmp_file, logger: Log.new.write('Testing...'))
+
+      # Unlike project/note/methodology templates, report templates are not
+      # renamed on collision - the existing file is overwritten in place so
+      # its filename stays a stable identity for the associated RTP.
+      expect(File.exist?(word_dir.join('dradis_welcome_template.v0.5_copy-01.docm'))).to eq false
+      expect(File.exist?(word_dir.join('dradis_welcome_template.v0.5.docm'))).to eq true
+    end
+
     if defined?(Dradis::Pro)
       it 'imports Pro-only content too' do
         described_class.new.perform(@tmp_file, logger: Log.new.write('Testing...'))
@@ -114,6 +128,30 @@ RSpec.describe KitImportJob do
         described_class.new.perform(@tmp_file, logger: Log.new.write('Testing...'))
 
         expect(Project.last.name).to eq('dradis-export-welcome_copy-01')
+      end
+
+      it 'updates the existing report template properties in place on re-import' do
+        word_dir = Rails.root.join('tmp', 'rspec', 'reports', 'word')
+        FileUtils.mkdir_p word_dir
+        FileUtils.touch word_dir.join('dradis_welcome_template.v0.5.docm')
+
+        existing_rtp = create(
+          :report_template_properties,
+          plugin_name: 'word',
+          template_file: 'dradis_welcome_template.v0.5.docm',
+          title: 'Stale title',
+          content_blocks: {}
+        )
+
+        described_class.new.perform(@tmp_file, logger: Log.new.write('Testing...'))
+
+        # Re-importing a kit with a report template that already exists should
+        # update the matching RTP in place (same identity, by filename)
+        # rather than creating a duplicate record.
+        expect(ReportTemplateProperties.where(template_file: 'dradis_welcome_template.v0.5.docm').count).to eq(1)
+
+        existing_rtp.reload
+        expect(existing_rtp.content_blocks.keys).to match_array(['Conclusion', 'Scope'])
       end
     end
   end
