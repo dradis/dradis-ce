@@ -110,21 +110,18 @@ describe 'QA issue evidence' do
       page.find('td.select-checkbox', match: :first).click
       click_button 'State'
       click_link 'Published'
-      wait_for_ajax
 
-      Timeout.timeout(Capybara.default_max_wait_time) do
-        sleep 0.1 until evidence.reload.state == 'published'
-      end
-
-      expect(evidence.state).to eq 'published'
+      expect(page).to have_current_path(project_qa_issue_path(current_project, issue, tab: 'evidence-tab'))
+      expect(page).to have_selector('.alert-success', text: 'State updated successfully.')
+      expect(evidence.reload.state).to eq 'published'
     end
 
     it 'removes the row once it is no longer ready for review' do
       page.find('td.select-checkbox', match: :first).click
       click_button 'State'
       click_link 'Published'
-      wait_for_ajax
 
+      expect(page).to have_current_path(project_qa_issue_path(current_project, issue, tab: 'evidence-tab'))
       expect(page).to have_no_selector("tr#evidence-#{evidence.id}")
     end
 
