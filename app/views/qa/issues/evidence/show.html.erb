@@ -23,7 +23,7 @@
             <span class="text-truncate" title="<%= @evidence.node.label %>"><%= @evidence.node.label %></span>
             <span class="actions">
               <span class="action">
-                <%= link_to edit_project_qa_issue_evidence_path(current_project, @issue, @evidence, return_to: 'qa') do %>
+                <%= link_to evidence_edit_path(@evidence, qa: true) do %>
                   <i class="fa-solid fa-pencil fa-fw"></i> Edit
                 <% end %>
               </span>

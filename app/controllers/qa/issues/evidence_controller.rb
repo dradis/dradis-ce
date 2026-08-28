@@ -44,7 +44,7 @@ class QA::Issues::EvidenceController < AuthenticatedController
 
         format.html do
           if params[:return_to] == 'qa'
-            redirect_to project_qa_issue_evidence_index_path(current_project, @issue), notice: 'State updated successfully.'
+            redirect_to project_qa_issue_path(current_project, @issue, tab: 'evidence-tab'), notice: 'State updated successfully.'
           else
             redirect_to project_issue_path(current_project, @issue, tab: 'evidence-tab'), notice: 'State updated successfully.'
           end
@@ -113,7 +113,7 @@ class QA::Issues::EvidenceController < AuthenticatedController
     if Evidence.states.keys.include?(params[:state])
       @state = params[:state]
     else
-      redirect_to project_qa_issue_evidence_index_path(current_project, params[:issue_id]), alert: 'Something fishy is going on...'
+      redirect_to project_qa_issue_path(current_project, params[:issue_id], tab: 'evidence-tab'), alert: 'Something fishy is going on...'
     end
   end
 end

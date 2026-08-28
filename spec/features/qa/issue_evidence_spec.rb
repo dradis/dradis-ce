@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 describe 'QA issue evidence' do
-  before { login_to_project_as_user }
+  before do
+    login_to_project_as_user
+    allow_any_instance_of(Project).to receive(:reviewers).and_return(User.all)
+  end
 
   let(:issue) { create(:issue, state: :ready_for_review, node: current_project.issue_library) }
   let(:node) { create(:node, project: current_project) }
@@ -111,11 +114,9 @@ describe 'QA issue evidence' do
       click_button 'State'
       click_link 'Published'
 
-      Timeout.timeout(Capybara.default_max_wait_time) do
-        sleep 0.1 until evidence.reload.state == 'published'
-      end
-
-      expect(evidence.state).to eq 'published'
+      expect(page).to have_current_path(project_qa_issue_path(current_project, issue, tab: 'evidence-tab'))
+      expect(page).to have_selector('.alert-success', text: 'State updated successfully.')
+      expect(evidence.reload.state).to eq 'published'
     end
 
     it 'removes the row once it is no longer ready for review' do
@@ -123,6 +124,7 @@ describe 'QA issue evidence' do
       click_button 'State'
       click_link 'Published'
 
+      expect(page).to have_current_path(project_qa_issue_path(current_project, issue, tab: 'evidence-tab'))
       expect(page).to have_no_selector("tr#evidence-#{evidence.id}")
     end
 
