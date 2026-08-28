@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 describe 'QA issue evidence' do
-  before { login_to_project_as_user }
+  before do
+    login_to_project_as_user
+    allow_any_instance_of(Project).to receive(:reviewers).and_return(User.all)
+  end
 
   let(:issue) { create(:issue, state: :ready_for_review, node: current_project.issue_library) }
   let(:node) { create(:node, project: current_project) }
