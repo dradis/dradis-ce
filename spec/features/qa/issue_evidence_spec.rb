@@ -110,6 +110,7 @@ describe 'QA issue evidence' do
       page.find('td.select-checkbox', match: :first).click
       click_button 'State'
       click_link 'Published'
+      wait_for_ajax
 
       Timeout.timeout(Capybara.default_max_wait_time) do
         sleep 0.1 until evidence.reload.state == 'published'
@@ -122,6 +123,7 @@ describe 'QA issue evidence' do
       page.find('td.select-checkbox', match: :first).click
       click_button 'State'
       click_link 'Published'
+      wait_for_ajax
 
       expect(page).to have_no_selector("tr#evidence-#{evidence.id}")
     end
