@@ -4,6 +4,7 @@
   - Upgraded gems:
     - mail, sqlite3
   - Bugs fixes:
+    - Models: scrub invalid UTF-8 byte sequences from every :string and :text column before saving
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
