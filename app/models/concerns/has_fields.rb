@@ -9,11 +9,10 @@ module HasFields
   end
 
   # Extract a Title file if one exists.
-  def title
-    fields.fetch(
-      'Title',
-      '(No #[Title]# field)'
-    )
+  def title(liquid_assigns: nil)
+    raw = fields.fetch('Title', '(No #[Title]# field)')
+    return raw unless liquid_assigns.present? && fields['Title'].present?
+    HTML::Pipeline::Dradis::LiquidFilter.call(raw, liquid_assigns: liquid_assigns).strip
   end
 
   def title?
