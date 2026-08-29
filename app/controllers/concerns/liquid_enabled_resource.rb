@@ -2,6 +2,7 @@ module LiquidEnabledResource
   extend ActiveSupport::Concern
 
   included do
+    before_action :set_current_liquid_assigns
     helper_method :liquid_assigns
   end
 
@@ -36,5 +37,9 @@ module LiquidEnabledResource
     authorize! :use, project
 
     LiquidCachedAssigns.new(project: project)
+  end
+
+  def set_current_liquid_assigns
+    Current.liquid_assigns = liquid_assigns
   end
 end
