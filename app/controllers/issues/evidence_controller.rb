@@ -74,6 +74,10 @@ class Issues::EvidenceController < AuthenticatedController
 
   private
 
+  def event_action_payload
+    super.merge(action: 'create')
+  end
+
   def evidence_params
     params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
   end
