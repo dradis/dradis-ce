@@ -21,7 +21,7 @@ class NodesController < NestedNodeResourceController
   def create
     @node.label = 'unnamed' unless @node.label.present?
     if @node.save
-      track_created(@node)
+      publish_event('node.created', @node.to_event_payload)
       flash[:notice] = 'Successfully created node.'
       redirect_to [current_project, @node]
     else
@@ -49,7 +49,7 @@ class NodesController < NestedNodeResourceController
             parent: @parent,
             type_id: params[:nodes][:type_id]
           )
-          track_created(node)
+          publish_event('node.created', node.to_event_payload)
         end
       end
     end
@@ -74,7 +74,7 @@ class NodesController < NestedNodeResourceController
   def update
     respond_to do |format|
       if @node.update(node_params)
-        track_updated(@node)
+        publish_event('node.updated', @node.to_event_payload)
         format.html { redirect_to project_node_path(current_project, @node), notice: 'Node updated.' }
         format.json { render json: { success: true }.to_json }
         format.js
@@ -92,7 +92,7 @@ class NodesController < NestedNodeResourceController
   # DELETE /nodes/<id>
   def destroy
     @node.destroy
-    track_destroyed(@node)
+    publish_event('node.destroyed', @node.to_event_payload)
 
     parent = @node.parent
     if parent

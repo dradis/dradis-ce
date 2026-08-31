@@ -1,7 +1,7 @@
 class Issues::EvidenceController < AuthenticatedController
-  include ActivityTracking
   include ContentFromTemplate
   include DynamicFieldNamesCacher
+  include EventPublisher
   include MultipleDestroy
   include ProjectScoped
 
@@ -42,7 +42,7 @@ class Issues::EvidenceController < AuthenticatedController
           issue_id: @issue.id,
           node_id: node.id
         )
-        track_created(evidence)
+        publish_event('evidence.created', evidence.to_event_payload)
       end
     end
 
@@ -57,7 +57,7 @@ class Issues::EvidenceController < AuthenticatedController
             label: label,
             parent: parent,
           )
-          track_created(node)
+          publish_event('node.created', node.to_event_payload)
         end
 
         evidence = Evidence.create!(
@@ -66,7 +66,7 @@ class Issues::EvidenceController < AuthenticatedController
           issue_id: @issue.id,
           node_id: node.id
         )
-        track_created(evidence)
+        publish_event('evidence.created', evidence.to_event_payload)
       end
     end
 
@@ -74,6 +74,13 @@ class Issues::EvidenceController < AuthenticatedController
   end
 
   private
+
+  # Override EventPublisher#event_action_payload to use the correct action
+  # name instead of the RESTful controller action ('create_multiple') so the
+  # activity feed shows the correct verb.
+  def event_action_payload
+    super.merge(action: 'create')
+  end
 
   def evidence_params
     params.require(:evidence).permit(:author, :content, :issue_id, :node_id)

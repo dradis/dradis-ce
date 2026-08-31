@@ -1,6 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+  - Activities: Remove ActivityTracking for Evidence, Nodes and Notes and use EventPublisher
   - QA: Add QA states to evidence
   - Upgraded gems:
     - mail, sqlite3
