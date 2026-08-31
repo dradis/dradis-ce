@@ -5,5 +5,6 @@ Rails.application.reloader.to_prepare do
     activity_service.subscribe_namespace 'inline_thread'
     activity_service.subscribe_namespace 'issue'
     activity_service.subscribe_namespace 'node'
+    activity_service.subscribe_namespace 'note'
   end
 end

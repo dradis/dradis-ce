@@ -74,6 +74,9 @@ class Issues::EvidenceController < AuthenticatedController
 
   private
 
+  # Override EventPublisher#event_action_payload to use the correct action
+  # name instead of the RESTful controller action ('create_multiple') so the
+  # activity feed shows the correct verb.
   def event_action_payload
     super.merge(action: 'create')
   end
