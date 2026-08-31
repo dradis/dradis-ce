@@ -1,6 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+  - Activities: Remove ActivityTracking for Evidence, Nodes and Notes and use EventPublisher
   - Upgraded gems:
     - mail, sqlite3
   - Bugs fixes:
