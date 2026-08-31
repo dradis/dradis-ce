@@ -1,7 +1,6 @@
 <span class="fa-regular fa-file-text"></span>
 
-<% title = row.title? ? row.title : "Note ##{row.id}" %>
-<%= link_to title, project_node_note_path(row.node.project, row.node_id, row), class: "search-match-title" %>
+<%= link_to row.title, project_node_note_path(row.node.project, row.node_id, row), class: "search-match-title" %>
 
 <div class="result-details">
   <p><span>Node:</span> <%= link_to row.node.label, project_node_path(row.node.project, row.node) %></p>
