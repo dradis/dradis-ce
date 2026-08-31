@@ -15,7 +15,7 @@ shared_examples 'a model that has fields' do |model|
 
     context 'when there is no #[Title]# field' do
       let(:content) { "#[Not The Title]#\nMy Title" }
-      it { should eq "#{record.class.name} ##{record.id}" }
+      it { should eq "#{record.class.name.demodulize.titleize} ##{record.id}" }
 
       specify '#title? returns false' do
         expect(record.title?).to be false
