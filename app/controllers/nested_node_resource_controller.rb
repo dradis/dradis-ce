@@ -27,4 +27,14 @@ class NestedNodeResourceController < AuthenticatedController
       ).find(params[:node_id])
     end
   end
+
+  private
+
+  # Override EventPublisher#event_action_payload to use the semantic action
+  # name ('create') instead of the RESTful controller action
+  # ('create_multiple') so the activity feed shows the correct verb.
+  def event_action_payload
+    action_map = { 'create_multiple' => 'create' }
+    super.merge(action: action_map.fetch(action_name, action_name))
+  end
 end
