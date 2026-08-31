@@ -78,7 +78,6 @@ class Node < ApplicationRecord
 
   def local_event_payload
     {
-      author: author,
       project: {
         id: project.id,
         name: project.name
