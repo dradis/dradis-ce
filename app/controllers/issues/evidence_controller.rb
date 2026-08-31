@@ -9,6 +9,7 @@ class Issues::EvidenceController < AuthenticatedController
   before_action :set_affected_nodes, only: :index
   before_action :set_auto_save_key, only: :new
   before_action :set_columns, only: :index
+  before_action :set_node_evidence, only: :index
 
   def index
     render layout: false
@@ -117,5 +118,9 @@ class Issues::EvidenceController < AuthenticatedController
   def set_issues
     @issues = current_project.issues.order(:text)
     @issue = @issues.find(params[:issue_id]) if params[:issue_id]
+  end
+
+  def set_node_evidence
+    @node_evidence = @affected_nodes.index_with { |node| node.evidence.where(issue_id: @issue.id) }
   end
 end
