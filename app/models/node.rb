@@ -5,6 +5,7 @@
 # Each Node has a :parent node and a :label. Nodes can also have many
 # Attachment objects associated with them.
 class Node < ApplicationRecord
+  include Eventable
   include Properties
   include Types
 
@@ -73,6 +74,18 @@ class Node < ApplicationRecord
   # Return all the Attachment objects associated with this Node.
   def attachments
     Attachment.find(:all, conditions: { node_id: self.id })
+  end
+
+  def local_event_payload
+    {
+      author: author,
+      project: {
+        id: project.id,
+        name: project.name
+      },
+      label: label,
+      properties: properties
+    }
   end
 
   # SEE: https://github.com/amerine/acts_as_tree/issues/63
