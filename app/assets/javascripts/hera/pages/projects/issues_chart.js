@@ -1,97 +1,101 @@
-function initIssuesChart() {
-  const $chartElement = $('[data-behavior~=issue-chart]');
+document.addEventListener('turbo:load', () => {
+  if (!$('body.projects.show').length) { return; }
 
-  if (!$chartElement.length || $chartElement.find('svg').length > 0) { return; }
+  function initIssuesChart() {
+    const $chartElement = $('[data-behavior~=issue-chart]');
 
-  const margin = { top: 20, bottom: 0 };
-  const width  = 354;
-  const height = 180 - margin.top - margin.bottom;
+    if (!$chartElement.length || $chartElement.find('svg').length > 0) { return; }
 
-  const x = d3.scaleBand().rangeRound([0, width]);
-  const y = d3.scaleLinear().range([height, 0]);
+    const margin = { top: 20, bottom: 0 };
+    const width  = 354;
+    const height = 180 - margin.top - margin.bottom;
 
-  const container = d3.select('[data-behavior~=issue-chart]');
+    const x = d3.scaleBand().rangeRound([0, width]);
+    const y = d3.scaleLinear().range([height, 0]);
 
-  const svg = container.append('svg')
-      .attr('width', width)
-      .attr('height', height + margin.top + margin.bottom)
-    .append('g')
-      .attr('transform', `translate(0,${margin.top})`);
+    const container = d3.select('[data-behavior~=issue-chart]');
 
-  // --------------------------------------------------------- Data variables
-  const tags = $chartElement.data('tags') || {};
-  const issuesByTag = $chartElement.data('issues-count') || {};
-  let highest = 0;
-  const data = [];
-  const x_domain = [];
-  const colors = [];
+    const svg = container.append('svg')
+        .attr('width', width)
+        .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+        .attr('transform', `translate(0,${margin.top})`);
 
-  Object.keys(tags).forEach(key => {
-    const issuesCount = issuesByTag[key] || 0;
-    highest = issuesCount > highest ? issuesCount : highest;
-    data.push({ letter: tags[key][0], frequency: issuesCount });
-    x_domain.push(tags[key][0]);
-    colors.push(tags[key][1]);
-  });
+    // --------------------------------------------------------- Data variables
+    const tags = $chartElement.data('tags') || {};
+    const issuesByTag = $chartElement.data('issues-count') || {};
+    let highest = 0;
+    const data = [];
+    const x_domain = [];
+    const colors = [];
 
-  const unassignedCount = issuesByTag['unassigned'] || 0;
-  data.push({ letter: 'N/A', frequency: unassignedCount });
-  x_domain.push('N/A');
+    Object.keys(tags).forEach(key => {
+      const issuesCount = issuesByTag[key] || 0;
+      highest = issuesCount > highest ? issuesCount : highest;
+      data.push({ letter: tags[key][0], frequency: issuesCount });
+      x_domain.push(tags[key][0]);
+      colors.push(tags[key][1]);
+    });
 
-  const highest_y = Math.max(highest, unassignedCount);
-  // -------------------------------------------------------- /Data variables
+    const unassignedCount = issuesByTag['unassigned'] || 0;
+    data.push({ letter: 'N/A', frequency: unassignedCount });
+    x_domain.push('N/A');
 
-  x.domain(x_domain);
-  y.domain([0, highest_y]);
+    const highest_y = Math.max(highest, unassignedCount);
+    // -------------------------------------------------------- /Data variables
 
-  const bars = svg.append('g');
+    x.domain(x_domain);
+    y.domain([0, highest_y]);
 
-  bars.selectAll('rect')
-      .data(data)
-    .enter().append('rect')
-      .attr('class', 'bar')
-      .attr('x', d => x(d.letter))
-      .attr('width', x.bandwidth())
-      .attr('y', d => y(d.frequency))
-      .attr('height', d => height - y(d.frequency));
+    const bars = svg.append('g');
 
-  bars.selectAll('text')
-      .data(data)
-    .enter().append('text')
-      .attr('x', d => x(d.letter) + x.bandwidth() / 2)
-      .attr('y', d => y(d.frequency))
-      .attr('dy', -5)
-      .attr('text-anchor', 'middle')
-      .attr('class', 'counter')
-      .text(d => d.frequency);
+    bars.selectAll('rect')
+        .data(data)
+      .enter().append('rect')
+        .attr('class', 'bar')
+        .attr('x', d => x(d.letter))
+        .attr('width', x.bandwidth())
+        .attr('y', d => y(d.frequency))
+        .attr('height', d => height - y(d.frequency));
 
-  colors.forEach((color, i) => {
-    $($('.bar')[i]).attr('fill', color);
-    $($('.counter')[i]).attr('fill', color);
-  });
+    bars.selectAll('text')
+        .data(data)
+      .enter().append('text')
+        .attr('x', d => x(d.letter) + x.bandwidth() / 2)
+        .attr('y', d => y(d.frequency))
+        .attr('dy', -5)
+        .attr('text-anchor', 'middle')
+        .attr('class', 'counter')
+        .text(d => d.frequency);
 
-  $($('.bar')[colors.length]).addClass('untagged');
-  $($('.counter')[colors.length]).addClass('untagged');
+    colors.forEach((color, i) => {
+      $($('.bar')[i]).attr('fill', color);
+      $($('.counter')[i]).attr('fill', color);
+    });
 
-  buildLegend(container, data, colors);
-}
+    $($('.bar')[colors.length]).addClass('untagged');
+    $($('.counter')[colors.length]).addClass('untagged');
 
-function buildLegend(container, data, colors) {
-  const legend = container.append('ul').attr('class', 'issue-chart-legend');
+    buildLegend(container, data, colors);
 
-  const item = legend.selectAll('li')
-      .data(data)
-    .enter().append('li')
-      .attr('class', (_, i) => i === colors.length ? 'legend-item untagged' : 'legend-item')
-      .attr('title', d => d.letter);
+    function buildLegend(container, data, colors) {
+      const legend = container.append('ul').attr('class', 'issue-chart-legend');
 
-  item.append('span')
-    .attr('class', 'legend-swatch')
-    .style('background-color', (_, i) => colors[i] || null);
+      const item = legend.selectAll('li')
+          .data(data)
+        .enter().append('li')
+          .attr('class', (_, i) => i === colors.length ? 'legend-item untagged' : 'legend-item')
+          .attr('title', d => d.letter);
 
-  item.append('span')
-    .attr('class', 'legend-label')
-    .text(d => d.letter);
-}
+      item.append('span')
+        .attr('class', 'legend-swatch')
+        .style('background-color', (_, i) => colors[i] || null);
 
-document.addEventListener('turbo:load', initIssuesChart);
+      item.append('span')
+        .attr('class', 'legend-label')
+        .text(d => d.letter);
+    }
+  }
+
+  initIssuesChart();
+});
