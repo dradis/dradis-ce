@@ -106,7 +106,6 @@ class EvidenceController < NestedNodeResourceController
   private
 
   def autogenerate_issue
-    byebug
     @evidence.issue = Issue.autogenerate_from(@evidence)
     publish_event('issue.created', @evidence.issue.to_event_payload)
   end
