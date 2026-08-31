@@ -4,6 +4,7 @@
   - Upgraded gems:
     - mail, sqlite3
   - Bugs fixes:
+    - Combobox: show the correct selected option when its value contains a double quote
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
