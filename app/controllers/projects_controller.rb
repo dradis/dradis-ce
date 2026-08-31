@@ -1,5 +1,5 @@
 class ProjectsController < AuthenticatedController
-  include IssuesDimensionGrouping
+  include Projects::IssuesSummaryGrouping
   include NotificationsReader
 
   before_action :set_project
@@ -20,7 +20,7 @@ class ProjectsController < AuthenticatedController
     @nodes = current_project.nodes.in_tree
     @tags = current_project.tags
 
-    build_all_tags_grouping
+    build_tags_grouping
 
     respond_to do |format|
       format.html { render layout: 'hera/project' if !request.xhr? }
