@@ -1,16 +1,12 @@
 spec:
   name: dradis-ce
   services:
-  - environment_slug: ruby-on-rails
-    envs:
-    - key: RAILS_ENV
-      value: production
-      scope: RUN_TIME
-    - key: RAILS_SERVE_STATIC_FILES
-      value: enabled
-      scope: RUN_TIME
-    git:
-      branch: develop
-      repo_clone_url: https://github.com/dradis/dradis-ce.git
-    name: web
-    run_command: ./bin/setup
+  - name: web
+    health_check:
+      http_path: /up
+    http_port: 80
+    image:
+      registry_type: DOCKER_HUB
+      registry: dradis
+      repository: dradis-ce
+      digest: sha256:78cf8fb628718518d9fce479cb54db0ccfb037dd6f7ef5711a499bfd166a6372
