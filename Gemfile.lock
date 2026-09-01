@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/dradis/dradis-calculator_stride.git
+  revision: e29c28e6deefd7971c26e5380988e6605719bbe0
+  branch: stride
+  specs:
+    dradis-calculator_stride (4.19.0)
+      dradis-plugins (>= 4.0)
+
 PATH
   remote: engines/dradis-api
   specs:
@@ -628,6 +636,7 @@ DEPENDENCIES
   dradis-calculator_cvss (~> 5.3.0)
   dradis-calculator_dread (~> 5.3.0)
   dradis-calculator_mitre (~> 5.3.0)
+  dradis-calculator_stride!
   dradis-coreimpact (~> 5.3.0)
   dradis-csv (~> 5.3.0)
   dradis-csv_export (~> 5.3.0)
