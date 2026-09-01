@@ -21,7 +21,7 @@ class NodesController < NestedNodeResourceController
   def create
     @node.label = 'unnamed' unless @node.label.present?
     if @node.save
-      track_created(@node)
+      publish_event('node.created', @node.to_event_payload)
       flash[:notice] = 'Successfully created node.'
       redirect_to [current_project, @node]
     else
@@ -49,7 +49,7 @@ class NodesController < NestedNodeResourceController
             parent: @parent,
             type_id: params[:nodes][:type_id]
           )
-          track_created(node)
+          publish_event('node.created', node.to_event_payload)
         end
       end
     end
@@ -74,7 +74,7 @@ class NodesController < NestedNodeResourceController
   def update
     respond_to do |format|
       if @node.update(node_params)
-        track_updated(@node)
+        publish_event('node.updated', @node.to_event_payload)
         format.html { redirect_to project_node_path(current_project, @node), notice: 'Node updated.' }
         format.json { render json: { success: true }.to_json }
         format.js
@@ -92,7 +92,7 @@ class NodesController < NestedNodeResourceController
   # DELETE /nodes/<id>
   def destroy
     @node.destroy
-    track_destroyed(@node)
+    publish_event('node.destroyed', @node.to_event_payload)
 
     parent = @node.parent
     if parent
@@ -115,6 +115,7 @@ class NodesController < NestedNodeResourceController
 
   def set_columns
     default_field_names = ['Label', 'Title'].freeze
+    default_evidence_field_names = default_field_names | ['State'].freeze
     extra_field_names = ['Created', 'Created by', 'Updated'].freeze
 
     note_dynamic_fields = dynamic_field_names(@node.notes)
@@ -124,10 +125,10 @@ class NodesController < NestedNodeResourceController
     rtp_default_evidence_fields = rtp ? rtp.evidence_fields.default.field_names : []
 
     @note_columns = note_dynamic_fields | extra_field_names
-    @evidence_columns = rtp_default_evidence_fields | evidence_dynamic_fields | extra_field_names | ['State']
+    @evidence_columns = rtp_default_evidence_fields | evidence_dynamic_fields | extra_field_names
 
     @default_note_columns = default_field_names
-    @default_evidence_columns = (rtp_default_evidence_fields.presence || default_field_names) | ['State']
+    @default_evidence_columns = (rtp_default_evidence_fields.presence || default_evidence_field_names)
   end
 
   def node_params

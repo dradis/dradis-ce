@@ -26,6 +26,7 @@
 # This behaviour is extensively used by import/export plugins such as WordExport.
 class Note < ApplicationRecord
   include Commentable
+  include Eventable
   include HasFields
   include Reviewable
   include RevisionTracking
@@ -81,6 +82,22 @@ class Note < ApplicationRecord
 
   def field_or_text(field_name)
     fields.fetch(field_name, text.truncate(20))
+  end
+
+  def local_event_payload
+    {
+      author: author,
+      project: {
+        id: project.id,
+        name: project.name
+      },
+      node: {
+        id: node.id,
+        label: node.label
+      },
+      fields: fields,
+      title: title
+    }
   end
 
   ActiveSupport.run_load_hooks(:note_model, self)

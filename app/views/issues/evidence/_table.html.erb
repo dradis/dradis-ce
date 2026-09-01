@@ -17,9 +17,7 @@
   </thead>
   <tbody>
     <% @affected_nodes.each do |node| %>
-      <% node_evidence = node.evidence.where(issue_id: @issue.id)
-         node_evidence = node_evidence.ready_for_review if local_assigns[:qa] %>
-      <% node_evidence.each do |evidence| %>
+      <% @node_evidence[node].each do |evidence| %>
         <tr id="evidence-<%= evidence.id %>">
           <td class="select-checkbox" data-behavior="select-checkbox"></td>
           <% @all_columns.each do |column| %>
@@ -27,8 +25,11 @@
               sort, display =
               case column
               when 'Label'
-                label_path = local_assigns[:qa] ? project_qa_issue_evidence_path(current_project, @issue, evidence) : [current_project, node, evidence]
-                [evidence.node.label, link_to(evidence.node.label, label_path)]
+                label_path = [current_project, node, evidence]
+                qa_label_path = project_qa_issue_evidence_path(current_project, @issue, evidence)
+                [evidence.node.label,
+                 (link_to(evidence.node.label, label_path, data: { qa_visible: false }) +
+                  link_to(evidence.node.label, qa_label_path, class: 'd-none', data: { qa_visible: true }))]
               when 'State'
                 [evidence.state_before_type_cast, evidence.state.humanize]
               when 'Created'
@@ -44,12 +45,15 @@
             <td data-sort="<%= sort %>"><%= display %></td>
           <% end  %>
           <td class="column-actions">
-            <%= link_to evidence_edit_path(evidence, qa: local_assigns[:qa]) do %>
+            <%= link_to edit_project_node_evidence_path(current_project, node, evidence, return_to: :issue), data: { qa_visible: false } do %>
+              <i class="fa-solid fa-pencil"></i> Edit
+            <% end %>
+            <%= link_to edit_project_qa_issue_evidence_path(current_project, @issue, evidence, return_to: :qa), class: 'd-none', data: { qa_visible: true } do %>
               <i class="fa-solid fa-pencil"></i> Edit
             <% end %>
             <%= link_to [current_project, node, evidence],
                   class: 'text-error-hover',
-                  data: { confirm: "Are you sure?\n\nProceeding will delete this evidence from the associated node." },
+                  data: { confirm: "Are you sure?\n\nProceeding will delete this evidence from the associated node.", qa_visible: false },
                   method: :delete do %>
               <i class="fa-solid fa-trash"></i> Delete
             <% end %>

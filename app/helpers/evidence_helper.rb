@@ -1,12 +1,4 @@
 module EvidenceHelper
-  def evidence_edit_path(evidence, qa: false)
-    if qa
-      edit_project_qa_issue_evidence_path(current_project, evidence.issue, evidence, return_to: :qa)
-    else
-      edit_project_node_evidence_path(current_project, evidence.node, evidence, return_to: :issue)
-    end
-  end
-
   def evidence_redirect_path(return_to)
     if return_to == 'issue'
       [current_project, @evidence.issue]
