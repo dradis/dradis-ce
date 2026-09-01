@@ -38,7 +38,7 @@ module Dradis::Plugins::Echo
       return prompts unless prompts.empty?
 
       user.prompts << defaults_for(scope)
-      user.prompts.for(scope)
+      user.prompts.for(scope).to_a
     end
 
     # -- Instance Methods -------------------------------------------------------
