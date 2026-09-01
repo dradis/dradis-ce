@@ -36,7 +36,10 @@ module Dradis::Plugins::Echo
     # globally means a user who already has prompts in one scope still gets
     # another scope's defaults backfilled.
     def self.ensure_defaults_for!(user, scope)
-      user.prompts << defaults_for(scope) if user.prompts.for(scope).empty?
+      prompts = user.prompts.for(scope).to_a
+      return prompts unless prompts.empty?
+
+      user.prompts << defaults_for(scope)
       user.prompts.for(scope)
     end
 
