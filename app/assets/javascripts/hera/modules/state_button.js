@@ -1,20 +1,26 @@
-document.addEventListener('turbo:load', function () {
-  if ($('[data-behavior~=state-radio]').length) {
-    function updateBtn($selectedRadio) {
-      var selectedState = $selectedRadio
-        .parent()
-        .find('[data-behavior~=state-label]');
+// Called from initBehaviors() since Turbo Frame swaps don't fire turbo:load.
+(function ($, window) {
+  function updateBtn($selectedRadio) {
+    var selectedState = $selectedRadio
+      .parent()
+      .find('[data-behavior~=state-label]');
 
-      var $stateBtn = $selectedRadio
-        .closest('[data-behavior~=btn-states]')
-        .find('[data-behavior~=state-button]');
+    var $stateBtn = $selectedRadio
+      .closest('[data-behavior~=btn-states]')
+      .find('[data-behavior~=state-button]');
 
-      $stateBtn.text(selectedState.text());
-      $stateBtn.parent().attr('data-state', $selectedRadio.val());
-    }
-
-    $('[data-behavior~=state-radio]').on('change', function () {
-      updateBtn($(this));
-    });
+    $stateBtn.text(selectedState.text());
+    $stateBtn.parent().attr('data-state', $selectedRadio.val());
   }
-});
+
+  function initStateButton(parentElement) {
+    $(parentElement)
+      .find('[data-behavior~=state-radio]')
+      .off('change.stateButton')
+      .on('change.stateButton', function () {
+        updateBtn($(this));
+      });
+  }
+
+  window.initStateButton = initStateButton;
+})(jQuery, window);

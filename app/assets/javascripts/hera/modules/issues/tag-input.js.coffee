@@ -4,12 +4,17 @@ class @SelectTagDropdown
 
   init: ->
     $('#issue_tag_list').val(@$target.data('tag'))
-    $span = $("#issues_editor .dropdown-toggle span.tag")
-    $span.css("color", @$target.css("color"))
+    $span = @$target.closest('.tag-input').find('.dropdown-toggle span.tag')
+    $span.css('color', @$target.css('color'))
     $span.html(@$target.html())
 
-document.addEventListener "turbo:load", ->
-  $('#issues_editor .js-taglink').click (e) ->
-    $target = $(e.target)
-    new SelectTagDropdown($target)
-    $('#issue_tag_list').trigger('textchange')
+# Called from initBehaviors() so the dropdown keeps working when the form is
+# rendered into a Turbo Frame, which doesn't fire turbo:load.
+@initTagInput = (parentElement) ->
+  $(parentElement)
+    .find('.js-taglink')
+    .off('click.tagInput')
+    .on 'click.tagInput', (e) ->
+      $target = $(e.currentTarget)
+      new SelectTagDropdown($target)
+      $('#issue_tag_list').trigger('textchange')
