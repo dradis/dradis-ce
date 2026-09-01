@@ -20,29 +20,20 @@ describe FieldsHelper do
 
       it 'falls back to the pipe-value check for a different field with no explicit options' do
         assign(:field_options, { 'Risk' => %w[High Medium Low] })
-        assign(:allow_dropdown, true)
         expect(helper.dropdown_options('Status', 'Open | Closed')).to eq(['Open', 'Closed'])
       end
     end
 
     context 'when the field has no explicit list options' do
       it 'returns nil when the value is not pipe-separated' do
-        assign(:allow_dropdown, true)
         expect(helper.dropdown_options('OS', 'Linux')).to be_nil
       end
 
-      it 'returns nil when dropdowns are not allowed, even if pipe-separated' do
-        assign(:allow_dropdown, false)
-        expect(helper.dropdown_options('OS', 'Linux | OSX | Windows')).to be_nil
-      end
-
-      it 'returns the split values when dropdowns are allowed and the value is pipe-separated' do
-        assign(:allow_dropdown, true)
+      it 'returns the split values when the value is pipe-separated' do
         expect(helper.dropdown_options('OS', 'Linux | OSX | Windows')).to eq(['Linux', 'OSX', 'Windows'])
       end
 
       it 'returns nil when the pipe-separated value contains Liquid filters' do
-        assign(:allow_dropdown, true)
         expect(helper.dropdown_options('OS', "{{ os | join: ' | ' }}")).to be_nil
       end
     end

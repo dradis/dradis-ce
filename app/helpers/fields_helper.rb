@@ -4,7 +4,7 @@ module FieldsHelper
 
     if options
       options if value.blank? || options.include?(value)
-    elsif @allow_dropdown && !has_liquid_filters?(value)
+    elsif !has_liquid_filters?(value)
       values = value.split(' | ')
       values if values.count > 1
     end

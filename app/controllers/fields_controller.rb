@@ -2,7 +2,6 @@ class FieldsController < AuthenticatedController
   # Returns the form view given a source text
   def form
     @form_data = FieldParser.source_to_fields_array(field_params[:source])
-    @allow_dropdown = field_params[:allow_dropdown] == 'true'
     @field_options = field_params[:field_options]&.to_h
     render layout: false
   end
@@ -20,6 +19,6 @@ class FieldsController < AuthenticatedController
   private
 
   def field_params
-    params.permit(:allow_dropdown, :index, :source, field_options: {}, form: [:name, :value])
+    params.permit(:index, :source, field_options: {}, form: [:name, :value])
   end
 end
