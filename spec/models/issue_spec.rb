@@ -128,8 +128,8 @@ describe Issue do
 
   describe '#evidence_by_node' do
     let(:issue) { create(:issue, node: project.issue_library) }
-    let(:node_a) { create(:node, label: '10.0.0.1') }
-    let(:node_b) { create(:node, label: '10.0.0.2') }
+    let(:node_a) { create(:node, label: '10.0.0.1', project: project) }
+    let(:node_b) { create(:node, label: '10.0.0.2', project: project) }
 
     let!(:evidence_a) { create(:evidence, issue: issue, node: node_a, state: :published) }
     let!(:evidence_b) { create(:evidence, issue: issue, node: node_b, state: :draft) }
