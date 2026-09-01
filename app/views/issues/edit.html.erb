@@ -17,6 +17,17 @@
     <h4 class="header-underline">Edit issue (<%= @issue.state.humanize %>)</h4>
     <!-- This div is needed to allow correct tabbing order in Chrome with page is loaded with turbolinks -->
     <div class="autofocus" autofocus="true" tabindex="1"></div>
-    <%= render 'form' %>
+    <% if @lock_owner %>
+      <%= render 'shared/editing_locked',
+            lock_owner: @lock_owner,
+            record: @issue,
+            force_path: edit_project_issue_path(current_project, @issue) %>
+    <% else %>
+      <div data-controller="editing-lock"
+           data-editing-lock-lock-url-value="<%= lock_project_issue_path(current_project, @issue) %>"
+           data-editing-lock-unlock-url-value="<%= unlock_project_issue_path(current_project, @issue) %>">
+      </div>
+      <%= render 'form' %>
+    <% end %>
   </div>
 </div>

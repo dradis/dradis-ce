@@ -39,6 +39,13 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :editing_lockable do
+    member do
+      patch :lock
+      delete :unlock
+    end
+  end
+
   concern :previewable do
     member do
       post :preview
@@ -70,7 +77,7 @@ Rails.application.routes.draw do
 
     post :create_multiple_evidence, to: 'issues/evidence#create_multiple'
 
-    resources :issues, concerns: [:multiple_destroy, :previewable] do
+    resources :issues, concerns: [:editing_lockable, :multiple_destroy, :previewable] do
       collection do
         post :import
         resources :merge, only: [:new, :create], controller: 'issues/merge'
@@ -101,11 +108,11 @@ Rails.application.routes.draw do
 
       resource :merge, only: [:create], controller: 'nodes/merge'
 
-      resources :notes, concerns: [:multiple_destroy, :previewable] do
+      resources :notes, concerns: [:editing_lockable, :multiple_destroy, :previewable] do
         resources :revisions, only: [:index, :show]
       end
 
-      resources :evidence, except: :index, concerns: [:multiple_destroy, :previewable] do
+      resources :evidence, except: :index, concerns: [:editing_lockable, :multiple_destroy, :previewable] do
         resources :revisions, only: [:index, :show]
       end
 

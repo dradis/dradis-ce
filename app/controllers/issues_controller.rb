@@ -1,6 +1,7 @@
 class IssuesController < AuthenticatedController
   include ConflictResolver
   include ContentFromTemplate
+  include EditingLock
   include DynamicFieldNamesCacher
   include EventPublisher
   include IssuesHelper
@@ -74,6 +75,17 @@ class IssuesController < AuthenticatedController
   end
 
   def edit
+    if locked_by_other?(@issue)
+      if params[:force]
+        force_lock(@issue)
+      else
+        @lock_owner = lock_owner(@issue)
+        return
+      end
+    else
+      acquire_lock(@issue)
+    end
+
     @form_preview_path = preview_project_issue_path(current_project, @issue)
   end
 
@@ -83,6 +95,7 @@ class IssuesController < AuthenticatedController
 
       if @issue.update(issue_params)
         @modified = true
+        release_lock(@issue)
         check_for_edit_conflicts(@issue, updated_at_before_save)
         format.html { redirect_to_main_or_qa }
         publish_event('issue.updated', @issue.to_event_payload)
@@ -98,6 +111,7 @@ class IssuesController < AuthenticatedController
   end
 
   def destroy
+    release_lock(@issue)
     respond_to do |format|
       if @issue.destroy
         format.html { redirect_to project_issues_path(current_project), notice: 'Issue deleted.' }
@@ -126,6 +140,10 @@ class IssuesController < AuthenticatedController
   end
 
   private
+
+  def editing_lock_record
+    @issue
+  end
 
   def liquid_resource_assigns
     { 'issue' => IssueDrop.new(@issue) }

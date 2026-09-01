@@ -3,6 +3,7 @@
 class NotesController < NestedNodeResourceController
   include AttachmentsCopier
   include ConflictResolver
+  include EditingLock
   include LiquidEnabledResource
   include Mentioned
   include MultipleDestroy
@@ -38,6 +39,17 @@ class NotesController < NestedNodeResourceController
   end
 
   def edit
+    if locked_by_other?(@note)
+      if params[:force]
+        force_lock(@note)
+      else
+        @lock_owner = lock_owner(@note)
+        return
+      end
+    else
+      acquire_lock(@note)
+    end
+
     @versions_count = @note.versions.count
     @form_preview_path = preview_project_node_note_path(current_project, @node, @note)
   end
@@ -50,6 +62,7 @@ class NotesController < NestedNodeResourceController
     copy_attachments(@note) if @note.node_changed?
 
     if @note.save
+      release_lock(@note)
       track_updated(@note)
       check_for_edit_conflicts(@note, updated_at_before_save)
       # if the note has just been moved to another node, we must reload
@@ -64,6 +77,7 @@ class NotesController < NestedNodeResourceController
 
   # Remove a Note from the back-end database.
   def destroy
+    release_lock(@note)
     if @note.destroy
       track_destroyed(@note)
       redirect_to project_node_path(current_project, @node), notice: 'Note deleted'
@@ -84,6 +98,10 @@ class NotesController < NestedNodeResourceController
     else
       @note = @node.notes.new
     end
+  end
+
+  def editing_lock_record
+    @note
   end
 
   def liquid_resource_assigns

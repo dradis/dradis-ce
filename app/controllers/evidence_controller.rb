@@ -1,6 +1,7 @@
 class EvidenceController < NestedNodeResourceController
   include AttachmentsCopier
   include ConflictResolver
+  include EditingLock
   include EvidenceHelper
   include LiquidEnabledResource
   include Mentioned
@@ -45,6 +46,17 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def edit
+    if locked_by_other?(@evidence)
+      if params[:force]
+        force_lock(@evidence)
+      else
+        @lock_owner = lock_owner(@evidence)
+        return
+      end
+    else
+      acquire_lock(@evidence)
+    end
+
     @form_preview_path = preview_project_node_evidence_path(current_project, @node, @evidence)
   end
 
@@ -58,6 +70,7 @@ class EvidenceController < NestedNodeResourceController
       copy_attachments(@evidence) if @evidence.node_changed?
 
       if @evidence.save
+        release_lock(@evidence)
         track_updated(@evidence)
         check_for_edit_conflicts(@evidence, updated_at_before_save)
         format.html do
@@ -75,6 +88,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def destroy
+    release_lock(@evidence)
     respond_to do |format|
       if @evidence.destroy
         track_destroyed(@evidence)
@@ -104,6 +118,10 @@ class EvidenceController < NestedNodeResourceController
   end
 
   private
+
+  def editing_lock_record
+    @evidence
+  end
 
   def autogenerate_issue
     @evidence.issue = Issue.autogenerate_from(@evidence)
