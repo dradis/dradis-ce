@@ -1,6 +1,6 @@
 <span class="actions">
   <span class="action">
-    <%= link_to edit_project_issue_path(current_project, @issue) do %>
+    <%= link_to edit_project_issue_path(current_project, @issue), data: { turbo_frame: dom_id(@issue) } do %>
       <i class="fa-solid fa-pencil fa-fw"></i> Edit
     <% end %>
   </span>
