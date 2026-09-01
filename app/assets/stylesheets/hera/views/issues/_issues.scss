@@ -1,18 +1,33 @@
-body.issues.edit,
-body.issues.new,
-body.qa-issues.edit {
-  .tag-input {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    right: 0;
-    top: 0;
-    padding: 0.6rem;
+.issue-meta {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  gap: 0.25rem;
+  margin-left: 0.5rem;
 
-    .btn {
-      background: var(--primary-bg);
-      color: var(--text-default);
-    }
+  .issue-tag-badge {
+    background-color: var(--issue-tag-badge-color);
+    color: $black; // fallback for browsers without contrast-color() support
+    color: contrast-color(var(--issue-tag-badge-color));
+  }
+}
+
+.issue-title {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.tag-input {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0.6rem;
+
+  .btn {
+    background: var(--primary-bg);
+    color: var(--text-default);
   }
 }
 

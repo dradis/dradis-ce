@@ -11,10 +11,7 @@
 <!-- Main content -->
 <ul class="tabs-container nav nav-tabs main-tabs">
   <li class="nav-item">
-    <a href="#info-tab" data-bs-toggle="tab" class="nav-link active">
-      <%= tag_and_name_for(@issue) %>
-      <%= "(#{@issue.state.humanize})" %>
-    </a>
+    <a href="#info-tab" data-bs-toggle="tab" class="nav-link active"><i class="fa-solid fa-bug"></i> Issue</a>
   </li>
   <li class="nav-item"><a href="#evidence-tab" class="nav-link" data-bs-toggle="tab"><i class="fa-solid fa-laptop"></i> Evidence <span class="badge bg-primary text-white" data-behavior="evidence-count"><%= @issue.evidence.count %></span></a></li>
   <%= render_view_hooks 'issues/show-tabs' %>
@@ -35,7 +32,14 @@
             <% cache ['issue-information-tab', @issue] do %>
               <div class="note-text-inner">
                 <h4 class="mb-4 header-underline">
-                  <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
+                  <span class="issue-title text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
+                  <% tag = @issue.tags.first %>
+                  <span class="issue-meta">
+                    <span class="badge issue-tag-badge" style="--issue-tag-badge-color: <%= tag ? tag.color : 'var(--untagged-color)' %>">
+                      <i class="fa-solid fa-tag"></i> <%= tag ? h(tag.display_name) : 'No tag' %>
+                    </span>
+                    <span class="badge bg-primary text-white"><%= @issue.state.humanize %></span>
+                  </span>
                   <%= render partial: 'shared/liquid_loading' %>
                   <%= render partial: 'actions' %>
                 </h4>
