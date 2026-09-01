@@ -216,7 +216,6 @@ describe 'Issues pages' do
         describe 'submitting the form with valid information' do
           let(:field) { '#[Description]#' }
           let(:value) { 'New info' }
-          # Turbo Frame submissions use fetch/FormData, which normalizes to \n.
           let(:new_content) { "#{field}\n#{value}" }
 
           before do
