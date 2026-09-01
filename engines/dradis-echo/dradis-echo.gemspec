@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.authors = ['Daniel Martin']
   spec.homepage = 'https://dradis.com/support/'
 
-  spec.files = `git ls-files`.split($\)
+  spec.files = Dir['{app,config,db,lib}/**/*', 'CHANGELOG.md', 'Rakefile', 'README.md']
   spec.executables = spec.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   spec.test_files = spec.files.grep(%r{^(test|spec|features)/})
 
