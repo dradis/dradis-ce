@@ -27,5 +27,9 @@ module Projects
         issues_count: @count_by_tag.to_json
       }
     end
+
+    def list_fields
+      []
+    end
   end
 end

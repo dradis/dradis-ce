@@ -27,4 +27,14 @@ describe Projects::IssuesSummaryGrouping do
       })
     end
   end
+
+  describe '#list_fields' do
+    it 'returns an empty array' do
+      host = Class.new do
+        include Projects::IssuesSummaryGrouping
+      end.new
+
+      expect(host.send(:list_fields)).to eq([])
+    end
+  end
 end
