@@ -1,51 +1,30 @@
 <section class="summary-panel">
   <% if @issues.any? %>
-    <h4 class="header-underline">Issues so far</h4>
-    <div id="issue-chart"></div>
+    <h4 class="header-underline">Issues so far
+      <span class="actions pt-1">
+        <div class="action">
+          <select class="form-select form-select-sm issues-grouping-select"
+                  data-controller="issues-grouping"
+                  data-issues-grouping-project-id-value="<%= current_project.id %>"
+                  data-issues-grouping-target="select">
+            <option value="tags" <%= 'selected' if @grouping == 'tags' %>>Tags</option>
+            <optgroup label="Lists">
+              <% if @list_fields.any? %>
+                <% @list_fields.each do |field| %>
+                  <option value="list:<%= field.name %>" <%= 'selected' if @grouping == "list:#{field.name}" %>><%= field.name %></option>
+                <% end %>
+              <% else %>
+                <option disabled>No lists defined in report template.</option>
+              <% end %>
+            </optgroup>
+          </select>
+        </div>
+      </span>
+    </h4>
+    <%= tag.div id: 'issue-chart', data: @chart_data.merge(behavior: 'issue-chart') %>
 
     <div id="issues-accordion" role="tablist">
-      <% for tag in @tags do %>
-        <% if @issues_by_tag[tag.name].any? %>
-          <div class="card" style="border-color: <%= tag.color %>">
-            <a data-bs-toggle="collapse" href="#collape<%= tag.display_name %>" class="card-header" style="background: <%= tag.color %>" data-behavior="card-header">
-              <h5><%= tag.display_name %><span class="float-end"><i class="fa-solid fa-caret-up" data-behavior="caret-icon"></i></span></h5>
-            </a>
-
-            <div id="collape<%= tag.display_name %>" class="collapse show">
-              <div class="card-body p-0">
-                <ul class="list-group">
-                  <% @issues_by_tag[tag.name].each do |issue| %>
-                    <%= link_to [current_project, issue], class: 'list-group-item'  do %>
-                      <li><i class="fa-solid fa-bug me-2" style="color: <%= tag.color %>"></i><%= issue.title %></li>
-                    <% end %>
-                  <% end %>
-                </ul>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      <% end %>
-
-      <%# unassigned %>
-      <% if @issues_by_tag[:unassigned].any? %>
-        <div class="card untagged">
-          <a data-bs-toggle="collapse" href="#collapeUnassigned" class="card-header" data-behavior="card-header">
-            <h5>Unassigned<span class="float-end"><i class="fa-solid fa-caret-up" data-behavior="caret-icon"></i></span></h5>
-          </a>
-
-          <div id="collapeUnassigned" class="collapse show">
-            <div class="card-body p-0">
-              <ul class="list-group">
-                <% @issues_by_tag[:unassigned].each do |issue| %>
-                  <%= link_to [current_project, issue], class: 'list-group-item'  do %>
-                    <li><i class="fa-solid fa-bug me-2"></i><%= issue.title %></li>
-                  <% end %>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-        </div>
-      <% end %>
+      <%= render 'projects/issues/summary/tags_accordion' %>
     </div>
 
   <% else %>
@@ -57,7 +36,3 @@
     %>
   <% end %>
 </section>
-
-<% if @issues.any? %>
-  <div id='issues-summary-data' data-tags='<%= @tag_names.to_json %>' data-issues-count='<%= @count_by_tag.to_json %>'></div>
-<% end %>

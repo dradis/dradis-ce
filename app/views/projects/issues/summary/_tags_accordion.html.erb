@@ -1,0 +1,39 @@
+<% @tags.each do |tag| %>
+  <% if @issues_by_tag[tag.name].any? %>
+    <div class="card" style="border-color: <%= tag.color %>">
+      <a data-bs-toggle="collapse" href="#collapse<%= tag.display_name %>" class="card-header" style="background: <%= tag.color %>" data-behavior="card-header">
+        <h5><%= tag.display_name %><span class="float-end"><i class="fa-solid fa-caret-up" data-behavior="caret-icon"></i></span></h5>
+      </a>
+      <div id="collapse<%= tag.display_name %>" class="collapse show">
+        <div class="card-body p-0">
+          <ul class="list-group">
+            <% @issues_by_tag[tag.name].each do |issue| %>
+              <%= link_to [current_project, issue], class: 'list-group-item' do %>
+                <li><i class="fa-solid fa-bug me-2" style="color: <%= tag.color %>"></i><%= issue.title %></li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<% if @issues_by_tag[:unassigned].any? %>
+  <div class="card untagged">
+    <a data-bs-toggle="collapse" href="#collapseUnassigned" class="card-header" data-behavior="card-header">
+      <h5>Unassigned<span class="float-end"><i class="fa-solid fa-caret-up" data-behavior="caret-icon"></i></span></h5>
+    </a>
+    <div id="collapseUnassigned" class="collapse show">
+      <div class="card-body p-0">
+        <ul class="list-group">
+          <% @issues_by_tag[:unassigned].each do |issue| %>
+            <%= link_to [current_project, issue], class: 'list-group-item' do %>
+              <li><i class="fa-solid fa-bug me-2"></i><%= issue.title %></li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% end %>
