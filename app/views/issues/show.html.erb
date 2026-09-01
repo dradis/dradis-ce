@@ -26,6 +26,9 @@
       <div class="tab-content">
         <div class="tab-pane active" id="info-tab">
           <%= turbo_frame_tag dom_id(@issue) do %>
+            <% if turbo_frame_request_id.present? %>
+              <%= flash_messages(extra_classes: 'mt-0 mb-4') %>
+            <% end %>
             <% if @conflicting_revisions %>
               <%= render "projects/conflicting_revisions", conflicts: @conflicting_revisions, record: @issue %>
             <% end %>
