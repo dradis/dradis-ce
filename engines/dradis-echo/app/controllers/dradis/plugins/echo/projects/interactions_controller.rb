@@ -10,9 +10,7 @@ module Dradis::Plugins::Echo
     before_action :set_record
 
     def index
-      Prompt.seed_default_prompts(current_user) if current_user.prompts.empty?
-
-      @prompts = current_user.prompts.for(@type)
+      @prompts = Prompt.ensure_defaults_for!(current_user, @type)
       @sessions = Session.for_record(@record).order(updated_at: :desc)
     end
 

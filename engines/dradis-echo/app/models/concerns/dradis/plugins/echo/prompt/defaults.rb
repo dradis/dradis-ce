@@ -68,8 +68,8 @@ module Dradis::Plugins::Echo
         ]
       end
 
-      def seed_default_prompts(user)
-        user.prompts = defaults.dup
+      def defaults_for(scope)
+        defaults.select { |prompt| prompt.scope.to_sym == scope.to_sym }
       end
     end
   end

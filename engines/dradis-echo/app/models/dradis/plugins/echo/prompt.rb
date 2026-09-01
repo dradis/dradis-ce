@@ -31,6 +31,15 @@ module Dradis::Plugins::Echo
 
     # -- Class Methods ----------------------------------------------------------
 
+    # Loads (seeding the scope's defaults first if the user has none yet) the
+    # user's prompts for a scope. Checking emptiness per scope rather than
+    # globally means a user who already has prompts in one scope still gets
+    # another scope's defaults backfilled.
+    def self.ensure_defaults_for!(user, scope)
+      user.prompts << defaults_for(scope) if user.prompts.for(scope).empty?
+      user.prompts.for(scope)
+    end
+
     # -- Instance Methods -------------------------------------------------------
     private
     def set_defaults

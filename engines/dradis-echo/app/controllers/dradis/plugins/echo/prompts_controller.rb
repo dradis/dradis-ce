@@ -3,7 +3,7 @@ module Dradis::Plugins::Echo
     before_action :set_prompt, only: [:show, :edit, :update, :destroy]
 
     def index
-      Prompt.seed_default_prompts(current_user) if current_user.prompts.empty?
+      Prompt::SCOPES.each { |scope| Prompt.ensure_defaults_for!(current_user, scope) }
 
       @prompts = current_user.prompts
     end
