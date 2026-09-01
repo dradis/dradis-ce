@@ -1,6 +1,5 @@
 class Issue < Note
   include Commentable
-  include Eventable
   include InlineCommentable
   # FIXME - ISSUE/NOTE INHERITANCE
   # Commentable.allowed_types << base.name doesn't work for Issue because it's
