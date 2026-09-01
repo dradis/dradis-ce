@@ -1,6 +1,5 @@
 <section class="summary-panel">
   <h4 class="header-underline">Issues so far
-    <% if defined?(Dradis::Pro) %>
     <span class="actions pt-1">
       <div class="action">
         <select class="form-select form-select-sm issues-grouping-select"
@@ -20,7 +19,6 @@
         </select>
       </div>
     </span>
-    <% end %>
   </h4>
 
   <%= turbo_frame_tag 'issues-summary', src: project_dashboard_issues_path(current_project) %>
