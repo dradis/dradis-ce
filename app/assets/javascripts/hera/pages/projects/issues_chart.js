@@ -1,4 +1,7 @@
-function initIssuesChart() {
+document.addEventListener('turbo:frame-load', e => {
+  if (!$('body.projects.show').length || e.target.id !== 'issues-summary') { return; }
+
+  function initIssuesChart() {
     const $chartElement = $('[data-behavior~=issue-chart]');
 
     if (!$chartElement.length || $chartElement.find('svg').length > 0) { return; }
@@ -94,8 +97,5 @@ function initIssuesChart() {
     }
 }
 
-document.addEventListener('turbo:frame-load', e => {
-  if (e.target.id === 'issues-summary') {
-    initIssuesChart();
-  }
+  initIssuesChart();
 });
