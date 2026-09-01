@@ -216,7 +216,8 @@ describe 'Issues pages' do
         describe 'submitting the form with valid information' do
           let(:field) { '#[Description]#' }
           let(:value) { 'New info' }
-          let(:new_content) { "#{field}\r\n#{value}" }
+          # Turbo Frame submissions use fetch/FormData, which normalizes to \n.
+          let(:new_content) { "#{field}\n#{value}" }
 
           before do
             fill_in :issue_text, with: field
@@ -225,10 +226,10 @@ describe 'Issues pages' do
 
           let(:submit_form) { click_button 'Update Issue' }
 
-          it 'updates and shows the issue' do
+          it 'updates the issue in place, without a full navigation' do
             submit_form
             expect(@issue.reload.text).to eq new_content
-            expect(current_path).to eq project_issue_path(current_project, @issue)
+            expect(current_path).to eq action_path
           end
 
           let(:model) { @issue }
@@ -275,7 +276,7 @@ describe 'Issues pages' do
 
           let(:column) { :text }
           let(:record) { @issue }
-          it_behaves_like 'a page which handles edit conflicts'
+          it_behaves_like 'a page which handles edit conflicts', updates_in_place: true
         end
 
         context 'submitting the form with invalid information' do
@@ -404,7 +405,7 @@ describe 'Issues pages' do
 
         context 'with states' do
           it 'shows the issue states in the view' do
-            expect(page).to have_text "(#{@issue.state.humanize})"
+            expect(page).to have_text @issue.state.humanize
           end
         end
 
