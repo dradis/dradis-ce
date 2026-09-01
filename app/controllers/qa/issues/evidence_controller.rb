@@ -9,6 +9,7 @@ class QA::Issues::EvidenceController < AuthenticatedController
   before_action :set_columns, only: :index
   before_action :set_evidence, only: [:edit, :show, :update]
   before_action :set_evidence_for_review, only: [:edit, :show]
+  before_action :set_node_evidence, only: :index
   before_action :validate_state, only: [:multiple_update, :update]
 
   def index
@@ -107,6 +108,10 @@ class QA::Issues::EvidenceController < AuthenticatedController
 
   def set_issue
     @issue = current_project.issues.ready_for_review.find(params[:issue_id])
+  end
+
+  def set_node_evidence
+    @node_evidence = @affected_nodes.index_with { |node| node.evidence.where(issue_id: @issue.id).ready_for_review }
   end
 
   def validate_state

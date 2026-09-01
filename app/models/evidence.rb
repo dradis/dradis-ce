@@ -45,7 +45,8 @@ class Evidence < ApplicationRecord
       node: {
         id: node.id,
         label: node.label
-      }
+      },
+      fields: fields
     }
   end
 
