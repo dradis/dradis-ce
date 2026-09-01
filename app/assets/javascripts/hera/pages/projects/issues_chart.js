@@ -1,5 +1,5 @@
-document.addEventListener('turbo:load', () => {
-  if (!$('body.projects.show').length) { return; }
+document.addEventListener('turbo:frame-load', e => {
+  if (!$('body.projects.show').length || e.target.id !== 'issues-summary') { return; }
 
   function initIssuesChart() {
     const $chartElement = $('[data-behavior~=issue-chart]');
@@ -95,7 +95,7 @@ document.addEventListener('turbo:load', () => {
         .attr('class', 'legend-label')
         .text(d => d.letter);
     }
-  }
+}
 
   initIssuesChart();
 });
