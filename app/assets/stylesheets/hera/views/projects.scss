@@ -1,4 +1,12 @@
 body.projects {
+  &.ce {
+    .summary-panel {
+      .combobox-container:has(.issues-grouping-select) {
+        display: none;
+      }
+    }
+  }
+
   .summary-panel {
     #boards-summary {
       display: flex;

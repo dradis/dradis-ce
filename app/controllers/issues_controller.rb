@@ -31,8 +31,8 @@ class IssuesController < AuthenticatedController
                         .group('nodes.id')
                         .sort_by { |node, _| node.label }
 
-    @first_node      = @affected_nodes.first
-    @first_evidence  = Evidence.where(node: @first_node, issue: @issue)
+    @first_node = @affected_nodes.first
+    @first_evidence = Evidence.where(node: @first_node, issue: @issue)
 
     load_conflicting_revisions(@issue)
   end

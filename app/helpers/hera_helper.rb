@@ -1,8 +1,6 @@
 module HeraHelper
   def body_css
-    classes = [controller_path.gsub('/', '-'), action_name]
-    classes << content_for(:body_class) if content_for?(:body_class)
-    classes.compact.join(' ')
+    class_names(controller_path.gsub('/', '-'), action_name, Dradis.edition, content_for(:body_class))
   end
 
   def colored_icon_for_model(model, icon_class, extra_class = nil)
