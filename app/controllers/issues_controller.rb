@@ -89,7 +89,7 @@ class IssuesController < AuthenticatedController
       else
         format.html do
           flash.now[:alert] = 'Issue couldn\'t be updated.'
-          render :edit
+          render :edit, status: :unprocessable_entity
         end
       end
       format.js

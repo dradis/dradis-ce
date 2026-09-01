@@ -93,6 +93,12 @@ document.addEventListener('turbo:load', function () {
         new LocalAutoSave(this);
       });
 
+    // Activate the issue tag dropdown
+    initTagInput(parentElement);
+
+    // Activate the state dropdown
+    initStateButton(parentElement);
+
     // Fetch content
     $(parentElement)
       .find('[data-behavior~=fetch]')
@@ -183,6 +189,9 @@ document.addEventListener('turbo:load', function () {
       .each(function () {
         new ComboBox($(this));
       });
+
+    // Render Liquid dynamic content
+    initLiquidAsync(parentElement);
 
     // Sortable lists
     $('[data-behavior~=ui-sortable]').sortable({
