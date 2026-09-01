@@ -11,14 +11,15 @@ describe 'Echo prompts' do
 
       expect(response).to have_http_status(:ok)
       titles = @logged_in_as.prompts.pluck(:title)
-      expect(titles).to include('Summarize', 'Reword', 'Haiku')
+      expect(titles).to match_array(Dradis::Plugins::Echo::Prompt.defaults_for(:issue).map(&:title))
     end
 
     it 'does not duplicate defaults the user already has' do
       get '/addons/echo/prompts'
       get '/addons/echo/prompts'
 
-      expect(@logged_in_as.prompts.where(title: 'Summarize').count).to eq(1)
+      titles = @logged_in_as.prompts.pluck(:title)
+      expect(titles).to match_array(Dradis::Plugins::Echo::Prompt.defaults_for(:issue).map(&:title))
     end
   end
 end
