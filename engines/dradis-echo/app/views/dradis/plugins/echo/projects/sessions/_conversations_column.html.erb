@@ -16,7 +16,7 @@
             locals: { record: record, type: type, active_session: active_session } %>
     <% else %>
       <div class="echo-session-empty">
-        <i class="fa-regular fa-comments me-1"></i> No conversations on this Issue yet — start one below.
+        <i class="fa-regular fa-comments me-1"></i> No conversations on this <%= record.model_name.human %> yet — start one below.
       </div>
     <% end %>
   </div>
