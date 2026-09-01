@@ -59,7 +59,8 @@ v5.2.0 (July 2026)
 v5.1.0 (May 2026)
   - DataTables: add sticky table toolbar that tracks below the navigation bar when scrolling
   - Mail: add support for SMTP configuration via environment variables for Docker deployments; smtp.yml remains supported for VM deployments during the deprecation transition
-  - Show don't gate: 
+  - Ruby: Upgrade Ruby version to 3.4.9
+  - Show don't gate:
     - Node-level Methodologies
     - Projects
   - Upgraded gems:
