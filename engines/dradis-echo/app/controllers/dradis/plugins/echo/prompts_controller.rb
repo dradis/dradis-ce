@@ -3,9 +3,7 @@ module Dradis::Plugins::Echo
     before_action :set_prompt, only: [:show, :edit, :update, :destroy]
 
     def index
-      Prompt::SCOPES.each { |scope| Prompt.ensure_defaults_for!(current_user, scope) }
-
-      @prompts = current_user.prompts
+      @prompts = Prompt::SCOPES.flat_map { |scope| Prompt.ensure_defaults_for!(current_user, scope) }
     end
 
     def new
