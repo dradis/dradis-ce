@@ -117,8 +117,7 @@ class Issue < Note
   # This is useful in a number of views to present or hide information about
   # all the instances for a given issue and node/host.
   def evidence_by_node(scope = :all)
-    evidence_collection = scope.to_sym == :published ? evidence.published : evidence
-    evidence_collection = evidence_collection.includes(:node)
+    evidence_collection = evidence.send(scope).includes(:node)
 
     results = Hash.new { |h, k| h[k] = [] }
 
