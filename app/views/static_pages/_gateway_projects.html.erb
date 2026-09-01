@@ -1,0 +1,32 @@
+<div class="dataTables_wrapper">
+  <table class="table table-striped dataTable mb-0">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Team</th>
+        <th>Theme</th>
+        <th>Created</th>
+        <th>Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @projects.each_with_index do |project, index| %>
+        <tr id="gateway-project-<%= index %>">
+          <td>
+            <a
+              href="javascript:void(0)"
+              class="js-try-pro"
+              data-term="gateway"
+              data-url="https://dradis.com/pro/pages/gateway.html">
+              <%= project[:name] %>
+            </a>
+          </td>
+          <td><%= project[:team] %></td>
+          <td><%= project[:theme] %></td>
+          <td><%= project[:created_at].strftime('%B %d, %Y') %></td>
+          <td><%= project[:updated_at].strftime('%B %d, %Y') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

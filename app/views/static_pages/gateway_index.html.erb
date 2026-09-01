@@ -1,0 +1,173 @@
+<% content_for :title, 'Gateway' %>
+
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to 'Dashboard', main_app.root_path %></li>
+    <li class="breadcrumb-item active">Gateway</li>
+  </ol>
+<% end %>
+
+<% content_for :sidebar do %>
+  <div class="header">
+    <div class="header-inner">
+      <h5 class="header-name">Gateway Tips</h5>
+      <div class="options">
+        <%= link_to '#gateway-tips', data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle update state</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div id="gateway-tips" class="page-tips show collapse">
+    <div class="bg-info">
+      <p>With Dradis Gateway:</p>
+      <ul class="fa-ul">
+        <li>
+          <p><i class="fa-solid fa-li fa-check text-mint"></i> Share live assessment results with contributors</p>
+        </li>
+        <li>
+          <p><i class="fa-solid fa-li fa-check text-mint"></i> Customise the view with your own themes</p>
+        </li>
+        <li>
+          <p><i class="fa-solid fa-li fa-check text-mint"></i> Accept questionnaire responses from contributors</p>
+        </li>
+        <li>
+          <p><i class="fa-solid fa-li fa-check text-mint"></i> Share deliverables directly through the portal</p>
+        </li>
+      </ul>
+      <p class="text-end card-link">More about <a href="https://dradis.com/tools/gateway.html" target="_blank">Dradis Gateway</a>.</p>
+    </div>
+  </div>
+<% end %>
+
+<h1>Gateway</h1>
+<h2 class="mb-3">Share the results of your assessments with contributors in real-time</h2>
+
+<div class="row mb-4">
+  <div class="col-md-6 mb-3">
+    <div class="card h-100">
+      <div class="card-body active-project">
+        <div class="d-flex justify-content-between align-items-start mb-1">
+          <a
+            href="javascript:void(0)"
+            class="h5 project-link text-truncate js-try-pro"
+            data-term="gateway"
+            data-url="https://dradis.com/pro/pages/gateway.html">
+            <%= @project.name %>
+          </a>
+        </div>
+        <% last_updated_at = @project.activities.maximum(:created_at) %>
+        <% if last_updated_at %>
+          <span class="small text-muted d-block mb-3">Last updated <%= time_ago_in_words(last_updated_at) %> ago</span>
+        <% end %>
+        <div class="metrics d-flex justify-content-between my-2">
+          <p><i class="fa-solid fa-bug fa-fw me-1"></i><%= pluralize(@project.issues.size, 'Issue') %></p>
+          <p><i class="fa-solid fa-flag fa-fw me-1"></i><%= @project.evidence.size %> Evidence</p>
+          <p><i class="fa-solid fa-sitemap fa-fw me-1"></i><%= pluralize(@project.nodes.size, 'Node') %></p>
+        </div>
+
+        <div class="divider divider-lg">
+          <span class="divider-label">Top 3 Vulnerabilities</span>
+        </div>
+        <div class="top-issues mb-4 pb-2">
+          <% if @project.issues.any? %>
+            <% top_issues = top_issues_by_evidence_count(@project) %>
+            <% max_issue_evidence = top_issues.first.evidence.size %>
+            <div data-behavior="board-progress">
+              <% top_issues.each do |issue| %>
+                <% percent = max_issue_evidence.zero? ? 0 : (issue.evidence.size.to_f / max_issue_evidence) * 100 %>
+                <div class="progress justify-content-between mb-2">
+                  <span class="px-3 text-end text-truncate"><%= issue.title %></span>
+                  <div class="count-wrapper d-flex w-100">
+                    <div
+                      class="progress-bar"
+                      data-bs-toggle="tooltip"
+                      title='<%= "#{issue.title} (#{issue.evidence.size} #{'occurrence'.pluralize(issue.evidence.size)})" %>'
+                      role="progressbar"
+                      style="<%= chart_styles(issue, percent) %>"
+                      aria-valuenow="<%= percent %>"
+                      aria-valuemin="0"
+                      aria-valuemax="100">
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="board-progress" data-behavior="board-progress">
+              <p class="board-name small">
+                <i class="fa-solid fa-bug fa-fw me-1" title="Issues"></i>
+                <span>Issues: 0</span>
+              </p>
+              <div class="progress empty">
+                <div class="progress-bar" role="progressbar"></div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <% top_nodes = top_nodes_by_issue_count(@project) %>
+
+        <div class="divider divider-lg">
+          <span class="divider-label">Top 3 Affected Nodes</span>
+        </div>
+        <div class="top-nodes">
+          <% if top_nodes.any? %>
+            <% max_node_issues = top_nodes.map { |n| n.issues_count.to_i }.max %>
+            <div data-behavior="board-progress">
+              <% top_nodes.each do |node| %>
+                <% next if max_node_issues.zero? %>
+                <% percent = (node.issues_count.to_f / max_node_issues) * 100 %>
+                <div class="progress justify-content-between mb-2">
+                  <span class="px-3 text-end"><%= node.label %></span>
+                  <div class="count-wrapper d-flex w-100">
+                    <% if percent == 0 %>
+                      <div class="d-flex justify-content-start w-100 h-100" style="background-color: var(--secondary-bg)"></div>
+                    <% else %>
+                      <div class="d-flex justify-content-start" style="width: <%= percent %>%;">
+                        <% issues_grouped_by_tag(node.issues).each do |tag, issues| %>
+                          <% bar_width = (issues.size.to_f / node.issues_count.to_f) * 100 %>
+                          <div
+                            class="progress-bar"
+                            data-bs-toggle="tooltip"
+                            title='<%= tag.nil? ? "Untagged (#{issues.size} #{'issue'.pluralize(issues.size)})" : "#{tag.display_name} (#{issues.size} #{'issue'.pluralize(issues.size)})" %>'
+                            role="progressbar"
+                            style="width: <%= bar_width %>%; background-color: <%= tag.nil? ? 'var(--untagged-color)' : tag.color %>"
+                            aria-valuenow="<%= bar_width %>"
+                            aria-valuemin="0"
+                            aria-valuemax="100">
+                          </div>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="board-progress" data-behavior="board-progress">
+              <p class="board-name small">
+                <i class="fa-solid fa-sitemap me-1" title="Nodes"></i>
+                <span>Nodes with Issues: 0</span>
+              </p>
+              <div class="progress empty">
+                <div class="progress-bar" role="progressbar"></div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="mt-0">
+
+<div class="card">
+  <div class="card-header bg-primary">
+    <h4 class="card-title mb-0">Projects</h4>
+  </div>
+  <div class="card-body">
+    <%= render partial: 'gateway_projects' %>
+  </div>
+</div>

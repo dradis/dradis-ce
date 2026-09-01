@@ -1,6 +1,8 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
+  - Show don't gate:
+    - Gateway
   - Upgraded gems:
     - mail, sqlite3
   - Bugs fixes:

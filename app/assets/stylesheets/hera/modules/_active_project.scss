@@ -130,6 +130,10 @@
     display: flex;
     flex-direction: column;
 
+    .badge.text-truncate {
+      max-width: 9rem;
+    }
+
     .project-link {
       overflow: hidden;
     }
