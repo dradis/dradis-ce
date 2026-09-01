@@ -19,7 +19,7 @@ module Dradis::Plugins::Echo
     validates :title,
       length: { maximum: DB_MAX_STRING_LENGTH },
       presence: true,
-      uniqueness: { scope: :user_id }
+      uniqueness: { scope: [ :user_id, :scope ] }
 
     validates :prompt, presence: true
     validates :scope, inclusion: SCOPES.map(&:to_s), presence: true
