@@ -4,6 +4,7 @@ class Issues::EvidenceController < AuthenticatedController
   include EventPublisher
   include MultipleDestroy
   include ProjectScoped
+  include Publishable
 
   before_action :set_issues, only: [:create_multiple, :index, :new]
   before_action :set_affected_nodes, only: :index
