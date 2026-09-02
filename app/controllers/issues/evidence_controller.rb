@@ -25,6 +25,8 @@ class Issues::EvidenceController < AuthenticatedController
     # validate Issue
     @issue = current_project.issues.find(evidence_params[:issue_id])
 
+    state = evidence_params[:state].presence || :draft
+
     if node_params_empty?
       @content = evidence_params[:content]
       @nodes_for_add_evidence = current_project.nodes.user_nodes.order(:label)
@@ -40,7 +42,8 @@ class Issues::EvidenceController < AuthenticatedController
           author: current_user.email,
           content: evidence_params[:content],
           issue_id: @issue.id,
-          node_id: node.id
+          node_id: node.id,
+          state: state
         )
         publish_event('evidence.created', evidence.to_event_payload)
       end
@@ -64,7 +67,8 @@ class Issues::EvidenceController < AuthenticatedController
           author: current_user.email,
           content: evidence_params[:content],
           issue_id: @issue.id,
-          node_id: node.id
+          node_id: node.id,
+          state: state
         )
         publish_event('evidence.created', evidence.to_event_payload)
       end
@@ -83,7 +87,7 @@ class Issues::EvidenceController < AuthenticatedController
   end
 
   def evidence_params
-    params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
+    params.require(:evidence).permit(:author, :content, :issue_id, :node_id, :state)
   end
 
   def node_params_empty?
