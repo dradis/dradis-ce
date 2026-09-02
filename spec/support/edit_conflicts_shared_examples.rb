@@ -64,8 +64,8 @@ shared_examples 'a page which handles edit conflicts' do |updates_in_place: fals
     it 'links to the previous versions' do
       submit_form
       all_versions = record.versions.order('created_at ASC')
-      my_version   = all_versions[-1]
-      conflict     = all_versions[-2]
+      my_version = all_versions[-1]
+      conflict = all_versions[-2]
       old_versions = all_versions - [my_version, conflict]
 
       expect(page).to have_link(
@@ -94,8 +94,8 @@ shared_examples 'a page which handles edit conflicts' do |updates_in_place: fals
       it 'links to them all' do
         submit_form
         all_versions = record.versions.order('created_at ASC')
-        my_version   = all_versions[-1]
-        conflicts    = all_versions[-3..-2]
+        my_version = all_versions[-1]
+        conflicts = all_versions[-3..-2]
         old_versions = all_versions - [my_version] - conflicts
 
         expect(page).to have_link(
