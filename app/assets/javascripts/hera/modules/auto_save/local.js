@@ -96,7 +96,11 @@ class LocalAutoSave {
         } else if (element.type === 'file') {
           element.value = '';
         } else if (element.name === 'issue[tag_list]') {
-          var $tagDropdownItem = $(`.js-taglink[data-tag='${item[1]}']`);
+          const $tagDropdownItem = $('[data-behavior~=tag-link]').filter(
+            function () {
+              return $(this).data('tag') === item[1];
+            }
+          );
           new SelectTagDropdown($tagDropdownItem)
         } else {
           element.value = item[1];
