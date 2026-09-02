@@ -4,6 +4,7 @@ class Issues::EvidenceController < AuthenticatedController
   include EventPublisher
   include MultipleDestroy
   include ProjectScoped
+  include Publishable
 
   before_action :set_issues, only: [:create_multiple, :index, :new]
   before_action :set_affected_nodes, only: :index
@@ -37,10 +38,7 @@ class Issues::EvidenceController < AuthenticatedController
       params[:evidence][:node_ids].reject(&:blank?).each do |node_id|
         node = current_project.nodes.find(node_id)
         evidence = Evidence.create!(
-          author: current_user.email,
-          content: evidence_params[:content],
-          issue_id: @issue.id,
-          node_id: node.id
+          evidence_params.merge(author: current_user.email, issue_id: @issue.id, node_id: node.id)
         )
         publish_event('evidence.created', evidence.to_event_payload)
       end
@@ -61,10 +59,7 @@ class Issues::EvidenceController < AuthenticatedController
         end
 
         evidence = Evidence.create!(
-          author: current_user.email,
-          content: evidence_params[:content],
-          issue_id: @issue.id,
-          node_id: node.id
+          evidence_params.merge(author: current_user.email, issue_id: @issue.id, node_id: node.id)
         )
         publish_event('evidence.created', evidence.to_event_payload)
       end
@@ -83,7 +78,7 @@ class Issues::EvidenceController < AuthenticatedController
   end
 
   def evidence_params
-    params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
+    params.require(:evidence).permit(:author, :content, :issue_id, :node_id, :state)
   end
 
   def node_params_empty?
