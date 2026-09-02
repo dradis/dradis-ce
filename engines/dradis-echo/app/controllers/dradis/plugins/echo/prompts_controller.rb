@@ -7,7 +7,7 @@ module Dradis::Plugins::Echo
     end
 
     def new
-      @prompt = current_user.prompts.new
+      @prompt = current_user.prompts.new(scope: params[:scope])
     end
 
     def create

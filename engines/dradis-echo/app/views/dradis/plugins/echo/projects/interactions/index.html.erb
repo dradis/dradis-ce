@@ -44,8 +44,9 @@
     <%= render 'shared/empty_state',
       actions_partial: 'dradis/plugins/echo/prompts/empty_state_actions',
       docs_link: 'https://dradis.com/support/guides/echo/prompts.html',
-      name: 'prompt',
-      text: 'Create reusable prompts to standardize how your team analyzes findings, writes reports, summarizes vulnerabilities, and more. Save time by building a library of prompts that anyone on your team can use for consistent results.'
+      docs_name: 'prompts',
+      name: "#{@type.to_s.titleize} prompt",
+      text: 'Create reusable prompts to standardize how your team drafts and refines content with Roslin. Save time by building a library of prompts that anyone on your team can use for consistent results.'
     %>
   <% end %>
 <% else %>
