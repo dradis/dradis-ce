@@ -220,6 +220,23 @@ document.addEventListener('turbo:load', function () {
     initBehaviors(event.target);
   });
 
+  // Turbo Stream actions (replace/update/append) patch the DOM directly and
+  // don't fire turbo:frame-load, so content they insert never gets its
+  // behaviors initialized. Reinitialize just the affected target after Turbo
+  // applies the stream action.
+  document.addEventListener('turbo:before-stream-render', function (event) {
+    const render = event.detail.render;
+
+    event.detail.render = async function (streamElement) {
+      await render(streamElement);
+
+      const targetElement = document.getElementById(
+        streamElement.getAttribute('target')
+      );
+      if (targetElement) initBehaviors(targetElement);
+    };
+  });
+
   // Because this is an event and not a data-driven behavior, we can leave it
   // out of initBehaviors and attach the listener to document directly.
   //
