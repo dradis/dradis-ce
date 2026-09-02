@@ -100,6 +100,11 @@ th {
   color: var(--badge-lavender-color);
 }
 
+.badge-outline-primary {
+  border: 1px solid $primary;
+  color: $primary;
+}
+
 .bg-info {
   background-color: $green-100 !important;
   color: $green-900;

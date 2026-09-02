@@ -32,14 +32,7 @@
             <% cache ['issue-information-tab', @issue] do %>
               <div class="note-text-inner">
                 <h4 class="mb-4 header-underline">
-                  <span class="issue-title text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
-                  <% tag = @issue.tags.first %>
-                  <span class="issue-meta">
-                    <span class="badge issue-tag-badge" style="--issue-tag-badge-color: <%= tag ? tag.color : 'var(--untagged-color)' %>">
-                      <i class="fa-solid fa-tag"></i> <%= tag ? h(tag.display_name) : 'No tag' %>
-                    </span>
-                    <span class="badge bg-primary text-white"><%= @issue.state.humanize %></span>
-                  </span>
+                  <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
                   <%= render partial: 'shared/liquid_loading' %>
                   <%= render partial: 'actions' %>
                 </h4>

@@ -1,20 +1,20 @@
+.issue-breadcrumbs {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
 .issue-meta {
   align-items: center;
   display: flex;
   flex-shrink: 0;
   gap: 0.25rem;
-  margin-left: 0.5rem;
 
   .issue-tag-badge {
     background-color: var(--issue-tag-badge-color);
     color: $black; // fallback for browsers without contrast-color() support
     color: contrast-color(var(--issue-tag-badge-color));
   }
-}
-
-.issue-title {
-  flex: 0 1 auto;
-  min-width: 0;
 }
 
 .tag-input {
