@@ -1,9 +1,12 @@
 require 'rails_helper'
-require File.expand_path('../../../../factories/prompts', __dir__)
 
 describe Dradis::Plugins::Echo::Prompt do
   describe 'validations' do
-    subject { create(:echo_prompt) }
+    subject do
+      create(:user).prompts.create!(
+        title: 'Summarize', prompt: 'Summarize {{ issue.title }}', scope: 'issue', visibility: :user
+      )
+    end
 
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:prompt) }
