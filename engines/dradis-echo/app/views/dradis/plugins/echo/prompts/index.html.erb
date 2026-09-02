@@ -62,7 +62,7 @@
           <tr>
             <td><%= content_tag :i, nil, class: "fa-solid #{prompt.icon}" %> <%= prompt.title %></td>
             <td><%= prompt.prompt %></td>
-            <td><%= prompt.scope.to_s.humanize %></td>
+            <td><%= prompt.scope.to_s.titleize %></td>
             <td><%= local_time_ago(prompt.created_at) %></td>
             <td><%= local_time_ago(prompt.updated_at) %></td>
             <td class="column-actions">
