@@ -1,6 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Activities: Remove ActivityTracking for Evidence, Nodes and Notes and use EventPublisher
   - QA: Add QA states to evidence
+  - Webhooks: Add Evidence, Node and Note CRUD webhook events
   - Upgraded gems:
     - mail, sqlite3
   - Bugs fixes:
