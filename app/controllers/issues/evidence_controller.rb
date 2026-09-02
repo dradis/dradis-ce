@@ -26,8 +26,6 @@ class Issues::EvidenceController < AuthenticatedController
     # validate Issue
     @issue = current_project.issues.find(evidence_params[:issue_id])
 
-    state = evidence_params[:state].presence || :draft
-
     if node_params_empty?
       @content = evidence_params[:content]
       @nodes_for_add_evidence = current_project.nodes.user_nodes.order(:label)
@@ -40,11 +38,7 @@ class Issues::EvidenceController < AuthenticatedController
       params[:evidence][:node_ids].reject(&:blank?).each do |node_id|
         node = current_project.nodes.find(node_id)
         evidence = Evidence.create!(
-          author: current_user.email,
-          content: evidence_params[:content],
-          issue_id: @issue.id,
-          node_id: node.id,
-          state: state
+          evidence_params.merge(author: current_user.email, issue_id: @issue.id, node_id: node.id)
         )
         publish_event('evidence.created', evidence.to_event_payload)
       end
@@ -65,11 +59,7 @@ class Issues::EvidenceController < AuthenticatedController
         end
 
         evidence = Evidence.create!(
-          author: current_user.email,
-          content: evidence_params[:content],
-          issue_id: @issue.id,
-          node_id: node.id,
-          state: state
+          evidence_params.merge(author: current_user.email, issue_id: @issue.id, node_id: node.id)
         )
         publish_event('evidence.created', evidence.to_event_payload)
       end
