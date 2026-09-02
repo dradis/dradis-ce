@@ -19,7 +19,12 @@ module Dradis::Plugins::Echo
     private
 
     def liquid_parse(template)
-      assigns = { 'issue' => IssueDrop.new(@record) }
+      assigns = case @type
+                when :issue
+                  { 'issue' => IssueDrop.new(@record) }
+                else
+                  raise "Unsupported type: #{@type}"
+      end
 
       options = {
         filters: [],
