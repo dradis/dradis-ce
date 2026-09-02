@@ -39,6 +39,10 @@ module IssuesHelper
     issues
   end
 
+  def issue_first_tag(issue)
+    issue.tags.first
+  end
+
   # Output Bootstrap badges if the issue has any associated tags
   def issue_tags(issue)
     return unless issue.fields.key?('Tags') || issue.fields.key?('AddonTags')

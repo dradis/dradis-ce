@@ -86,7 +86,7 @@ class IssuesController < AuthenticatedController
         check_for_edit_conflicts(@issue, updated_at_before_save)
         format.html { redirect_to_main_or_qa }
         format.turbo_stream do
-          if params[:return_to] == 'qa'
+          if return_to_qa?
             redirect_to_main_or_qa
           else
             flash.now[:notice] = 'Issue updated.'
@@ -142,7 +142,7 @@ class IssuesController < AuthenticatedController
   def redirect_to_main_or_qa
     notice = 'Issue updated.'
 
-    if params[:return_to] == 'qa'
+    if return_to_qa?
       if @issue.ready_for_review?
         redirect_to project_qa_issue_path(current_project, @issue), notice: notice
       else
@@ -151,6 +151,10 @@ class IssuesController < AuthenticatedController
     else
       redirect_to project_issue_path(current_project, @issue), notice: notice
     end
+  end
+
+  def return_to_qa?
+    params[:return_to] == 'qa'
   end
 
   def set_affected_nodes

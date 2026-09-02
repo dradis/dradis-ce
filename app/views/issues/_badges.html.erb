@@ -1,4 +1,4 @@
-<% tag = issue.tags.first %>
+<% tag = issue_first_tag(issue) %>
 <span id="<%= dom_id(issue, :badges) %>" class="issue-meta">
   <span class="badge issue-tag-badge" style="--issue-tag-badge-color: <%= tag ? tag.color : 'var(--untagged-color)' %>">
     <i class="fa-solid fa-tag"></i> <%= tag ? h(tag.display_name) : 'No tag' %>
