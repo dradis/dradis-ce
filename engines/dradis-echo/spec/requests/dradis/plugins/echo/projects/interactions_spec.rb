@@ -56,6 +56,34 @@ describe 'Echo interactions' do
     end
   end
 
+  describe 'GET /addons/echo/projects/:project_id/interactions/:id/preview' do
+    it 'renders the prompt with its liquid drops resolved' do
+      prompt = @logged_in_as.prompts.create!(
+        title: 'Summary', prompt: 'Issue: {{ issue.title }}', scope: 'issue', visibility: :user
+      )
+
+      get "/addons/echo/projects/#{@project.id}/interactions/#{prompt.id}/preview",
+        params: { type: 'issue', record: issue.id }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include('Issue: SQLi')
+    end
+
+    it 'raises a clear error for a whitelisted scope with no drop mapping' do
+      stub_const('Dradis::Plugins::Echo::Prompt::SCOPES', %i[issue note])
+      note = create(:note, node: @project.issue_library)
+      prompt = @logged_in_as.prompts.create!(
+        title: 'Note prompt', prompt: 'Draft it', scope: 'issue', visibility: :user
+      )
+      prompt.update_column(:scope, 'note')
+
+      expect do
+        get "/addons/echo/projects/#{@project.id}/interactions/#{prompt.id}/preview",
+          params: { type: 'note', record: note.id }
+      end.to raise_error(ArgumentError, /note/i)
+    end
+  end
+
   describe 'the retired Roslin one-shot path' do
     it 'no longer exposes a create route' do
       expect do
