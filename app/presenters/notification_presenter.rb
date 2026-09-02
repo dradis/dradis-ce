@@ -1,8 +1,13 @@
 class NotificationPresenter < BasePresenter
+  # Notifiable types with no real actor (e.g. system-generated notifications).
+  # These skip actor attribution/avatar and fall back to a generic presentation.
+  SYSTEM_NOTIFICATION_TYPES = %w[].freeze
+
   presents :notification
 
   def avatar_with_link(size)
-    h.link_to(avatar_image(notification.actor, size: size), 'javascript:void(0)')
+    actor = notification.actor unless SYSTEM_NOTIFICATION_TYPES.include?(notification.notifiable_type)
+    h.link_to(avatar_image(actor, size: size), 'javascript:void(0)')
   end
 
   def comment_path(anchor: false)
@@ -30,10 +35,14 @@ class NotificationPresenter < BasePresenter
   end
 
   def render_title
-    [
-      linked_email,
-      render_partial
-    ].join(' ').html_safe
+    if SYSTEM_NOTIFICATION_TYPES.include?(notification.notifiable_type)
+      render_partial.html_safe
+    else
+      [
+        linked_email,
+        render_partial
+      ].join(' ').html_safe
+    end
   end
 
   private
