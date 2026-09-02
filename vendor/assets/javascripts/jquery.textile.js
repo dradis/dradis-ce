@@ -137,10 +137,7 @@
       this._typingTimer = setTimeout(function() {
         this._onKeyPressPreview.bind(this, view)
 
-        // Piggy back this event for the purpose of updating the source view, which will trigger auto-save
-        // This will be updated/refactored when auto-save is re-worked. Currently it will cause an extra request per edit.
         this._loadSource();
-        this.$element.trigger('textchange');
       }.bind(this), this._doneTypingInterval);
     },
     _buildToolbar: function() {
@@ -231,6 +228,7 @@
         contentType: 'application/json',
         success: function(result){
           this.$element.val(result);
+          this.$element.trigger('textchange');
         }.bind(this)
       });
     },
