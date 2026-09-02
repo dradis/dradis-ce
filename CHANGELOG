@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Issues: update an issue's text, tag, and state in place from the Show page, without a full page reload
   - Webhooks: Add Evidence, Node and Note CRUD webhook events
   - Upgraded gems:
     - mail, sqlite3
