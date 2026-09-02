@@ -19,7 +19,7 @@ class IssuesController < AuthenticatedController
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
   before_action :set_affected_nodes, only: [:show]
   before_action :set_form_cancel_path, only: [:new, :edit]
-  before_action :set_send_to_integrations, only: [:new, :edit, :show]
+  before_action :set_send_to_integrations, only: [:new, :edit, :show, :update]
   before_action :set_tags, except: [:destroy]
 
   def index
@@ -85,6 +85,14 @@ class IssuesController < AuthenticatedController
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         format.html { redirect_to_main_or_qa }
+        format.turbo_stream do
+          if params[:return_to] == 'qa'
+            redirect_to_main_or_qa
+          else
+            flash.now[:notice] = 'Issue updated.'
+            load_conflicting_revisions(@issue)
+          end
+        end
         publish_event('issue.updated', @issue.to_event_payload)
       else
         format.html do

@@ -1,0 +1,3 @@
+<%= turbo_stream.replace dom_id(@issue), partial: 'issues/content' %>
+<%= turbo_stream.replace "#{dom_id(@issue)}_link", partial: 'issues/issue', locals: { issue: @issue } %>
+<%= turbo_stream.replace dom_id(@issue, :badges), partial: 'issues/badges', locals: { issue: @issue } %>
