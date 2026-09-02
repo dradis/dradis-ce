@@ -7,7 +7,7 @@ describe 'fields#form' do
     it 'defaults to a blank option instead of the first list option' do
       post form_fields_path, params: {
         source: "#[Risk]#\n",
-        field_options: { 'Risk' => %w[High Medium Low] }
+        field_values: { 'Risk' => %w[High Medium Low] }
       }
 
       select = Nokogiri::HTML.fragment(response.body).at_css('select')

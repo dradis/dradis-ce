@@ -4,22 +4,22 @@ describe FieldsHelper do
   describe '#dropdown_options' do
     context 'when the field has explicit list options' do
       it 'returns the options when the value is blank' do
-        assign(:field_options, { 'Risk' => %w[High Medium Low] })
+        assign(:field_values, { 'Risk' => %w[High Medium Low] })
         expect(helper.dropdown_options('Risk', '')).to eq(%w[High Medium Low])
       end
 
       it 'returns the options when the value matches one of them' do
-        assign(:field_options, { 'Risk' => %w[High Medium Low] })
+        assign(:field_values, { 'Risk' => %w[High Medium Low] })
         expect(helper.dropdown_options('Risk', 'High')).to eq(%w[High Medium Low])
       end
 
       it 'returns nil when the value does not match any of the options' do
-        assign(:field_options, { 'Risk' => %w[High Medium Low] })
+        assign(:field_values, { 'Risk' => %w[High Medium Low] })
         expect(helper.dropdown_options('Risk', '{{ issue.risk }}')).to be_nil
       end
 
       it 'falls back to the pipe-value check for a different field with no explicit options' do
-        assign(:field_options, { 'Risk' => %w[High Medium Low] })
+        assign(:field_values, { 'Risk' => %w[High Medium Low] })
         expect(helper.dropdown_options('Status', 'Open | Closed')).to eq(['Open', 'Closed'])
       end
     end

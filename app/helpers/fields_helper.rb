@@ -1,6 +1,6 @@
 module FieldsHelper
   def dropdown_options(field_name, value)
-    options = @field_options && @field_options[field_name]
+    options = @field_values && @field_values[field_name]
 
     if options
       options if value.blank? || options.include?(value)
