@@ -1,7 +1,7 @@
 module Dradis::CE::API
   module V3
     class EvidenceController < Dradis::CE::API::APIController
-      include ActivityTracking
+      include EventPublisher
       include Dradis::CE::API::ProjectScoped
 
       before_action :set_node
@@ -19,7 +19,7 @@ module Dradis::CE::API
         @evidence = @node.evidence.build(evidence_params)
         @evidence.author = current_user.email
         if @evidence.save
-          track_created(@evidence)
+          publish_event('evidence.created', @evidence.to_event_payload)
           render status: 201, location: node_evidence_path(@node, @evidence)
         else
           render_validation_errors(@evidence)
@@ -29,7 +29,7 @@ module Dradis::CE::API
       def update
         @evidence = @node.evidence.find(params[:id])
         if @evidence.update(evidence_params)
-          track_updated(@evidence)
+          publish_event('evidence.updated', @evidence.to_event_payload)
           render evidence: @evidence
         else
           render_validation_errors(@evidence)
@@ -39,7 +39,7 @@ module Dradis::CE::API
       def destroy
         @evidence = @node.evidence.find(params[:id])
         @evidence.destroy
-        track_destroyed(@evidence)
+        publish_event('evidence.destroyed', @evidence.to_event_payload)
         render_successful_destroy_message
       end
 
