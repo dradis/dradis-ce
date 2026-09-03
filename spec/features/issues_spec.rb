@@ -224,7 +224,13 @@ describe 'Issues pages' do
             find('#issue_text').send_keys :enter, value
           end
 
-          let(:submit_form) { click_button 'Update Issue' }
+          # Turbo submits this form via fetch, so the click returns before the
+          # turbo_stream response lands. Wait for the confirmation banner so
+          # assertions on server state below don't run against a stale read.
+          let(:submit_form) do
+            click_button 'Update Issue'
+            expect(page).to have_content('Issue updated.')
+          end
 
           it 'updates the issue in place, without a full navigation' do
             submit_form
