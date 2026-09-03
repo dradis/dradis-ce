@@ -54,6 +54,22 @@ describe 'Echo interactions' do
         get "/addons/echo/projects/#{@project.id}/interactions", params: { record: issue.id }
       end.to raise_error(ActiveRecord::RecordNotFound)
     end
+
+    context 'when the Roslin agent is not enabled' do
+      let!(:roslin) do
+        Dradis::Plugins::Echo::Agents::Roslin.provision!.tap { |agent| agent.update!(enabled: false) }
+      end
+
+      it 'renders the not-enabled panel instead of the prompt picker' do
+        get "/addons/echo/projects/#{@project.id}/interactions",
+          params: { type: 'issue', record: issue.id }
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include('is not enabled')
+        expect(response.body).to include('Think of Roslin as an editor or writing companion')
+        expect(response.body).not_to include('Start a new conversation')
+      end
+    end
   end
 
   describe 'GET /addons/echo/projects/:project_id/interactions/:id/preview' do
