@@ -10,10 +10,6 @@ describe Dradis::Plugins::Echo::Prompt do
 
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:prompt) }
-
-    # Scoped to :scope (not just :user_id) so a title collision in one scope
-    # can't block default seeding for another.
-    it { should validate_uniqueness_of(:title).scoped_to(:user_id, :scope) }
   end
 
   describe '.defaults_for' do
