@@ -15,8 +15,10 @@ module HTML
       #    correctly, we can't add this <div> at an earlier point in the pipeline
       #    because then RedCloth can't parse the Textile correctly.
       class TextileFilter < TextFilter
+        include EmailInlineCodeProtection
+
         def call
-          parser = RedCloth.new(@text, [:filter_html, :no_span_caps])
+          parser = RedCloth.new(protect_email_inline_code(@text), [:filter_html, :no_span_caps])
 
           doc = if context[:no_inline_code]
             parser.to(HTML::NoInlineCodeTextileFormatter)
@@ -24,7 +26,7 @@ module HTML
             parser.to_html
           end
 
-          "<div>#{doc}</div>"
+          "<div>#{doc.gsub(SENTINEL_CHAR, '@')}</div>"
         end
       end
     end
