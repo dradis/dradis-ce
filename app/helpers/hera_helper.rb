@@ -44,11 +44,11 @@ module HeraHelper
     controller_name == 'nodes' && @node && (@node.parent_id == node.id || @node.id == node.id) ? 'in' : ''
   end
 
-  def flash_messages(extra_classes: nil)
+  def flash_messages
     flash.select { |key, _| FlashHelper::ALERT_TYPES.keys.include?(key) }.collect do |name, msg|
       flash_attrs = flash_attrs(msg, name)
 
-      content_tag :div, class: [flash_attrs[:flash_css], extra_classes].compact.join(' ') do
+      content_tag :div, class: flash_attrs[:flash_css] do
         [
           button_tag(class: 'btn-close', data: flash_attrs[:data_attrs]) do
             '<span class="visually-hidden">Close alert</span>'.html_safe
