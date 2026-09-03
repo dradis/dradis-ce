@@ -34,8 +34,6 @@ module Dradis::Plugins::Echo
       params.permit(:id, :type, :project_id, :record)
     end
 
-    # Resolved here, not in the liquid_parse helper: that runs mid-render inside a
-    # lazy turbo-frame, where a raise surfaces as an empty frame, not an error.
     def set_liquid_assigns
       @liquid_assigns =
         case @type
