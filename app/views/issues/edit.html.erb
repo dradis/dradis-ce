@@ -14,9 +14,9 @@
 
 <div class="content-container" id="issues_editor">
   <div class="note-text-inner">
-    <!-- This div is needed to allow correct tabbing order in Chrome with page is loaded with turbolinks -->
-    <div class="autofocus" autofocus="true" tabindex="1"></div>
     <%= turbo_frame_tag dom_id(@issue) do %>
+      <!-- This div is needed to allow correct tabbing order in Chrome with page is loaded with turbolinks -->
+      <div class="autofocus" autofocus="true" tabindex="1"></div>
       <h4 class="header-underline">Edit issue (<%= @issue.state.humanize %>)</h4>
       <%= render 'form' %>
     <% end %>
