@@ -201,6 +201,7 @@ fieldset.check_boxes {
   padding: 1rem 0;
   position: sticky;
   width: 100%;
+  z-index: 2;
 
   @media (max-width: 991px) {
     margin-top: 2rem;
