@@ -11,7 +11,7 @@ module Dradis::Plugins::Echo
     before_action :set_liquid_assigns, only: [:preview]
 
     def index
-      @prompts = Prompt.ensure_defaults_for!(current_user, @type)
+      @prompts = Prompt.seed_defaults_for(current_user, @type)
       @sessions = Session.for_record(@record).order(updated_at: :desc)
     end
 
