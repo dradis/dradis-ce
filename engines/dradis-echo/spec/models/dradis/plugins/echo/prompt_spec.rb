@@ -17,8 +17,8 @@ describe Dradis::Plugins::Echo::Prompt do
       expect(described_class.defaults_for(:issue).map(&:scope).uniq).to eq(['issue'])
     end
 
-    it 'returns nothing for a scope with no defaults' do
-      expect(described_class.defaults_for(:content_block)).to be_empty
+    it 'returns an empty array for an unknown scope' do
+      expect(described_class.defaults_for(:nonexistent)).to eq([])
     end
   end
 end
