@@ -19,6 +19,7 @@
       - [integration bug fixes]:
         - [future tense verb] [integration bug fix]
   - Reporting enhancements:
+    - Setup kits: add report template properties to the OWASP and Red Team HTML report templates
     - [report type]:
       - [future tense verb] [reporting enhancement]
   - REST/JSON API enhancements:
