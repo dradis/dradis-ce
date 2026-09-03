@@ -1,9 +1,9 @@
 [v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+  - Webhooks: Add Evidence, Node and Note CRUD webhook events
   - Upgraded gems:
     - mail, sqlite3
   - Bugs fixes:
+    - Combobox: show the correct selected option when its value contains a double quote
     - Textile: stop mis-parsing inline code (@...@) that contains an email address
     - [entity]:
       - [future tense verb] [bug fix]
