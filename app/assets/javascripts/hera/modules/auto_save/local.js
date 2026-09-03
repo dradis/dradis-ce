@@ -101,7 +101,7 @@ class LocalAutoSave {
               return $(this).data('tag') === item[1];
             }
           );
-          new SelectTagDropdown($tagDropdownItem)
+          window.selectTagDropdown($tagDropdownItem);
         } else {
           element.value = item[1];
         }
