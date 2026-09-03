@@ -6,7 +6,7 @@ class NotificationPresenter < BasePresenter
   presents :notification
 
   def avatar_with_link(size)
-    actor = notification.actor unless SYSTEM_NOTIFICATION_TYPES.include?(notification.notifiable_type)
+    actor = notification.actor unless system_notification?
     h.link_to(avatar_image(actor, size: size), 'javascript:void(0)')
   end
 
@@ -35,7 +35,7 @@ class NotificationPresenter < BasePresenter
   end
 
   def render_title
-    if SYSTEM_NOTIFICATION_TYPES.include?(notification.notifiable_type)
+    if system_notification?
       render_partial.html_safe
     else
       [
@@ -99,5 +99,13 @@ class NotificationPresenter < BasePresenter
     else
       [commentable.project, commentable]
     end
+  end
+
+  def system_notification?
+    # Can't use ||= here: the result is often false, and false is falsy in
+    # Ruby, so ||= would recompute it on every call instead of memoizing it.
+    return @system_notification if defined?(@system_notification)
+
+    @system_notification = SYSTEM_NOTIFICATION_TYPES.include?(notification.notifiable_type)
   end
 end
