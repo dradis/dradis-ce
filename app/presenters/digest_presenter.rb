@@ -7,7 +7,7 @@ class DigestPresenter < NotificationPresenter
   end
 
   def avatar_with_link(opts)
-    actor = notification.actor unless SYSTEM_NOTIFICATION_TYPES.include?(notification.notifiable_type)
+    actor = notification.actor unless system_notification?
     h.link_to(avatar_image(actor, opts), 'javascript:void(0)')
   end
 
@@ -26,7 +26,7 @@ class DigestPresenter < NotificationPresenter
 
   def text_title
     email =
-      if SYSTEM_NOTIFICATION_TYPES.include?(notification.notifiable_type)
+      if system_notification?
         nil
       elsif notification.actor
         notification.actor.email
@@ -40,7 +40,7 @@ class DigestPresenter < NotificationPresenter
   private
 
   def linked_email
-    return if SYSTEM_NOTIFICATION_TYPES.include?(notification.notifiable_type)
+    return if system_notification?
 
     # Get the count of the unique list of actors from the list of notifications
     actor_count = notifications.pluck(:actor_id).uniq.compact.count
