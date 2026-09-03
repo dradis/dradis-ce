@@ -4,6 +4,7 @@
     - mail, sqlite3
   - Bugs fixes:
     - Combobox: show the correct selected option when its value contains a double quote
+    - Setup kits: render the Red Team report's Recommendation content block
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
@@ -19,6 +20,7 @@
       - [integration bug fixes]:
         - [future tense verb] [integration bug fix]
   - Reporting enhancements:
+    - Setup kits: add report template properties to the OWASP and Red Team HTML report templates
     - [report type]:
       - [future tense verb] [reporting enhancement]
   - REST/JSON API enhancements:

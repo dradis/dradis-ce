@@ -579,7 +579,7 @@
   <!-- ===== PRO CONTENT BLOCKS (before sitrep) ===== -->
   <% if defined?(Dradis::Pro) %>
     <%
-      pro_section_types = ['Rules of Engagement', 'Executive Summary', 'Attack Narrative', 'Key Findings', 'Detection Analysis', 'Recommendations', 'Appendix']
+      pro_section_types = ['Rules of Engagement', 'Executive Summary', 'Attack Narrative', 'Key Findings', 'Detection Analysis', 'Recommendation', 'Appendix']
     %>
     <% pro_section_types.each do |section_type| %>
       <% section_blocks = content_service.all_content_blocks.select { |b| b.fields['Type'] == section_type } %>
