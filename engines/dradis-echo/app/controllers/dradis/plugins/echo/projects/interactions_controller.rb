@@ -35,13 +35,14 @@ module Dradis::Plugins::Echo
     end
 
     def set_liquid_assigns
-      @liquid_assigns =
-        case @type
-        when :issue
-          { 'issue' => IssueDrop.new(@record) }
-        else
-          raise ArgumentError, "Unsupported prompt scope: #{@type}"
-        end
+      @liquid_assigns = { 'project' => ProjectDrop.new(current_project) }
+
+      case @type
+      when :issue
+        @liquid_assigns['issue'] = IssueDrop.new(@record)
+      else
+        raise ArgumentError, "Unsupported prompt scope: #{@type}"
+      end
     end
 
     def set_prompt

@@ -69,6 +69,18 @@ describe 'Echo interactions' do
       expect(response.body).to include('Issue: SQLi')
     end
 
+    it 'exposes the project drop to every prompt scope' do
+      prompt = @logged_in_as.prompts.create!(
+        title: 'Context', prompt: 'Assessment: {{ project.name }}', scope: 'issue', visibility: :user
+      )
+
+      get "/addons/echo/projects/#{@project.id}/interactions/#{prompt.id}/preview",
+        params: { type: 'issue', record: issue.id }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Assessment: #{@project.name}")
+    end
+
     it 'raises a clear error for a whitelisted scope with no drop mapping' do
       stub_const('Dradis::Plugins::Echo::Prompt::SCOPES', %i[issue note])
       note = create(:note, node: @project.issue_library)
