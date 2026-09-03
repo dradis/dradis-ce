@@ -8,11 +8,13 @@ class NotificationsBroadcastingJob < ApplicationJob
     recipients = User.where(id: recipient_ids)
 
     if user_id
-      notifiable.notify(action: action, actor: User.find(user_id), recipients: recipients)
+      notifiable.notify(action: action, actor: User.find_by(id: user_id), recipients: recipients)
     else
       # No actor was given, so each recipient is notified as their own actor.
-      recipients.each do |recipient|
-        notifiable.notify(action: action, actor: recipient, recipients: [recipient])
+      ActiveRecord::Base.transaction do
+        recipients.each do |recipient|
+          notifiable.notify(action: action, actor: recipient, recipients: [recipient])
+        end
       end
     end
 
