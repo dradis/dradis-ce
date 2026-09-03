@@ -8,7 +8,6 @@ module Dradis::Plugins::Echo
     before_action :set_type
     before_action :set_prompt, only: [:preview]
     before_action :set_record
-    before_action :set_liquid_assigns, only: [:preview]
 
     def index
       @prompts = Prompt.seed_defaults_for(current_user, @type)
@@ -19,6 +18,19 @@ module Dradis::Plugins::Echo
 
     private
 
+    def liquid_assigns
+      assigns = { 'project' => ProjectDrop.new(current_project) }
+
+      case @type
+      when :issue
+        assigns['issue'] = IssueDrop.new(@record)
+      else
+        raise ArgumentError, "Unsupported prompt scope: #{@type}"
+      end
+
+      assigns
+    end
+
     def liquid_parse(template)
       options = {
         filters: [],
@@ -26,23 +38,12 @@ module Dradis::Plugins::Echo
         strict_variables: true
       }
 
-      Liquid::Template.parse(template).render(@liquid_assigns, options)
+      Liquid::Template.parse(template).render(liquid_assigns, options)
     end
     helper_method :liquid_parse
 
     def record_params
       params.permit(:id, :type, :project_id, :record)
-    end
-
-    def set_liquid_assigns
-      @liquid_assigns = { 'project' => ProjectDrop.new(current_project) }
-
-      case @type
-      when :issue
-        @liquid_assigns['issue'] = IssueDrop.new(@record)
-      else
-        raise ArgumentError, "Unsupported prompt scope: #{@type}"
-      end
     end
 
     def set_prompt

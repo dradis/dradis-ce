@@ -108,7 +108,7 @@ describe 'Echo interactions' do
       expect do
         get "/addons/echo/projects/#{@project.id}/interactions/#{prompt.id}/preview",
           params: { type: 'note', record: note.id }
-      end.to raise_error(ArgumentError, /note/i)
+      end.to raise_error { |error| expect(error.cause || error).to be_a(ArgumentError).and have_attributes(message: /note/i) }
     end
   end
 
