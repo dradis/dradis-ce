@@ -1,0 +1,26 @@
+<% content_for :title, 'Quality Assurance - Evidence' %>
+
+<% content_for :breadcrumbs do %>
+  <%= render 'breadcrumbs' %>
+<% end %>
+
+<% content_for :sidebar do %>
+  <%= render partial: 'qa/sidebar', locals:
+    {
+      index_path: project_qa_issue_evidence_index_path(current_project, @issue),
+      name: 'evidence_for_review',
+      records: @evidence_for_review
+    }
+  %>
+<% end %>
+
+<div class="row p-0">
+  <div class="col-12">
+    <div class="content-container">
+      <div class="note-text-inner">
+        <h4 class="header-underline">Edit evidence (<%= @evidence.state.humanize %>)</h4>
+        <%= render 'evidence/form' %>
+      </div>
+    </div>
+  </div>
+</div>

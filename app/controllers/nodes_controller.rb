@@ -115,6 +115,7 @@ class NodesController < NestedNodeResourceController
 
   def set_columns
     default_field_names = ['Label', 'Title'].freeze
+    default_evidence_field_names = default_field_names | ['State'].freeze
     extra_field_names = ['Created', 'Created by', 'Updated'].freeze
 
     note_dynamic_fields = dynamic_field_names(@node.notes)
@@ -127,7 +128,7 @@ class NodesController < NestedNodeResourceController
     @evidence_columns = rtp_default_evidence_fields | evidence_dynamic_fields | extra_field_names
 
     @default_note_columns = default_field_names
-    @default_evidence_columns = rtp_default_evidence_fields.presence || default_field_names
+    @default_evidence_columns = (rtp_default_evidence_fields.presence || default_evidence_field_names)
   end
 
   def node_params

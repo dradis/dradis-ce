@@ -4,11 +4,13 @@ class Issues::EvidenceController < AuthenticatedController
   include EventPublisher
   include MultipleDestroy
   include ProjectScoped
+  include Publishable
 
   before_action :set_issues, only: [:create_multiple, :index, :new]
   before_action :set_affected_nodes, only: :index
   before_action :set_auto_save_key, only: :new
   before_action :set_columns, only: :index
+  before_action :set_node_evidence, only: :index
 
   def index
     render layout: false
@@ -36,10 +38,7 @@ class Issues::EvidenceController < AuthenticatedController
       params[:evidence][:node_ids].reject(&:blank?).each do |node_id|
         node = current_project.nodes.find(node_id)
         evidence = Evidence.create!(
-          author: current_user.email,
-          content: evidence_params[:content],
-          issue_id: @issue.id,
-          node_id: node.id
+          evidence_params.merge(author: current_user.email, issue_id: @issue.id, node_id: node.id)
         )
         publish_event('evidence.created', evidence.to_event_payload)
       end
@@ -60,10 +59,7 @@ class Issues::EvidenceController < AuthenticatedController
         end
 
         evidence = Evidence.create!(
-          author: current_user.email,
-          content: evidence_params[:content],
-          issue_id: @issue.id,
-          node_id: node.id
+          evidence_params.merge(author: current_user.email, issue_id: @issue.id, node_id: node.id)
         )
         publish_event('evidence.created', evidence.to_event_payload)
       end
@@ -82,7 +78,7 @@ class Issues::EvidenceController < AuthenticatedController
   end
 
   def evidence_params
-    params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
+    params.require(:evidence).permit(:author, :content, :issue_id, :node_id, :state)
   end
 
   def node_params_empty?
@@ -91,7 +87,7 @@ class Issues::EvidenceController < AuthenticatedController
   end
 
   def set_columns
-    default_field_names = ['Label', 'Title'].freeze
+    default_field_names = ['Label', 'Title', 'State'].freeze
     extra_field_names = ['Created', 'Created by', 'Updated'].freeze
 
     dynamic_fields = dynamic_field_names(@issue.evidence)
@@ -100,7 +96,7 @@ class Issues::EvidenceController < AuthenticatedController
     rtp_default_fields = rtp ? rtp.evidence_fields.default.field_names : []
 
     @default_columns = rtp_default_fields.presence || default_field_names
-    @all_columns = rtp_default_fields | dynamic_fields | extra_field_names
+    @all_columns = default_field_names | rtp_default_fields | dynamic_fields | extra_field_names
   end
 
   def set_affected_nodes
@@ -124,5 +120,9 @@ class Issues::EvidenceController < AuthenticatedController
   def set_issues
     @issues = current_project.issues.order(:text)
     @issue = @issues.find(params[:issue_id]) if params[:issue_id]
+  end
+
+  def set_node_evidence
+    @node_evidence = @affected_nodes.index_with { |node| node.evidence.where(issue_id: @issue.id) }
   end
 end

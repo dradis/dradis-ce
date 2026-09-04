@@ -34,8 +34,8 @@
   <% end %>
 
   <div class="form-actions sticky">
-    <%= hidden_field_tag :return_to, :issue if params[:return_to] == 'issue' %>
-    <%= f.button :submit, nil, class: 'btn btn-primary' %> or
+    <%= hidden_field_tag :return_to, params[:return_to] if params[:return_to].present? %>
+    <%= render partial: 'qa/state_button', locals: { f: f, record: @evidence } %> or
     <%=
       link_to 'Cancel',
       evidence_redirect_path(params[:return_to]),
