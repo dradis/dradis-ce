@@ -10,9 +10,7 @@ module Dradis::Plugins::Echo
     before_action :set_record
 
     def index
-      Prompt.seed_default_prompts(current_user) if current_user.prompts.empty?
-
-      @prompts = current_user.prompts.for(@type)
+      @prompts = Prompt.seed_defaults_for(current_user, @type)
       @sessions = Session.for_record(@record).order(updated_at: :desc)
     end
 
@@ -20,16 +18,27 @@ module Dradis::Plugins::Echo
 
     private
 
-    def liquid_parse(template)
-      assigns = { 'issue' => IssueDrop.new(@record) }
+    def liquid_assigns
+      assigns = { 'project' => ProjectDrop.new(current_project) }
 
+      case @type
+      when :issue
+        assigns['issue'] = IssueDrop.new(@record)
+      else
+        raise ArgumentError, "Unsupported prompt scope: #{@type}"
+      end
+
+      assigns
+    end
+
+    def liquid_parse(template)
       options = {
         filters: [],
         strict_filters: true,
         strict_variables: true
       }
 
-      Liquid::Template.parse(template).render(assigns, options)
+      Liquid::Template.parse(template).render(liquid_assigns, options)
     end
     helper_method :liquid_parse
 

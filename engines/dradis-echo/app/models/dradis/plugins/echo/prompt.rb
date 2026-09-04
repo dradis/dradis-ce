@@ -19,7 +19,7 @@ module Dradis::Plugins::Echo
     validates :title,
       length: { maximum: DB_MAX_STRING_LENGTH },
       presence: true,
-      uniqueness: { scope: :user_id }
+      uniqueness: { scope: [ :scope, :user_id ] }
 
     validates :prompt, presence: true
     validates :scope, inclusion: SCOPES.map(&:to_s), presence: true
@@ -30,6 +30,16 @@ module Dradis::Plugins::Echo
     scope :for, ->(value) { where(scope: value) }
 
     # -- Class Methods ----------------------------------------------------------
+
+    # Checks emptiness per scope, not globally, so a user with prompts in
+    # one scope still gets another scope's defaults backfilled.
+    def self.seed_defaults_for(user, scope)
+      prompts = user.prompts.for(scope).to_a
+      return prompts unless prompts.empty?
+
+      user.prompts << defaults_for(scope)
+      user.prompts.for(scope).to_a
+    end
 
     # -- Instance Methods -------------------------------------------------------
     private
