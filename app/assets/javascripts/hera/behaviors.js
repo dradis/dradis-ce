@@ -93,6 +93,13 @@ document.addEventListener('turbo:load', function () {
         new LocalAutoSave(this);
       });
 
+    // Release the record lock when the Cancel link is used to leave an edit form
+    $(parentElement)
+      .find('[data-behavior~=record-locking]')
+      .each(function () {
+        new RecordLocking(this);
+      });
+
     // Activate the issue tag dropdown
     initTagInput(parentElement);
 
