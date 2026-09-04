@@ -1,8 +1,13 @@
 class NotificationPresenter < BasePresenter
+  # Notifiable types with no real actor (e.g. system-generated notifications).
+  # These skip actor attribution and show the Dradis logo in place of an avatar.
+  SYSTEM_NOTIFICATION_TYPES = %w[].freeze
+
   presents :notification
 
   def avatar_with_link(size)
-    h.link_to(avatar_image(notification.actor, size: size), 'javascript:void(0)')
+    avatar = system_notification? ? system_notification_logo : avatar_image(notification.actor, size: size)
+    h.link_to(avatar, 'javascript:void(0)')
   end
 
   def comment_path(anchor: false)
@@ -30,10 +35,14 @@ class NotificationPresenter < BasePresenter
   end
 
   def render_title
-    [
-      linked_email,
-      render_partial
-    ].join(' ').html_safe
+    if system_notification?
+      render_partial.html_safe
+    else
+      [
+        linked_email,
+        render_partial
+      ].join(' ').html_safe
+    end
   end
 
   private
@@ -89,6 +98,20 @@ class NotificationPresenter < BasePresenter
       [commentable.project, commentable.board, commentable.list, commentable]
     else
       [commentable.project, commentable]
+    end
+  end
+
+  def system_notification?
+    # Can't use ||= here: the result is often false, and false is falsy in
+    # Ruby, so ||= would recompute it on every call instead of memoizing it.
+    return @system_notification if defined?(@system_notification)
+
+    @system_notification = SYSTEM_NOTIFICATION_TYPES.include?(notification.notifiable_type)
+  end
+
+  def system_notification_logo
+    h.content_tag :span, class: 'gravatar' do
+      h.image_tag('logo_small.png', alt: 'Dradis logo', class: 'system-notification-logo', width: 40)
     end
   end
 end

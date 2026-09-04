@@ -7,7 +7,8 @@ class DigestPresenter < NotificationPresenter
   end
 
   def avatar_with_link(opts)
-    h.link_to(avatar_image(notification.actor, opts), 'javascript:void(0)')
+    avatar = system_notification? ? system_notification_logo : avatar_image(notification.actor, opts)
+    h.link_to(avatar, 'javascript:void(0)')
   end
 
   def comment_path(anchor: false)
@@ -25,18 +26,22 @@ class DigestPresenter < NotificationPresenter
 
   def text_title
     email =
-      if notification.actor
+      if system_notification?
+        nil
+      elsif notification.actor
         notification.actor.email
       else
         'A user who has since been deleted'
       end
 
-    [email, render_partial.strip].join(' ')
+    [email, render_partial.strip].compact.join(' ')
   end
 
   private
 
   def linked_email
+    return if system_notification?
+
     # Get the count of the unique list of actors from the list of notifications
     actor_count = notifications.pluck(:actor_id).uniq.compact.count
 
