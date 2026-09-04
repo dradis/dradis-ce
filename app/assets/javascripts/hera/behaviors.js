@@ -100,6 +100,12 @@ document.addEventListener('turbo:load', function () {
         new RecordLocking(this);
       });
 
+    // Activate the issue tag dropdown
+    initTagInput(parentElement);
+
+    // Activate the state dropdown
+    initStateButton(parentElement);
+
     // Fetch content
     $(parentElement)
       .find('[data-behavior~=fetch]')
@@ -191,6 +197,9 @@ document.addEventListener('turbo:load', function () {
         new ComboBox($(this));
       });
 
+    // Render Liquid dynamic content
+    initLiquidAsync(parentElement);
+
     // Sortable lists
     $('[data-behavior~=ui-sortable]').sortable({
       axis: 'y',
@@ -216,6 +225,23 @@ document.addEventListener('turbo:load', function () {
   // turbo:load
   document.addEventListener('turbo:frame-load', function (event) {
     initBehaviors(event.target);
+  });
+
+  // Turbo Stream actions (replace/update/append) patch the DOM directly and
+  // don't fire turbo:frame-load, so content they insert never gets its
+  // behaviors initialized. Reinitialize just the affected target after Turbo
+  // applies the stream action.
+  document.addEventListener('turbo:before-stream-render', function (event) {
+    const render = event.detail.render;
+
+    event.detail.render = async function (streamElement) {
+      await render(streamElement);
+
+      const targetElement = document.getElementById(
+        streamElement.getAttribute('target')
+      );
+      if (targetElement) initBehaviors(targetElement);
+    };
   });
 
   // Because this is an event and not a data-driven behavior, we can leave it

@@ -22,6 +22,7 @@ class IssuesController < AuthenticatedController
   before_action :set_form_cancel_path, only: [:new, :edit]
   # Must run after :set_form_cancel_path; the lockout page links back to it.
   before_action :check_edit_lock, only: :edit
+  before_action :set_send_to_integrations, only: [:new, :edit, :show]
   before_action :set_tags, except: [:destroy]
 
   def index
@@ -209,6 +210,12 @@ class IssuesController < AuthenticatedController
     else
       @issue = Issue.new(node: @issuelib)
     end
+  end
+
+  def set_send_to_integrations
+    ticketing_integrations = Dradis::Plugins::with_feature(:ticketing)
+    sync_integrations = Dradis::Plugins::with_feature(:issue_sync)
+    @send_to_integrations = sync_integrations | ticketing_integrations
   end
 
   def set_tags

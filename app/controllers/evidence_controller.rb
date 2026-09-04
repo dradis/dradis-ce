@@ -29,7 +29,7 @@ class EvidenceController < NestedNodeResourceController
 
     respond_to do |format|
       if @evidence.save
-        track_created(@evidence)
+        publish_event('evidence.created', @evidence.to_event_payload)
         format.html do
           redirect_to [current_project, @evidence.node, @evidence],
             notice: "Evidence added for node #{@evidence.node.label}."
@@ -58,7 +58,7 @@ class EvidenceController < NestedNodeResourceController
       copy_attachments(@evidence) if @evidence.node_changed?
 
       if @evidence.save
-        track_updated(@evidence)
+        publish_event('evidence.updated', @evidence.to_event_payload)
         check_for_edit_conflicts(@evidence, updated_at_before_save)
         format.html do
           redirect_to evidence_redirect_path(params[:return_to]), notice: 'Evidence updated.'
@@ -77,7 +77,7 @@ class EvidenceController < NestedNodeResourceController
   def destroy
     respond_to do |format|
       if @evidence.destroy
-        track_destroyed(@evidence)
+        publish_event('evidence.destroyed', @evidence.to_event_payload)
         format.html do
           notice = "Successfully deleted evidence for '#{@evidence.issue.title}.'"
           # Evidence can be deleted from 3 places:
@@ -107,7 +107,7 @@ class EvidenceController < NestedNodeResourceController
 
   def autogenerate_issue
     @evidence.issue = Issue.autogenerate_from(@evidence)
-    track_created(@evidence.issue)
+    publish_event('issue.created', @evidence.issue.to_event_payload)
   end
 
   def liquid_resource_assigns
