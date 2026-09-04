@@ -134,7 +134,7 @@ class IssuesController < AuthenticatedController
     { 'issue' => IssueDrop.new(@issue) }
   end
 
-  def lockable_record
+  def lockable_resource
     @issue
   end
 
