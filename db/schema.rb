@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_07_14_000002) do
+ActiveRecord::Schema[8.0].define(version: 2026_07_22_100000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -167,6 +167,15 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_14_000002) do
     t.index ["agent_id"], name: "index_dradis_plugins_echo_sessions_on_agent_id"
     t.index ["record_type", "record_id"], name: "index_dradis_plugins_echo_sessions_on_record"
     t.index ["user_id"], name: "index_dradis_plugins_echo_sessions_on_user_id"
+  end
+
+  create_table "editing_sessions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "record_type", null: false
+    t.integer "record_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["record_type", "record_id"], name: "index_editing_sessions_uniqueness", unique: true
+    t.index ["user_id"], name: "index_editing_sessions_on_user_id"
   end
 
   create_table "evidence", force: :cascade do |t|
@@ -336,6 +345,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_14_000002) do
   add_foreign_key "dradis_plugins_echo_prompts", "users"
   add_foreign_key "dradis_plugins_echo_sessions", "dradis_plugins_echo_agents", column: "agent_id"
   add_foreign_key "dradis_plugins_echo_sessions", "users", on_delete: :nullify
+  add_foreign_key "editing_sessions", "users"
   add_foreign_key "inline_threads", "users"
   add_foreign_key "inline_threads", "users", column: "resolved_by_id"
   add_foreign_key "mapping_fields", "mappings"
