@@ -7,6 +7,8 @@ class Issue < Note
   Commentable.allowed_types << 'Issue'
   InlineCommentable.allowed_types << 'Issue'
 
+  include Lockable
+
   include Subscribable
   Subscribable.allowed_types << 'Issue'
 
@@ -44,6 +46,16 @@ class Issue < Note
   # FIXME - ISSUE/NOTE INHERITANCE
   def comments(*params)
     Comment.where(commentable_type: 'Issue', commentable_id: self.id)
+  end
+
+  # `has_many :editing_sessions` doesn't work as normal here, because we're not
+  # using proper single-table inheritance. (By default it will search for
+  # sessions where record_type is "Note" instead of "Issue".) So we need to
+  # override Issue#editing_sessions with a hack.
+  #
+  # FIXME - ISSUE/NOTE INHERITANCE
+  def editing_sessions(*params)
+    EditingSession.where(record_type: 'Issue', record_id: self.id)
   end
 
   # `has_many :inline_threads` doesn't work as normal here, because

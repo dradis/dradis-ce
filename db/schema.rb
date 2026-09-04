@@ -169,6 +169,15 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_14_000000) do
     t.index ["user_id"], name: "index_dradis_plugins_echo_sessions_on_user_id"
   end
 
+  create_table "editing_sessions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "record_type", null: false
+    t.integer "record_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["record_type", "record_id"], name: "index_editing_sessions_uniqueness", unique: true
+    t.index ["user_id"], name: "index_editing_sessions_on_user_id"
+  end
+
   create_table "evidence", force: :cascade do |t|
     t.integer "node_id"
     t.integer "issue_id"
@@ -337,6 +346,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_14_000000) do
   add_foreign_key "dradis_plugins_echo_prompts", "users"
   add_foreign_key "dradis_plugins_echo_sessions", "dradis_plugins_echo_agents", column: "agent_id"
   add_foreign_key "dradis_plugins_echo_sessions", "users", on_delete: :nullify
+  add_foreign_key "editing_sessions", "users"
   add_foreign_key "inline_threads", "users"
   add_foreign_key "inline_threads", "users", column: "resolved_by_id"
   add_foreign_key "mapping_fields", "mappings"

@@ -1,5 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - Activities: Remove ActivityTracking for Evidence, Nodes and Notes and use EventPublisher
+  - Issues: warn user if another user is currently editing the record
   - QA: Add QA states to evidence
   - Webhooks: Add Evidence, Node and Note CRUD webhook events
   - Upgraded gems:
