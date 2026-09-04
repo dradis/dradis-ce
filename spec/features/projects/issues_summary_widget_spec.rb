@@ -4,9 +4,10 @@ describe 'Issues Summary widget', js: true do
   before { login_to_project_as_user }
 
   context 'with issues' do
+    let(:issue) { create(:issue, node: current_project.issue_library) }
+
     before do
       tag = create(:tag)
-      issue = create(:issue, node: current_project.issue_library)
       issue.tags << tag
     end
 
@@ -42,6 +43,14 @@ describe 'Issues Summary widget', js: true do
       first('[data-behavior="card-header"]').click
 
       expect(page).to have_css('[data-behavior="caret-icon"].fa-caret-down')
+    end
+
+    it 'navigates to the full issue page when an accordion link is clicked' do
+      visit project_path(current_project)
+
+      click_link issue.title
+
+      expect(page).to have_current_path(project_issue_path(current_project, issue))
     end
   end
 
