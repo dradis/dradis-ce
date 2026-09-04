@@ -6,6 +6,7 @@ class EditingSession < ApplicationRecord
   # loaded and includes the concern, which may happen after this class.
   validates :record_type, presence: true, inclusion: { in: ->(_) { Lockable.allowed_types } }
 
+  # FIXME - ISSUE/NOTE INHERITANCE
   # `find_by(record: record)` won't work here: Issue is an STI subclass of Note,
   # so Rails' polymorphic query would look up record_type: 'Note' (the base
   # class), not 'Issue' (what we actually store, see .acquire! below).
