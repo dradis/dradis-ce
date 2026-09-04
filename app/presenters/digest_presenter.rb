@@ -7,8 +7,8 @@ class DigestPresenter < NotificationPresenter
   end
 
   def avatar_with_link(opts)
-    actor = notification.actor unless system_notification?
-    h.link_to(avatar_image(actor, opts), 'javascript:void(0)')
+    avatar = system_notification? ? system_notification_logo : avatar_image(notification.actor, opts)
+    h.link_to(avatar, 'javascript:void(0)')
   end
 
   def comment_path(anchor: false)

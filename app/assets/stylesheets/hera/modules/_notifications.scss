@@ -25,6 +25,12 @@
 
     img {
       border-radius: 50%;
+
+      &.system-notification-logo {
+        border-radius: 0;
+        padding: 0.25rem;
+        width: 2.5rem;
+      }
     }
   }
 
