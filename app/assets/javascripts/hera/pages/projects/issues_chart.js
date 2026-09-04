@@ -1,8 +1,11 @@
-document.addEventListener('turbo:load', function(){
-  var $dataElement  = $('#issues-summary-data'),
-      $chartElement = $('#issue-chart');
+function initIssuesChart() {
+  var $dataElement  = $('[data-behavior="issues-summary-data"]'),
+      $chartElement = $('[data-behavior="issue-chart"]');
 
-  if ($dataElement.length && $chartElement.find('svg').length == 0) {
+  if (!$dataElement.length || $chartElement.find('svg').length) {
+    return;
+  }
+
     var margin = {top: 20, bottom: 30},
         width = 354;
         height = 180 - margin.top - margin.bottom;
@@ -15,7 +18,7 @@ document.addEventListener('turbo:load', function(){
     var xAxis = d3.axisBottom(x)
         .tickSize(0);
 
-    var svg = d3.select('#issue-chart').append('svg')
+    var svg = d3.select('[data-behavior="issue-chart"]').append('svg')
         .attr('width', width)
         .attr('height', height + margin.top + margin.bottom)
       .append('g')
@@ -91,5 +94,6 @@ document.addEventListener('turbo:load', function(){
     $($('.tick')[i]).addClass('untagged');
     $($('.bar')[i]).addClass('untagged');
     $($('.counter')[i]).addClass('untagged');
-  }
-});
+}
+
+document.addEventListener('turbo:load', initIssuesChart);

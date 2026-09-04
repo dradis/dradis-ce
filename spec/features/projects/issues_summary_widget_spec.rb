@@ -1,0 +1,17 @@
+require 'rails_helper'
+
+describe 'Issues Summary widget', js: true do
+  before do
+    login_to_project_as_user
+
+    tag = create(:tag)
+    issue = create(:issue, node: current_project.issue_library)
+    issue.tags << tag
+  end
+
+  it 'initializes the chart once across repeated lifecycle events' do
+    visit project_path(current_project)
+
+    expect(page).to have_css('[data-behavior="issue-chart"] svg')
+  end
+end

@@ -1,5 +1,5 @@
 <% if @issues.any? %>
-  <div id="issue-chart"></div>
+  <div data-behavior="issue-chart"></div>
 
   <div id="issues-accordion" role="tablist">
     <% for tag in @tags do %>
@@ -56,5 +56,5 @@
 <% end %>
 
 <% if @issues.any? %>
-  <div id='issues-summary-data' data-tags='<%= @tag_names.to_json %>' data-issues-count='<%= @count_by_tag.to_json %>'></div>
+  <div data-behavior="issues-summary-data" data-tags='<%= @tag_names.to_json %>' data-issues-count='<%= @count_by_tag.to_json %>'></div>
 <% end %>
