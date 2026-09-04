@@ -100,6 +100,11 @@ th {
   color: var(--badge-lavender-color);
 }
 
+.badge-outline-primary {
+  border: 1px solid $primary;
+  color: $primary;
+}
+
 .bg-info {
   background-color: $green-100 !important;
   color: $green-900;
@@ -196,6 +201,7 @@ fieldset.check_boxes {
   padding: 1rem 0;
   position: sticky;
   width: 100%;
+  z-index: 2;
 
   @media (max-width: 991px) {
     margin-top: 2rem;

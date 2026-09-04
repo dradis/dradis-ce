@@ -56,7 +56,10 @@ describe 'Edit locking multi-actor flow' do
       expect(page).to have_content('Edit issue')
 
       click_link 'Cancel'
-      expect(page).to have_current_path(project_issue_path(project, issue))
+      # Cancel swaps the Turbo Frame back to the issue content in place,
+      # so the URL stays on the edit path rather than navigating away.
+      expect(page).to have_current_path(edit_project_issue_path(project, issue))
+      expect(page).not_to have_button('Update Issue')
     end
 
     # The lock release request is fired with `fetch(..., { keepalive: true })`

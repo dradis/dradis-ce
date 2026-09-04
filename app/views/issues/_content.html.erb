@@ -1,0 +1,18 @@
+<%= turbo_frame_tag dom_id(@issue) do %>
+  <% if @conflicting_revisions %>
+    <%= render "projects/conflicting_revisions", conflicts: @conflicting_revisions, record: @issue %>
+  <% end %>
+  <% cache ['issue-information-tab', @issue] do %>
+    <div class="note-text-inner">
+      <h4 class="mb-4 header-underline">
+        <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
+        <%= render partial: 'shared/liquid_loading' %>
+        <%= render partial: 'actions' %>
+      </h4>
+      <%= render partial: 'shared/textile_content', locals: { record: @issue, preview_path: preview_project_issue_path(current_project, @issue)  } %>
+      <div class="author-info">
+        <span class="ms-auto">Author: <%= @issue.author || 'n/a' %></span>
+      </div>
+    </div>
+  <% end %>
+<% end %>

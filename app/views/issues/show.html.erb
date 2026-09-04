@@ -4,10 +4,6 @@
   <%= render 'sidebar'%>
 <% end %>
 
-<% if @conflicting_revisions %>
-  <%= render "projects/conflicting_revisions", conflicts: @conflicting_revisions, record: @issue %>
-<% end %>
-
 <% content_for :breadcrumbs do %>
   <%= render partial: 'breadcrumbs' %>
 <% end %>
@@ -15,10 +11,7 @@
 <!-- Main content -->
 <ul class="tabs-container nav nav-tabs main-tabs">
   <li class="nav-item">
-    <a href="#info-tab" data-bs-toggle="tab" class="nav-link active">
-      <%= tag_and_name_for(@issue) %>
-      <%= "(#{@issue.state.humanize})" %>
-    </a>
+    <a href="#info-tab" data-bs-toggle="tab" class="nav-link active"><i class="fa-solid fa-bug"></i> Issue</a>
   </li>
   <li class="nav-item"><a href="#evidence-tab" class="nav-link" data-bs-toggle="tab"><i class="fa-solid fa-laptop"></i> Evidence <span class="badge bg-primary text-white" data-behavior="evidence-count"><%= @issue.evidence.count %></span></a></li>
   <%= render_view_hooks 'issues/show-tabs' %>
@@ -29,19 +22,7 @@
     <div class="content-container">
       <div class="tab-content">
         <div class="tab-pane active" id="info-tab">
-          <% cache ['issue-information-tab', @issue] do %>
-            <div class="note-text-inner">
-              <h4 class="mb-4 header-underline">
-                <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
-                <%= render partial: 'shared/liquid_loading' %>
-                <%= render partial: 'actions' %>
-              </h4>
-              <%= render partial: 'shared/textile_content', locals: { record: @issue, preview_path: preview_project_issue_path(current_project, @issue)  } %>
-              <div class="author-info">
-                <span class="ms-auto">Author: <%= @issue.author || 'n/a' %></span>
-              </div>
-            </div>
-          <% end %>
+          <%= render 'content' %>
         </div>
 
         <div class="tab-pane" id="evidence-tab">

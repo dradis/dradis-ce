@@ -1,6 +1,8 @@
 # the following let variables must be defined for this to work: record,
 # submit_form, column
-shared_examples 'a page which handles edit conflicts' do
+#
+# pass updates_in_place: true if the edit form submits into a Turbo Frame (needs `action_path` let)
+shared_examples 'a page which handles edit conflicts' do |updates_in_place: false|
   include RevisionsHelper
 
   def record_path(record)
@@ -54,7 +56,7 @@ shared_examples 'a page which handles edit conflicts' do
 
     it 'shows the updated record with a warning and a link to the revision history' do
       submit_form
-      expect(current_path).to eq record_path(record)
+      expect(current_path).to eq(updates_in_place ? action_path : record_path(record))
       expect(page).to have_content(/#{conflict_warning}/i)
       expect(page).to have_link 'revision history', href: record_revisions_path(record)
     end
@@ -62,8 +64,8 @@ shared_examples 'a page which handles edit conflicts' do
     it 'links to the previous versions' do
       submit_form
       all_versions = record.versions.order('created_at ASC')
-      my_version   = all_versions[-1]
-      conflict     = all_versions[-2]
+      my_version = all_versions[-1]
+      conflict = all_versions[-2]
       old_versions = all_versions - [my_version, conflict]
 
       expect(page).to have_link(
@@ -92,8 +94,8 @@ shared_examples 'a page which handles edit conflicts' do
       it 'links to them all' do
         submit_form
         all_versions = record.versions.order('created_at ASC')
-        my_version   = all_versions[-1]
-        conflicts    = all_versions[-3..-2]
+        my_version = all_versions[-1]
+        conflicts = all_versions[-3..-2]
         old_versions = all_versions - [my_version] - conflicts
 
         expect(page).to have_link(
