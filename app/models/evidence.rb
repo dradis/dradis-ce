@@ -1,5 +1,6 @@
 class Evidence < ApplicationRecord
   include Commentable
+  include Eventable
   include HasFields
   include RevisionTracking
   include Subscribable
@@ -24,11 +25,28 @@ class Evidence < ApplicationRecord
 
   # -- Scopes ---------------------------------------------------------------
 
-
   # -- Class Methods --------------------------------------------------------
 
-
   # -- Instance Methods -----------------------------------------------------
+
+  def local_event_payload
+    {
+      author: author,
+      project: {
+        id: project.id,
+        name: project.name
+      },
+      issue: {
+        id: issue.id,
+        title: issue.title
+      },
+      node: {
+        id: node.id,
+        label: node.label
+      },
+      fields: fields
+    }
+  end
 
   def local_fields
     {
