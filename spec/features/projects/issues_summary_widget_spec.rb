@@ -14,4 +14,14 @@ describe 'Issues Summary widget', js: true do
 
     expect(page).to have_css('[data-behavior="issue-chart"] svg')
   end
+
+  it 'initializes the chart once when called repeatedly' do
+    visit project_path(current_project)
+
+    expect(page).to have_css('[data-behavior="issue-chart"] svg')
+
+    page.execute_script('initIssuesChart(); initIssuesChart();')
+
+    expect(page).to have_css('[data-behavior="issue-chart"] svg', count: 1)
+  end
 end
