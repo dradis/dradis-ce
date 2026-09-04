@@ -1,38 +1,40 @@
 <% content_for :title, 'Record locked' %>
 
-<div class="content-container mt-4">
-  <div class="edit-locked">
-    <div class="icon">
-      <i class="fa-solid fa-lock"></i>
-    </div>
+<%= turbo_frame_tag dom_id(@locked_record) do %>
+  <div class="content-container mt-4">
+    <div class="edit-locked">
+      <div class="icon">
+        <i class="fa-solid fa-lock"></i>
+      </div>
 
-    <h3 class="heading">
-      This <%= @locked_record.model_name.human.downcase %> is currently being edited
-    </h3>
+      <h3 class="heading">
+        This <%= @locked_record.model_name.human.downcase %> is currently being edited
+      </h3>
 
-    <p class="description">
-      Another team member is currently editing this record. Go back, or edit
-      anyway and risk overwriting their changes.
-    </p>
+      <p class="description">
+        Another team member is currently editing this record. Go back, or edit
+        anyway and risk overwriting their changes.
+      </p>
 
-    <div class="editor">
-      <%= avatar_image(@locked_by, size: 48) %>
-      <div class="editor-info">
-        <span class="editor-name"><%= @locked_by.name %></span>
-        <span class="editor-status">
-          <span class="pulse"></span> Currently editing
-        </span>
+      <div class="editor">
+        <%= avatar_image(@locked_by, size: 48) %>
+        <div class="editor-info">
+          <span class="editor-name"><%= @locked_by.name %></span>
+          <span class="editor-status">
+            <span class="pulse"></span> Currently editing
+          </span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <%= link_to @form_cancel_path, class: 'btn btn-primary' do %>
+          <i class="fa-solid fa-arrow-left"></i> Go back
+        <% end %>
+
+        <%= link_to url_for(request.parameters.merge(force: 'true')), class: 'btn btn-outline-danger' do %>
+          <i class="fa-solid fa-lock-open"></i> Edit anyway
+        <% end %>
       </div>
     </div>
-
-    <div class="actions">
-      <%= link_to @form_cancel_path, class: 'btn btn-primary' do %>
-        <i class="fa-solid fa-arrow-left"></i> Go back
-      <% end %>
-
-      <%= link_to url_for(request.parameters.merge(force: 'true')), class: 'btn btn-outline-danger' do %>
-        <i class="fa-solid fa-lock-open"></i> Edit anyway
-      <% end %>
-    </div>
   </div>
-</div>
+<% end %>
