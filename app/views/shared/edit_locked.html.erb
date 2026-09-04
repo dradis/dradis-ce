@@ -1,7 +1,7 @@
 <% content_for :title, 'Record locked' %>
 
-<%= turbo_frame_tag dom_id(@locked_record) do %>
-  <div class="content-container mt-4">
+<div class="content-container mt-4">
+  <%= turbo_frame_tag dom_id(@locked_record) do %>
     <div class="edit-locked">
       <div class="icon">
         <i class="fa-solid fa-lock"></i>
@@ -36,5 +36,5 @@
         <% end %>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>
