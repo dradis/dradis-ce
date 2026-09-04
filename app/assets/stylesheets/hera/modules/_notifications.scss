@@ -126,6 +126,20 @@
             }
           }
 
+          .notification-icon {
+            font-size: 2rem;
+          }
+
+          .notification-read {
+            top: auto;
+            bottom: 0;
+            right: 0.5rem;
+          }
+
+          .system-notification-logo {
+            padding: 0.25rem;
+          }
+
           &:last-child {
             border-bottom: none;
           }
