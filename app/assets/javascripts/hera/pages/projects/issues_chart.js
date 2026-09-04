@@ -97,3 +97,4 @@ function initIssuesChart() {
 }
 
 document.addEventListener('turbo:load', initIssuesChart);
+document.addEventListener('turbo:frame-load', initIssuesChart);

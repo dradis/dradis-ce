@@ -120,6 +120,10 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
+    namespace :dashboard, module: 'projects/dashboard' do
+      resources :issues, only: [:index]
+    end
+
     resources :tags, except: [:show] do
       collection { post :sort }
     end

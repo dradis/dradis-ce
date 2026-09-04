@@ -1,7 +1,5 @@
 <section class="summary-panel">
-  <% if @issues.any? %>
-    <h4 class="header-underline">Issues so far</h4>
-  <% end %>
+  <h4 class="header-underline">Issues so far</h4>
 
-  <%= render 'projects/issues/summary_content' %>
+  <%= turbo_frame_tag 'issues-summary', src: project_dashboard_issues_path(current_project) %>
 </section>
