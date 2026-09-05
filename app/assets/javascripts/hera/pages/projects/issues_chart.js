@@ -1,95 +1,93 @@
-document.addEventListener('turbo:load', function(){
-  var $dataElement  = $('#issues-summary-data'),
-      $chartElement = $('#issue-chart');
+(() => {
+  const initIssuesChart = () => {
+    const $dataElement = $('[data-behavior="issues-summary-data"]');
+    const $chartElement = $('.issue-chart');
 
-  if ($dataElement.length && $chartElement.find('svg').length == 0) {
-    var margin = {top: 20, bottom: 30},
-        width = 354;
-        height = 180 - margin.top - margin.bottom;
+    if (!$dataElement.length || $chartElement.find('svg').length) return;
 
-    var x = d3.scaleBand().rangeRound([0, width]);
-
-    var y = d3.scaleLinear()
-        .range([height, 0]);
-
-    var xAxis = d3.axisBottom(x)
-        .tickSize(0);
-
-    var svg = d3.select('#issue-chart').append('svg')
-        .attr('width', width)
-        .attr('height', height + margin.top + margin.bottom)
+    const margin = { top: 20, bottom: 30 };
+    const width = 354;
+    const height = 180 - margin.top - margin.bottom;
+    const x = d3.scaleBand().rangeRound([0, width]);
+    const y = d3.scaleLinear().range([height, 0]);
+    const xAxis = d3.axisBottom(x).tickSize(0);
+    const svg = d3
+      .select($chartElement[0])
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height + margin.top + margin.bottom)
       .append('g')
-        .attr('transform', 'translate(0,' + margin.top + ')');
+      .attr('transform', `translate(0,${margin.top})`);
 
-    // --------------------------------------------------------- Data variables
-    var tags        = $dataElement.data('tags');
-    var issuesByTag = $dataElement.data('issues-count');
-    var highest     = 0;
-    var data        = [];
-    var x_domain    = [];
+    const tags = $dataElement.data('tags');
+    const issuesByTag = $dataElement.data('issues-count');
+    let highest = 0;
+    const data = [];
+    const xDomain = [];
 
-    for (var key in tags){
-      issuesCount = issuesByTag[key];
-      highest = issuesCount > highest ? issuesCount : highest
-      data.push({letter: tags[key][0], frequency: issuesCount});
-      x_domain.push(tags[key][0]);
-    }
-    data.push({letter: 'N/A', frequency: issuesByTag['unassigned']})
-    x_domain.push('N/A');
-
-    var highest_y = Math.max(highest, issuesByTag['unassigned']);
-    // -------------------------------------------------------- /Data variables
-
-    x.domain(x_domain);
-
-    y.domain([0, highest_y]);
-
-    d3.selection.prototype.last = function() {
-      return d3.select(
-          this.nodes()[this.size() - 1]
-      );
-    };
-
-    x_axis = svg.append('g')
-        .attr('class', 'x axis')
-        .attr('transform', 'translate(0,' + height + ')')
-        .call(xAxis);
-    x_axis.selectAll("text").style("fill", "inherit");
-    x_axis.selectAll("path").style("stroke", "none");
-    x_axis.selectAll("text").last().classed("untagged", true);
-
-    var bars = svg.append('g');
-
-    bars.selectAll('rect')
-        .data(data)
-      .enter().append('rect')
-        .attr('class', 'bar' )
-        .attr('x', function(d) { return x(d.letter); })
-        .attr('width', x.bandwidth())
-        .attr('y', function(d) { return y(d.frequency); })
-        .attr('height', function(d) { return height - y(d.frequency); });
-
-
-    bars.selectAll('text')
-        .data(data)
-      .enter().append('text')
-        .attr('x', function(d, i) { return x(d.letter) + x.bandwidth()/2; })
-        .attr('y', function(d) { return y(d.frequency);})
-        .attr('dy', -5)
-        .attr('text-anchor', 'middle')
-        .attr('class', 'counter' )
-        .text(function(d) {return d.frequency;});
-
-    var i = 0;
-    for( var key in tags ){
-      $($('.tick')[i]).attr('fill', tags[key][1]);
-      $($('.bar')[i]).attr('fill', tags[key][1]);
-      $($('.counter')[i]).attr('fill', tags[key][1]);
-      i++;
+    for (const key in tags) {
+      const issuesCount = issuesByTag[key];
+      highest = issuesCount > highest ? issuesCount : highest;
+      data.push({ letter: tags[key][0], frequency: issuesCount });
+      xDomain.push(tags[key][0]);
     }
 
-    $($('.tick')[i]).addClass('untagged');
-    $($('.bar')[i]).addClass('untagged');
-    $($('.counter')[i]).addClass('untagged');
-  }
-});
+    data.push({ letter: 'N/A', frequency: issuesByTag.unassigned });
+    xDomain.push('N/A');
+
+    x.domain(xDomain);
+    y.domain([0, Math.max(highest, issuesByTag.unassigned)]);
+
+    const xAxisGroup = svg
+      .append('g')
+      .attr('class', 'x axis')
+      .attr('transform', `translate(0,${height})`)
+      .call(xAxis);
+
+    xAxisGroup.selectAll('text').style('fill', 'inherit');
+    xAxisGroup.selectAll('path').style('stroke', 'none');
+    xAxisGroup
+      .selectAll('text')
+      .filter((d, index, nodes) => index === nodes.length - 1)
+      .classed('untagged', true);
+
+    const bars = svg.append('g');
+
+    bars
+      .selectAll('rect')
+      .data(data)
+      .enter()
+      .append('rect')
+      .attr('class', 'bar')
+      .attr('x', d => x(d.letter))
+      .attr('width', x.bandwidth())
+      .attr('y', d => y(d.frequency))
+      .attr('height', d => height - y(d.frequency));
+
+    bars
+      .selectAll('text')
+      .data(data)
+      .enter()
+      .append('text')
+      .attr('x', d => x(d.letter) + x.bandwidth() / 2)
+      .attr('y', d => y(d.frequency))
+      .attr('dy', -5)
+      .attr('text-anchor', 'middle')
+      .attr('class', 'counter')
+      .text(d => d.frequency);
+
+    Object.keys(tags).forEach((key, index) => {
+      $chartElement.find('.tick').eq(index).attr('fill', tags[key][1]);
+      $chartElement.find('.bar').eq(index).attr('fill', tags[key][1]);
+      $chartElement.find('.counter').eq(index).attr('fill', tags[key][1]);
+    });
+
+    const untaggedIndex = Object.keys(tags).length;
+    $chartElement.find('.tick').eq(untaggedIndex).addClass('untagged');
+    $chartElement.find('.bar').eq(untaggedIndex).addClass('untagged');
+    $chartElement.find('.counter').eq(untaggedIndex).addClass('untagged');
+  };
+
+  document.addEventListener('turbo:load', initIssuesChart);
+  document.addEventListener('turbo:frame-load', initIssuesChart);
+})();

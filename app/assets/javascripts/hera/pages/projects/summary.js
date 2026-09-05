@@ -1,6 +1,6 @@
 document.addEventListener('turbo:load', function () {
   if ($('body.projects.show').length) {
-    $('a[data-bs-toggle="collapse"]').click(function () {
+    $(document).on('click', 'a[data-bs-toggle="collapse"]', function () {
       if ($(this).hasClass('collapsed')) {
         $(this)
           .find('[data-behavior~=caret-icon]')
