@@ -1,3 +1,11 @@
+body.ce.projects {
+  .summary-panel {
+    .combobox-container:has(.issues-grouping-select) {
+      display: none;
+    }
+  }
+}
+
 body.projects {
   .summary-panel {
     #boards-summary {
