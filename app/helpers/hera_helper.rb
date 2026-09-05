@@ -1,6 +1,6 @@
 module HeraHelper
   def body_css
-    classes = [controller_path.gsub('/', '-'), action_name]
+    classes = [controller_path.gsub('/', '-'), action_name, Dradis.edition]
     classes << content_for(:body_class) if content_for?(:body_class)
     classes.compact.join(' ')
   end
