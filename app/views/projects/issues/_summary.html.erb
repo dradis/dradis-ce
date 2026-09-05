@@ -3,7 +3,7 @@
 
   <%= turbo_frame_tag 'issues-summary',
     src: project_dashboard_issues_path(current_project),
-    data: { behavior: 'issues-summary' } do %>
+    class: 'issues-summary-frame' do %>
     <%= spinner_tag %>
   <% end %>
 </section>

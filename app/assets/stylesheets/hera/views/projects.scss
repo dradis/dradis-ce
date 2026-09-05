@@ -51,8 +51,12 @@ body.projects {
       }
     }
 
-    [data-behavior~="issues-summary"] {
-      min-height: 17rem;
+    .issues-summary-frame {
+      display: block;
+
+      > .spinner-container {
+        min-height: 17rem;
+      }
     }
 
     #issues-accordion {
