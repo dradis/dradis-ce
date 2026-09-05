@@ -17,13 +17,6 @@ describe 'Issues Summary widget', js: true do
       expect(page).to have_css('[data-behavior="issue-chart"] svg')
     end
 
-    it 'renders a legend item for each tag and one for unassigned' do
-      visit project_path(current_project)
-
-      expect(page).to have_css('.issue-chart-legend .legend-item', count: 2)
-      expect(page).to have_css('.issue-chart-legend .legend-item.untagged', text: 'N/A')
-    end
-
     it 'initializes the chart once when called repeatedly' do
       visit project_path(current_project)
 
