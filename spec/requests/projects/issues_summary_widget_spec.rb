@@ -10,5 +10,11 @@ describe 'Projects', type: :request do
       expect(response.body).to include('Issues so far')
       expect(response.body).to include('id="issues-summary"')
     end
+
+    it 'renders the grouping selector, hidden' do
+      get project_path(current_project)
+
+      expect(response.body).to include('issues-grouping-select')
+    end
   end
 end
