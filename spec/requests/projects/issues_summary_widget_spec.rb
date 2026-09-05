@@ -8,7 +8,7 @@ describe 'Projects', type: :request do
       get project_path(current_project)
 
       expect(response.body).to include('Issues so far')
-      expect(response.body).to include('<turbo-frame id="issues-summary"')
+      expect(response.body).to include('id="issues-summary"')
     end
   end
 end

@@ -22,7 +22,10 @@ describe 'Issues Summary widget', js: true do
 
       expect(page).to have_css('[data-behavior="issue-chart"] svg')
 
-      page.execute_script('initIssuesChart(); initIssuesChart();')
+      page.execute_script(<<~JS)
+        document.dispatchEvent(new Event('turbo:load'));
+        document.dispatchEvent(new Event('turbo:frame-load'));
+      JS
 
       expect(page).to have_css('[data-behavior="issue-chart"] svg', count: 1)
     end
