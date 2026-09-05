@@ -51,6 +51,10 @@ body.projects {
       }
     }
 
+    [data-behavior~="issues-summary"] {
+      min-height: 8rem;
+    }
+
     #issues-accordion {
       margin-top: 1rem;
 
