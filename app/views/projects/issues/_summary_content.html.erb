@@ -5,11 +5,11 @@
     <% for tag in @tags do %>
       <% if @issues_by_tag[tag.name].any? %>
         <div class="card" style="border-color: <%= tag.color %>">
-          <a data-bs-toggle="collapse" href="#collape<%= tag.display_name %>" class="card-header" style="background: <%= tag.color %>" data-behavior="card-header">
+          <a data-bs-toggle="collapse" href="#collapse<%= tag.display_name %>" class="card-header" style="background: <%= tag.color %>" data-behavior="card-header">
             <h5><%= tag.display_name %><span class="float-end"><i class="fa-solid fa-caret-up" data-behavior="caret-icon"></i></span></h5>
           </a>
 
-          <div id="collape<%= tag.display_name %>" class="collapse show">
+          <div id="collapse<%= tag.display_name %>" class="collapse show">
             <div class="card-body p-0">
               <ul class="list-group">
                 <% @issues_by_tag[tag.name].each do |issue| %>
@@ -27,11 +27,11 @@
     <%# unassigned %>
     <% if @issues_by_tag[:unassigned].any? %>
       <div class="card untagged">
-        <a data-bs-toggle="collapse" href="#collapeUnassigned" class="card-header" data-behavior="card-header">
+        <a data-bs-toggle="collapse" href="#collapseUnassigned" class="card-header" data-behavior="card-header">
           <h5>Unassigned<span class="float-end"><i class="fa-solid fa-caret-up" data-behavior="caret-icon"></i></span></h5>
         </a>
 
-        <div id="collapeUnassigned" class="collapse show">
+        <div id="collapseUnassigned" class="collapse show">
           <div class="card-body p-0">
             <ul class="list-group">
               <% @issues_by_tag[:unassigned].each do |issue| %>
