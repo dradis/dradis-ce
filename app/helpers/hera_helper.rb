@@ -1,28 +1,21 @@
 module HeraHelper
   def body_css
-    classes = [controller_path.gsub('/', '-'), action_name, Dradis.edition]
-    classes << content_for(:body_class) if content_for?(:body_class)
-    classes.compact.join(' ')
+    class_names(controller_path.gsub('/', '-'), action_name, Dradis.edition, content_for(:body_class))
   end
 
   def colored_icon_for_model(model, icon_class, extra_class = nil)
-    css = ['fa-solid']
-    css << icon_class
-    css << extra_class if extra_class
-
     tag = nil
+
+    css = model.is_a?(Node) ? class_names('fa-fw fa-solid', model.icon) : class_names('fa-solid', icon_class, extra_class)
 
     case model
     when Evidence
       tag = model.issue.tags.first
     when Issue
       tag = model.tags.first
-    when Node
-      css = ['fa-fw fa-solid']
-      css << model.icon
     end
 
-    options = { class: css.join(' ') }
+    options = { class: css }
     if tag
       options[:style] = "color: #{tag.color}"
     elsif !model.is_a?(Node)
