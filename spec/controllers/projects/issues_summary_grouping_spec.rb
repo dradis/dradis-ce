@@ -1,6 +1,21 @@
 require 'rails_helper'
 
 describe Projects::IssuesSummaryGrouping do
+  describe '#build_grouping' do
+    it 'uses tags grouping regardless of the requested grouping' do
+      host = Class.new { include Projects::IssuesSummaryGrouping }.new
+      host.instance_variable_set(:@tags, [])
+      host.instance_variable_set(:@issues, [])
+
+      host.send(:build_grouping, 'authors')
+
+      expect(host.instance_variable_get(:@grouping)).to eq('tags')
+      expect(host.instance_variable_get(:@chart_data)).to eq(
+        grouping: 'tags', tags: {}.to_json, issues_count: { unassigned: 0 }.to_json
+      )
+    end
+  end
+
   describe '#build_tags_grouping' do
     it 'groups tagged and unassigned issues and builds the chart attributes' do
       host = Class.new { include Projects::IssuesSummaryGrouping }.new
@@ -22,6 +37,11 @@ describe Projects::IssuesSummaryGrouping do
       )
       expect(host.instance_variable_get(:@tag_names)).to eq(
         tag.name => [tag.display_name, tag.color]
+      )
+      expect(host.instance_variable_get(:@chart_data)).to eq(
+        grouping: 'tags',
+        tags: { tag.name => [tag.display_name, tag.color] }.to_json,
+        issues_count: { tag.name => 1, unassigned: 1 }.to_json
       )
     end
   end

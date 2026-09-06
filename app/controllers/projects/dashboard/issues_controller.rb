@@ -6,6 +6,6 @@ class Projects::Dashboard::IssuesController < AuthenticatedController
     @issues = current_project.issues.includes(:tags).sort
     @tags = current_project.tags
 
-    build_tags_grouping
+    build_grouping(params[:grouping])
   end
 end
