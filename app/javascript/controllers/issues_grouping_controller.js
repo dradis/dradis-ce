@@ -26,7 +26,7 @@ export default class extends Controller {
   }
 
   updateFrameSrc(grouping) {
-    const frame = document.getElementById("issues-summary")
+    const frame = document.querySelector('[data-behavior~="issues-summary"]')
     if (!frame) return
 
     const url = new URL(frame.src, window.location.origin)
