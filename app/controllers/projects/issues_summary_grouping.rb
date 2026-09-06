@@ -4,12 +4,13 @@ module Projects
 
     def build_tags_grouping
       @count_by_tag = Hash.new(0)
-      @count_by_tag[:unassigned] = 0
       @issues_by_tag = Hash.new { |h, k| h[k] = [] }
 
       @tag_names = @tags.map do |tag|
+        @count_by_tag[tag.name] = 0
         [tag.name, [tag.display_name, tag.color]]
       end.to_h
+      @count_by_tag[:unassigned] = 0
 
       @issues.each do |issue|
         if issue.tags.empty?
