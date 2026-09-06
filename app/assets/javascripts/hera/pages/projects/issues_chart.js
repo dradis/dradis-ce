@@ -1,7 +1,7 @@
 (() => {
   const initIssuesChart = () => {
     const $dataElement = $('[data-behavior="issues-summary-data"]');
-    const $chartElement = $('.issue-chart');
+    const $chartElement = $('[data-behavior~="issue-chart"]');
 
     if (!$dataElement.length || $chartElement.find('svg').length) return;
 
