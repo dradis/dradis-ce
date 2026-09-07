@@ -121,7 +121,7 @@ class NodesController < NestedNodeResourceController
     evidence_dynamic_fields = dynamic_field_names(@node.evidence)
 
     rtp = current_project.report_template_properties
-    rtp_default_evidence_fields = rtp ? rtp.evidence_fields.default.field_names : []
+    rtp_default_evidence_fields = rtp ? rtp.evidence_fields.defaults.field_names : []
 
     @note_columns = note_dynamic_fields | extra_field_names
     @evidence_columns = rtp_default_evidence_fields | evidence_dynamic_fields | extra_field_names
