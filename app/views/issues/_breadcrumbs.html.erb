@@ -1,4 +1,4 @@
-<nav>  
+<nav class="issue-breadcrumbs">
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
         <%= link_to current_project.name, project_path(current_project) %>
@@ -10,4 +10,6 @@
       <%= @issue.title %>
     </li>
   </ol>
+
+  <%= render partial: 'badges', locals: { issue: @issue } %>
 </nav>

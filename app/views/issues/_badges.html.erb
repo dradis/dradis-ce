@@ -1,0 +1,8 @@
+<span id="<%= dom_id(issue, :badges) %>" class="issue-meta">
+  <% if tag = issue.tags.first %>
+    <span class="badge issue-tag-badge" style="--issue-tag-badge-color: <%= tag.color %>">
+      <i class="fa-solid fa-tag"></i> <%= h(tag.display_name) %>
+    </span>
+  <% end %>
+  <span class="badge badge-outline-primary"><%= issue.state.humanize %></span>
+</span>

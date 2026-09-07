@@ -81,7 +81,7 @@ describe 'Issues pages' do
               with: "#[Title]#\nRspec issue\n\n#[Description]#\nNew description\n\n"
           end
 
-          it 'creates a new Issue under the Issue library with the right Category and Author'  do
+          it 'creates a new Issue under the Issue library with the right Category and Author' do
             expect { submit_form }.to change { current_project.issues.count }.by(1)
             issue = current_project.issues.last
             expect(current_path).to eq(project_issue_path(current_project, issue))
@@ -216,19 +216,26 @@ describe 'Issues pages' do
         describe 'submitting the form with valid information' do
           let(:field) { '#[Description]#' }
           let(:value) { 'New info' }
-          let(:new_content) { "#{field}\r\n#{value}" }
+          # Turbo Frame submissions use fetch/FormData, which normalizes to \n.
+          let(:new_content) { "#{field}\n#{value}" }
 
           before do
             fill_in :issue_text, with: field
             find('#issue_text').send_keys :enter, value
           end
 
-          let(:submit_form) { click_button 'Update Issue' }
+          # Turbo submits this form via fetch, so the click returns before the
+          # turbo_stream response lands. Wait for the confirmation banner so
+          # assertions on server state below don't run against a stale read.
+          let(:submit_form) do
+            click_button 'Update Issue'
+            expect(page).to have_content('Issue updated.')
+          end
 
-          it 'updates and shows the issue' do
+          it 'updates the issue in place, without a full navigation' do
             submit_form
             expect(@issue.reload.text).to eq new_content
-            expect(current_path).to eq project_issue_path(current_project, @issue)
+            expect(current_path).to eq action_path
           end
 
           let(:model) { @issue }
@@ -275,7 +282,7 @@ describe 'Issues pages' do
 
           let(:column) { :text }
           let(:record) { @issue }
-          it_behaves_like 'a page which handles edit conflicts'
+          it_behaves_like 'a page which handles edit conflicts', updates_in_place: true
         end
 
         context 'submitting the form with invalid information' do
@@ -404,7 +411,7 @@ describe 'Issues pages' do
 
         context 'with states' do
           it 'shows the issue states in the view' do
-            expect(page).to have_text "(#{@issue.state.humanize})"
+            expect(page).to have_text @issue.state.humanize
           end
         end
 
