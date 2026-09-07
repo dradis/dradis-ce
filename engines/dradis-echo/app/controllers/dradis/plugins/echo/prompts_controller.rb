@@ -50,7 +50,8 @@ module Dradis::Plugins::Echo
     end
 
     def set_scope
-      if Prompt::SCOPES.map(&:to_s).include?(params[:scope])
+      # Allow nil params[:scope] when creating a new prompt from the index page
+      if Prompt::SCOPES.map(&:to_s).include?(params[:scope]) || params[:scope].nil?
         @scope = params[:scope]
       else
         redirect_to prompts_path, alert: 'Something fishy is going on...'
