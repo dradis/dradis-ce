@@ -114,10 +114,9 @@
         this._loadFields(this.$element.val(), this._fieldValues);
       }.bind(this));
 
-      // The source textarea is what actually gets submitted, but the Fields
-      // view only regenerates it on a debounce. Flush that sync before letting
-      // the form submit, or an edit made within _doneTypingInterval of hitting
-      // save never makes it into the source and is silently lost.
+      // The Fields view only syncs to the submitted source textarea on a
+      // debounce. Flush it on submit, or a save within _doneTypingInterval
+      // silently drops the edit.
       this.$element.closest('form').on('submit', (evt) => this._onSubmit(evt));
 
       // Bind all form element actions within container
