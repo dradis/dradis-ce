@@ -5,6 +5,7 @@ class IssuesController < AuthenticatedController
   include EventPublisher
   include IssuesHelper
   include LiquidEnabledResource
+  include LockableResource
   include Mentioned
   include MultipleDestroy
   include NotificationsReader
@@ -19,6 +20,8 @@ class IssuesController < AuthenticatedController
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
   before_action :set_affected_nodes, only: [:show]
   before_action :set_form_cancel_path, only: [:new, :edit]
+  # Must run after :set_form_cancel_path; the lockout page links back to it.
+  before_action :check_edit_lock, only: :edit
   before_action :set_send_to_integrations, only: [:new, :edit, :show]
   before_action :set_tags, except: [:destroy]
 
@@ -82,6 +85,7 @@ class IssuesController < AuthenticatedController
       updated_at_before_save = @issue.updated_at.to_i
 
       if @issue.update(issue_params)
+        @issue.release_edit_session(current_user)
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         format.html { redirect_to_main_or_qa }
@@ -129,6 +133,10 @@ class IssuesController < AuthenticatedController
 
   def liquid_resource_assigns
     { 'issue' => IssueDrop.new(@issue) }
+  end
+
+  def lockable_resource
+    @issue
   end
 
   def redirect_to_main_or_qa
