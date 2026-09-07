@@ -114,8 +114,40 @@
         this._loadFields(this.$element.val(), this._fieldValues);
       }.bind(this));
 
+      // The source textarea is what actually gets submitted, but the Fields
+      // view only regenerates it on a debounce. Flush that sync before letting
+      // the form submit, or an edit made within _doneTypingInterval of hitting
+      // save never makes it into the source and is silently lost.
+      this.$element.closest('form').on('submit', (evt) => this._onSubmit(evt));
+
       // Bind all form element actions within container
       this.bindFieldGroup(this.options.$fields);
+    },
+    _onSubmit(evt) {
+      // Second pass, after the source has been flushed: let it through.
+      if (this._sourceFlushed) {
+        this._sourceFlushed = false;
+        return;
+      }
+
+      // Nothing to flush when the user is editing the source directly.
+      if (!this.options.$fields.is(':visible')) { return; }
+
+      const form = evt.currentTarget;
+      const submitter = evt.originalEvent && evt.originalEvent.submitter;
+
+      evt.preventDefault();
+      clearTimeout(this._typingTimer);
+
+      this._loadSource(() => {
+        this._sourceFlushed = true;
+
+        if (form.requestSubmit) {
+          form.requestSubmit(submitter);
+        } else {
+          $(form).submit();
+        }
+      });
     },
     bindFieldGroup: function($parent) {
       var that = this;
@@ -221,7 +253,7 @@
       });
     },
     // Ajax write
-    _loadSource: function() {
+    _loadSource(done) {
       $.post({
         url: this.$element.data('paths').source_url,
         data: JSON.stringify({ form: this._serializedFormData() }),
@@ -230,6 +262,8 @@
           this.$element.val(result);
           this.$element.trigger('textchange');
         }.bind(this)
+      }).always(() => {
+        if (done) { done(); }
       });
     },
     _onKeyPressPreview: function(type) {
