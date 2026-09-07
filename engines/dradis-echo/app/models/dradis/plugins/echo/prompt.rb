@@ -3,7 +3,7 @@ module Dradis::Plugins::Echo
     include Defaults
     include Icons
 
-    SCOPES = [ :issue ].freeze
+    SCOPES = DEFAULTS.keys.freeze
 
     enum :visibility, [ :user, :team ]
 
@@ -30,16 +30,6 @@ module Dradis::Plugins::Echo
     scope :for, ->(value) { where(scope: value) }
 
     # -- Class Methods ----------------------------------------------------------
-
-    # Checks emptiness per scope, not globally, so a user with prompts in
-    # one scope still gets another scope's defaults backfilled.
-    def self.seed_defaults_for(user, scope)
-      prompts = user.prompts.for(scope).to_a
-      return prompts unless prompts.empty?
-
-      user.prompts << defaults_for(scope)
-      user.prompts.for(scope).to_a
-    end
 
     # -- Instance Methods -------------------------------------------------------
     private

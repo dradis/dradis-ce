@@ -1,13 +1,14 @@
 module Dradis::Plugins::Echo
   class PromptsController < ApplicationController
     before_action :set_prompt, only: [:show, :edit, :update, :destroy]
+    before_action :set_scope, only: [:new]
 
     def index
-      @prompts = Prompt::SCOPES.flat_map { |scope| Prompt.seed_defaults_for(current_user, scope) }
+      @prompts = Prompt.find_or_seed_for(current_user)
     end
 
     def new
-      @prompt = current_user.prompts.new(scope: params[:scope])
+      @prompt = current_user.prompts.new(scope: @scope)
     end
 
     def create
@@ -46,6 +47,14 @@ module Dradis::Plugins::Echo
 
     def set_prompt
       @prompt = current_user.prompts.find(params[:id])
+    end
+
+    def set_scope
+      if Prompt::SCOPES.map(&:to_s).include?(params[:scope])
+        @scope = params[:scope]
+      else
+        redirect_to prompts_path, alert: 'Something fishy is going on...'
+      end
     end
   end
 end
