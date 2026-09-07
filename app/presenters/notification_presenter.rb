@@ -1,7 +1,7 @@
 class NotificationPresenter < BasePresenter
   # Notifiable types with no real actor (e.g. system-generated notifications).
   # These skip actor attribution and show the Dradis logo in place of an avatar.
-  SYSTEM_NOTIFICATION_TYPES = %w[].freeze
+  SYSTEM_NOTIFICATION_TYPES = %w[Release].freeze
 
   presents :notification
 
@@ -28,6 +28,8 @@ class NotificationPresenter < BasePresenter
     case notification.notifiable_type
     when 'Comment'
       'fa-comment'
+    when 'Release'
+      'fa-rocket'
     else
       ''
     end
