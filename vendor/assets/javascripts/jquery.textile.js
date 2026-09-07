@@ -57,6 +57,7 @@
       // You already have access to the DOM element and the options via the instance,
       // e.g., this.element and this.options
       this._fieldValues = this.$element.data('field-values');
+      this._fieldsDirty = false;
 
       this._buildContainer();
 
@@ -129,8 +130,10 @@
         return;
       }
 
-      // Nothing to flush when the user is editing the source directly.
+      // Nothing to flush when the user is editing the source directly, or
+      // when the Fields form has no edit still waiting on the debounce.
       if (!this.options.$fields.is(':visible')) { return; }
+      if (!this._fieldsDirty) { return; }
 
       const form = evt.currentTarget;
       const submitter = evt.originalEvent && evt.originalEvent.submitter;
@@ -164,6 +167,8 @@
       $parent.find('[data-behavior~=preview-enabled]').on('textchange load-preview', this._timedPreview.bind(this));
     },
     _timedPreview: function(view) {
+      this._fieldsDirty = true;
+
       clearTimeout(this._typingTimer);
       this._typingTimer = setTimeout(function() {
         this._onKeyPressPreview.bind(this, view)
@@ -260,6 +265,7 @@
         success: function(result){
           this.$element.val(result);
           this.$element.trigger('textchange');
+          this._fieldsDirty = false;
         }.bind(this)
       }).always(() => {
         if (done) { done(); }
