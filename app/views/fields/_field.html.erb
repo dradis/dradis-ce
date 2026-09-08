@@ -20,9 +20,8 @@
   </div>
   <div class="inline-editable">
     <div class="edit-hover">
-      <% if render_dropdown?(value) %>
-        <% options = value.split(' | ') %>
-        <%= select :item_form, "field_value_#{index}", options, {}, { class: 'form-select', data: { behavior: 'preview-enabled' }, tabindex: index + 1 } %>
+      <% if (options = dropdown_options(field_name, value)) %>
+        <%= select :item_form, "field_value_#{index}", options, { selected: value, include_blank: true }, { class: 'form-select', data: { behavior: 'preview-enabled' }, tabindex: index + 1 } %>
       <% else %>
         <%= label_tag "item_form[field_value_#{index}]", 'Field Value', class: 'visually-hidden' %>
         <%= text_area_tag "item_form[field_value_#{index}]", value, rows: 1,
