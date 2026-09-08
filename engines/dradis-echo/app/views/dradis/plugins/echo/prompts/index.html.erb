@@ -38,7 +38,7 @@
   <h4 class="header-underline">Prompts
     <% if @prompts.any? %>
       <span class="actions pt-1">
-        <%= link_to new_prompt_path do %>
+        <%= link_to new_prompt_path(scope: :issue) do %>
           <i class="fa-solid fa-plus me-1"></i>New Prompt
         <% end %>
       </span>
