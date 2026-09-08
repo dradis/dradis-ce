@@ -1,8 +1,4 @@
 class NotificationPresenter < BasePresenter
-  # Notifiable types with no real actor (e.g. system-generated notifications).
-  # These skip actor attribution and show the Dradis logo in place of an avatar.
-  SYSTEM_NOTIFICATION_TYPES = %w[Release].freeze
-
   presents :notification
 
   def avatar_with_link(size)
@@ -108,7 +104,7 @@ class NotificationPresenter < BasePresenter
     # Ruby, so ||= would recompute it on every call instead of memoizing it.
     return @system_notification if defined?(@system_notification)
 
-    @system_notification = SYSTEM_NOTIFICATION_TYPES.include?(notification.notifiable_type)
+    @system_notification = Notification::SYSTEM_TYPES.include?(notification.notifiable_type)
   end
 
   def system_notification_logo

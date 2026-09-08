@@ -1,4 +1,8 @@
 class Notification < ApplicationRecord
+  # Notifiable types with no real actor (e.g. system-generated notifications).
+  # These skip actor attribution and show the Dradis logo in place of an avatar.
+  SYSTEM_TYPES = %w[Release].freeze
+
   # -- Relationships --------------------------------------------------------
   belongs_to :actor, class_name: 'User'
   belongs_to :recipient, class_name: 'User'
