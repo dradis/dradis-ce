@@ -17,9 +17,9 @@ class Notification < ApplicationRecord
   validates :recipient, presence: true, associated: true
 
   # -- Scopes ---------------------------------------------------------------
-  scope :newest,  -> { order(created_at: :desc) }
-  scope :read,    -> { where.not(read_at: nil) }
-  scope :unread,  -> { where(read_at: nil) }
+  scope :newest, -> { order(created_at: :desc) }
+  scope :read, -> { where.not(read_at: nil) }
+  scope :unread, -> { where(read_at: nil) }
 
   # All unread notifications within a given span of time
   scope :since, -> (time_ago = 1.day.ago) {
