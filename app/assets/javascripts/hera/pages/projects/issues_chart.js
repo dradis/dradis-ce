@@ -88,6 +88,5 @@
     $chartElement.find('.counter').eq(untaggedIndex).addClass('untagged');
   };
 
-  document.addEventListener('turbo:load', initIssuesChart);
   document.addEventListener('turbo:frame-load', initIssuesChart);
 })();
