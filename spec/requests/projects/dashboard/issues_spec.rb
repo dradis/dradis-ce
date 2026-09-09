@@ -5,7 +5,7 @@ describe 'Projects::Dashboard::Issues', type: :request do
 
   describe 'GET /projects/:project_id/dashboard/issues' do
     it 'renders tagged issues' do
-      tag = create(:tag, name: '!000001_sqli')
+      tag = create(:tag, name: '!000001_sqli', project: current_project)
       issue = create(:issue, node: current_project.issue_library)
       issue.tags << tag
 
