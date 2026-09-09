@@ -15,6 +15,6 @@ class TagDrop < BaseDrop
   private
 
   def scoped_issues
-    Issue.public_send(@scope)
+    @scoped_issues ||= Issue.public_send(@scope)
   end
 end

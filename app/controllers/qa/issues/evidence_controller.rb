@@ -1,13 +1,14 @@
 class QA::Issues::EvidenceController < AuthenticatedController
   include DynamicFieldNamesCacher
   include EventPublisher
+  include LiquidEnabledResource
   include ProjectScoped
   include Publishable
 
-  before_action :set_issue, only: [:edit, :index, :show, :update]
+  before_action :set_issue, only: [:edit, :index, :preview, :show, :update]
   before_action :set_affected_nodes, only: :index
   before_action :set_columns, only: :index
-  before_action :set_evidence, only: [:edit, :show, :update]
+  before_action :set_evidence, only: [:edit, :preview, :show, :update]
   before_action :set_evidence_for_review, only: [:edit, :show]
   before_action :set_node_evidence, only: :index
   before_action :validate_state, only: [:multiple_update, :update]
@@ -20,7 +21,7 @@ class QA::Issues::EvidenceController < AuthenticatedController
 
   def edit
     @node = @evidence.node
-    @form_preview_path = preview_project_node_evidence_path(current_project, @node, @evidence)
+    @form_preview_path = preview_project_qa_issue_evidence_path(current_project, @issue, @evidence)
   end
 
   def update
@@ -82,7 +83,7 @@ class QA::Issues::EvidenceController < AuthenticatedController
                           .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
                           .where('evidence.issue_id = ? AND evidence.state = ?', @issue.id, Evidence.states[:ready_for_review])
                           .group('nodes.id')
-                          .sort_by { |node, _| node.label }
+                          .order('label')
   end
 
   def set_columns

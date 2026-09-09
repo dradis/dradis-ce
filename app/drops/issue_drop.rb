@@ -27,6 +27,6 @@ class IssueDrop < BaseDrop
   # The Issue itself is expected to already match :scope (the caller is
   # responsible for that), so only its Evidence needs to be checked here.
   def scoped_evidence
-    @record.evidence.public_send(@scope)
+    @scoped_evidence ||= @record.evidence.public_send(@scope)
   end
 end
