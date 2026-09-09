@@ -19,6 +19,7 @@ class NodeDrop < BaseDrop
   # A Node doesn't know whether the Issue its Evidence belongs to matches
   # :scope, so both the Evidence and its Issue need to be checked.
   def scoped_evidence
-    @record.evidence.public_send(@scope).joins(:issue).merge(Issue.public_send(@scope))
+    @scoped_evidence ||=
+      @record.evidence.public_send(@scope).joins(:issue).merge(Issue.public_send(@scope))
   end
 end
