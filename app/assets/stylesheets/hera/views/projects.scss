@@ -35,7 +35,7 @@ body.projects {
       }
     }
 
-    #issue-chart {
+    .issue-chart {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -48,6 +48,14 @@ body.projects {
 
       svg text {
         font-size: 14px;
+      }
+    }
+
+    .issues-summary-frame {
+      display: block;
+
+      > .spinner-container {
+        min-height: 17rem;
       }
     }
 
