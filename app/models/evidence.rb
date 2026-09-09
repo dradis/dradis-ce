@@ -2,6 +2,7 @@ class Evidence < ApplicationRecord
   include Commentable
   include Eventable
   include HasFields
+  include Reviewable
   include RevisionTracking
   include Subscribable
 
@@ -36,6 +37,7 @@ class Evidence < ApplicationRecord
         id: project.id,
         name: project.name
       },
+      state: state,
       issue: {
         id: issue.id,
         title: issue.title
