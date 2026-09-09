@@ -5,14 +5,13 @@
 
     if (!$dataElement.length || $chartElement.find('svg').length) return;
 
-    const margin = { top: 20, bottom: 30 };
+    const margin = { top: 20, bottom: 0 };
     const width = 354;
     const height = 180 - margin.top - margin.bottom;
     const x = d3.scaleBand().rangeRound([0, width]);
     const y = d3.scaleLinear().range([height, 0]);
-    const xAxis = d3.axisBottom(x).tickSize(0);
-    const svg = d3
-      .select($chartElement[0])
+    const container = d3.select($chartElement[0]);
+    const svg = container
       .append('svg')
       .attr('width', width)
       .attr('height', height + margin.top + margin.bottom)
@@ -24,12 +23,14 @@
     let highest = 0;
     const data = [];
     const xDomain = [];
+    const colors = [];
 
     for (const key in tags) {
       const issuesCount = issuesByTag[key];
       highest = issuesCount > highest ? issuesCount : highest;
       data.push({ letter: tags[key][0], frequency: issuesCount });
       xDomain.push(tags[key][0]);
+      colors.push(tags[key][1]);
     }
 
     data.push({ letter: 'N/A', frequency: issuesByTag.unassigned });
@@ -37,19 +38,6 @@
 
     x.domain(xDomain);
     y.domain([0, Math.max(highest, issuesByTag.unassigned)]);
-
-    const xAxisGroup = svg
-      .append('g')
-      .attr('class', 'x axis')
-      .attr('transform', `translate(0,${height})`)
-      .call(xAxis);
-
-    xAxisGroup.selectAll('text').style('fill', 'inherit');
-    xAxisGroup.selectAll('path').style('stroke', 'none');
-    xAxisGroup
-      .selectAll('text')
-      .filter((d, index, nodes) => index === nodes.length - 1)
-      .classed('untagged', true);
 
     const bars = svg.append('g');
 
@@ -76,16 +64,37 @@
       .attr('class', 'counter')
       .text(d => d.frequency);
 
-    Object.keys(tags).forEach((key, index) => {
-      $chartElement.find('.tick').eq(index).attr('fill', tags[key][1]);
-      $chartElement.find('.bar').eq(index).attr('fill', tags[key][1]);
-      $chartElement.find('.counter').eq(index).attr('fill', tags[key][1]);
+    colors.forEach((color, index) => {
+      $chartElement.find('.bar').eq(index).attr('fill', color);
+      $chartElement.find('.counter').eq(index).attr('fill', color);
     });
 
-    const untaggedIndex = Object.keys(tags).length;
-    $chartElement.find('.tick').eq(untaggedIndex).addClass('untagged');
-    $chartElement.find('.bar').eq(untaggedIndex).addClass('untagged');
-    $chartElement.find('.counter').eq(untaggedIndex).addClass('untagged');
+    $chartElement.find('.bar').eq(colors.length).addClass('untagged');
+    $chartElement.find('.counter').eq(colors.length).addClass('untagged');
+
+    buildLegend(container, data, colors);
+  };
+
+  const buildLegend = (container, data, colors) => {
+    const legendItems = container
+      .append('ul')
+      .attr('class', 'issue-chart-legend')
+      .selectAll('li')
+      .data(data)
+      .enter()
+      .append('li')
+      .attr('class', (_, index) => (index === colors.length ? 'legend-item untagged' : 'legend-item'))
+      .attr('title', d => d.letter);
+
+    legendItems
+      .append('span')
+      .attr('class', 'legend-swatch')
+      .style('background-color', (_, index) => colors[index] || null);
+
+    legendItems
+      .append('span')
+      .attr('class', 'legend-label')
+      .text(d => d.letter);
   };
 
   document.addEventListener('turbo:load', initIssuesChart);
