@@ -7,7 +7,7 @@ describe 'Issues Summary widget', js: true do
     let(:issue) { create(:issue, node: current_project.issue_library) }
 
     before do
-      tag = create(:tag)
+      tag = create(:tag, project: current_project)
       issue.tags << tag
     end
 
