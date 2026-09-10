@@ -2,6 +2,7 @@ class Card < ApplicationRecord
   include Commentable
   include Eventable
   include HasFields
+  include Lockable
   include RevisionTracking
   include Subscribable
 

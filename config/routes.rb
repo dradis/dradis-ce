@@ -64,6 +64,7 @@ Rails.application.routes.draw do
         resources :cards, except: [:index] do
           resource :position, only: [:update], controller: 'cards/position'
           resources :revisions, only: [:index, :show]
+          concerns :lockable, controller: 'cards/editing_sessions'
         end
       end
     end

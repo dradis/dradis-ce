@@ -68,4 +68,17 @@ describe 'Edit locking multi-actor flow' do
 
     expect(EditingSession.for_record(issue)).to be_nil
   end
+
+  describe 'for a card' do
+    let(:project) { create(:project) }
+    let(:board) { create(:board, project: project) }
+    let(:list) { create(:list, board: board) }
+    let(:card) { create(:card, list: list) }
+    let(:record) { card }
+    let(:edit_path) { edit_project_board_list_card_path(project, board, list, card) }
+
+    let(:submit_form) { click_button 'Update Card' }
+
+    it_behaves_like 'a lockable resource'
+  end
 end
