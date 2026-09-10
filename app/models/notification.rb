@@ -1,4 +1,8 @@
 class Notification < ApplicationRecord
+  # Notifiable types with no real actor (e.g. system-generated notifications).
+  # These skip actor attribution and show the Dradis logo in place of an avatar.
+  SYSTEM_TYPES = %w[Release].freeze
+
   # -- Relationships --------------------------------------------------------
   belongs_to :actor, class_name: 'User'
   belongs_to :recipient, class_name: 'User'
@@ -13,9 +17,9 @@ class Notification < ApplicationRecord
   validates :recipient, presence: true, associated: true
 
   # -- Scopes ---------------------------------------------------------------
-  scope :newest,  -> { order(created_at: :desc) }
-  scope :read,    -> { where.not(read_at: nil) }
-  scope :unread,  -> { where(read_at: nil) }
+  scope :newest, -> { order(created_at: :desc) }
+  scope :read, -> { where.not(read_at: nil) }
+  scope :unread, -> { where(read_at: nil) }
 
   # All unread notifications within a given span of time
   scope :since, -> (time_ago = 1.day.ago) {
