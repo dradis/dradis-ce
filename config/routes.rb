@@ -112,6 +112,7 @@ Rails.application.routes.draw do
 
       resources :evidence, except: :index, concerns: [:multiple_destroy, :previewable] do
         resources :revisions, only: [:index, :show]
+        concerns :lockable, controller: 'evidence/editing_sessions'
       end
 
       constraints(filename: /.*/) do
