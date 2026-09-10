@@ -3,19 +3,19 @@
     <div class="issue-chart" data-behavior="issue-chart"></div>
 
     <div id="issues-accordion" role="tablist">
-      <% for tag in @tags do %>
-        <% if @issues_by_tag[tag.name].any? %>
-          <div class="card" style="border-color: <%= tag.color %>">
-            <a data-bs-toggle="collapse" href="#collapse<%= tag.display_name %>" class="card-header" style="background: <%= tag.color %>" data-behavior="card-header">
-              <h5><%= tag.display_name %><span class="float-end"><i class="fa-solid fa-caret-up" data-behavior="caret-icon"></i></span></h5>
+      <% @entries.each do |name, (display_name, color)| %>
+        <% if @issues_by_value[name].any? %>
+          <div class="card" style="border-color: <%= color %>">
+            <a data-bs-toggle="collapse" href="#collapse<%= display_name %>" class="card-header" style="background: <%= color %>" data-behavior="card-header">
+              <h5><%= display_name %><span class="float-end"><i class="fa-solid fa-caret-up" data-behavior="caret-icon"></i></span></h5>
             </a>
 
-            <div id="collapse<%= tag.display_name %>" class="collapse show">
+            <div id="collapse<%= display_name %>" class="collapse show">
               <div class="card-body p-0">
                 <ul class="list-group">
-                  <% @issues_by_tag[tag.name].each do |issue| %>
+                  <% @issues_by_value[name].each do |issue| %>
                     <%= link_to [current_project, issue], class: 'list-group-item', data: { turbo_frame: '_top' }  do %>
-                      <li><i class="fa-solid fa-bug me-2" style="color: <%= tag.color %>"></i><%= issue.title %></li>
+                      <li><i class="fa-solid fa-bug me-2" style="color: <%= color %>"></i><%= issue.title %></li>
                     <% end %>
                   <% end %>
                 </ul>
@@ -25,7 +25,7 @@
         <% end %>
       <% end %>
 
-      <% if @issues_by_tag[:unassigned].any? %>
+      <% if @issues_by_value[:unassigned].any? %>
         <div class="card untagged">
           <a data-bs-toggle="collapse" href="#collapseUnassigned" class="card-header" data-behavior="card-header">
             <h5>Unassigned<span class="float-end"><i class="fa-solid fa-caret-up" data-behavior="caret-icon"></i></span></h5>
@@ -34,7 +34,7 @@
           <div id="collapseUnassigned" class="collapse show">
             <div class="card-body p-0">
               <ul class="list-group">
-                <% @issues_by_tag[:unassigned].each do |issue| %>
+                <% @issues_by_value[:unassigned].each do |issue| %>
                   <%= link_to [current_project, issue], class: 'list-group-item', data: { turbo_frame: '_top' }  do %>
                     <li><i class="fa-solid fa-bug me-2"></i><%= issue.title %></li>
                   <% end %>
@@ -56,6 +56,6 @@
   <% end %>
 
   <% if @issues.any? %>
-    <div data-behavior="issues-summary-data" data-tags='<%= @tag_names.to_json %>' data-issues-count='<%= @count_by_tag.to_json %>'></div>
+    <div data-behavior="issues-summary-data" data-tags='<%= @entries.to_json %>' data-issues-count='<%= @count_by_value.to_json %>'></div>
   <% end %>
 <% end %>

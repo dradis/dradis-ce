@@ -13,6 +13,23 @@ describe Tag do
     end
   end
 
+  describe '#matches?' do
+    it 'returns true when the issue is tagged with it' do
+      tag = create(:tag, name: '!0000ff_blue')
+      issue = create(:issue)
+      issue.tags << tag
+
+      expect(tag.matches?(issue)).to be true
+    end
+
+    it 'returns false when the issue is not tagged with it' do
+      tag = create(:tag, name: '!0000ff_blue')
+      issue = create(:issue)
+
+      expect(tag.matches?(issue)).to be false
+    end
+  end
+
   describe '#save' do
     it 'normalizes the name before persisting' do
       tag = Tag.create!(name: '!0000ff_BlUe')
