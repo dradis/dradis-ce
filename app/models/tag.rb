@@ -68,6 +68,10 @@ class Tag < ApplicationRecord
     name[/\A(!\h{6})_[[:word:]]+?\z/, 1].try(:gsub, '!', '#') || '#555'
   end
 
+  def matches?(issue)
+    issue.tags.include?(self)
+  end
+
   private
   def normalize_name
     self[:name] = self.name.downcase

@@ -2,42 +2,57 @@ module Projects
   module IssuesSummaryGrouping
     private
 
-    def build_grouping(_grouping)
-      @grouping = 'tags'
-      build_tags_grouping
+    def build_grouping(grouping)
+      valid_groupings = ['tags'] + @list_fields.map { |field| "list:#{field.name}" }
+      @grouping = valid_groupings.include?(grouping) ? grouping : 'tags'
+
+      items =
+        if @grouping.start_with?('list:')
+          field_name = @grouping.delete_prefix('list:')
+          @list_field = @list_fields.find { |f| f.name == field_name }
+          (@list_field&.values || []).map { |v| ListFieldValue.new(v, field_name: field_name, project: current_project) }
+        else
+          @grouping = 'tags'
+          @tags
+        end
+
+      @entries = items.to_h { |item| [item.name, [item.display_name, item.color]] }
+      @count_by_value, @issues_by_value = build_value_grouping(items)
+
+      @chart_data = {
+        grouping: @grouping,
+        tags: @entries.to_json,
+        issues_count: @count_by_value.to_json
+      }
     end
 
-    def build_tags_grouping
-      @count_by_tag = Hash.new(0)
-      @issues_by_tag = Hash.new { |h, k| h[k] = [] }
-
-      @tag_names = @tags.map do |tag|
-        @count_by_tag[tag.name] = 0
-        [tag.name, [tag.display_name, tag.color]]
-      end.to_h
-      @count_by_tag[:unassigned] = 0
+    def build_value_grouping(items)
+      count_by_value = Hash.new(0)
+      items.each { |item| count_by_value[item.name] = 0 }
+      count_by_value[:unassigned] = 0
+      issues_by_value = Hash.new { |h, k| h[k] = [] }
 
       @issues.each do |issue|
-        if issue.tags.empty?
-          @issues_by_tag[:unassigned] << issue
-          @count_by_tag[:unassigned] += 1
+        matched = items.select { |item| item.matches?(issue) }
+
+        if matched.empty?
+          issues_by_value[:unassigned] << issue
+          count_by_value[:unassigned] += 1
         else
-          issue.tags.each do |tag|
-            @issues_by_tag[tag.name] << issue
-            @count_by_tag[tag.name] += 1
+          matched.each do |item|
+            issues_by_value[item.name] << issue
+            count_by_value[item.name] += 1
           end
         end
       end
 
-      @chart_data = {
-        grouping: 'tags',
-        tags: @tag_names.to_json,
-        issues_count: @count_by_tag.to_json
-      }
+      [count_by_value, issues_by_value]
     end
 
     def list_fields
-      []
+      current_project.report_template_properties
+        &.issue_fields
+        &.select { |f| f.type == :list } || []
     end
   end
 end
