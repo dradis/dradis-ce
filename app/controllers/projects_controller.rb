@@ -1,5 +1,6 @@
 class ProjectsController < AuthenticatedController
   include NotificationsReader
+  include Projects::IssuesSummaryGrouping
 
   before_action :set_project
 
@@ -14,6 +15,7 @@ class ProjectsController < AuthenticatedController
     @activities = Activity.latest
     @authors = [current_user]
     @boards = current_project.methodology_library.boards
+    @list_fields = list_fields
     @methodologies = current_project.methodology_library.notes.map { |n| Methodology.new(filename: n.id, content: n.text) }
     @nodes = current_project.nodes.in_tree
 
