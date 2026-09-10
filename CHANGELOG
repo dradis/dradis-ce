@@ -1,4 +1,4 @@
-[v#.#.#] ([month] [YYYY])
+v5.4.0 (September 2026)
   - Issues: warn user if another user is currently editing the record
   - QA: Add QA states to evidence
   - Webhooks: Add Evidence, Node and Note CRUD webhook events
@@ -6,30 +6,6 @@
     - mail, sqlite3
   - Bugs fixes:
     - Combobox: show the correct selected option when its value contains a double quote
-    - [entity]:
-      - [future tense verb] [bug fix]
-    - Bug tracker items:
-      - [item]
-  - Echo enhancements:
-    - [Echo entity]:
-      - [future tense verb] [Echo enhancement]
-  - New integrations:
-    - [integration]
-  - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
-  - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
-  - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v5.3.0 (August 2026)
   - Cards: add option to move a task to a different list
