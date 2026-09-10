@@ -1,5 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - Issues: warn user if another user is currently editing the record
+  - Editing: Warn user if another user is currently editing a record
   - QA: Add QA states to evidence
   - Webhooks: Add Evidence, Node and Note CRUD webhook events
   - Upgraded gems:
