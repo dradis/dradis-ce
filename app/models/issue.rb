@@ -1,12 +1,13 @@
 class Issue < Note
   include Commentable
-  include Eventable
   include InlineCommentable
   # FIXME - ISSUE/NOTE INHERITANCE
   # Commentable.allowed_types << base.name doesn't work for Issue because it's
   # an STI model, so we manually allow the class here.
   Commentable.allowed_types << 'Issue'
   InlineCommentable.allowed_types << 'Issue'
+
+  include Lockable
 
   include Subscribable
   Subscribable.allowed_types << 'Issue'
@@ -45,6 +46,16 @@ class Issue < Note
   # FIXME - ISSUE/NOTE INHERITANCE
   def comments(*params)
     Comment.where(commentable_type: 'Issue', commentable_id: self.id)
+  end
+
+  # `has_many :editing_sessions` doesn't work as normal here, because we're not
+  # using proper single-table inheritance. (By default it will search for
+  # sessions where record_type is "Note" instead of "Issue".) So we need to
+  # override Issue#editing_sessions with a hack.
+  #
+  # FIXME - ISSUE/NOTE INHERITANCE
+  def editing_sessions(*params)
+    EditingSession.where(record_type: 'Issue', record_id: self.id)
   end
 
   # `has_many :inline_threads` doesn't work as normal here, because
@@ -107,8 +118,9 @@ class Issue < Note
     self.title <=> other.title
   end
 
-  # This method groups all the available evidence associated with this Issue
-  # into a Hash where the keys are the nodes. E.g.:
+  # This method groups the evidence associated with this Issue (optionally scoped by state)
+  # into a Hash where the keys are
+  # the nodes. E.g.:
   # {
   #   <node 1> => [<evidence 1.1>, <evidence 1.2>],
   #   <node 2> => [<evidence 2.1>]
@@ -116,10 +128,12 @@ class Issue < Note
   #
   # This is useful in a number of views to present or hide information about
   # all the instances for a given issue and node/host.
-  def evidence_by_node()
+  def evidence_by_node(scope = :all)
+    evidence_collection = evidence.send(scope).includes(:node)
+
     results = Hash.new { |h, k| h[k] = [] }
 
-    self.evidence.includes(:node).each do |evidence|
+    evidence_collection.each do |evidence|
       results[evidence.node] << evidence
     end
 

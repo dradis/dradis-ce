@@ -40,6 +40,8 @@
                     icon + ' ' + item.title
                   end
                 ]
+              when 'State'
+                [item.state_before_type_cast, item.state.humanize]
               when 'Created'
                 [item.created_at.to_i, local_time_ago(item.created_at)]
               when 'Created by'
