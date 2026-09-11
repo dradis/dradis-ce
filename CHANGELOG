@@ -1,9 +1,9 @@
 v5.4.0 (September 2026)
   - Issues: warn user if another user is currently editing the record
   - QA: Add QA states to evidence
-  - Webhooks: Add Evidence, Node and Note CRUD webhook events
+  - Webhooks: Add Evidence, Node and Note CRUD events
   - Upgraded gems:
-    - mail, sqlite3
+    - mail, rubyzip, sqlite3
   - Bugs fixes:
     - Combobox: show the correct selected option when its value contains a double quote
 
