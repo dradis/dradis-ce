@@ -68,10 +68,11 @@ class QA::Issues::EvidenceController < AuthenticatedController
   end
 
   def next_evidence_or_index_path
-    notice = 'State successfully updated.'
+    notice = "State successfully updated for evidence on #{@evidence.node.label}."
     next_evidence = @issue.evidence.ready_for_review.first
 
     if next_evidence
+      notice << ' You are now viewing the next piece of evidence ready for review.'
       [project_qa_issue_evidence_path(current_project, @issue, next_evidence), { notice: notice }]
     else
       [project_qa_issue_path(current_project, @issue, tab: 'evidence-tab'), { notice: notice }]
