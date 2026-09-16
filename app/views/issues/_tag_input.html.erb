@@ -30,7 +30,7 @@
       <%= link_to new_project_tag_path(current_project), remote: true, class: 'dropdown-item' do %>
         <i class="fa-solid fa-plus fa-fw me-1"></i> Add new tag
       <% end %>
-      <%= link_to project_tags_path(current_project), class: 'dropdown-item' do %>
+      <%= link_to project_tags_path(current_project), class: 'dropdown-item', data: { turbo_frame: '_top' } do %>
         <i class="fa-solid fa-tags fa-fw me-1"></i> Manage tags
       <% end %>
     </div>
