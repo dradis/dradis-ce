@@ -5,6 +5,7 @@
   - Upgraded gems:
     - mail, sqlite3
   - Bugs fixes:
+    - Activity tracking: avoid raising an error when an unrelated event shares a name prefix with a tracked namespace
     - Combobox: show the correct selected option when its value contains a double quote
     - [entity]:
       - [future tense verb] [bug fix]
