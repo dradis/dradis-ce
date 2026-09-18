@@ -7,7 +7,7 @@
       <%= link_to 'QA', project_qa_issues_path(current_project) %>
     </li>
     <li class="breadcrumb-item active">
-      <%= (@issue.title? ? @issue.title : "Issue ##{@issue.id}")%>
+      <%= @issue.title %>
     </li>
   </ol>
 </nav>

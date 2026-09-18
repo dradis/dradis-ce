@@ -54,6 +54,62 @@ describe 'Echo interactions' do
         get "/addons/echo/projects/#{@project.id}/interactions", params: { record: issue.id }
       end.to raise_error(ActiveRecord::RecordNotFound)
     end
+
+    context 'when the Roslin agent is not enabled' do
+      let!(:roslin) do
+        Dradis::Plugins::Echo::Agents::Roslin.provision!.tap { |agent| agent.update!(enabled: false) }
+      end
+
+      it 'renders the not-enabled panel instead of the prompt picker' do
+        get "/addons/echo/projects/#{@project.id}/interactions",
+          params: { type: 'issue', record: issue.id }
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include('is not enabled')
+        expect(response.body).to include('Think of Roslin as an editor or writing companion')
+        expect(response.body).not_to include('Start a new conversation')
+      end
+    end
+  end
+
+  describe 'GET /addons/echo/projects/:project_id/interactions/:id/preview' do
+    it 'renders the prompt with its liquid drops resolved' do
+      prompt = @logged_in_as.prompts.create!(
+        title: 'Summary', prompt: 'Issue: {{ issue.title }}', scope: 'issue', visibility: :user
+      )
+
+      get "/addons/echo/projects/#{@project.id}/interactions/#{prompt.id}/preview",
+        params: { type: 'issue', record: issue.id }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include('Issue: SQLi')
+    end
+
+    it 'exposes the project drop to every prompt scope' do
+      prompt = @logged_in_as.prompts.create!(
+        title: 'Context', prompt: 'Assessment: {{ project.name }}', scope: 'issue', visibility: :user
+      )
+
+      get "/addons/echo/projects/#{@project.id}/interactions/#{prompt.id}/preview",
+        params: { type: 'issue', record: issue.id }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Assessment: #{@project.name}")
+    end
+
+    it 'raises a clear error for a whitelisted scope with no drop mapping' do
+      stub_const('Dradis::Plugins::Echo::Prompt::SCOPES', %i[issue note])
+      note = create(:note, node: @project.issue_library)
+      prompt = @logged_in_as.prompts.create!(
+        title: 'Note prompt', prompt: 'Draft it', scope: 'issue', visibility: :user
+      )
+      prompt.update_column(:scope, 'note')
+
+      expect do
+        get "/addons/echo/projects/#{@project.id}/interactions/#{prompt.id}/preview",
+          params: { type: 'note', record: note.id }
+      end.to raise_error { |error| expect(error.cause || error).to be_a(ArgumentError).and have_attributes(message: /note/i) }
+    end
   end
 
   describe 'the retired Roslin one-shot path' do

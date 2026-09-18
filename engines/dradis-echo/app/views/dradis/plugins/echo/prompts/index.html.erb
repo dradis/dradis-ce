@@ -38,7 +38,7 @@
   <h4 class="header-underline">Prompts
     <% if @prompts.any? %>
       <span class="actions pt-1">
-        <%= link_to new_prompt_path do %>
+        <%= link_to new_prompt_path(scope: :issue) do %>
           <i class="fa-solid fa-plus me-1"></i>New Prompt
         <% end %>
       </span>
@@ -62,7 +62,7 @@
           <tr>
             <td><%= content_tag :i, nil, class: "fa-solid #{prompt.icon}" %> <%= prompt.title %></td>
             <td><%= prompt.prompt %></td>
-            <td><%= prompt.scope.to_s.humanize %></td>
+            <td><%= prompt.scope.to_s.titleize %></td>
             <td><%= local_time_ago(prompt.created_at) %></td>
             <td><%= local_time_ago(prompt.updated_at) %></td>
             <td class="column-actions">

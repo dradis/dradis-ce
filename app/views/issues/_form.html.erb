@@ -15,7 +15,6 @@
       input_html: {
         class: 'textile',
         data: {
-          allow_dropdown: @issue.new_record?,
           behavior: 'auto-save rich-toolbar drop-zone',
           paths: editor_paths,
           'rich-toolbar': 'defaults field image',
@@ -36,16 +35,15 @@
   <%= render 'issues/tag_input', f: f %>
 
   <div class="form-actions sticky">
-    <%= render partial: 'qa/state_button', locals: { f: f, record: @issue } %>
+    <%= render partial: 'qa/state_button', locals: { f: f, record: @issue } %> or
+    <%=
+      link_to 'Cancel',
+      @form_cancel_path,
+      class: 'cancel-link',
+      data: {
+        behavior: class_names('clear-local-auto-save', 'record-locking': @issue.persisted?),
+        'record-locking-path': @issue.persisted? ? project_issue_editing_session_path(current_project, @issue) : nil
+      }
+      %>
   </div>
-  or
-  <%=
-    link_to 'Cancel',
-    @form_cancel_path,
-    class: 'cancel-link',
-    data: {
-      behavior: 'clear-local-auto-save'
-    }
-    %>
-</div>
 <% end %>

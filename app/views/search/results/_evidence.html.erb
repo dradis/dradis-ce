@@ -1,7 +1,6 @@
 <span class="fa-regular fa-flag"></span>
 
-<% title = row.title? ? row.title : "Evidence ##{row.id}" %>
-<%= link_to title, project_node_evidence_path(row.node.project, row.node_id, row), class: "search-match-title" %>
+<%= link_to row.title, project_node_evidence_path(row.node.project, row.node_id, row), class: "search-match-title" %>
 
 <div class="result-details">
   <p><span>Issue:</span> <%= link_to row.issue.title, project_issue_path(current_project, row.issue) %></p>
