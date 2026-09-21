@@ -10,6 +10,7 @@ class QA::Issues::EvidenceController < AuthenticatedController
   before_action :set_columns, only: :index
   before_action :set_evidence, only: [:edit, :preview, :show, :update]
   before_action :set_evidence_for_review, only: [:edit, :show]
+  before_action :set_form_cancel_path, only: :edit
   before_action :set_node_evidence, only: :index
   before_action :validate_state, only: [:multiple_update, :update]
 
@@ -105,6 +106,10 @@ class QA::Issues::EvidenceController < AuthenticatedController
 
   def set_evidence_for_review
     @evidence_for_review = @issue.evidence.ready_for_review
+  end
+
+  def set_form_cancel_path
+    @form_cancel_path = project_qa_issue_evidence_path(current_project, @issue, @evidence)
   end
 
   def set_issue
