@@ -45,6 +45,10 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :lockable do |options|
+    resource :editing_session, only: :destroy, controller: options[:controller]
+  end
+
   resources :notifications, only: [:index, :update]
 
   resources :projects, only: [:index, :show] do
@@ -79,6 +83,7 @@ Rails.application.routes.draw do
       resources :evidence, concerns: :multiple_destroy, controller: 'issues/evidence', only: [:index, :new]
       resources :nodes, only: [:show], controller: 'issues/nodes'
       resources :revisions, only: [:index, :show]
+      concerns :lockable, controller: 'issues/editing_sessions'
     end
 
     resources :methodologies do
@@ -120,12 +125,18 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
+    namespace :dashboard, module: 'projects/dashboard' do
+      resources :issues, only: [:index]
+    end
+
     resources :tags, except: [:show] do
       collection { post :sort }
     end
 
     namespace :qa do
-      resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable]
+      resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable] do
+        resources :evidence, only: [:edit, :index, :show, :update], controller: 'issues/evidence', concerns: [:multiple_update, :previewable]
+      end
     end
 
     get 'search' => 'search#index'

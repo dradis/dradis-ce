@@ -1,8 +1,4 @@
 // Echo Sessions — session list, message list, composer.
-// Ships in Slice 5. Add `//= require dradis/plugins/echo/sessions` to the engine
-// hera.scss manifest. Replaces the inline `style="height: 50vh"` in the old
-// interactions/show.html.erb. Tokens only (var(--*)); no hardcoded colors,
-// no ID selectors, no !important, no inline styles. px only for borders.
 
 // ---- Interactions layout (conversations and prompt picker side-by-side) ----
 .echo-interactions-layout {

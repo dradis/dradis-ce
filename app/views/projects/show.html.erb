@@ -12,7 +12,15 @@
 <div class="row p-0">
   <div class="col-12 col-lg-6 col-xxl-4">
     <div class="content-container">
-      <%= render partial: 'projects/issues/summary' %>
+      <section class="summary-panel">
+        <h4 class="header-underline">Issues so far</h4>
+
+        <%= turbo_frame_tag 'issues-summary',
+          src: project_dashboard_issues_path(current_project),
+          class: 'issues-summary-frame' do %>
+          <%= spinner_tag %>
+        <% end %>
+      </section>
     </div>
   </div>
 
