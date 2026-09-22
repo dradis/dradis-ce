@@ -4,8 +4,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Editor: keep the cursor in place after uploading an image
     - Bug tracker items:
       - [item]
   - Echo enhancements:
