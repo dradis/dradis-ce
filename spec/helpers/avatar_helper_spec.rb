@@ -51,14 +51,14 @@ RSpec.describe AvatarHelper do
   end
 
   describe '#avatar_url' do
-    it 'uses the public GitHub default without disclosing the instance URL' do
+    it 'requests a 404 when no Gravatar exists' do
       expect(helper).not_to receive(:image_url)
       url = URI.parse(helper.avatar_url(user, size: 24))
 
       expect(url.host).to eq('secure.gravatar.com')
       expect(url.path).to eq("/avatar/#{Digest::MD5.hexdigest('test@example.com')}")
       expect(URI.decode_www_form(url.query).to_h).to eq(
-        'd' => AvatarHelper::GRAVATAR_DEFAULT_IMAGE_URL,
+        'd' => '404',
         'r' => 'PG',
         's' => '48'
       )

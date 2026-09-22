@@ -3,7 +3,6 @@
 module AvatarHelper
   DEFAULT_PROFILE_IMAGE = 'avatar.png'.freeze
   DEFAULT_PROFILE_IMAGE_SIZE = 80
-  GRAVATAR_DEFAULT_IMAGE_URL = 'https://raw.githubusercontent.com/dradis/dradis-ce/refs/heads/develop/app/assets/images/avatar.png'.freeze
 
   def avatar_image(user, opt = {})
     opt.reverse_merge!( # Defaults if not provided
@@ -39,7 +38,7 @@ module AvatarHelper
 
     gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
     size = options.fetch(:size, DEFAULT_PROFILE_IMAGE_SIZE).to_i * 2 # Retina displays mean dot density can be higher.
-    "https://secure.gravatar.com/avatar/#{gravatar_id}?r=PG&s=#{size}&d=#{ERB::Util.url_encode(GRAVATAR_DEFAULT_IMAGE_URL)}"
+    "https://secure.gravatar.com/avatar/#{gravatar_id}?r=PG&s=#{size}&d=404"
   end
 
   def tribute_hash(users)
