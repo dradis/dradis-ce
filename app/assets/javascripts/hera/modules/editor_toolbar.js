@@ -330,10 +330,10 @@ class EditorToolbar {
       this.$target.val().replace(placeholder.asString(), affix.asString()),
     );
 
-    var position = this.$target.val().indexOf(affix.asString()),
-      cursorInfo = new CursorInfo(position, position, undefined);
+    var position =
+      this.$target.val().indexOf(affix.asString()) + affix.asString().length;
 
-    this.setCursor(affix, cursorInfo);
+    this.$target[0].setSelectionRange(position, position);
     this.$target.trigger('textchange');
   }
 
