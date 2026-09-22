@@ -125,12 +125,18 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
+    namespace :dashboard, module: 'projects/dashboard' do
+      resources :issues, only: [:index]
+    end
+
     resources :tags, except: [:show] do
       collection { post :sort }
     end
 
     namespace :qa do
-      resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable]
+      resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable] do
+        resources :evidence, only: [:edit, :index, :show, :update], controller: 'issues/evidence', concerns: [:multiple_update, :previewable]
+      end
     end
 
     get 'search' => 'search#index'

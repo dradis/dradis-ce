@@ -7,6 +7,7 @@ class EvidenceController < NestedNodeResourceController
   include MultipleDestroy
   include NodesSidebar
   include NotificationsReader
+  include Publishable
 
   before_action :set_or_initialize_evidence
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
@@ -132,7 +133,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def evidence_params
-    params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
+    params.require(:evidence).permit(:author, :content, :issue_id, :node_id, :state)
   end
 
   def set_auto_save_key
