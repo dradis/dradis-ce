@@ -3,17 +3,7 @@
 module AvatarHelper
   DEFAULT_PROFILE_IMAGE = 'avatar.png'.freeze
   DEFAULT_PROFILE_IMAGE_SIZE = 80
-
-  # Gravatar will use a default image if one is not found. Having gravatar serve
-  # the default image is not desired. Instead force an error by using a bad
-  # default url and let our fallback image code take effect.
-  def avatar_url(user, options = {})
-    return image_path(DEFAULT_PROFILE_IMAGE) if user.nil? || !user.email.include?('@')
-
-    gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
-    size = options.fetch(:size, DEFAULT_PROFILE_IMAGE_SIZE).to_i * 2 # Retina displays mean dot density can be higher.
-    "https://secure.gravatar.com/avatar/#{gravatar_id}?r=PG&s=#{size}&d=#{image_url(DEFAULT_PROFILE_IMAGE)}"
-  end
+  GRAVATAR_DEFAULT_IMAGE_URL = 'https://raw.githubusercontent.com/dradis/dradis-ce/refs/heads/develop/app/assets/images/avatar.png'.freeze
 
   def avatar_image(user, opt = {})
     opt.reverse_merge!( # Defaults if not provided
@@ -29,18 +19,27 @@ module AvatarHelper
 
     img_properties = {
       alt: opt[:alt],
-      data: { fallback_image: opt[:fallback_image] },
+      data: { controller: 'gravatar', gravatar_url: avatar_url(user, size: opt[:size]) },
       height: opt[:size],
-      onerror: "this.src = '#{opt[:fallback_image]}';",
+      referrerpolicy: 'no-referrer',
       style: opt[:style],
       title: opt[:title],
       width: opt[:size]
     }
 
     content_tag :span, class: opt[:class] do
-      image_tag(avatar_url(user, size: opt[:size]), img_properties) +
+      image_tag(user.try(:avatar).presence || opt[:fallback_image], img_properties) +
         (opt[:include_name] ? " #{user.try(:name)}" : '')
     end
+  end
+
+  def avatar_url(user, options = {})
+    return user.avatar if user.try(:avatar).present?
+    return image_path(DEFAULT_PROFILE_IMAGE) if user.nil? || !user.email.include?('@')
+
+    gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
+    size = options.fetch(:size, DEFAULT_PROFILE_IMAGE_SIZE).to_i * 2 # Retina displays mean dot density can be higher.
+    "https://secure.gravatar.com/avatar/#{gravatar_id}?r=PG&s=#{size}&d=#{ERB::Util.url_encode(GRAVATAR_DEFAULT_IMAGE_URL)}"
   end
 
   def tribute_hash(users)
