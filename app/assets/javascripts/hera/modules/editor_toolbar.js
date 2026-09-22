@@ -318,8 +318,9 @@ class EditorToolbar {
   }
 
   replaceImagePlaceholder(data, index, file) {
-    var placeholder = this.affixesLibrary('image-placeholder', file.name),
-      affix = this.affixesLibrary('image', data.result[0].url);
+    const placeholder = this.affixesLibrary('image-placeholder', file.name),
+      affix = this.affixesLibrary('image', data.result[0].url),
+      scrollPosition = window.scrollY;
 
     // Resolve the sizes before inserting the affix, so the indexOf() below finds an exact match.
     affix.prefix = affix.prefix
@@ -330,11 +331,14 @@ class EditorToolbar {
       this.$target.val().replace(placeholder.asString(), affix.asString()),
     );
 
-    var position =
+    const position =
       this.$target.val().indexOf(affix.asString()) + affix.asString().length;
 
     this.$target[0].setSelectionRange(position, position);
     this.$target.trigger('textchange');
+
+    // Undo the browser's auto-scroll to the (possibly off-screen) field.
+    window.scrollTo(0, scrollPosition);
   }
 
   affixesLibrary(type, selection) {
