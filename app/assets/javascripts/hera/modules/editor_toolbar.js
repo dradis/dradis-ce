@@ -321,21 +321,14 @@ class EditorToolbar {
     var placeholder = this.affixesLibrary('image-placeholder', file.name),
       affix = this.affixesLibrary('image', data.result[0].url);
 
-    this.$target.val(
-      this.$target
-        .val()
-        .replace(placeholder.asString(), affix.asString(), this.$target),
-    );
+    // Resolve the sizes before inserting the affix, so the indexOf() below finds an exact match.
+    affix.prefix = affix.prefix
+      .replace('width: #', 'width: ' + data.result[0].width)
+      .replace('height: #', 'height: ' + data.result[0].height);
 
-
-    // Replace placeholder image sizes
     this.$target.val(
-      this.$target.val().replace('width: #', 'width: ' + data.result[0].width)
+      this.$target.val().replace(placeholder.asString(), affix.asString()),
     );
-    this.$target.val(
-      this.$target.val().replace('height: #', 'height: ' + data.result[0].height)
-    );
-
 
     var position = this.$target.val().indexOf(affix.asString()),
       cursorInfo = new CursorInfo(position, position, undefined);
