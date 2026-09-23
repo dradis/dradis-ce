@@ -151,7 +151,9 @@ document.addEventListener('turbo:load', function () {
 
     // Initialize clipboard.js
     const clipboard = new Clipboard(
-      parentElement.querySelectorAll('[data-clipboard-text]')
+      parentElement.querySelectorAll(
+        '[data-clipboard-text], [data-clipboard-target]'
+      )
     );
 
     clipboard.on('success', function (e) {

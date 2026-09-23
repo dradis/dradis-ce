@@ -1,0 +1,70 @@
+.console {
+  @include console-box;
+  height: auto;
+  min-height: 25rem;
+  max-height: 50vh;
+}
+
+.console-header {
+  align-items: center;
+  background-color: lighten($black, 5%);
+  border-radius: 5px 5px 0 0;
+  color: $grey-500;
+  display: flex;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-size: $text-small;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 1rem 1rem 0;
+
+  .console-copy-btn {
+    background-color: transparent;
+    border: 1px solid $grey-800;
+    border-radius: 4px;
+    color: $grey-500;
+    font-size: inherit;
+    padding: 0.15rem 0.5rem;
+
+    &:hover {
+      background-color: $grey-800;
+      color: lighten($grey-500, 15%);
+    }
+  }
+}
+
+.console-info {
+  background-color: lighten($black, 5%);
+  border-bottom: 1px solid $grey-800;
+  color: $grey-600;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-size: 0.75rem;
+  padding: 0 1rem 1rem 2rem;
+}
+
+body.upload.index {
+  .console {
+    border-radius: 0 0 5px 5px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: $text-small;
+    margin-top: 0;
+  }
+}
+
+.status-dot {
+  border-radius: 50%;
+  display: inline-block;
+  height: 0.6rem;
+  width: 0.6rem;
+
+  &.text-error {
+    background-color: $red;
+  }
+
+  &.text-primary {
+    background-color: $primary;
+  }
+
+  &.text-success {
+    background-color: $green;
+  }
+}

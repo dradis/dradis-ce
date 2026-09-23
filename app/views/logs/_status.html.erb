@@ -1,0 +1,24 @@
+<% warning_count = local_assigns.fetch(:warning_count, 0) %>
+<% state = log&.state || :running %>
+<% status_class = { completed: 'text-success', failed: 'text-error', running: 'text-primary' }[state] %>
+<div id="status" class="console-header" data-behavior="status">
+  <span class="status-dot <%= status_class %>"></span>
+  <span class="console-summary">
+    <% case state %>
+    <% when :completed %>
+      Import complete.
+    <% when :failed %>
+      Import failed. See the log below for details.
+    <% else %>
+      Importing&hellip;
+    <% end %>
+  </span>
+  <div class="console-header-actions ms-auto d-flex align-items-center gap-2">
+    <% if warning_count > 0 %>
+      <span class="badge text-bg-warning"><%= warning_count %> warn</span>
+    <% end %>
+    <button type="button" class="btn btn-sm console-copy-btn" data-clipboard-target="#console" title="Copy log output">
+      <i class="fa-solid fa-copy"></i> Copy log
+    </button>
+  </div>
+</div>

@@ -60,10 +60,13 @@
     <div class="content-container mb-0 h-100">
       <h4 class="header-underline">Output console</h4>
       <div id="status" data-behavior="status"></div>
-      <%= content_tag :div, id: 'result', style: 'display:none', data: { url: status_console_index_path, behavior: 'result' }  do %>
-        <div><strong>Filename</strong>: <span data-behavior="filename"></span> <span data-behavior="spinner"><%= image_tag 'loading.gif', style: "margin:0;", alt: 'loading spinner' %></span></div>
-        <div><strong>Size</strong>: <span data-behavior="filesize"></span></div>
-        <div id="console" class="mx-0 mb-0" data-behavior="console"></div>
+      <%= content_tag :div, id: 'result', style: 'display:none', data: { behavior: 'result' } do %>
+        <div class="console-info">
+          <span data-behavior="filename"></span> &middot; <span data-behavior="filesize"></span>
+          <span data-behavior="spinner"><%= image_tag 'loading.gif', style: "margin:0;", alt: 'loading spinner' %></span>
+        </div>
+        <div data-behavior="console-mount"></div>
+        <div id="console" class="console mx-0 mb-0" data-behavior="console" data-controller="console-scroll"></div>
       <% end %>
     </div>
   </div>
