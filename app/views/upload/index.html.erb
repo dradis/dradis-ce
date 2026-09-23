@@ -18,7 +18,7 @@
       <p class="mt-4">Use the form below to upload output files from other tools.</p>
 
       <div class="mt-4">
-        <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, id: 'new_upload', data: { behavior: 'new-upload', parse_url: project_upload_parse_path(current_project) } do %>
+        <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, data: { behavior: 'new-upload', parse_url: project_upload_parse_path(current_project) } do %>
           <div class="mb-5 mt-4 pt-2">
             <%= label_tag :uploader do %>
               <h5>1. Tool you are uploading output from</h5>
@@ -38,8 +38,8 @@
             <div>
               <label class="visually-hidden" data-behavior="file-label">Choose file</label>
               <%= file_field_tag 'file', class: 'form-control' %>
-              <%= hidden_field_tag 'item_id', nil, data: { behavior: 'item-id' } %>
-              <%= hidden_field_tag 'attachment', nil, data: { behavior: 'attachment' } %>
+              <%= hidden_field_tag 'item_id', nil, id: false, data: { behavior: 'item-id' } %>
+              <%= hidden_field_tag 'attachment', nil, id: false, data: { behavior: 'attachment' } %>
               <%= hidden_field_tag 'format', 'js' %>
             </div>
           </div>
@@ -47,8 +47,8 @@
 
         <p>Upload progress:</p>
         <div class="progress mb-2">
-          <div class="progress-bar progress-bar-striped">
-            <div class="percent">0%</div>
+          <div class="progress-bar progress-bar-striped" data-behavior="progress-bar">
+            <div class="percent" data-behavior="percent">0%</div>
           </div>
         </div>
 

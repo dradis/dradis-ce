@@ -1,8 +1,8 @@
 document.addEventListener('turbo:load', function () {
   if ($('body.upload').length) {
     // Enable Ajax file uploads via 3rd party plugin
-    const $bar = $('.progress-bar');
-    const $percent = $('.percent');
+    const $bar = $('[data-behavior~=progress-bar]');
+    const $percent = $('[data-behavior~=percent]');
     const $status = $('[data-behavior~=status]');
 
     $('[data-behavior~=new-upload]').ajaxForm({
