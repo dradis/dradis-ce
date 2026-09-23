@@ -39,4 +39,18 @@ describe 'Edit locking multi-actor flow' do
 
     it_behaves_like 'a lockable resource'
   end
+
+  describe 'for an issue edited from the QA space' do
+    let(:project) { create(:project) }
+    let(:issue) { create(:issue, node: project.issue_library, state: 'ready_for_review') }
+    let(:record) { issue }
+    let(:edit_path) { edit_project_qa_issue_path(project, issue) }
+
+    let(:submit_form) do
+      find('.btn-states button[type="submit"]').click
+      expect(page).to have_content('Issue updated.')
+    end
+
+    it_behaves_like 'a lockable resource'
+  end
 end
