@@ -53,4 +53,29 @@ describe 'Edit locking multi-actor flow' do
 
     it_behaves_like 'a lockable resource'
   end
+
+  describe 'for a piece of evidence' do
+    let(:project) { create(:project) }
+    let(:node) { create(:node, project: project) }
+    let(:evidence) { create(:evidence, node: node, issue: create(:issue, node: project.issue_library)) }
+    let(:record) { evidence }
+    let(:edit_path) { edit_project_node_evidence_path(project, node, evidence) }
+
+    let(:submit_form) { click_button 'Update Evidence' }
+
+    it_behaves_like 'a lockable resource'
+  end
+
+  describe 'for a piece of evidence reviewed from the QA space' do
+    let(:project) { create(:project) }
+    let(:node) { create(:node, project: project) }
+    let(:qa_issue) { create(:issue, node: project.issue_library, state: 'ready_for_review') }
+    let(:evidence) { create(:evidence, node: node, issue: qa_issue, state: 'ready_for_review') }
+    let(:record) { evidence }
+    let(:edit_path) { edit_project_qa_issue_evidence_path(project, qa_issue, evidence) }
+
+    let(:submit_form) { click_button 'Update Evidence' }
+
+    it_behaves_like 'a lockable resource'
+  end
 end
