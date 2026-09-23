@@ -46,6 +46,15 @@ describe 'Edit locking multi-actor flow' do
     let(:record) { issue }
     let(:edit_path) { edit_project_qa_issue_path(project, issue) }
 
+    # Cancel lands on the QA show page, which loads inline threads asynchronously.
+    # Wait for the highlight before RSpec rolls back the test transaction.
+    before(:each, js: true) { create(:inline_thread, commentable: issue) }
+    after(:each, js: true) do
+      Capybara.using_session(:user_a) do
+        expect(page).to have_css('[data-behavior~=inline-thread-highlight]')
+      end
+    end
+
     let(:submit_form) do
       find('.btn-states button[type="submit"]').click
       expect(page).to have_content('Issue updated.')
