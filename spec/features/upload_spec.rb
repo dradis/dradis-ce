@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 describe 'Restoring project files' do
-  before { login_to_project_as_user }
+  before do
+    login_to_project_as_user
+    login_as(@logged_in_as) # the console's ActionCable connection needs a real Warden session
+  end
 
   context 'with v1 methodologies data' do
     before do

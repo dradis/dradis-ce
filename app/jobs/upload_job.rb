@@ -33,5 +33,6 @@ class UploadJob < ApplicationJob
       end
     end
     tracker.update_state(state: :failed, message: exception.message)
+    logger.write { 'Worker process failed.' }
   end
 end

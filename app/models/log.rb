@@ -1,10 +1,14 @@
 class Log < ApplicationRecord
   after_initialize :set_uid
+  after_create_commit :broadcast_log
 
   # The UUID assigned here is the authorization primitive for reading
   # the log stream. It's returned only to the user that initiated the
   # job; ConsoleController#status treats possession of the UUID as the
-  # authorization to read the associated records.
+  # authorization to read the associated records. The same UUID is what
+  # Turbo signs into the stream name broadcast_log below writes to, so a
+  # broadcast subscription carries the same bearer-token security model
+  # as the polling endpoint.
   def set_uid
     self.uid ||= SecureRandom.uuid
   end
@@ -32,5 +36,23 @@ class Log < ApplicationRecord
     color_num = text.match(/\e\[(\d+)m/)
     return '' unless color_num
     color_num[1]
+  end
+
+  def state
+    case text
+    when 'Worker process completed.' then :completed
+    when 'Worker process failed.' then :failed
+    else :running
+    end
+  end
+
+  private
+
+  # PoC scope: only the Import consumer subscribes to this stream today
+  # (see upload/create.js.erb). Other consumers keep polling
+  # ConsoleController#status until they're migrated too.
+  def broadcast_log
+    broadcast_append_to(uid, target: 'console', partial: 'logs/log', locals: { log: self })
+    broadcast_replace_to(uid, target: 'status', partial: 'logs/status', locals: { log: self }) unless state == :running
   end
 end

@@ -15,6 +15,6 @@ class ConsoleController < AuthenticatedController
       'uid = ? and id > ?',
       @job_id, params[:after].to_i
     )
-    @working = @logs.last.text != 'Worker process completed.' if @logs.any?
+    @working = @logs.last.state == :running if @logs.any?
   end
 end
