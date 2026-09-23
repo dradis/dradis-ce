@@ -1,3 +1,12 @@
+body.upload.index {
+  .console {
+    border-radius: 0 0 5px 5px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: $text-small;
+    margin-top: 0;
+  }
+}
+
 .console {
   @include console-box;
   height: auto;
@@ -39,15 +48,6 @@
   font-family: 'SFMono-Regular', Consolas, monospace;
   font-size: 0.75rem;
   padding: 0 1rem 1rem 2rem;
-}
-
-body.upload.index {
-  .console {
-    border-radius: 0 0 5px 5px;
-    font-family: 'SFMono-Regular', Consolas, monospace;
-    font-size: $text-small;
-    margin-top: 0;
-  }
 }
 
 .status-dot {
