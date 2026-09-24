@@ -130,7 +130,8 @@ describe 'QA issue evidence' do
 
     context 'when the user is not a reviewer' do
       before do
-        allow_any_instance_of(Project).to receive(:reviewers).and_return(User.none)
+        other_user = create(:user)
+        allow_any_instance_of(Project).to receive(:reviewers).and_return(User.where(id: other_user.id))
         visit project_qa_issue_path(current_project, issue)
         click_link 'Evidence'
       end
