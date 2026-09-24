@@ -1,6 +1,6 @@
 <% if @success -%>
   $('[data-behavior~=result]').data('id', '<%= @item_id %>')
-  $('[data-behavior~=result]').show()
+  $('[data-behavior~=result]').removeClass('d-none')
   $('[data-behavior~=item-id]').val('<%= @item_id %>')
   $('[data-behavior~=status]').replaceWith('<%= j render("logs/status", log: nil) %>');
   window.initBehaviors(document.querySelector('[data-behavior~=status]'));
