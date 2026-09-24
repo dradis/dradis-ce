@@ -11,7 +11,7 @@ class Notes::EditingSessionsController < AuthenticatedController
   private
 
   def set_note
-    @node = current_project.nodes.find(params[:node_id])
-    @note = @node.notes.find(params[:note_id])
+    node = current_project.nodes.find(params[:node_id])
+    @note = node.notes.find(params[:note_id])
   end
 end

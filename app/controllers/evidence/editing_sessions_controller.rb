@@ -11,7 +11,7 @@ class Evidence::EditingSessionsController < AuthenticatedController
   private
 
   def set_evidence
-    @node = current_project.nodes.find(params[:node_id])
-    @evidence = @node.evidence.find(params[:evidence_id])
+    node = current_project.nodes.find(params[:node_id])
+    @evidence = node.evidence.find(params[:evidence_id])
   end
 end
