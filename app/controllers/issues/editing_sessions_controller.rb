@@ -1,14 +1,14 @@
 class Issues::EditingSessionsController < AuthenticatedController
-  include EditingSessionsActions
   include ProjectScoped
 
   before_action :set_issue
 
-  private
-
-  def editing_session_record
-    @issue
+  def destroy
+    @issue.release_edit_session(current_user)
+    head :no_content
   end
+
+  private
 
   def set_issue
     @issue = current_project.issues.find(params[:issue_id])

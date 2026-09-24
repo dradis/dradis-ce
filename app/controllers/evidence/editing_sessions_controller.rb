@@ -1,14 +1,14 @@
 class Evidence::EditingSessionsController < AuthenticatedController
-  include EditingSessionsActions
   include ProjectScoped
 
   before_action :set_evidence
 
-  private
-
-  def editing_session_record
-    @evidence
+  def destroy
+    @evidence.release_edit_session(current_user)
+    head :no_content
   end
+
+  private
 
   def set_evidence
     @node = current_project.nodes.find(params[:node_id])

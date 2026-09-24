@@ -1,14 +1,14 @@
 class Cards::EditingSessionsController < AuthenticatedController
-  include EditingSessionsActions
   include ProjectScoped
 
   before_action :set_card
 
-  private
-
-  def editing_session_record
-    @card
+  def destroy
+    @card.release_edit_session(current_user)
+    head :no_content
   end
+
+  private
 
   def set_card
     @board = current_project.boards.find(params[:board_id])

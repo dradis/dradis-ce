@@ -1,14 +1,14 @@
 class Notes::EditingSessionsController < AuthenticatedController
-  include EditingSessionsActions
   include ProjectScoped
 
   before_action :set_note
 
-  private
-
-  def editing_session_record
-    @note
+  def destroy
+    @note.release_edit_session(current_user)
+    head :no_content
   end
+
+  private
 
   def set_note
     @node = current_project.nodes.find(params[:node_id])
