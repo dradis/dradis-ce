@@ -259,9 +259,9 @@ class ComboBox {
         selectedValues.push(value);
       }
 
-      this.$target.val(selectedValues).trigger('change');
+      this.setTargetValue(selectedValues);
     } else {
-      this.$target.val(value).trigger('change');
+      this.setTargetValue(value);
       this.hideMenu();
     }
 
@@ -444,9 +444,9 @@ class ComboBox {
     if (this.isMultiSelect) {
       let selectedValues = this.$target.val() || [];
       selectedValues.push(sanitizedValue);
-      this.$target.val(selectedValues).trigger('change');
+      this.setTargetValue(selectedValues);
     } else {
-      this.$target.val(sanitizedValue).trigger('change');
+      this.setTargetValue(sanitizedValue);
     }
   }
 
@@ -455,7 +455,7 @@ class ComboBox {
       selectedValues = this.$target
         .val()
         .filter((value) => value != valueToRemove);
-    this.$target.val(selectedValues).trigger('change');
+    this.setTargetValue(selectedValues);
   }
 
   // ==========================================================================
@@ -561,6 +561,11 @@ class ComboBox {
   filterByDataValue($elements, dataKey, value) {
     const attr = `data-${dataKey}`;
     return $elements.filter((_, el) => el.getAttribute(attr) === String(value));
+  }
+
+  setTargetValue(value) {
+    this.$target.val(value);
+    this.$target[0].dispatchEvent(new Event('change', { bubbles: true }));
   }
 
   showMenu() {
