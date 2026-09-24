@@ -35,8 +35,6 @@ document.addEventListener('turbo:load', function () {
       $('[data-behavior~=file-label]').text(fileName);
 
       $(this).closest('form').submit();
-      // Can't use this, because Rails UJS doesn't kick in (missing CSRF)
-      // $(this).closest('form').trigger('submit.rails');
     });
 
     const $uploader = $('[data-behavior~=tool-select]');
