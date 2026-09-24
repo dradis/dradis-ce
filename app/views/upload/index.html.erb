@@ -37,7 +37,7 @@
             <% end %>
             <div>
               <label class="visually-hidden" data-behavior="file-label">Choose file</label>
-              <%= file_field_tag 'file', class: 'form-control' %>
+              <%= file_field_tag 'file', class: 'form-control', data: { behavior: 'file-input' } %>
               <%= hidden_field_tag 'item_id', nil, id: false, data: { behavior: 'item-id' } %>
               <%= hidden_field_tag 'attachment', nil, id: false, data: { behavior: 'attachment' } %>
               <%= hidden_field_tag 'format', 'js' %>
@@ -59,7 +59,7 @@
   <div class="col-lg-6 col-xl-7 mb-4">
     <div class="content-container mb-0 h-100">
       <h4 class="header-underline">Output console</h4>
-      <div id="status" data-behavior="status"></div>
+      <div data-behavior="status"></div>
       <%= content_tag :div, id: 'result', style: 'display:none', data: { behavior: 'result' } do %>
         <div class="console-info">
           <span data-behavior="filename"></span> &middot; <span data-behavior="filesize"></span>

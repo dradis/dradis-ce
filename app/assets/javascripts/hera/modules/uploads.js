@@ -1,6 +1,5 @@
 document.addEventListener('turbo:load', function () {
   if ($('body.upload').length) {
-    // Enable Ajax file uploads via 3rd party plugin
     const $bar = $('[data-behavior~=progress-bar]');
     const $percent = $('[data-behavior~=percent]');
     const $status = $('[data-behavior~=status]');
@@ -28,7 +27,7 @@ document.addEventListener('turbo:load', function () {
       },
     });
 
-    $(':file').change(function () {
+    $('[data-behavior~=file-input]').change(function () {
       const fileName = this.value.split('\\').pop();
       $('[data-behavior~=console]').empty();
       $('[data-behavior~=filename]').text(fileName);
@@ -36,8 +35,6 @@ document.addEventListener('turbo:load', function () {
       $('[data-behavior~=file-label]').text(fileName);
 
       $(this).closest('form').submit();
-      // Can't use this, because Rails UJS doesn't kick in (missing CSRF)
-      // $(this).closest('form').trigger('submit.rails');
     });
 
     const $uploader = $('[data-behavior~=tool-select]');
