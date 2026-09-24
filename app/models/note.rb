@@ -28,6 +28,7 @@ class Note < ApplicationRecord
   include Commentable
   include Eventable
   include HasFields
+  include Lockable
   # FIXME - ISSUE?/NOTE INHERITANCE
   # Issues have QA states but notes don't currently use states.
   # Since Issue is an extension of Note, notes have a state column too.
