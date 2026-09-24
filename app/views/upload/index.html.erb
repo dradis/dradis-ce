@@ -37,7 +37,7 @@
             <% end %>
             <div>
               <label class="visually-hidden" data-behavior="file-label">Choose file</label>
-              <%= file_field_tag 'file', class: 'form-control' %>
+              <%= file_field_tag 'file', class: 'form-control', data: { behavior: 'file-input' } %>
               <%= hidden_field_tag 'item_id', nil, id: false, data: { behavior: 'item-id' } %>
               <%= hidden_field_tag 'attachment', nil, id: false, data: { behavior: 'attachment' } %>
               <%= hidden_field_tag 'format', 'js' %>

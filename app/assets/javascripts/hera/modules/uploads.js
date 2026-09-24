@@ -27,7 +27,7 @@ document.addEventListener('turbo:load', function () {
       },
     });
 
-    $(':file').change(function () {
+    $('[data-behavior~=file-input]').change(function () {
       const fileName = this.value.split('\\').pop();
       $('[data-behavior~=console]').empty();
       $('[data-behavior~=filename]').text(fileName);
