@@ -52,7 +52,7 @@ class Log < ApplicationRecord
   # (see upload/create.js.erb). Other consumers keep polling
   # ConsoleController#status until they're migrated too.
   def broadcast_log
-    broadcast_append_to(uid, target: 'console', partial: 'logs/log', locals: { log: self })
-    broadcast_replace_to(uid, target: 'status', partial: 'logs/status', locals: { log: self }) unless state == :running
+    Turbo::StreamsChannel.broadcast_append_to(uid, targets: '[data-behavior~=console]', partial: 'logs/log', locals: { log: self })
+    Turbo::StreamsChannel.broadcast_replace_to(uid, targets: '[data-behavior~=status]', partial: 'logs/status', locals: { log: self }) unless state == :running
   end
 end

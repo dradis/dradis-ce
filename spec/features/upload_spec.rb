@@ -24,6 +24,7 @@ describe 'Restoring project files' do
 
       expect(page).to have_text('Processing V1 Methodologies...', wait: 120)
       expect(page).to have_text('Worker process completed', wait: 120)
+      expect(page).to have_text('Import complete.')
 
       expect(current_project.boards.count).to eq 1
       expect(current_project.boards.first.name).to eq 'OWASPv4 Methodology'
