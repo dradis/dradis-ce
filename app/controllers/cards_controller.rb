@@ -103,6 +103,10 @@ class CardsController < AuthenticatedController
   end
 
   def set_form_cancel_path
-    @form_cancel_path = @card.new_record? ? [current_project, @board] : [current_project, @board, @list, @card]
+    if @card.new_record?
+      @form_cancel_path = [current_project, @board]
+    else
+      @form_cancel_path = [current_project, @board, @list, @card]
+    end
   end
 end
