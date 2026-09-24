@@ -114,6 +114,10 @@ class NotesController < NestedNodeResourceController
   end
 
   def set_form_cancel_path
-    @form_cancel_path = @note.new_record? ? project_node_path(current_project, @node) : project_node_note_path(current_project, @node, @note)
+    if @note.new_record?
+      @form_cancel_path = project_node_path(current_project, @node)
+    else
+      @form_cancel_path = project_node_note_path(current_project, @node, @note)
+    end
   end
 end
