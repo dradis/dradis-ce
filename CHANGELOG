@@ -6,6 +6,8 @@
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
+    - Combobox:
+      - show inline validation errors on dropdowns that fail validation
     - Bug tracker items:
       - [item]
   - Echo enhancements:
