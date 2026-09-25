@@ -20,9 +20,12 @@ class UploadJob < ApplicationJob
       state: state
     )
 
-    importer.import(file: file)
-
-    logger.write { 'Worker process completed.' }
+    # Importers return false (after logging why) when the file isn't in their format
+    if importer.import(file: file) == false
+      logger.write { 'Worker process failed.' }
+    else
+      logger.write { 'Worker process completed.' }
+    end
 
   rescue => exception
     logger.write { "There was an error with the upload: #{exception.message}" }

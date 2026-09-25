@@ -42,8 +42,12 @@ module Uploadable
         state: @state,
       )
 
-      importer.import(file: attachment.fullpath)
-      job_logger.write('Worker process completed.')
+      # Importers return false (after logging why) when the file isn't in their format
+      if importer.import(file: attachment.fullpath) == false
+        job_logger.write('Worker process failed.')
+      else
+        job_logger.write('Worker process completed.')
+      end
     rescue Exception => e
       # Fail noisily in test mode; re-raise the error so the test fails:
       raise if Rails.env.test?
