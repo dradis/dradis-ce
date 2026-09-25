@@ -14,7 +14,7 @@ body.upload.index {
 
 .console-header {
   align-items: center;
-  background-color: lighten($black, 5%);
+  background-color: $black;
   border-radius: 5px 5px 0 0;
   color: $grey-500;
   display: flex;
@@ -40,7 +40,7 @@ body.upload.index {
 }
 
 .console-info {
-  background-color: lighten($black, 5%);
+  background-color: $black;
   border-bottom: 1px solid $grey-800;
   color: $grey-600;
   font-family: 'SFMono-Regular', Consolas, monospace;
@@ -67,11 +67,17 @@ body.upload.index {
     background-color: $grey-700;
   }
 
-  &.text-primary {
-    background-color: $primary;
-  }
-
   &.text-success {
     background-color: $green;
   }
+
+  &.text-warning {
+    animation: status-dot-pulse 2s infinite;
+    background-color: $yellow;
+  }
+}
+
+@keyframes status-dot-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }

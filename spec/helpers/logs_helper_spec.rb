@@ -14,8 +14,8 @@ describe LogsHelper do
       expect(helper.log_status_class(failed_log)).to eq('text-error')
     end
 
-    it 'returns the primary class for a running log' do
-      expect(helper.log_status_class(running_log)).to eq('text-primary')
+    it 'returns the warning class for a running log' do
+      expect(helper.log_status_class(running_log)).to eq('text-warning')
     end
 
     it 'returns the muted class when there is no log yet' do

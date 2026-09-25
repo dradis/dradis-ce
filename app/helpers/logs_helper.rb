@@ -6,7 +6,7 @@ module LogsHelper
     when :failed
       'text-error'
     when :running
-      'text-primary'
+      'text-warning'
     else
       'text-muted'
     end
