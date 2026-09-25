@@ -4,6 +4,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
+    - Avatars: display a local image while Gravatar loads
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
