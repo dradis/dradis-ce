@@ -1,5 +1,5 @@
 @mixin console-box {
-  background-color: $black;
+  background-color: lighten($black, 5%);
   border-radius: 5px;
   color: $grey-500;
   margin: 1rem 0;

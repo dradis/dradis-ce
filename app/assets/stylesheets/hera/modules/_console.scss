@@ -14,9 +14,9 @@ body.upload.index {
 
 .console-header {
   align-items: center;
-  background-color: $black;
+  background-color: lighten($black, 5%);
   border-radius: 5px 5px 0 0;
-  color: $grey-500;
+  color: $grey-200;
   display: flex;
   font-family: 'SFMono-Regular', Consolas, monospace;
   font-size: $text-small;
@@ -25,8 +25,8 @@ body.upload.index {
   padding: 1rem 1rem 0;
 
   .console-copy-btn {
-    background-color: transparent;
-    border: 1px solid $grey-800;
+    background-color: $grey-900;
+    border: 1px solid $grey-500;
     border-radius: 4px;
     color: $grey-500;
     font-size: inherit;
@@ -40,7 +40,7 @@ body.upload.index {
 }
 
 .console-info {
-  background-color: $black;
+  background-color: lighten($black, 5%);
   border-bottom: 1px solid $grey-800;
   color: $grey-600;
   font-family: 'SFMono-Regular', Consolas, monospace;
@@ -50,7 +50,6 @@ body.upload.index {
 
 .console-placeholder {
   color: $grey-600;
-  font-style: italic;
 }
 
 .status-dot {
@@ -78,6 +77,11 @@ body.upload.index {
 }
 
 @keyframes status-dot-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
