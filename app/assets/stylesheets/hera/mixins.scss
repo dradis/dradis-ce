@@ -1,9 +1,8 @@
-@mixin ajax-console {
-  background-color: $black;
+@mixin console-box {
+  background-color: lighten($black, 5%);
   border-radius: 5px;
   color: $grey-500;
   margin: 1rem 0;
-  height: 400px;
   overflow: auto;
   padding: 1rem;
 

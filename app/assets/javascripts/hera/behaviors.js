@@ -151,7 +151,9 @@ document.addEventListener('turbo:load', function () {
 
     // Initialize clipboard.js
     const clipboard = new Clipboard(
-      parentElement.querySelectorAll('[data-clipboard-text]')
+      parentElement.querySelectorAll(
+        '[data-clipboard-text], [data-clipboard-target]'
+      )
     );
 
     clipboard.on('success', function (e) {
@@ -237,10 +239,11 @@ document.addEventListener('turbo:load', function () {
     event.detail.render = async function (streamElement) {
       await render(streamElement);
 
-      const targetElement = document.getElementById(
-        streamElement.getAttribute('target')
-      );
-      if (targetElement) initBehaviors(targetElement);
+      if (streamElement.target || streamElement.targets) {
+        streamElement.targetElements.forEach(function (targetElement) {
+          initBehaviors(targetElement);
+        });
+      }
     };
   });
 
