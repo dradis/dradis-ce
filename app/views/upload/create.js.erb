@@ -1,13 +1,12 @@
 <% if @success -%>
   $('[data-behavior~=result]').data('id', '<%= @item_id %>')
-  $('[data-behavior~=result]').removeClass('d-none')
   $('[data-behavior~=item-id]').val('<%= @item_id %>')
-  $('[data-behavior~=status]').replaceWith('<%= j render("logs/status", log: nil) %>');
+  $('[data-behavior~=status]').replaceWith('<%= j render("logs/status", log: Log.new(uid: @item_id)) %>');
   window.initBehaviors(document.querySelector('[data-behavior~=status]'));
   $('[data-behavior~=console-mount]').html('<%= j turbo_stream_from(@item_id) %>');
 
-  $('[data-behavior~=filesize]').text('<%=j number_to_human_size( File.size(@attachment.fullpath) ) %>');
-  $('[data-behavior~=spinner]').hide();
+  $('[data-behavior~=filesize]').text('· <%=j number_to_human_size( File.size(@attachment.fullpath) ) %>');
+  $('[data-behavior~=spinner]').addClass('d-none');
   url = $('[data-behavior~=new-upload]').data('parse-url');
   data = {
     file: '<%= @attachment.filename %>',

@@ -42,7 +42,7 @@ describe 'upload requests' do
 
       it 'imports the uploaded template' do
         attachments_path = Attachment.pwd.join(@uploads_node.id.to_s)
-        attachment_file  = attachments_path.join('temp').to_s
+        attachment_file = attachments_path.join('temp').to_s
 
         FileUtils.mkdir_p(attachments_path)
         FileUtils.cp(small_file, attachment_file)
@@ -94,7 +94,7 @@ describe 'upload requests' do
 
       it 'enqueues a background job with the right parameters' do
         attachments_path = Attachment.pwd.join(@uploads_node.id.to_s)
-        attachment_file  = attachments_path.join('temp').to_s
+        attachment_file = attachments_path.join('temp').to_s
 
         FileUtils.mkdir_p(attachments_path)
         FileUtils.cp(big_file, attachment_file)

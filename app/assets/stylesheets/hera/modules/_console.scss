@@ -9,9 +9,7 @@ body.upload.index {
 
 .console {
   @include console-box;
-  height: auto;
-  min-height: 25rem;
-  max-height: 50vh;
+  height: 22.5rem;
 }
 
 .console-header {
@@ -50,6 +48,11 @@ body.upload.index {
   padding: 0 1rem 1rem 2rem;
 }
 
+.console-placeholder {
+  color: $grey-600;
+  font-style: italic;
+}
+
 .status-dot {
   border-radius: 50%;
   display: inline-block;
@@ -58,6 +61,10 @@ body.upload.index {
 
   &.text-error {
     background-color: $red;
+  }
+
+  &.text-muted {
+    background-color: $grey-700;
   }
 
   &.text-primary {

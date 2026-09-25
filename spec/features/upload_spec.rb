@@ -12,6 +12,9 @@ describe 'Restoring project files' do
     end
 
     it 'transforms methodologies into boards', js: true do
+      expect(page).to have_text('Waiting for an upload')
+      expect(page).to have_text('Upload a tool output file to see the import log here.')
+
       find('.combobox', match: :first).click
       find('.combobox-option', text: 'Dradis::Plugins::Projects::Upload::Template').click
       attach_file \

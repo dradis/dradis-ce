@@ -5,8 +5,10 @@ module LogsHelper
       'text-success'
     when :failed
       'text-error'
-    else
+    when :running
       'text-primary'
+    else
+      'text-muted'
     end
   end
 
@@ -16,8 +18,10 @@ module LogsHelper
       'Import complete.'
     when :failed
       'Import failed. See the log below for details.'
-    else
+    when :running
       'Importing…'
+    else
+      'Waiting for an upload'
     end
   end
 end

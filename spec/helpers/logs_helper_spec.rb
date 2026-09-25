@@ -18,8 +18,8 @@ describe LogsHelper do
       expect(helper.log_status_class(running_log)).to eq('text-primary')
     end
 
-    it 'treats a missing log as running' do
-      expect(helper.log_status_class(nil)).to eq('text-primary')
+    it 'returns the muted class when there is no log yet' do
+      expect(helper.log_status_class(nil)).to eq('text-muted')
     end
   end
 
@@ -36,8 +36,8 @@ describe LogsHelper do
       expect(helper.log_status_summary(running_log)).to eq('Importing…')
     end
 
-    it 'treats a missing log as running' do
-      expect(helper.log_status_summary(nil)).to eq('Importing…')
+    it 'returns the idle summary when there is no log yet' do
+      expect(helper.log_status_summary(nil)).to eq('Waiting for an upload')
     end
   end
 end
