@@ -318,30 +318,27 @@ class EditorToolbar {
   }
 
   replaceImagePlaceholder(data, index, file) {
-    var placeholder = this.affixesLibrary('image-placeholder', file.name),
-      affix = this.affixesLibrary('image', data.result[0].url);
+    const placeholder = this.affixesLibrary('image-placeholder', file.name),
+      affix = this.affixesLibrary('image', data.result[0].url),
+      scrollPosition = window.scrollY;
+
+    // Resolve the sizes before inserting the affix, so the indexOf() below finds an exact match.
+    affix.prefix = affix.prefix
+      .replace('width: #', 'width: ' + data.result[0].width)
+      .replace('height: #', 'height: ' + data.result[0].height);
 
     this.$target.val(
-      this.$target
-        .val()
-        .replace(placeholder.asString(), affix.asString(), this.$target),
+      this.$target.val().replace(placeholder.asString(), affix.asString()),
     );
 
+    const position =
+      this.$target.val().indexOf(affix.asString()) + affix.asString().length;
 
-    // Replace placeholder image sizes
-    this.$target.val(
-      this.$target.val().replace('width: #', 'width: ' + data.result[0].width)
-    );
-    this.$target.val(
-      this.$target.val().replace('height: #', 'height: ' + data.result[0].height)
-    );
-
-
-    var position = this.$target.val().indexOf(affix.asString()),
-      cursorInfo = new CursorInfo(position, position, undefined);
-
-    this.setCursor(affix, cursorInfo);
+    this.$target[0].setSelectionRange(position, position);
     this.$target.trigger('textchange');
+
+    // Undo the browser's auto-scroll to the (possibly off-screen) field.
+    window.scrollTo(0, scrollPosition);
   }
 
   affixesLibrary(type, selection) {
