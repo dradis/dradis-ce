@@ -10,8 +10,9 @@ module Projects
         if @grouping.start_with?('list:')
           field_name = @grouping.delete_prefix('list:')
           @list_field = @list_fields.find { |f| f.name == field_name }
+          value_cache = {}
           (@list_field&.values || []).map do |v|
-            ListFieldValue.new(v, field_name: field_name, project: current_project)
+            ListFieldValue.new(v, field_name: field_name, project: current_project, value_cache: value_cache)
           end
         else
           @grouping = 'tags'
