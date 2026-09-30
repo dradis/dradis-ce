@@ -14,7 +14,7 @@ body.upload.index {
 
 .console-header {
   align-items: center;
-  background-color: lighten($black, 5%);
+  background-color: $console-bg;
   border-radius: 5px 5px 0 0;
   color: $grey-200;
   display: flex;
@@ -40,7 +40,7 @@ body.upload.index {
 }
 
 .console-info {
-  background-color: lighten($black, 5%);
+  background-color: $console-bg;
   border-bottom: 1px solid $grey-800;
   color: $grey-600;
   font-family: 'SFMono-Regular', Consolas, monospace;
