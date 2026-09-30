@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Upload: show live console output instead of polling for updates
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:

@@ -1,0 +1,13 @@
+<% warning_count = local_assigns.fetch(:warning_count, 0) %>
+<div class="console-header" data-behavior="status">
+  <span class="status-dot <%= log_status_class(log) %>"></span>
+  <span class="console-summary"><%= log_status_summary(log) %></span>
+  <div class="console-header-actions ms-auto d-flex align-items-center gap-2">
+    <% if warning_count > 0 %>
+      <span class="badge text-bg-warning"><%= warning_count %> warn</span>
+    <% end %>
+    <button type="button" class="btn btn-sm console-copy-btn <%= 'invisible' unless log %>" data-clipboard-target="[data-behavior~=console]" title="Copy log output">
+      <i class="fa-solid fa-copy"></i> Copy log
+    </button>
+  </div>
+</div>
