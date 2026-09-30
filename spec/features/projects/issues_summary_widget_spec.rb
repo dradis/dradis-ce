@@ -36,7 +36,7 @@ describe 'Issues Summary widget', js: true do
       expect(page).to have_css('[data-behavior="caret-icon"].fa-caret-up')
 
       page.execute_script(<<~JS)
-        const frame = document.querySelector('turbo-frame#issues-summary');
+        const frame = document.querySelector('[data-behavior~="issues-summary"]');
         frame.innerHTML = '';
         frame.reload();
       JS
