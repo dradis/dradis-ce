@@ -293,7 +293,7 @@
       $('.textile-toolbar a', scope).removeClass('active');
       $('.textile-toolbar .btn-form', scope).addClass('active');
 
-      $('.textile-form').empty();
+      $('.textile-form', scope).empty();
 
       this._loadFields(this.$element.val(), this._fieldValues);
 
