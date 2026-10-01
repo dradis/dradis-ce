@@ -386,6 +386,19 @@ pre {
 }
 
 table {
+  .column-actions button {
+    visibility: hidden;
+  }
+
+  tr {
+    &:focus-within,
+    &:hover {
+      .column-actions button {
+        visibility: visible;
+      }
+    }
+  }
+
   &.table-ajax-inputs {
     td {
       &.value input {
