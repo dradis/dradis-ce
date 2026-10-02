@@ -214,6 +214,10 @@ class ComboBox {
           this.$combobox.toggleClass('disabled', isDisabled);
         }
 
+        if (mutation.attributeName === 'class') {
+          this.refreshValidationUI();
+        }
+
         // Ensure changes to options are reflected in the combobox
         if (mutation.type === 'childList') {
           const currentFilter = this.$filter?.val();
@@ -478,6 +482,16 @@ class ComboBox {
       'disabled',
       !!this.$target.attr('disabled')?.length,
     );
+    this.refreshValidationUI();
+  }
+
+  // Wrapping the select breaks Bootstrap's `.is-invalid ~ .invalid-feedback`
+  // sibling rule, so mirror the invalid state onto the container and combobox.
+  refreshValidationUI() {
+    const isInvalid = this.$target.hasClass('is-invalid');
+
+    this.$comboboxContainer.toggleClass('is-invalid', isInvalid);
+    this.$combobox.toggleClass('is-invalid', isInvalid);
   }
 
   updateComboboxUI(options) {
