@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Editing: Warn user if another user is currently editing a record
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
