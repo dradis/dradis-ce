@@ -39,10 +39,12 @@
   <%= simple_form_for(
     (type == :branch ? Node.new : Node.new(parent_id: parent.id)),
     url: main_app.project_nodes_path(current_project),
-    html: { class: 'add_one_node_form form-horizontal', id: "new_#{type}_node_form" }
+    html: { class: 'add_one_node_form form-horizontal', id: "new_#{type}_node_form", data: { turbo: false } }
   ) do |f| %>
     <%= f.hidden_field :parent_id, id: "#{type}_parent_id" %>
-    <%= f.input :label, input_html: { id: "#{type}_node_label", data: { behavior: 'node-label' } } %>
+    <%# Turbo focuses this once the subnode form loads into its frame. The
+      # top-level form renders with the page, so autofocus would steal focus. %>
+    <%= f.input :label, input_html: { autofocus: type == :child, id: "#{type}_node_label", data: { behavior: 'node-label' } } %>
     <%= f.input :type_id,
       collection: node_types_collection,
       include_blank: false,
@@ -55,7 +57,7 @@
     # exists on a real Node. We can't pass a string or symbol to form_for
     # either because if we pass ':node' or ':nodes' form_for will try to
     # use the @node or @nodes instance variables and we get the same error. %>
-  <%= form_tag(main_app.create_multiple_project_nodes_path(current_project), class: 'add_multiple_nodes_form', data: { behavior: 'add-multiple-nodes-form' }) do %>
+  <%= form_tag(main_app.create_multiple_project_nodes_path(current_project), class: 'add_multiple_nodes_form', data: { behavior: 'add-multiple-nodes-form', turbo: false }) do %>
 
     <div class="add_multiple_nodes_error">
       Please add at least one node

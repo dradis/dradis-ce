@@ -9,7 +9,15 @@
 >
   <div class="modal-dialog">
     <div class="modal-content">
-      <%= render 'nodes/modals/add_node_content', type: type, parent: @node %>
+      <% if type == :branch %>
+        <%= render 'nodes/modals/add_node_content', type: :branch %>
+      <% else %>
+        <%# Nodes::SubnodesController#new loads the form for the node whose
+          # 'Add subnode' link opened this modal %>
+        <%= turbo_frame_tag 'add_subnode_form' do %>
+          <div class="modal-body"><%= spinner_tag %></div>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </div>

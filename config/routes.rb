@@ -105,6 +105,7 @@ Rails.application.routes.draw do
       end
 
       resource :merge, only: [:create], controller: 'nodes/merge'
+      resources :subnodes, only: [:new], controller: 'nodes/subnodes'
 
       resources :notes, concerns: [:multiple_destroy, :previewable] do
         resources :revisions, only: [:index, :show]
