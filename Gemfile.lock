@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/dradis/dradis-calculator_aivss-ssvc.git
+  revision: 891bd9afee420361134270f6aeeef7df7886d56b
+  branch: main
+  specs:
+    dradis-calculator_aivss-ssvc (5.3.0)
+      dradis-plugins (>= 4.0)
+
 PATH
   remote: engines/dradis-api
   specs:
@@ -625,6 +633,7 @@ DEPENDENCIES
   dradis-api!
   dradis-brakeman (~> 5.4.0)
   dradis-burp (~> 5.4.0)
+  dradis-calculator_aivss-ssvc!
   dradis-calculator_cvss (~> 5.4.0)
   dradis-calculator_dread (~> 5.4.0)
   dradis-calculator_mitre (~> 5.4.0)
