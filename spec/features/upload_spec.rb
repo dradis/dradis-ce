@@ -12,7 +12,7 @@ describe 'Restoring project files' do
     end
 
     it 'transforms methodologies into boards', js: true do
-      expect(page).to have_text('Waiting for an upload')
+      expect(page).to have_text('Waiting to start')
       expect(page).to have_text('Upload a tool output file to see the import log here.')
 
       find('.combobox', match: :first).click
@@ -27,7 +27,7 @@ describe 'Restoring project files' do
 
       expect(page).to have_text('Processing V1 Methodologies...', wait: 120)
       expect(page).to have_text('Worker process completed', wait: 120)
-      expect(page).to have_text('Import complete.')
+      expect(page).to have_text('Complete.')
 
       expect(current_project.boards.count).to eq 1
       expect(current_project.boards.first.name).to eq 'OWASPv4 Methodology'

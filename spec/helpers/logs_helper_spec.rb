@@ -25,19 +25,19 @@ describe LogsHelper do
 
   describe '#log_status_summary' do
     it 'returns the completed summary for a completed log' do
-      expect(helper.log_status_summary(completed_log)).to eq('Import complete.')
+      expect(helper.log_status_summary(completed_log)).to eq('Complete.')
     end
 
     it 'returns the failed summary for a failed log' do
-      expect(helper.log_status_summary(failed_log)).to eq('Import failed. See the log below for details.')
+      expect(helper.log_status_summary(failed_log)).to eq('Failed. See the log below for details.')
     end
 
     it 'returns the running summary for a running log' do
-      expect(helper.log_status_summary(running_log)).to eq('Importing…')
+      expect(helper.log_status_summary(running_log)).to eq('Working…')
     end
 
     it 'returns the idle summary when there is no log yet' do
-      expect(helper.log_status_summary(nil)).to eq('Waiting for an upload')
+      expect(helper.log_status_summary(nil)).to eq('Waiting to start')
     end
   end
 end

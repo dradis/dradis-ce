@@ -15,13 +15,13 @@ module LogsHelper
   def log_status_summary(log)
     case log&.state
     when :completed
-      'Import complete.'
+      'Complete.'
     when :failed
-      'Import failed. See the log below for details.'
+      'Failed. See the log below for details.'
     when :running
-      'Importing…'
+      'Working…'
     else
-      'Waiting for an upload'
+      'Waiting to start'
     end
   end
 end
