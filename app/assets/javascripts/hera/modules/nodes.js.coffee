@@ -1,16 +1,18 @@
 document.addEventListener "turbo:load", ->
-  $(".add_node_radio").click ->
+  # Delegated so they also reach the add subnode form, which a Turbo Frame
+  # loads after the page
+  $(document).on "click", "[data-behavior~=add-node-radio]", ->
     $this  = $(this)
     $modal = $this.closest(".modal")
     isOne  = $this.val() == "one"
     $modal.find(".add_one_node_form").toggle(isOne)
     $modal.find(".add_multiple_nodes_form").toggle(!isOne)
 
-  $(".modal_add_node_submit_btn").click ->
+  $(document).on "click", "[data-behavior~=add-node-submit]", ->
     $(this).attr('disabled', 'disabled').val('Processing...')
     $(this).closest(".modal").find("form:visible").submit()
 
-  $(".add_multiple_nodes_form").submit (e) ->
+  $(document).on "submit", "[data-behavior~=add-multiple-nodes-form]", (e) ->
     $modal = $(this).closest(".modal")
     unless $modal.find(".nodes_list").val().trim()
       e.preventDefault()

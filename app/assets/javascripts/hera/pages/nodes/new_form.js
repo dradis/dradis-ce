@@ -16,7 +16,9 @@
     }
 
     if ($('[data-behavior~=copy-node-label]').length) {
-      $('[data-behavior~=copy-node-label]').click(function() {
+      // Delegated so it also reaches the add subnode form, which a Turbo
+      // Frame loads after the page
+      $(document).on('click', '[data-behavior~=copy-node-label]', function() {
         var $modal = $(this).parents('[data-behavior~=add-node]'),
             $nodeType = $modal.find('[data-behavior~=node-icon]'),
             $nodesType = $modal.find('[data-behavior~=nodes-icon]'),

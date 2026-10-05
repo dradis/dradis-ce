@@ -29,7 +29,8 @@
               "add_#{type}_node",
               :one,
               true,
-              class: "add_node_radio form-check-radio") %>
+              class: "add_node_radio form-check-radio",
+              data: { behavior: 'add-node-radio' }) %>
           <%= label_tag "add_#{type}_node_one", "Add one", class: 'form-check-label' %>
         </div>
 
@@ -39,7 +40,8 @@
               "add_#{type}_node",
               :multiple,
               false,
-              class: "add_node_radio") %>
+              class: "add_node_radio",
+              data: { behavior: 'add-node-radio' }) %>
           <%= label_tag "add_#{type}_node_multiple", "Add multiple", class: 'form-check-label' %>
         </div>
 
@@ -64,7 +66,7 @@
           # exists on a real Node. We can't pass a string or symbol to form_for
           # either because if we pass ':node' or ':nodes' form_for will try to
           # use the @node or @nodes instance variables and we get the same error. %>
-        <%= form_tag(main_app.create_multiple_project_nodes_path(current_project), class: 'add_multiple_nodes_form') do %>
+        <%= form_tag(main_app.create_multiple_project_nodes_path(current_project), class: 'add_multiple_nodes_form', data: { behavior: 'add-multiple-nodes-form' }) do %>
 
           <div class="add_multiple_nodes_error">
             Please add at least one node
@@ -86,7 +88,7 @@
       </div>
 
       <div class="modal-footer">
-        <input type="submit" value="Add" class="modal_add_node_submit_btn btn btn-primary" />
+        <input type="submit" value="Add" class="modal_add_node_submit_btn btn btn-primary" data-behavior="add-node-submit" />
         <button class="btn" data-bs-dismiss="modal" aria-hidden="true">Close</button>
       </div>
     </div>
