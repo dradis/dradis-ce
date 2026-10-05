@@ -65,6 +65,14 @@
     max-height: 50vh;
     overflow: auto;
 
+    // The node picker reuses the sidebar tree, but adding nodes from inside
+    // a picker makes no sense. Rows that load after the page (tree.js, the
+    // activity poller) reuse the sidebar markup too, so this has to be CSS.
+    .add-subnode,
+    .options {
+      display: none;
+    }
+
     .active-selection {
       text-decoration: underline;
 
