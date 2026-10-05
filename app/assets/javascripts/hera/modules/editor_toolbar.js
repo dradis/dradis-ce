@@ -328,7 +328,7 @@ class EditorToolbar {
       .replace('height: #', 'height: ' + data.result[0].height);
 
     this.$target.val(
-      this.$target.val().replace(placeholder.asString(), affix.asString()),
+      this.$target.val().replace(placeholder.asString(), () => affix.asString()),
     );
 
     const position =
