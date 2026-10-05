@@ -5,13 +5,15 @@
     - [gem]
   - Bugs fixes:
     - Editor: keep the cursor in place after uploading an image
+    - Combobox:
+      - show inline validation errors on dropdowns that fail validation
     - Bug tracker items:
       - [item]
   - Echo enhancements:
     - [Echo entity]:
       - [future tense verb] [Echo enhancement]
   - New integrations:
-    - [integration]
+    - Calculators: Add AIVSS-SSVC
   - Integration enhancements:
     - [integration]:
       - [future tense verb] [integration enhancement]
