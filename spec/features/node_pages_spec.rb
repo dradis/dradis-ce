@@ -181,6 +181,36 @@ describe 'node pages' do
     end
   end
 
+  describe 'adding a subnode from the node tree', :js do
+    let!(:node) { create(:node, project: current_project) }
+
+    before do
+      visit project_issues_path(current_project)
+      tree_row = find("li[data-node-id='#{node.id}']")
+      tree_row.hover
+      within(tree_row) { click_link 'Add subnode' }
+    end
+
+    it 'opens the add subnode form without leaving the page' do
+      expect(page).to have_selector('#modal_add_child_node .modal-title', text: node.label)
+      expect(page).to have_current_path(project_issues_path(current_project))
+    end
+
+    it 'adds a subnode under the clicked node' do
+      fill_in 'child_node_label', with: 'My new node'
+
+      expect { click_button 'Add' }.to change { node.children.count }.by(1)
+      expect(node.children.last.label).to eq 'My new node'
+    end
+
+    it 'adds multiple subnodes under the clicked node' do
+      choose 'Add multiple'
+      fill_in :child_nodes_list, with: "node 1\nnode 2"
+
+      expect { click_button 'Add' }.to change { node.children.count }.by(2)
+    end
+  end
+
   describe "clicking 'rename' on a node", js: true do
     before do
       @node = create(:node, label: 'My node', project: current_project)
