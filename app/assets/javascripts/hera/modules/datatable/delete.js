@@ -46,7 +46,7 @@ DradisDatatable.prototype.handleBulkDeleteSuccess = function (rows, data) {
   if (data.success) {
     if (data.jobId) {
       // Background deletion
-      this.showConsole(data.jobId);
+      this.showConsole(data.streamTag, data.statusHtml);
     } else {
       // Inline deletion
       this.showAlert(data.msg, 'success');
@@ -102,7 +102,7 @@ DradisDatatable.prototype.toggleBulkDeleteBtn = function (isShown) {
   $(bulkDeleteBtn[0].node).toggleClass('d-none', !isShown);
 };
 
-DradisDatatable.prototype.showConsole = function (jobId) {
+DradisDatatable.prototype.showConsole = function (streamTag, statusHtml) {
   // the table may set the url to redirect to when closing the console
   var closeUrl = this.$paths.data('table-close-console-url');
 
@@ -112,12 +112,11 @@ DradisDatatable.prototype.showConsole = function (jobId) {
 
   // show console
   $('#modal-console').modal('show');
-  ConsoleUpdater.jobId = jobId;
-  $('#console').empty();
-  $('#result').data('id', ConsoleUpdater.jobId);
   $('#result').show();
 
-  // start console
-  ConsoleUpdater.parsing = true;
-  setTimeout(ConsoleUpdater.updateConsole, 1000);
+  // start streaming the job's log into the console
+  $('#modal-console [data-behavior~=console]').empty();
+  $('#modal-console [data-behavior~=status]').replaceWith(statusHtml);
+  $('#modal-console [data-behavior~=console-mount]').html(streamTag);
+  window.initBehaviors(document.getElementById('modal-console'));
 };

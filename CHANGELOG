@@ -1,5 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - Upload: show live console output instead of polling for updates
+  - Console: show live output instead of polling for updates in uploads and bulk deletes
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:

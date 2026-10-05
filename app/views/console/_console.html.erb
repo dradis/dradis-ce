@@ -5,17 +5,15 @@
         <h5 class="modal-title" id="modal-title">Output console</h5>
       </div>
       <div class="modal-body">
+        <%= render 'logs/status', log: nil %>
         <%= content_tag :div,
                         id: 'result',
                         style: 'display:none',
                         data: {
                           url: main_app.status_console_index_path
                         }  do %>
-          <div>
-            This task can take some time and will be executed in the background.<br>
-            Progress can be tracked here:
-          </div>
-          <div id="console" class="console"></div>
+          <div data-behavior="console-mount"></div>
+          <div id="console" class="console mx-0 mb-0" data-behavior="console" data-controller="console-scroll"></div>
         <% end %>
       </div>
       <div class="modal-footer d-none">

@@ -1,18 +1,12 @@
-body.upload.index {
-  .console {
-    border-radius: 0 0 5px 5px;
-    font-family: 'SFMono-Regular', Consolas, monospace;
-    font-size: $text-small;
-    margin-top: 0;
-  }
-}
-
 .console {
   background-color: $console-bg;
-  border-radius: 5px;
+  border-radius: 0 0 5px 5px;
+  border-top: 1px solid $grey-800;
   color: $grey-500;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-size: $text-small;
   height: 22.5rem;
-  margin: 1rem 0;
+  margin: 0 0 1rem;
   overflow: auto;
   padding: 1rem;
 
@@ -47,7 +41,11 @@ body.upload.index {
   font-size: $text-small;
   gap: 0.5rem;
   margin: 1rem 0 0;
-  padding: 1rem 1rem 0;
+  padding: 1rem;
+
+  &:has(+ * .console-info) {
+    padding-bottom: 0;
+  }
 
   .console-copy-btn {
     background-color: $grey-900;
@@ -66,7 +64,6 @@ body.upload.index {
 
 .console-info {
   background-color: $console-bg;
-  border-bottom: 1px solid $grey-800;
   color: $grey-600;
   font-family: 'SFMono-Regular', Consolas, monospace;
   font-size: 0.75rem;
