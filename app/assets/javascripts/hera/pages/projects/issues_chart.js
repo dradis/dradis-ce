@@ -20,7 +20,7 @@
 
     const groups = $dataElement.data('groups');
     const data = groups.map(group => ({
-      letter: group.unassigned ? 'N/A' : group.name,
+      letter: group.name,
       frequency: group.count,
     }));
     const xDomain = data.map(d => d.letter);
@@ -78,7 +78,7 @@
       .enter()
       .append('li')
       .attr('class', group => (group.unassigned ? 'legend-item untagged' : 'legend-item'))
-      .attr('title', group => (group.unassigned ? 'N/A' : group.name));
+      .attr('title', group => group.name);
 
     items
       .append('span')
@@ -88,7 +88,7 @@
     items
       .append('span')
       .attr('class', 'legend-label')
-      .text(group => (group.unassigned ? 'N/A' : group.name));
+      .text(group => group.name);
   };
 
   document.addEventListener('turbo:frame-load', initIssuesChart);
