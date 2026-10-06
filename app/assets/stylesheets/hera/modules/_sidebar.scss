@@ -235,7 +235,6 @@ body:not(.has-sub-nav) {
               color: var(--text-default);
             }
 
-            // Fills the row, which pushes the add subnode link to the right edge
             > .node-link {
               flex: 1;
               min-width: 0;
