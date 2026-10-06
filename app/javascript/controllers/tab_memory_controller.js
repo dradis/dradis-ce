@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 
-// The strip supplies data-local-storage-key. Addon tabs participate automatically;
-// data-tab-memory-restore="#info-tab" remembers a different tab on return.
+// The strip supplies data-local-storage-key. Tabs can override the behavior by
+// defining an alternative restore, e.g. `data: { tab_memory_restore: '#info-tab' }`
 export default class extends Controller {
   initialize() {
     this.clicked = this.clicked.bind(this);

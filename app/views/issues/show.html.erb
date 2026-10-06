@@ -13,7 +13,11 @@
 <% end %>
 
 <!-- Main content -->
-<ul class="tabs-container nav nav-tabs main-tabs" data-controller="tab-memory" data-local-storage-key="<%= dom_id(@issue) %>">
+<ul
+  class="tabs-container nav nav-tabs main-tabs"
+  data-controller="tab-memory"
+  data-local-storage-key="<%= dom_id(@issue) %>"
+>
   <li class="nav-item">
     <a href="#info-tab" data-bs-toggle="tab" class="nav-link active">
       <%= tag_and_name_for(@issue) %>

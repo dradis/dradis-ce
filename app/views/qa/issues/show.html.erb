@@ -14,7 +14,11 @@
   %>
 <% end %>
 
-<ul class="tabs-container nav nav-tabs main-tabs" data-controller="tab-memory" data-local-storage-key="<%= dom_id(@issue, :qa) %>">
+<ul
+  class="tabs-container nav nav-tabs main-tabs"
+  data-controller="tab-memory"
+  data-local-storage-key="<%= dom_id(@issue, :qa) %>"
+>
   <li class="nav-item">
     <a href="#info-tab" data-bs-toggle="tab" class="nav-link active">
       <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
