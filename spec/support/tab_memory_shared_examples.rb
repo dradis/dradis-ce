@@ -80,18 +80,24 @@ shared_examples 'remembered tabs' do
   end
 
   it 'preserves other query parameters and replaces history when restoring' do
-    visit record_path
-    select_tab(other_tab)
-    visit "#{record_path}?context=testing"
-    expect_active_tab(other_tab)
-    expect(page).to have_current_path("#{record_path}?context=testing&tab=#{other_tab.delete_prefix('#')}")
-    page.go_back
-    expect(page).to have_current_path("#{record_path}?tab=#{other_tab.delete_prefix('#')}")
-    page.go_forward
-    expect_active_tab(other_tab)
+    # A fresh window avoids the browser's history cap after a long feature suite.
+    window = open_new_window
+    within_window(window) do
+      visit record_path
+      select_tab(other_tab)
+      previous_length = page.evaluate_script('history.length')
 
-    select_tab(default_tab)
-    expect(page).to have_current_path("#{record_path}?context=testing&tab=#{default_tab.delete_prefix('#')}")
+      visit "#{record_path}?context=testing"
+      expect_active_tab(other_tab)
+      expect(page).to have_current_path("#{record_path}?context=testing&tab=#{other_tab.delete_prefix('#')}")
+      expect(page.evaluate_script('history.length')).to eq(previous_length + 1)
+
+      select_tab(default_tab)
+      expect(page.evaluate_script('history.length')).to eq(previous_length + 2)
+      expect(page).to have_current_path("#{record_path}?context=testing&tab=#{default_tab.delete_prefix('#')}")
+    end
+  ensure
+    window&.close
   end
 
   it 'continues to switch tabs when localStorage is blocked' do
