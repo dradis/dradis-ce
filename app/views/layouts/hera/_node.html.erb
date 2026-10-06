@@ -19,7 +19,7 @@
 
   <%= link_to '#modal_add_child_node',
     class: 'add-subnode',
-    data: { bs_toggle: 'modal', node_id: node.id, node_label: node.label },
+    data: { bs_toggle: 'modal', parent_id: node.id, parent_label: node.label },
     title: 'Add subnode' do %>
     <i class="fa-solid fa-plus fa-fw"></i>
     <span class="visually-hidden">Add subnode to <%= node.label %></span>

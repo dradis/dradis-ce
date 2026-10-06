@@ -39,12 +39,12 @@ document.addEventListener('show.bs.modal', (event) => {
   const modal = event.target;
   const trigger = event.relatedTarget;
 
-  if (!modal.matches('[data-behavior~=add-child-node]') || !trigger?.dataset.nodeId) return;
+  if (!modal.matches('[data-behavior~=add-child-node]') || !trigger?.dataset.parentId) return;
 
-  const { nodeId, nodeLabel } = trigger.dataset;
+  const { parentId, parentLabel } = trigger.dataset;
 
   modal.querySelectorAll('[data-behavior~=parent-node-id]').forEach((input) => {
-    input.value = nodeId;
+    input.value = parentId;
   });
-  modal.querySelector('[data-behavior~=parent-node-label]').textContent = nodeLabel;
+  modal.querySelector('[data-behavior~=parent-node-label]').textContent = parentLabel;
 });
