@@ -1,0 +1,18 @@
+<% dom_id = "issues-group-#{group_counter}" %>
+<div class="card <%= 'untagged' if group.unassigned? %>" <%= tag.attributes(style: ("border-color: #{group.color}" if group.color)) %>>
+  <a data-bs-toggle="collapse" href="#<%= dom_id %>" class="card-header" <%= tag.attributes(style: ("background: #{group.color}" if group.color)) %> data-behavior="card-header">
+    <h5><%= group.name %><span class="float-end"><i class="fa-solid fa-caret-up" data-behavior="caret-icon"></i></span></h5>
+  </a>
+
+  <div id="<%= dom_id %>" class="collapse show">
+    <div class="card-body p-0">
+      <ul class="list-group">
+        <% group.issues.each do |issue| %>
+          <%= link_to [current_project, issue], class: 'list-group-item', data: { turbo_frame: '_top' } do %>
+            <li><i class="fa-solid fa-bug me-2" <%= tag.attributes(style: ("color: #{group.color}" if group.color)) %>></i><%= issue.title %></li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

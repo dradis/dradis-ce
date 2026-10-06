@@ -1,28 +1,17 @@
 class Projects::Dashboard::IssuesController < AuthenticatedController
   include ProjectScoped
 
+  before_action :set_grouping
+
   def index
     @issues = current_project.issues.includes(:tags).sort
-    @tags = current_project.tags
+    @groups = @grouping.groups(@issues)
+  end
 
-    @count_by_tag = { unassigned: 0 }
-    @issues_by_tag = Hash.new { |h, k| h[k] = [] }
+  private
 
-    @tag_names = @tags.map do |tag|
-      @count_by_tag[tag.name] = 0
-      [tag.name, [tag.display_name, tag.color]]
-    end.to_h
-
-    @issues.each do |issue|
-      if issue.tags.empty?
-        @issues_by_tag[:unassigned] << issue
-        @count_by_tag[:unassigned] += 1
-      else
-        issue.tags.each do |tag|
-          @issues_by_tag[tag.name] << issue
-          @count_by_tag[tag.name] += 1
-        end
-      end
-    end
+  def set_grouping
+    @groupings = IssuesSummary::Grouping.available(current_project)
+    @grouping = IssuesSummary::Grouping.find(current_project, params[:grouping])
   end
 end
