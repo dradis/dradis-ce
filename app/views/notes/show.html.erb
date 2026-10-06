@@ -8,7 +8,7 @@
   <%= render partial: 'breadcrumbs' %>
 <% end %>
 
-<ul class="tabs-container nav nav-tabs main-tabs">
+<ul class="tabs-container nav nav-tabs main-tabs" data-controller="tab-memory" data-local-storage-key="<%= dom_id(@note) %>">
   <li class="nav-item"><a class="nav-link active" href="#info-tab" data-bs-toggle="tab"><i class="fa-solid fa-file-text"></i> Note</a></li>
 </ul>
 

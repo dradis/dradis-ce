@@ -20,7 +20,7 @@
   </div>
 <% else %>
 
-  <ul id="plugin-chooser" class="tabs-container nav nav-tabs">
+  <ul id="plugin-chooser" class="tabs-container nav nav-tabs" data-controller="tab-memory" data-local-storage-key="<%= dom_id(current_project, :export) %>">
     <% if !defined?(Dradis::Pro) %>
       <%= render 'static_pages/export_tabs'%>
     <% end %>
