@@ -33,18 +33,19 @@
   });
 })();
 
-// The add subnode modal is shared by every node, so point it at the node whose
-// link opened it (the node tree or the node page's actions menu).
+// One modal adds both top-level nodes and subnodes. Links that add a subnode
+// carry the parent node, links that add a top-level node carry nothing.
 document.addEventListener('show.bs.modal', (event) => {
   const modal = event.target;
-  const trigger = event.relatedTarget;
 
-  if (!modal.matches('[data-behavior~=add-child-node]') || !trigger?.dataset.parentId) return;
+  if (!modal.matches('[data-behavior~=add-node]')) return;
 
-  const { parentId, parentLabel } = trigger.dataset;
+  const { parentId = '', parentLabel = '' } = event.relatedTarget?.dataset ?? {};
 
   modal.querySelectorAll('[data-behavior~=parent-node-id]').forEach((input) => {
     input.value = parentId;
   });
   modal.querySelector('[data-behavior~=parent-node-label]').textContent = parentLabel;
+  modal.querySelector('[data-behavior~=top-level-node-title]').hidden = Boolean(parentId);
+  modal.querySelector('[data-behavior~=subnode-title]').hidden = !parentId;
 });

@@ -1,46 +1,42 @@
 <div
-  id="modal_add_<%= type %>_node"
+  id="modal_add_node"
   class="modal fade"
   tabindex="-1"
   role="dialog"
   aria-hidden="true"
-  data-behavior="add-node add-<%= type %>-node"
+  data-behavior="add-node"
   aria-labelledby="modal-title"
 >
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <% if type == :branch %>
-          <h5 class="modal-title" id="modal-title">Add top-level node</h5>
-        <% else %>
-          <h5 class="modal-title" id="modal-title">Add a child to the <strong data-behavior="parent-node-label"></strong> node</h5>
-        <% end %>
+        <h5 class="modal-title" id="modal-title">
+          <span data-behavior="top-level-node-title">Add top-level node</span>
+          <span data-behavior="subnode-title" hidden>Add a child to the <strong data-behavior="parent-node-label"></strong> node</span>
+        </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">
           <span class="visually-hidden">Close modal</span>
         </button>
       </div>
 
       <div class="modal-body">
-        <%# we need to scope the names of the radio buttons to this specific modal
-          # so that clicking a radio in the 'add child' modal won't deselect the
-          # radios in the 'add branch' modal %>
         <div class='form-check ps-0' data-behavior='copy-node-label'>
           <%= radio_button_tag(
-              "add_#{type}_node",
+              "add_node",
               :one,
               true,
               class: "add_node_radio form-check-radio") %>
-          <%= label_tag "add_#{type}_node_one", "Add one", class: 'form-check-label' %>
+          <%= label_tag "add_node_one", "Add one", class: 'form-check-label' %>
         </div>
 
         <div class='form-check ps-0' data-behavior='copy-node-label'>
 
           <%= radio_button_tag(
-              "add_#{type}_node",
+              "add_node",
               :multiple,
               false,
               class: "add_node_radio") %>
-          <%= label_tag "add_#{type}_node_multiple", "Add multiple", class: 'form-check-label' %>
+          <%= label_tag "add_node_multiple", "Add multiple", class: 'form-check-label' %>
         </div>
 
         <hr>
@@ -48,15 +44,15 @@
         <%= simple_form_for(
           Node.new,
           url: main_app.project_nodes_path(current_project),
-          html: { class: 'add_one_node_form form-horizontal', id: "new_#{type}_node_form" }
+          html: { class: 'add_one_node_form form-horizontal', id: 'new_node_form' }
         ) do |f| %>
-          <%= f.hidden_field :parent_id, id: "#{type}_parent_id", data: { behavior: 'parent-node-id' } %>
-          <%= f.input :label, input_html: { id: "#{type}_node_label", data: { behavior: 'node-label' } } %>
+          <%= f.hidden_field :parent_id, id: 'add_node_parent_id', data: { behavior: 'parent-node-id' } %>
+          <%= f.input :label, input_html: { id: 'add_node_label', data: { behavior: 'node-label' } } %>
           <%= f.input :type_id,
             collection: node_types_collection,
             include_blank: false,
             label: 'Icon',
-            input_html: { class: 'form-select', id: "#{type}_node_icon", data: { behavior: 'node-icon' } }
+            input_html: { class: 'form-select', id: 'add_node_icon', data: { behavior: 'node-icon' } }
           %>
         <% end %>
 
@@ -70,16 +66,16 @@
             Please add at least one node
           </div>
 
-          <%= hidden_field_tag "nodes[parent_id]", nil, data: { behavior: 'parent-node-id' } if type == :child %>
-          <%= label_tag "#{type}_nodes_list", 'To create multiple nodes, add one node name per line:', class: 'form-label' %>
-          <%= text_area_tag "nodes[list]", "", rows: 3, class: 'mb-3 nodes_list form-control', id: "#{type}_nodes_list", data: { behavior: 'nodes-list' } %>
-          <%= label_tag "#{type}_nodes_icon", 'Icon', class: 'form-label' %>
+          <%= hidden_field_tag "nodes[parent_id]", nil, id: 'add_nodes_parent_id', data: { behavior: 'parent-node-id' } %>
+          <%= label_tag "add_nodes_list", 'To create multiple nodes, add one node name per line:', class: 'form-label' %>
+          <%= text_area_tag "nodes[list]", "", rows: 3, class: 'mb-3 nodes_list form-control', id: 'add_nodes_list', data: { behavior: 'nodes-list' } %>
+          <%= label_tag "add_nodes_icon", 'Icon', class: 'form-label' %>
           <%= select_tag(
             "nodes[type_id]",
             options_for_select(node_types_collection),
             include_blank: false,
             class: 'form-select',
-            id: "#{type}_nodes_icon",
+            id: 'add_nodes_icon',
             data: { behavior: 'nodes-icon' })
           %>
         <% end %>

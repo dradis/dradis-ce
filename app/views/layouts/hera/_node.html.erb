@@ -17,7 +17,7 @@
     <%= node.label %>
   <% end %>
 
-  <%= link_to '#modal_add_child_node',
+  <%= link_to '#modal_add_node',
     class: 'add-subnode',
     data: { bs_toggle: 'modal', parent_id: node.id, parent_label: node.label },
     title: 'Add subnode' do %>
