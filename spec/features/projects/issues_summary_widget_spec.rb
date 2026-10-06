@@ -57,6 +57,50 @@ describe 'Issues Summary widget', js: true do
     end
   end
 
+  context 'with several groupings' do
+    let(:other_grouping) do
+      Class.new(IssuesSummary::Grouping) do
+        def key = 'other'
+        def label = 'Other'
+        def values = [OpenStruct.new(display_name: 'Mine', color: '#112233')]
+        def matches?(_value, _issue) = true
+      end
+    end
+
+    before do
+      allow(IssuesSummary::Grouping).to receive(:available).and_wrap_original do |original, project|
+        original.call(project) + [other_grouping.new(project)]
+      end
+
+      create(:issue, node: current_project.issue_library)
+    end
+
+    it 'reloads the summary when another grouping is picked' do
+      visit project_path(current_project)
+
+      expect(page).to have_css('.card-header', text: 'Unassigned')
+
+      find('[data-behavior~="combobox"]').click
+      find('[data-behavior~="combobox-option"]', text: 'Other').click
+
+      expect(page).to have_css('.card-header', text: 'Mine')
+      expect(page).to have_no_css('.card-header', text: 'Unassigned')
+    end
+
+    it 'restores the last picked grouping on the next visit' do
+      visit project_path(current_project)
+
+      find('[data-behavior~="combobox"]').click
+      find('[data-behavior~="combobox-option"]', text: 'Other').click
+
+      expect(page).to have_css('.card-header', text: 'Mine')
+
+      visit project_path(current_project)
+
+      expect(page).to have_css('.card-header', text: 'Mine')
+    end
+  end
+
   context 'without issues' do
     it 'navigates to the issues page from the empty state' do
       visit project_path(current_project)
