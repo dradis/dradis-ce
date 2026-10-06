@@ -40,7 +40,7 @@ document.addEventListener('show.bs.modal', (event) => {
 
   if (!modal.matches('[data-behavior~=add-node]')) return;
 
-  const { parentId = '', parentLabel = '' } = event.relatedTarget?.dataset ?? {};
+  const { parentId = '', parentLabel = '' } = event.relatedTarget.dataset;
 
   modal.querySelectorAll('[data-behavior~=parent-node-id]').forEach((input) => {
     input.value = parentId;
