@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Projects::Dashboard::Issues::Grouping do
-  let(:project) { current_project }
+  let(:project) { Project.new }
 
   describe '.available' do
     it 'offers the tags grouping' do
