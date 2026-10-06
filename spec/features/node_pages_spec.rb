@@ -26,12 +26,12 @@ describe 'node pages' do
       let(:submit_form) { click_button 'Add' }
 
       it 'shows a modal for adding a top-level node' do
-        expect(page).to have_field :branch_node_label
+        expect(page).to have_field :add_node_label
       end
 
       describe "submitting the 'new top-level node' form" do
         it 'creates and shows the new node' do
-          fill_in :branch_node_label, with: 'My awesome node'
+          fill_in :add_node_label, with: 'My awesome node'
           expect { submit_form }.to change { Node.count }.by(1)
           expect(page).to have_content 'Successfully created node.'
           new_node = Node.last
@@ -43,11 +43,11 @@ describe 'node pages' do
 
       example 'adding multiple root nodes' do
         choose 'Add multiple'
-        expect(page).to have_no_field :branch_node_label
-        expect(page).to have_field :branch_nodes_list
+        expect(page).to have_no_field :add_node_label
+        expect(page).to have_field :add_nodes_list
 
         # Include a blank line to make sure that no node gets created:
-        fill_in :branch_nodes_list, with: <<-LIST.strip_heredoc
+        fill_in :add_nodes_list, with: <<-LIST.strip_heredoc
             node 1
 
             node_2
@@ -88,8 +88,8 @@ describe 'node pages' do
       example 'adding multiple root host nodes' do
         choose 'Add multiple'
 
-        fill_in :branch_nodes_list, with: "foo\nbar"
-        find('#branch_nodes_icon + .combobox').click
+        fill_in :add_nodes_list, with: "foo\nbar"
+        find('#add_nodes_icon + .combobox').click
         find('.combobox-option', text: 'Host').click
 
         expect do
@@ -112,7 +112,7 @@ describe 'node pages' do
       let(:node) { create(:node, project: current_project) }
 
       example 'adding a single node' do
-        fill_in 'child_node_label', with: 'My new node'
+        fill_in 'add_node_label', with: 'My new node'
         expect do
           click_button 'Add'
         end.to change { node.children.count }.by(1)
@@ -130,11 +130,11 @@ describe 'node pages' do
 
       example 'adding multiple nodes' do
         choose 'Add multiple'
-        expect(page).to have_no_field :child_node_label
-        expect(page).to have_field :child_nodes_list
+        expect(page).to have_no_field :add_node_label
+        expect(page).to have_field :add_nodes_list
 
         # Include a blank line to make sure that no node gets created:
-        fill_in :child_nodes_list, with: <<-LIST.strip_heredoc
+        fill_in :add_nodes_list, with: <<-LIST.strip_heredoc
             node 1
 
             node_2
@@ -174,7 +174,7 @@ describe 'node pages' do
 
       example 'adding multiple nodes - submitting a blank textarea' do
         choose 'Add multiple'
-        fill_in :child_nodes_list, with: "   \n \n \n    \n "
+        fill_in :add_nodes_list, with: "   \n \n \n    \n "
         click_button 'Add'
         expect(page).to have_content 'Please add at least one node'
       end
@@ -197,12 +197,12 @@ describe 'node pages' do
       end
 
       it 'opens the add subnode form without leaving the page' do
-        expect(page).to have_selector('#modal_add_child_node .modal-title', text: node.label)
+        expect(page).to have_selector('#modal_add_node .modal-title', text: node.label)
         expect(page).to have_current_path(project_issues_path(current_project))
       end
 
       it 'adds a subnode under the clicked node' do
-        fill_in 'child_node_label', with: 'My new node'
+        fill_in 'add_node_label', with: 'My new node'
 
         expect { click_button 'Add' }.to change { node.children.count }.by(1)
         expect(node.children.last.label).to eq 'My new node'
@@ -210,7 +210,7 @@ describe 'node pages' do
 
       it 'adds multiple subnodes under the clicked node' do
         choose 'Add multiple'
-        fill_in :child_nodes_list, with: "node 1\nnode 2"
+        fill_in :add_nodes_list, with: "node 1\nnode 2"
 
         expect { click_button 'Add' }.to change { node.children.count }.by(2)
       end
@@ -225,8 +225,8 @@ describe 'node pages' do
       end
 
       it 'adds the subnode under the clicked node, not the current one' do
-        expect(page).to have_selector('#modal_add_child_node .modal-title', text: node.label)
-        fill_in 'child_node_label', with: 'My new node'
+        expect(page).to have_selector('#modal_add_node .modal-title', text: node.label)
+        fill_in 'add_node_label', with: 'My new node'
 
         expect { click_button 'Add' }.to change { node.children.count }.by(1)
         expect(other_node.children.count).to eq 0
