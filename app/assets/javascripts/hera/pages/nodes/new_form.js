@@ -32,3 +32,19 @@
     }
   });
 })();
+
+// The add subnode modal is shared by every node, so point it at the node whose
+// link opened it (the node tree or the node page's actions menu).
+document.addEventListener('show.bs.modal', (event) => {
+  const modal = event.target;
+  const trigger = event.relatedTarget;
+
+  if (!modal.matches('[data-behavior~=add-child-node]') || !trigger?.dataset.nodeId) return;
+
+  const { nodeId, nodeLabel } = trigger.dataset;
+
+  modal.querySelectorAll('[data-behavior~=parent-node-id]').forEach((input) => {
+    input.value = nodeId;
+  });
+  modal.querySelector('[data-behavior~=parent-node-label]').textContent = nodeLabel;
+});

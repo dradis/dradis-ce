@@ -4,7 +4,7 @@
   tabindex="-1"
   role="dialog"
   aria-hidden="true"
-  data-behavior="add-node"
+  data-behavior="add-node add-<%= type %>-node"
   aria-labelledby="modal-title"
 >
   <div class="modal-dialog">
@@ -13,7 +13,7 @@
         <% if type == :branch %>
           <h5 class="modal-title" id="modal-title">Add top-level node</h5>
         <% else %>
-          <h5 class="modal-title" id="modal-title">Add a child to the <strong><%= @node.label %></strong> node</h5>
+          <h5 class="modal-title" id="modal-title">Add a child to the <strong data-behavior="parent-node-label"><%= @node&.label %></strong> node</h5>
         <% end %>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">
           <span class="visually-hidden">Close modal</span>
@@ -46,11 +46,11 @@
         <hr>
 
         <%= simple_form_for(
-          (type == :branch ? Node.new : Node.new(parent_id: @node.id)),
+          (type == :branch ? Node.new : Node.new(parent_id: @node&.id)),
           url: main_app.project_nodes_path(current_project),
           html: { class: 'add_one_node_form form-horizontal', id: "new_#{type}_node_form" }
         ) do |f| %>
-          <%= f.hidden_field :parent_id, id: "#{type}_parent_id" %>
+          <%= f.hidden_field :parent_id, id: "#{type}_parent_id", data: { behavior: 'parent-node-id' } %>
           <%= f.input :label, input_html: { id: "#{type}_node_label", data: { behavior: 'node-label' } } %>
           <%= f.input :type_id,
             collection: node_types_collection,
@@ -70,7 +70,7 @@
             Please add at least one node
           </div>
 
-          <%= hidden_field_tag "nodes[parent_id]", @node.id if type == :child %>
+          <%= hidden_field_tag "nodes[parent_id]", @node&.id, data: { behavior: 'parent-node-id' } if type == :child %>
           <%= label_tag "#{type}_nodes_list", 'To create multiple nodes, add one node name per line:', class: 'form-label' %>
           <%= text_area_tag "nodes[list]", "", rows: 3, class: 'mb-3 nodes_list form-control', id: "#{type}_nodes_list", data: { behavior: 'nodes-list' } %>
           <%= label_tag "#{type}_nodes_icon", 'Icon', class: 'form-label' %>

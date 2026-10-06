@@ -30,7 +30,7 @@
   <li class="dropdown dots-dropdown">
     <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" data-behavior="nodes-more-dropdown"><i class="fa-solid fa-ellipsis-h fa-lg"></i><span class="visually-hidden">Toggle menu</span></a>
     <div class="dropdown-menu">
-      <a href="#modal_add_child_node" class="dropdown-item" tabindex="-1" data-bs-toggle="modal"><i class="fa-solid fa-plus fa-fw"></i> Add subnode</a>
+      <a href="#modal_add_child_node" class="dropdown-item" tabindex="-1" data-bs-toggle="modal" data-node-id="<%= @node.id %>" data-node-label="<%= @node.label %>"><i class="fa-solid fa-plus fa-fw"></i> Add subnode</a>
       <a href="#modal_rename_node" class="dropdown-item" tabindex="-1" data-bs-toggle="modal"><i class="fa-solid fa-pencil fa-fw"></i> Rename</a>
       <a href="#modal_move_node" class="dropdown-item" tabindex="-1" data-bs-toggle="modal"><i class="fa-solid fa-mail-forward fa-fw"></i> Move</a>
       <a href="#modal_merge_node" class="dropdown-item" tabindex="-1" data-bs-toggle="modal"><i class="fa-solid fa-compress fa-fw"></i> Merge</a>
