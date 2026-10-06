@@ -5,7 +5,7 @@
     <div class="issue-chart" data-behavior="issue-chart"></div>
 
     <div id="issues-accordion" role="tablist">
-      <%= render partial: 'projects/dashboard/issues/group', collection: @groups, as: :group %>
+      <%= render partial: 'projects/dashboard/issues/group', collection: @groups.select { |group| group.issues.any? }, as: :group %>
     </div>
   <% else %>
     <%= render 'shared/empty_state',
