@@ -36,18 +36,58 @@ body.projects {
     }
 
     .issue-chart {
-      display: flex;
-      justify-content: center;
       align-items: center;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      justify-content: center;
 
       .bar.untagged,
-      .counter.untagged,
-      .tick.untagged {
+      .counter.untagged {
         fill: var(--untagged-color);
       }
 
       svg text {
         font-size: 14px;
+      }
+
+      .issue-chart-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+        justify-content: center;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .legend-item {
+        align-items: center;
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .legend-item.untagged .legend-swatch {
+        background-color: var(--untagged-color);
+      }
+
+      .legend-item.untagged .legend-label {
+        color: var(--untagged-color);
+      }
+
+      .legend-label {
+        color: var(--text-default);
+        max-width: 12rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .legend-swatch {
+        border-radius: 50%;
+        flex-shrink: 0;
+        height: 0.75rem;
+        width: 0.75rem;
       }
     }
 
