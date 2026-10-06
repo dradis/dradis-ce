@@ -582,8 +582,21 @@ class ComboBox {
     this.$target[0].dispatchEvent(new Event('change', { bubbles: true }));
   }
 
+  // Popper doesn't notice the control growing (e.g. multi-select chips wrapping
+  // onto more lines), so re-position the menu whenever the control resizes.
+  setupPopper() {
+    if (this.popper) return;
+
+    this.popper = Popper.createPopper(this.$combobox[0], this.$comboboxMenu[0], {
+      placement: 'bottom-end',
+    });
+    new ResizeObserver(() => this.popper.update()).observe(this.$combobox[0]);
+  }
+
   showMenu() {
     this.$comboboxMenu.css('display', 'block');
+    this.setupPopper();
+    this.popper.update();
     this.$combobox.attr('aria-expanded', 'true');
     this.$filter?.focus();
   }

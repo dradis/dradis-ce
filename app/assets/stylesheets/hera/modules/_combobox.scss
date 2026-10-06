@@ -101,7 +101,7 @@
   position: absolute;
   margin: 0;
   max-height: 80vh;
-  max-width: 90vw;
+  max-width: #{'min(30rem, calc(100vw - 1rem))'};
   min-width: 100%;
   overflow-y: auto;
   padding: 0.25rem 0;
