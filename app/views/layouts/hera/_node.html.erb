@@ -12,9 +12,17 @@
     <span class="visually-hidden">Toggle child nodes</span>
   <% end %>
 
-  <%= link_to main_app.project_node_path(node.project, node), title: node.label, data: { behavior: 'sidebar-link sidebar-node-link' } do %>
+  <%= link_to main_app.project_node_path(node.project, node), class: 'node-link', title: node.label, data: { behavior: 'sidebar-link sidebar-node-link' } do %>
     <%= colored_icon_for_model(node, nil) %>
     <%= node.label %>
+  <% end %>
+
+  <%= link_to '#modal_add_child_node',
+    class: 'add-subnode',
+    data: { bs_toggle: 'modal', node_id: node.id, node_label: node.label },
+    title: 'Add subnode' do %>
+    <i class="fa-solid fa-plus fa-fw"></i>
+    <span class="visually-hidden">Add subnode to <%= node.label %></span>
   <% end %>
 
   <%= content_tag :ul, data: {id: dom_id(node, 'menu')}, class: "children #{css_class_for_sub_nodes(node)}" do %>
