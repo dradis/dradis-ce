@@ -11,7 +11,7 @@ class Projects::Dashboard::IssuesController < AuthenticatedController
   private
 
   def set_grouping
-    @groupings = IssuesSummary::Grouping.available(current_project)
-    @grouping = IssuesSummary::Grouping.find(current_project, params[:grouping])
+    @groupings = Projects::Dashboard::Issues::Grouping.available(current_project)
+    @grouping = Projects::Dashboard::Issues::Grouping.find(current_project, params[:grouping])
   end
 end

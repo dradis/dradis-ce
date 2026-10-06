@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe IssuesSummary::TagsGrouping do
+describe Projects::Dashboard::Issues::TagsGrouping do
   let(:project) { current_project }
   let(:grouping) { described_class.new(project) }
   let(:node) { project.issue_library }

@@ -59,7 +59,7 @@ describe 'Issues Summary widget', js: true do
 
   context 'with several groupings' do
     let(:other_grouping) do
-      Class.new(IssuesSummary::Grouping) do
+      Class.new(Projects::Dashboard::Issues::Grouping) do
         def key = 'other'
         def label = 'Other'
         def values = [OpenStruct.new(display_name: 'Mine', color: '#112233')]
@@ -68,7 +68,7 @@ describe 'Issues Summary widget', js: true do
     end
 
     before do
-      allow(IssuesSummary::Grouping).to receive(:available).and_wrap_original do |original, project|
+      allow(Projects::Dashboard::Issues::Grouping).to receive(:available).and_wrap_original do |original, project|
         original.call(project) + [other_grouping.new(project)]
       end
 
