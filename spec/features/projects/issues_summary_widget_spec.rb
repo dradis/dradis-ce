@@ -80,8 +80,8 @@ describe 'Issues Summary widget', js: true do
 
       expect(page).to have_css('.card-header', text: 'Unassigned')
 
-      find('[data-behavior~="combobox"]').click
-      find('[data-behavior~="combobox-option"]', text: 'Other').click
+      find('turbo-frame#issues-summary [data-behavior~="combobox"]').click
+      find('turbo-frame#issues-summary [data-behavior~="combobox-option"]', text: 'Other').click
 
       expect(page).to have_css('.card-header', text: 'Mine')
       expect(page).to have_no_css('.card-header', text: 'Unassigned')
@@ -90,8 +90,8 @@ describe 'Issues Summary widget', js: true do
     it 'restores the last picked grouping on the next visit' do
       visit project_path(current_project)
 
-      find('[data-behavior~="combobox"]').click
-      find('[data-behavior~="combobox-option"]', text: 'Other').click
+      find('turbo-frame#issues-summary [data-behavior~="combobox"]').click
+      find('turbo-frame#issues-summary [data-behavior~="combobox-option"]', text: 'Other').click
 
       expect(page).to have_css('.card-header', text: 'Mine')
 
