@@ -56,9 +56,11 @@ module Projects
             end
           end
 
-          issues_by_value.map { |value, value_issues|
+          groups = issues_by_value.map do |value, value_issues|
             Group.new(name: value.display_name, color: value.color, issues: value_issues)
-          } << Group.new(name: 'Unassigned', issues: unassigned, unassigned: true)
+          end
+
+          groups << Group.new(name: 'Unassigned', issues: unassigned, unassigned: true)
         end
       end
     end

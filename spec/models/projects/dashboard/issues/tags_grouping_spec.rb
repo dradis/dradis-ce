@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Projects::Dashboard::Issues::TagsGrouping do
-  let(:project) { current_project }
+  let(:project) { Project.new }
   let(:grouping) { described_class.new(project) }
   let(:node) { project.issue_library }
   let!(:critical) { create(:tag, name: '!9467bd_critical', project: project) }
