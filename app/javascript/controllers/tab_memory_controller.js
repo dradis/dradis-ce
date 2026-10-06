@@ -56,8 +56,6 @@ export default class extends Controller {
   }
 
   restore() {
-    // Initializing Bootstrap also establishes aria-selected on the default tab.
-    this.tabs.forEach((tab) => bootstrap.Tab.getOrCreateInstance(tab));
     const requested = new URL(window.location.href).searchParams.get('tab');
     const tab = this.findTab(`#${requested}`) || this.findTab(this.read()) ||
       this.tabs.find((tab) => tab.classList.contains('active'));
@@ -94,8 +92,7 @@ export default class extends Controller {
   }
 
   get tabs() {
-    return Array.from(this.element.querySelectorAll('[data-bs-toggle="tab"]'))
-      .filter((tab) => tab.closest('[data-controller~="tab-memory"]') === this.element);
+    return Array.from(this.element.querySelectorAll('[data-bs-toggle="tab"]'));
   }
 
   tabTarget(tab) {
