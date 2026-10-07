@@ -240,6 +240,7 @@ end
 # effective.
 
 # ----------------------------------------------------------------- Calculators
+gem 'dradis-calculator_aivss-ssvc', github: 'dradis/dradis-calculator_aivss-ssvc', branch: 'main'
 gem 'dradis-calculator_cvss', '~> 5.4.0'
 gem 'dradis-calculator_dread', '~> 5.4.0'
 gem 'dradis-calculator_mitre', '~> 5.4.0'
