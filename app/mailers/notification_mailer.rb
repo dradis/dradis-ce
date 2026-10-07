@@ -1,5 +1,5 @@
 class NotificationMailer < ApplicationMailer
-  helper :avatar, :notification_mailer
+  helper :avatar
 
   before_action :set_inline_attachments
 

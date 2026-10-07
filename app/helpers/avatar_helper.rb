@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module AvatarHelper
+  DEFAULT_EMAIL_AVATAR_URL = 'https://raw.githubusercontent.com/dradis/dradis-ce/refs/heads/develop/app/assets/images/avatar.png'.freeze
   DEFAULT_PROFILE_IMAGE = 'avatar.png'.freeze
   DEFAULT_PROFILE_IMAGE_SIZE = 80
 
@@ -18,7 +19,6 @@ module AvatarHelper
 
     img_properties = {
       alt: opt[:alt],
-      data: { controller: 'gravatar', gravatar_url: avatar_url(user, size: opt[:size]) },
       height: opt[:size],
       referrerpolicy: 'no-referrer',
       style: opt[:style],
@@ -26,19 +26,32 @@ module AvatarHelper
       width: opt[:size]
     }
 
+    source = user.try(:avatar).presence || opt[:fallback_image]
+    if opt[:email]
+      source = avatar_url(user, size: opt[:size], email: true)
+    else
+      img_properties[:data] = { controller: 'gravatar', gravatar_url: avatar_url(user, size: opt[:size]) }
+    end
+
     content_tag :span, class: opt[:class] do
-      image_tag(user.try(:avatar).presence || opt[:fallback_image], img_properties) +
+      image_tag(source, img_properties) +
         (opt[:include_name] ? " #{user.try(:name)}" : '')
     end
   end
 
   def avatar_url(user, options = {})
-    return user.avatar if user.try(:avatar).present?
-    return image_path(DEFAULT_PROFILE_IMAGE) if user.nil? || !user.email.include?('@')
+    if user.try(:avatar).present?
+      return options[:email] ? URI.join(root_url, user.avatar).to_s : user.avatar
+    end
+
+    if user.nil? || !user.email.include?('@')
+      return options[:email] ? DEFAULT_EMAIL_AVATAR_URL : image_path(DEFAULT_PROFILE_IMAGE)
+    end
 
     gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
     size = options.fetch(:size, DEFAULT_PROFILE_IMAGE_SIZE).to_i * 2 # Retina displays mean dot density can be higher.
-    "https://secure.gravatar.com/avatar/#{gravatar_id}?r=PG&s=#{size}&d=404"
+    default = options[:email] ? ERB::Util.url_encode(DEFAULT_EMAIL_AVATAR_URL) : '404'
+    "https://secure.gravatar.com/avatar/#{gravatar_id}?r=PG&s=#{size}&d=#{default}"
   end
 
   def tribute_hash(users)

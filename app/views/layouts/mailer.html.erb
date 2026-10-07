@@ -41,7 +41,7 @@
               </td>
               <td width="320" style="padding-bottom: 0;" colspan="6">
                 <div style="text-align: right;">
-                  <%= email_avatar_image @user, alt: @user.email, size: 70, style: 'border-radius: 50%;' %>
+                  <%= avatar_image @user, email: true, alt: @user.email, size: 70, style: 'border-radius: 50%;' %>
                 </div>
               </td>
             </tr>
