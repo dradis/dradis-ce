@@ -2,7 +2,7 @@
 <% cache(@mentionable_users) do %>
   <%= content_tag :meta, '',
     content: tribute_hash(@mentionable_users).to_json,
-    data: { fallback_image: image_url(AvatarHelper::DEFAULT_PROFILE_IMAGE) },
+    data: { behavior: 'mentionable-users' },
     name: 'mentionable-users'
   %>
 <% end %>

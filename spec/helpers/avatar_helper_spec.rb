@@ -70,4 +70,15 @@ RSpec.describe AvatarHelper do
       expect(helper.avatar_url(user)).to eq(helper.image_path(AvatarHelper::DEFAULT_PROFILE_IMAGE))
     end
   end
+
+  describe '#tribute_hash' do
+    it 'provides a local image and a deferred URL for mention menus' do
+      entry = helper.tribute_hash([user]).first
+
+      expect(entry[:key]).to eq(user.email)
+      expect(entry[:value]).to eq(user.email)
+      expect(entry[:avatar_path]).to eq(helper.image_path(AvatarHelper::DEFAULT_PROFILE_IMAGE))
+      expect(entry[:avatar_url]).to eq(helper.avatar_url(user, size: 24))
+    end
+  end
 end
