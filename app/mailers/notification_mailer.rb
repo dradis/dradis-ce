@@ -1,4 +1,6 @@
 class NotificationMailer < ApplicationMailer
+  helper :avatar
+
   before_action :set_inline_attachments
 
   def digest

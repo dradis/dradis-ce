@@ -8,7 +8,6 @@ module AvatarHelper
     opt.reverse_merge!( # Defaults if not provided
       alt: I18n.t(user ? :alt : :removed, name: user.try(:name), scope: 'helpers.avatar_helper'),
       fallback_image: image_path(DEFAULT_PROFILE_IMAGE),
-      gravatar: true,
       include_name: false,
       size: DEFAULT_PROFILE_IMAGE_SIZE,
       title: user.try(:name)
@@ -19,6 +18,7 @@ module AvatarHelper
 
     img_properties = {
       alt: opt[:alt],
+      data: { controller: 'gravatar', gravatar_url: avatar_url(user, size: opt[:size]) },
       height: opt[:size],
       referrerpolicy: 'no-referrer',
       style: opt[:style],
@@ -26,12 +26,8 @@ module AvatarHelper
       width: opt[:size]
     }
 
-    if opt[:gravatar]
-      img_properties[:data] = { controller: 'gravatar', gravatar_url: avatar_url(user, size: opt[:size]) }
-    end
-
     content_tag :span, class: opt[:class] do
-      image_tag(opt[:src] || user.try(:avatar).presence || opt[:fallback_image], img_properties) +
+      image_tag(user.try(:avatar).presence || opt[:fallback_image], img_properties) +
         (opt[:include_name] ? " #{user.try(:name)}" : '')
     end
   end
@@ -48,10 +44,9 @@ module AvatarHelper
   def tribute_hash(users)
     users.map do |user|
       {
-        key: user.email,
+        key: h(user.email),
         value: user.email,
-        avatar_path: user.try(:avatar).presence || image_path(DEFAULT_PROFILE_IMAGE),
-        avatar_url: avatar_url(user, size: 24)
+        avatar_url: avatar_url(user)
       }
     end
   end

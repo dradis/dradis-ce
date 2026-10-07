@@ -65,11 +65,4 @@ class DigestPresenter < NotificationPresenter
         notifications.first
       end
   end
-
-  def system_notification_logo
-    h.content_tag :span, class: 'gravatar' do
-      h.image_tag(h.inline_email_image(Rails.root.join('app/assets/images/logo_small.png')),
-        alt: 'Dradis logo', class: 'system-notification-logo', width: 40)
-    end
-  end
 end
