@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Tabs: remember the last selected tab when revisiting a view
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
