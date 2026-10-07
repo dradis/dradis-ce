@@ -41,11 +41,12 @@ document.addEventListener('show.bs.modal', (event) => {
   if (!modal.matches('[data-behavior~=add-node]')) return;
 
   const { parentId = '', parentLabel = '' } = event.relatedTarget.dataset;
+  const isSubnode = Boolean(parentId);
 
   modal.querySelectorAll('[data-behavior~=parent-node-id]').forEach((input) => {
     input.value = parentId;
   });
   modal.querySelector('[data-behavior~=parent-node-label]').textContent = parentLabel;
-  modal.querySelector('[data-behavior~=top-level-node-title]').hidden = Boolean(parentId);
-  modal.querySelector('[data-behavior~=subnode-title]').hidden = !parentId;
+  modal.querySelector('[data-behavior~=top-level-node-title]').hidden = isSubnode;
+  modal.querySelector('[data-behavior~=subnode-title]').hidden = !isSubnode;
 });
