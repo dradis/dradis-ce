@@ -1,19 +1,9 @@
 # frozen_string_literal: true
 
 module AvatarHelper
+  DEFAULT_EMAIL_AVATAR_URL = 'https://raw.githubusercontent.com/dradis/dradis-ce/refs/heads/develop/app/assets/images/avatar.png'.freeze
   DEFAULT_PROFILE_IMAGE = 'avatar.png'.freeze
   DEFAULT_PROFILE_IMAGE_SIZE = 80
-
-  # Gravatar will use a default image if one is not found. Having gravatar serve
-  # the default image is not desired. Instead force an error by using a bad
-  # default url and let our fallback image code take effect.
-  def avatar_url(user, options = {})
-    return image_path(DEFAULT_PROFILE_IMAGE) if user.nil? || !user.email.include?('@')
-
-    gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
-    size = options.fetch(:size, DEFAULT_PROFILE_IMAGE_SIZE).to_i * 2 # Retina displays mean dot density can be higher.
-    "https://secure.gravatar.com/avatar/#{gravatar_id}?r=PG&s=#{size}&d=#{image_url(DEFAULT_PROFILE_IMAGE)}"
-  end
 
   def avatar_image(user, opt = {})
     opt.reverse_merge!( # Defaults if not provided
@@ -29,18 +19,39 @@ module AvatarHelper
 
     img_properties = {
       alt: opt[:alt],
-      data: { fallback_image: opt[:fallback_image] },
       height: opt[:size],
-      onerror: "this.src = '#{opt[:fallback_image]}';",
+      referrerpolicy: 'no-referrer',
       style: opt[:style],
       title: opt[:title],
       width: opt[:size]
     }
 
+    source = user.try(:avatar).presence || opt[:fallback_image]
+    if opt[:email]
+      source = avatar_url(user, size: opt[:size], email: true)
+    else
+      img_properties[:data] = { controller: 'gravatar', gravatar_url: avatar_url(user, size: opt[:size]) }
+    end
+
     content_tag :span, class: opt[:class] do
-      image_tag(avatar_url(user, size: opt[:size]), img_properties) +
+      image_tag(source, img_properties) +
         (opt[:include_name] ? " #{user.try(:name)}" : '')
     end
+  end
+
+  def avatar_url(user, options = {})
+    if user.try(:avatar).present?
+      return options[:email] ? URI.join(root_url, user.avatar).to_s : user.avatar
+    end
+
+    if user.nil? || !user.email.include?('@')
+      return options[:email] ? DEFAULT_EMAIL_AVATAR_URL : image_path(DEFAULT_PROFILE_IMAGE)
+    end
+
+    gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
+    size = options.fetch(:size, DEFAULT_PROFILE_IMAGE_SIZE).to_i * 2 # Retina displays mean dot density can be higher.
+    default = options[:email] ? ERB::Util.url_encode(DEFAULT_EMAIL_AVATAR_URL) : '404'
+    "https://secure.gravatar.com/avatar/#{gravatar_id}?r=PG&s=#{size}&d=#{default}"
   end
 
   def tribute_hash(users)
