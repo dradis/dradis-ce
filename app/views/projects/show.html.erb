@@ -16,8 +16,12 @@
         <h4 class="header-underline">Issues so far</h4>
 
         <%= turbo_frame_tag 'issues-summary',
-          src: project_dashboard_issues_path(current_project),
-          class: 'issues-summary-frame' do %>
+          class: 'issues-summary-frame',
+          data: {
+            controller: 'issues-grouping',
+            issues_grouping_url_value: project_dashboard_issues_path(current_project),
+            issues_grouping_storage_key_value: "project.#{Dradis.edition}.#{dom_id(current_project)}.issues_grouping"
+          } do %>
           <%= spinner_tag %>
         <% end %>
       </section>

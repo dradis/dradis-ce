@@ -1,0 +1,8 @@
+<%= form_with url: project_dashboard_issues_path(current_project), method: :get, class: 'd-flex justify-content-end mb-2' do |form| %>
+  <%= form.select :grouping,
+    options_for_select(@groupings.map { |grouping| [grouping.label, grouping.key] }, @grouping.key),
+    {},
+    class: 'form-select form-select-sm',
+    aria: { label: 'Group issues by' },
+    data: { action: 'change->issues-grouping#change' } %>
+<% end %>
