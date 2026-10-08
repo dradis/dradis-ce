@@ -1,5 +1,4 @@
 [v#.#.#] ([month] [YYYY])
-  - Calculators: Add STRIDE
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
@@ -13,7 +12,7 @@
     - [Echo entity]:
       - [future tense verb] [Echo enhancement]
   - New integrations:
-    - [integration]
+    - STRIDE calculator
   - Integration enhancements:
     - [integration]:
       - [future tense verb] [integration enhancement]
