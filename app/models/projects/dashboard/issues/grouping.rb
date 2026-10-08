@@ -6,6 +6,22 @@ module Projects
       # `label`, `values` and `values_for`) live here, so the views and JS only
       # deal with the Groups returned by `#groups`.
       class Grouping
+        # One bucket of issues, e.g. a tag or a list field value. This is all the
+        # views and the chart JS know about.
+        Group = Struct.new(:name, :color, :issues, :unassigned, keyword_init: true) do
+          def count
+            issues.size
+          end
+
+          def unassigned?
+            unassigned.present?
+          end
+
+          def chart_data
+            { name: name, color: color, count: count, unassigned: unassigned? }
+          end
+        end
+
         def self.available(project)
           [new(project)]
         end
