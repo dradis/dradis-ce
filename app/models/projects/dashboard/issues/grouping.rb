@@ -1,15 +1,13 @@
 module Projects
   module Dashboard
     module Issues
-      # A way of splitting a project's issues into groups. Subclasses describe where
-      # the groups come from (`values`) and how an issue ends up in one
-      # (`matches?`). Everything downstream (views, JS) only deals with the Groups
-      # returned by `#groups`, so it never needs to know about the origin.
-      #
-      # A value is anything that responds to `display_name` and `color`.
+      # Splits a project's issues into Groups for the dashboard "Issues so far"
+      # widget. The differences between where the groups come from (`key`,
+      # `label`, `values` and `values_for`) live here, so the views and JS only
+      # deal with the Groups returned by `#groups`.
       class Grouping
         def self.available(project)
-          [TagsGrouping.new(project)]
+          [new(project)]
         end
 
         def self.find(project, key)
@@ -24,19 +22,16 @@ module Projects
         end
 
         def key
-          raise NotImplementedError
+          'tags'
         end
 
         def label
-          raise NotImplementedError
+          'Tags'
         end
 
+        # Anything that responds to `display_name` and `color`.
         def values
-          raise NotImplementedError
-        end
-
-        def matches?(_value, _issue)
-          raise NotImplementedError
+          @values ||= project.tags.to_a
         end
 
         # Returns one Group per value, followed by an "Unassigned" Group holding the
@@ -47,7 +42,7 @@ module Projects
           unassigned = []
 
           issues.each do |issue|
-            matched = values.select { |value| matches?(value, issue) }
+            matched = values_for(issue)
 
             if matched.empty?
               unassigned << issue
@@ -61,6 +56,12 @@ module Projects
           end
 
           groups << Group.new(name: 'Unassigned', issues: unassigned, unassigned: true)
+        end
+
+        private
+
+        def values_for(issue)
+          values.select { |tag| issue.tags.include?(tag) }
         end
       end
     end
