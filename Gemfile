@@ -243,7 +243,7 @@ end
 gem 'dradis-calculator_cvss', '~> 5.3.0'
 gem 'dradis-calculator_dread', '~> 5.3.0'
 gem 'dradis-calculator_mitre', '~> 5.3.0'
-gem 'dradis-calculator_stride', github: 'dradis/dradis-calculator_stride', branch: 'stride'
+gem 'dradis-calculator_stride', github: 'dradis/dradis-calculator_stride', branch: 'implement-stride-calculator'
 
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv_export', '~> 5.3.0'
