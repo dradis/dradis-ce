@@ -266,13 +266,10 @@ describe 'node pages', js: true do
   end
 
   def wait_for_loading_to_finish
-    safety = 0
     # The page will have .loading elements, but they start off hidden and only
-    # get shown once loading actually takes place
-    while page.has_selector?('li.node > ul > li.loading', visible: true)
-      raise 'Loading timed out' if (safety += 1) >= 5 # 0.1 x 5 = 1/2 second
-      sleep 0.1
-    end
+    # get shown once loading actually takes place. has_no_selector? returns as
+    # soon as they're gone; has_selector? would wait the full timeout instead.
+    expect(page).to have_no_selector('li.node > ul > li.loading', visible: true)
   end
 
   def expand_node_in_sidebar(node)

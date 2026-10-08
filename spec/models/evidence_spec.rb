@@ -10,6 +10,14 @@ describe Evidence do
   it { should validate_presence_of :issue }
   it { should validate_presence_of :node }
 
+  it { should define_enum_for(:state).with_values([:draft, :ready_for_review, :published]) }
+
+  describe 'state' do
+    it 'defaults to draft' do
+      expect(Evidence.new.state).to eq('draft')
+    end
+  end
+
   describe 'on create' do
     let(:issue) { create(:issue, project: node.project) }
     let(:node) { create(:node) }
@@ -57,7 +65,7 @@ describe Evidence do
   describe '#fields' do
     before do
       issue = create(:issue)
-      node  = create(:node, label: 'Node Label')
+      node = create(:node, label: 'Node Label')
       @evidence = Evidence.new(
         node_id: node.id, issue_id: issue.id, content: "#[Output]#\nResistance is futile\n\n"
       )

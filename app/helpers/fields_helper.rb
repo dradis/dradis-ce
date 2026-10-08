@@ -1,8 +1,13 @@
 module FieldsHelper
-  def render_dropdown?(value)
-    @allow_dropdown &&
-    !has_liquid_filters?(value) &&
-    value.split(' | ').count > 1
+  def dropdown_options(field_name, value)
+    options = @field_values && @field_values[field_name]
+
+    if options
+      options if value.blank? || options.include?(value)
+    elsif !has_liquid_filters?(value)
+      values = value.split(' | ')
+      values if values.count > 1
+    end
   end
 
   private

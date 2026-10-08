@@ -1,7 +1,6 @@
-<section class="summary-panel">
+<%= turbo_frame_tag 'issues-summary' do %>
   <% if @issues.any? %>
-    <h4 class="header-underline">Issues so far</h4>
-    <div id="issue-chart"></div>
+    <div class="issue-chart" data-behavior="issue-chart"></div>
 
     <div id="issues-accordion" role="tablist">
       <% for tag in @tags do %>
@@ -15,7 +14,7 @@
               <div class="card-body p-0">
                 <ul class="list-group">
                   <% @issues_by_tag[tag.name].each do |issue| %>
-                    <%= link_to [current_project, issue], class: 'list-group-item'  do %>
+                    <%= link_to [current_project, issue], class: 'list-group-item', data: { turbo_frame: '_top' }  do %>
                       <li><i class="fa-solid fa-bug me-2" style="color: <%= tag.color %>"></i><%= issue.title %></li>
                     <% end %>
                   <% end %>
@@ -37,7 +36,7 @@
             <div class="card-body p-0">
               <ul class="list-group">
                 <% @issues_by_tag[:unassigned].each do |issue| %>
-                  <%= link_to [current_project, issue], class: 'list-group-item'  do %>
+                  <%= link_to [current_project, issue], class: 'list-group-item', data: { turbo_frame: '_top' }  do %>
                     <li><i class="fa-solid fa-bug me-2"></i><%= issue.title %></li>
                   <% end %>
                 <% end %>
@@ -50,14 +49,14 @@
 
   <% else %>
     <%= render 'shared/empty_state',
-      actions_partial: 'projects/issues/empty_state_actions',
+      actions_partial: 'projects/dashboard/issues/empty_state_actions',
       name: 'issue',
       docs_link: 'https://dradis.com/support/guides/projects/issues.html',
       text: 'Use issues to represent vulnerabilities or findings.'
     %>
   <% end %>
-</section>
 
-<% if @issues.any? %>
-  <div id='issues-summary-data' data-tags='<%= @tag_names.to_json %>' data-issues-count='<%= @count_by_tag.to_json %>'></div>
+  <% if @issues.any? %>
+    <div data-behavior="issues-summary-data" data-tags='<%= @tag_names.to_json %>' data-issues-count='<%= @count_by_tag.to_json %>'></div>
+  <% end %>
 <% end %>

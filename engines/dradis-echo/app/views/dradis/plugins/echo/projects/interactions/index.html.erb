@@ -17,8 +17,10 @@
       <div class="echo-interactions-panel">
         <h5 class="mb-3">Start a new conversation</h5>
         <p>
-          Interact with <i class="fa-solid fa-robot me-1"></i>Roslin by selecting a
-          <%= link_to 'saved prompt', echo.prompts_path, data: { turbo_frame: '_top' } %> to use with this Issue.
+          Interact with <i class="fa-solid fa-robot me-1"></i>
+          Roslin by selecting a
+          <%= link_to 'saved prompt', echo.prompts_path, data: { turbo_frame: '_top' } %>
+          to use here.
         </p>
         <p>
           You can edit the prompt before sending it, any changes are one-off and
@@ -51,8 +53,9 @@
     <%= render 'shared/empty_state',
       actions_partial: 'dradis/plugins/echo/prompts/empty_state_actions',
       docs_link: 'https://dradis.com/support/guides/echo/prompts.html',
-      name: 'prompt',
-      text: 'Create reusable prompts to standardize how your team analyzes findings, writes reports, summarizes vulnerabilities, and more. Save time by building a library of prompts that anyone on your team can use for consistent results.'
+      docs_name: 'prompts',
+      name: "#{@type.to_s.titleize} prompt",
+      text: 'Create reusable prompts to standardize how your team drafts and refines content with Roslin. Save time by building a library of prompts that anyone on your team can use for consistent results.'
     %>
   <% end %>
 <% else %>

@@ -1,13 +1,13 @@
 <% if @success -%>
   ConsoleUpdater.jobId = '<%= @item_id %>'
-  $('#result').data('id', ConsoleUpdater.jobId)
-  $('#result').show()
-  $('#item_id').val(ConsoleUpdater.jobId)
+  $('[data-behavior~=result]').data('id', ConsoleUpdater.jobId)
+  $('[data-behavior~=result]').show()
+  $('[data-behavior~=item-id]').val(ConsoleUpdater.jobId)
 
-  $('#filesize').text('<%=j number_to_human_size( File.size(@attachment.fullpath) ) %>');
-  $('#spinner').hide();
+  $('[data-behavior~=filesize]').text('<%=j number_to_human_size( File.size(@attachment.fullpath) ) %>');
+  $('[data-behavior~=spinner]').hide();
   ConsoleUpdater.parsing = true;
-  url = $('#new_upload').data('parse-url');
+  url = $('[data-behavior~=new-upload]').data('parse-url');
   data = {
     file: '<%= @attachment.filename %>',
     item_id: '<%= @item_id %>',
@@ -19,7 +19,7 @@
 
   $.post(url, data, null, 'script');
 
-  $('#attachment').val('<%= @attachment.filename %>');
+  $('[data-behavior~=attachment]').val('<%= @attachment.filename %>');
   setTimeout(ConsoleUpdater.updateConsole, 1000);
 <% else -%>
   $("#<%= @item_id  %>").find('span').html('(<%=h flash.now[:error] %>)');

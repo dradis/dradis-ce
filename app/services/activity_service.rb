@@ -5,7 +5,7 @@ class ActivityService
   end
 
   def self.subscribe_namespace(namespace)
-    regex = Regexp.new("^#{Regexp.escape(namespace)}\.*")
+    regex = /^#{Regexp.escape(namespace)}\./
 
     ActiveSupport::Notifications.subscribe(regex) do |event|
       payload = event.payload

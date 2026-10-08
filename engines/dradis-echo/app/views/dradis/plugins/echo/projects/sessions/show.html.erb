@@ -11,8 +11,8 @@
           new_conversation_path: echo.project_interactions_path(current_project, type: @type, record: @record.id) %>
 
     <div class="echo-interactions-panel">
-      <%# Live transcript + composer state, both over the re-authorizing SessionsChannel %>
-      <%# (Slice 4): the socket re-checks project access on every subscribe. %>
+      <%# Live transcript + composer state, both over the re-authorizing SessionsChannel: %>
+      <%# the socket re-checks project access on every subscribe. %>
       <%= turbo_stream_from [@session, :messages], channel: Dradis::Plugins::Echo::SessionsChannel %>
       <%= turbo_stream_from [@session, :composer_state], channel: Dradis::Plugins::Echo::SessionsChannel %>
 

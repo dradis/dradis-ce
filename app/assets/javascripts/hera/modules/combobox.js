@@ -214,6 +214,10 @@ class ComboBox {
           this.$combobox.toggleClass('disabled', isDisabled);
         }
 
+        if (mutation.attributeName === 'class') {
+          this.refreshValidationUI();
+        }
+
         // Ensure changes to options are reflected in the combobox
         if (mutation.type === 'childList') {
           const currentFilter = this.$filter?.val();
@@ -463,9 +467,7 @@ class ComboBox {
   // ==========================================================================
 
   setInitialSelection() {
-    let $initialOption = this.$comboboxOptions.filter(
-      `[data-value="${this.$target.val()}"]`,
-    );
+    let $initialOption = this.filterByDataValue(this.$comboboxOptions, 'value', this.$target.val());
 
     if (!$initialOption.length) {
       if (this.isMultiSelect) {
@@ -480,6 +482,16 @@ class ComboBox {
       'disabled',
       !!this.$target.attr('disabled')?.length,
     );
+    this.refreshValidationUI();
+  }
+
+  // Wrapping the select breaks Bootstrap's `.is-invalid ~ .invalid-feedback`
+  // sibling rule, so mirror the invalid state onto the container and combobox.
+  refreshValidationUI() {
+    const isInvalid = this.$target.hasClass('is-invalid');
+
+    this.$comboboxContainer.toggleClass('is-invalid', isInvalid);
+    this.$combobox.toggleClass('is-invalid', isInvalid);
   }
 
   updateComboboxUI(options) {
@@ -506,10 +518,8 @@ class ComboBox {
 
   updateMultiSelectUI($options) {
     $options.forEach(($option) => {
-      if (
-        this.$combobox.find(`[data-option-value="${$option.data('value')}"]`)
-          .length
-      ) {
+      const $existingTags = this.$combobox.find('[data-behavior~=combobox-multi-option]');
+      if (this.filterByDataValue($existingTags, 'option-value', $option.data('value')).length) {
         return;
       }
 
@@ -543,7 +553,7 @@ class ComboBox {
     if (this.isMultiSelect) {
       const currentValues = this.$target.val() || [];
       currentValues.forEach((value) => {
-        const $option = this.$comboboxOptions.filter(`[data-value="${value}"]`);
+        const $option = this.filterByDataValue(this.$comboboxOptions, 'value', value);
         if ($option.length) {
           $options.push($option);
         }
@@ -551,9 +561,7 @@ class ComboBox {
       this.$comboboxOptions.removeClass('selected');
       this.$combobox.find('[data-behavior~=combobox-multi-option]').remove();
     } else {
-      $options = this.$comboboxOptions.filter(
-        `[data-value="${this.$target.val()}"]`,
-      );
+      $options = this.filterByDataValue(this.$comboboxOptions, 'value', this.$target.val());
     }
 
     this.updateComboboxUI($options);
@@ -562,6 +570,12 @@ class ComboBox {
   // ==========================================================================
   // Utilities
   // ==========================================================================
+
+  // Matches by exact attribute value, so quotes in the value can't break a selector.
+  filterByDataValue($elements, dataKey, value) {
+    const attr = `data-${dataKey}`;
+    return $elements.filter((_, el) => el.getAttribute(attr) === String(value));
+  }
 
   showMenu() {
     this.$comboboxMenu.css('display', 'block');

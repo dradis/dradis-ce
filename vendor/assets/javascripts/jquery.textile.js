@@ -56,6 +56,9 @@
       // Place initialization logic here
       // You already have access to the DOM element and the options via the instance,
       // e.g., this.element and this.options
+      this._fieldValues = this.$element.data('field-values');
+      this._fieldsDirty = false;
+
       this._buildContainer();
 
       this._previousContent = this.$element.val();
@@ -78,7 +81,7 @@
       // add Form
       this.options.$fields = $(this.options.tpl.fields);
       $('.textile-inner', this.options.$wrap).append(this.options.$fields);
-      this._loadFields(this.$element.val(), this.$element.data('allow-dropdown'));
+      this._loadFields(this.$element.val(), this._fieldValues);
 
       // add Preview to container and load
       this.options.$preview = $(this.options.tpl.preview);
@@ -109,11 +112,44 @@
 
       // When auto-save populates data into source view refresh the form
       this.$element.on('load-preview', function() {
-        this._loadFields(this.$element.val());
+        this._loadFields(this.$element.val(), this._fieldValues);
       }.bind(this));
+
+      // The Fields view only syncs to the submitted source textarea on a
+      // debounce. Flush it on submit, or a save within _doneTypingInterval
+      // silently drops the edit.
+      this.$element.closest('form').on('submit', (evt) => this._onSubmit(evt));
 
       // Bind all form element actions within container
       this.bindFieldGroup(this.options.$fields);
+    },
+    _onSubmit(evt) {
+      // Second pass, after the source has been flushed: let it through.
+      if (this._sourceFlushed) {
+        this._sourceFlushed = false;
+        return;
+      }
+
+      // Nothing to flush when the user is editing the source directly, or
+      // when the Fields form has no edit still waiting on the debounce.
+      if (!this.options.$fields.is(':visible')) { return; }
+      if (!this._fieldsDirty) { return; }
+
+      const form = evt.currentTarget;
+      const submitter = evt.originalEvent && evt.originalEvent.submitter;
+
+      evt.preventDefault();
+      clearTimeout(this._typingTimer);
+
+      this._loadSource(() => {
+        this._sourceFlushed = true;
+
+        if (form.requestSubmit) {
+          form.requestSubmit(submitter);
+        } else {
+          $(form).submit();
+        }
+      });
     },
     bindFieldGroup: function($parent) {
       var that = this;
@@ -131,14 +167,13 @@
       $parent.find('[data-behavior~=preview-enabled]').on('textchange load-preview', this._timedPreview.bind(this));
     },
     _timedPreview: function(view) {
+      this._fieldsDirty = true;
+
       clearTimeout(this._typingTimer);
       this._typingTimer = setTimeout(function() {
         this._onKeyPressPreview.bind(this, view)
 
-        // Piggy back this event for the purpose of updating the source view, which will trigger auto-save
-        // This will be updated/refactored when auto-save is re-worked. Currently it will cause an extra request per edit.
         this._loadSource();
-        this.$element.trigger('textchange');
       }.bind(this), this._doneTypingInterval);
     },
     _buildToolbar: function() {
@@ -179,10 +214,10 @@
     },
 
     // Ajax form
-    _loadFields: function(data, allowDropdown) {
+    _loadFields: function(data, fieldValues) {
       $.post({
         url: this.$element.data('paths').form_url,
-        data: {source: data, allow_dropdown: allowDropdown},
+        data: {source: data, field_values: fieldValues},
         beforeSend: function(){
           this.options.$fields.addClass('loading-indicator').text('Loading...');
         }.bind(this),
@@ -222,14 +257,18 @@
       });
     },
     // Ajax write
-    _loadSource: function() {
+    _loadSource(done) {
       $.post({
         url: this.$element.data('paths').source_url,
         data: JSON.stringify({ form: this._serializedFormData() }),
         contentType: 'application/json',
         success: function(result){
           this.$element.val(result);
+          this.$element.trigger('textchange');
+          this._fieldsDirty = false;
         }.bind(this)
+      }).always(() => {
+        if (done) { done(); }
       });
     },
     _onKeyPressPreview: function(type) {
@@ -256,7 +295,7 @@
 
       $('.textile-form').empty();
 
-      this._loadFields(this.$element.val(), false);
+      this._loadFields(this.$element.val(), this._fieldValues);
 
       // Show Form pane
       this.options.$help.hide();
@@ -330,7 +369,25 @@
     // --------------------------------------------------- Other event handlers
 
     _serializedFormData: function() {
-      return $('[name^=item_form]', this.options.$fields).serializeArray();
+      const data = $('[name^=item_form]', this.options.$fields).serializeArray();
+
+      // A blank select (no value chosen yet) should still serialize as the
+      // pipe-separated list of its options, not an empty string, so the
+      // source view keeps showing the available choices until one is picked.
+      $('select[name^=item_form]', this.options.$fields).each((_, select) => {
+        const $select = $(select);
+
+        if ($select.val() !== '') return;
+
+        const options = $select.find('option[value!=""]').map((_, option) => option.value).get();
+
+        if (options.length < 2) return;
+
+        const entry = data.find((item) => item.name === $select.attr('name'));
+        if (entry) entry.value = options.join(' | ');
+      });
+
+      return data;
     },
 
     _setDefaultView: function() {

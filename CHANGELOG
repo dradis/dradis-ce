@@ -2,17 +2,19 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - mail, sqlite3
+    - [gem]
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Editor: keep the cursor in place after uploading an image
+    - Combobox:
+      - show inline validation errors on dropdowns that fail validation
     - Bug tracker items:
       - [item]
   - Echo enhancements:
     - [Echo entity]:
       - [future tense verb] [Echo enhancement]
   - New integrations:
-    - STRIDE calculator
+    - Calculators: Add AIVSS-SSVC
+    - Calculators: Add STRIDE
   - Integration enhancements:
     - [integration]:
       - [future tense verb] [integration enhancement]
@@ -28,6 +30,16 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v5.4.0 (September 2026)
+  - Issues: warn user if another user is currently editing the record
+  - QA: Add QA states to evidence
+  - Webhooks: Add Evidence, Node and Note CRUD events
+  - Upgraded gems:
+    - mail, rubyzip, sqlite3
+  - Bugs fixes:
+    - Activity tracking: avoid raising an error when an unrelated event shares a name prefix with a tracked namespace
+    - Combobox: show the correct selected option when its value contains a double quote
 
 v5.3.0 (August 2026)
   - Cards: add option to move a task to a different list
