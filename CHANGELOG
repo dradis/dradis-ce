@@ -13,8 +13,9 @@
     - [Echo entity]:
       - [future tense verb] [Echo enhancement]
   - New integrations:
-    - Calculators: Add AIVSS-SSVC
-    - Calculators: Add STRIDE
+    - Calculators:
+      - AIVSS-SSVC
+      - STRIDE
   - Integration enhancements:
     - [integration]:
       - [future tense verb] [integration enhancement]
