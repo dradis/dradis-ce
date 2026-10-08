@@ -20,6 +20,7 @@
   // Create the defaults once
   var pluginName = 'textile',
       document = window.document,
+      editorCount = 0,
       defaults = {
         defaultViewKey: 'editor.view',
         // Start fullscreen?
@@ -58,6 +59,11 @@
       // e.g., this.element and this.options
       this._fieldValues = this.$element.data('field-values');
       this._fieldsDirty = false;
+
+      // Identifies this editor when a page has several, so a field added from
+      // its Fields form (fields/field.js.erb) is added to this editor only.
+      this._editorId = ++editorCount;
+      this.$element.attr('data-textile-editor-id', this._editorId);
 
       this._buildContainer();
 
@@ -217,7 +223,7 @@
     _loadFields: function(data, fieldValues) {
       $.post({
         url: this.$element.data('paths').form_url,
-        data: {source: data, field_values: fieldValues},
+        data: {source: data, field_values: fieldValues, editor_id: this._editorId},
         beforeSend: function(){
           this.options.$fields.addClass('loading-indicator').text('Loading...');
         }.bind(this),
