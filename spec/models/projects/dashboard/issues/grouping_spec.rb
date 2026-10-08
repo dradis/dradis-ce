@@ -63,6 +63,7 @@ describe Projects::Dashboard::Issues::Grouping do
     it 'puts issues that only have tags outside the project in the unassigned group' do
       outsider = create(:issue, node: node)
       outsider.tags << create(:tag, name: '!000000_other')
+      allow(grouping).to receive(:values).and_return([critical])
 
       expect(grouping.groups([outsider]).last.issues).to eq [outsider]
     end
