@@ -1,12 +1,16 @@
 class QA::IssuesController < AuthenticatedController
   include EventPublisher
   include LiquidEnabledResource
+  include LockableResource
   include Mentioned
   include ProjectScoped
   include Publishable
 
   before_action :set_issues
   before_action :set_issue, only: [:edit, :show, :preview, :update]
+  before_action :set_form_cancel_path, only: :edit
+  # Must run after :set_form_cancel_path; the lockout page links back to it.
+  before_action :check_edit_lock, only: :edit
   before_action :validate_state, only: [:multiple_update, :update]
 
   def index
@@ -16,7 +20,6 @@ class QA::IssuesController < AuthenticatedController
   def show; end
 
   def edit
-    @form_cancel_path = project_qa_issue_path(current_project, @issue)
     @form_preview_path = preview_project_qa_issue_path(current_project, @issue)
     @tags = current_project.tags
   end
@@ -72,6 +75,10 @@ class QA::IssuesController < AuthenticatedController
     { 'issue' => IssueDrop.new(@issue) }
   end
 
+  def lockable_resource
+    @issue
+  end
+
   def next_issue_or_index_path
     notice = "State successfully updated for #{@issue.title}."
     next_issue = current_project.issues.ready_for_review.first
@@ -90,6 +97,10 @@ class QA::IssuesController < AuthenticatedController
 
   def set_issues
     @issues = current_project.issues.ready_for_review
+  end
+
+  def set_form_cancel_path
+    @form_cancel_path = project_qa_issue_path(current_project, @issue)
   end
 
   def validate_state

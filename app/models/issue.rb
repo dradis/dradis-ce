@@ -8,6 +8,10 @@ class Issue < Note
   InlineCommentable.allowed_types << 'Issue'
 
   include Lockable
+  # FIXME - ISSUE/NOTE INHERITANCE
+  # Note also includes Lockable, so ActiveSupport::Concern skips re-running
+  # the `included` hook here. Register 'Issue' explicitly instead.
+  Lockable.allowed_types << 'Issue'
 
   include Subscribable
   Subscribable.allowed_types << 'Issue'

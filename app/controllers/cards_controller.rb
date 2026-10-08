@@ -1,6 +1,7 @@
 class CardsController < AuthenticatedController
   include ActivityTracking
   include ContentFromTemplate
+  include LockableResource
   include Mentioned
   include NotificationsReader
   include ProjectScoped
@@ -10,6 +11,9 @@ class CardsController < AuthenticatedController
   before_action :set_or_initialize_card
   before_action :initialize_sidebar, only: [:show, :new, :edit]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
+  before_action :set_form_cancel_path, only: [:new, :edit]
+  # Must run after :set_form_cancel_path; the lockout page links back to it.
+  before_action :check_edit_lock, only: :edit
 
   layout 'cards'
 
@@ -42,6 +46,7 @@ class CardsController < AuthenticatedController
 
   def update
     if @card.update(card_params)
+      @card.release_edit_session(current_user)
       track_updated(@card)
       redirect_to [current_project, @board, @list, @card], notice: 'Task updated.'
     else
@@ -69,6 +74,10 @@ class CardsController < AuthenticatedController
     @sorted_cards = @list.ordered_cards.select(&:persisted?)
   end
 
+  def lockable_resource
+    @card
+  end
+
   def set_or_initialize_card
     if params[:id]
       @card = @board.cards.find(params[:id])
@@ -90,6 +99,14 @@ class CardsController < AuthenticatedController
       "#{@list.id}-card-#{params[:template]}"
     else
       "#{@list.id}-card"
+    end
+  end
+
+  def set_form_cancel_path
+    if @card.new_record?
+      @form_cancel_path = [current_project, @board]
+    else
+      @form_cancel_path = [current_project, @board, @list, @card]
     end
   end
 end
