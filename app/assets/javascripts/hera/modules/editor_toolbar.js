@@ -17,6 +17,11 @@ class EditorToolbar {
       return;
     }
 
+    // Only ever add a toolbar to a textarea once
+    if ($target.data('editorToolbar') !== undefined) {
+      return;
+    }
+
     this.$target = $target;
     this.opts = {
       include: $target.data('rich-toolbar').split(' '),
