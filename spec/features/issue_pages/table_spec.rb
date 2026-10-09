@@ -38,5 +38,38 @@ describe 'issue pages' do
     let(:content_attribute) { :text }
 
     it_behaves_like 'a DataTable with Dynamic Columns'
+
+    describe 'bulk delete that runs in the background' do
+      before do
+        Configuration.create!(name: 'admin:max_deleted_inline', value: 0)
+        login_as(@logged_in_as) # the console's ActionCable connection needs a real Warden session
+        ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true # the suite's :test adapter won't run perform_later jobs otherwise
+      end
+
+      after { ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false }
+
+      it 'streams the job log into the console modal and redirects once closed' do
+        within '.dataTables_wrapper' do
+          page.find('td.select-checkbox', match: :first).click
+
+          page.accept_confirm do
+            click_button('Delete')
+          end
+        end
+
+        # Individual log lines aren't asserted here: broadcasts sent before
+        # the browser's subscription is established are lost, same as the
+        # upload console's console-mount stream, so intermediate lines
+        # aren't guaranteed. The final status always reflects reality
+        # (see Log.latest_for), which is what the redirect depends on.
+        within '#modal-console' do
+          expect(page).to have_text('Complete.', wait: 10)
+
+          click_button 'Done!'
+        end
+
+        expect(page).to have_current_path(project_issues_path(current_project), wait: 10)
+      end
+    end
   end
 end

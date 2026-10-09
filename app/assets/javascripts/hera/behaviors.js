@@ -151,7 +151,9 @@ document.addEventListener('turbo:load', function () {
 
     // Initialize clipboard.js
     const clipboard = new Clipboard(
-      parentElement.querySelectorAll('[data-clipboard-text]')
+      parentElement.querySelectorAll(
+        '[data-clipboard-text], [data-clipboard-target]'
+      )
     );
 
     clipboard.on('success', function (e) {
@@ -200,6 +202,35 @@ document.addEventListener('turbo:load', function () {
     // Render Liquid dynamic content
     initLiquidAsync(parentElement);
 
+    // Once the console modal's job reaches a terminal state, reveal its
+    // "Done!" button and, if the table wants a redirect on close, wire
+    // that up. Status is pushed by broadcast, and this runs again each
+    // time it changes (see the turbo:before-stream-render hook below).
+    $(parentElement)
+      .find('[data-behavior~=status]')
+      .addBack('[data-behavior~=status]')
+      .each(function () {
+        const state = $(this).data('log-state');
+        if (state !== 'completed' && state !== 'failed') return;
+
+        const $modal = $(this).closest('#modal-console');
+        if (!$modal.length) return;
+
+        $modal.find('.modal-footer').removeClass('d-none');
+
+        const closeUrl = $('#result').data('close-url');
+        if (!closeUrl) return;
+
+        $modal.one('hide.bs.modal', function () {
+          if (window.Turbo) {
+            Turbo.cache.clear();
+            Turbo.visit(closeUrl);
+          } else {
+            window.location = closeUrl;
+          }
+        });
+      });
+
     // Sortable lists
     $('[data-behavior~=ui-sortable]').sortable({
       axis: 'y',
@@ -237,10 +268,11 @@ document.addEventListener('turbo:load', function () {
     event.detail.render = async function (streamElement) {
       await render(streamElement);
 
-      const targetElement = document.getElementById(
-        streamElement.getAttribute('target')
-      );
-      if (targetElement) initBehaviors(targetElement);
+      if (streamElement.target || streamElement.targets) {
+        streamElement.targetElements.forEach(function (targetElement) {
+          initBehaviors(targetElement);
+        });
+      }
     };
   });
 
