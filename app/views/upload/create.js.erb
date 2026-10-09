@@ -1,9 +1,11 @@
 <% if @success -%>
   $('[data-behavior~=result]').data('id', '<%= @item_id %>')
   $('[data-behavior~=item-id]').val('<%= @item_id %>')
-  $('[data-behavior~=status]').replaceWith('<%= j render("logs/status", log: Log.new(uid: @item_id)) %>');
-  window.initBehaviors(document.querySelector('[data-behavior~=status]'));
-  $('[data-behavior~=console-mount]').html('<%= j turbo_stream_from(@item_id) %>');
+  // Scoped to the page's own console; the layout's modal shares these hooks
+  $('[data-behavior~=result] [data-behavior~=console]').attr('data-console-uid', '<%= @item_id %>');
+  $('[data-behavior~=result]').siblings('[data-behavior~=status]').replaceWith('<%= j render("logs/status", log: Log.new(uid: @item_id)) %>');
+  window.initBehaviors($('[data-behavior~=result]').siblings('[data-behavior~=status]')[0]);
+  $('[data-behavior~=result] [data-behavior~=console-mount]').html('<%= j turbo_stream_from(@item_id) %>');
 
   $('[data-behavior~=filesize]').text('· <%=j number_to_human_size( File.size(@attachment.fullpath) ) %>');
   $('[data-behavior~=spinner]').addClass('d-none');

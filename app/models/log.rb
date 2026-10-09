@@ -65,7 +65,11 @@ class Log < ApplicationRecord
   # ConsoleController#status is unaffected, since this only pushes to
   # clients actually subscribed to this uid's stream.
   def broadcast_log
-    Turbo::StreamsChannel.broadcast_append_to(uid, targets: '[data-behavior~=console]', partial: 'logs/log', locals: { log: self })
-    Turbo::StreamsChannel.broadcast_replace_to(uid, targets: '[data-behavior~=status]', partial: 'logs/status', locals: { log: self }) unless state == :running
+    Turbo::StreamsChannel.broadcast_append_to(uid, targets: console_selector('console'), partial: 'logs/log', locals: { log: self })
+    Turbo::StreamsChannel.broadcast_replace_to(uid, targets: console_selector('status'), partial: 'logs/status', locals: { log: self }) unless state == :running
+  end
+
+  def console_selector(behavior)
+    "[data-behavior~=#{behavior}][data-console-uid=\"#{uid}\"]"
   end
 end

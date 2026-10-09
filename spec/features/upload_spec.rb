@@ -29,6 +29,10 @@ describe 'Restoring project files' do
       expect(page).to have_text('Worker process completed', wait: 120)
       expect(page).to have_text('Complete.')
 
+      ids = page.all('[data-behavior~=console] p.log', visible: :all).map { |p| p['data-id'] }
+      expect(ids).to eq(ids.uniq)
+      expect(page).to have_css('#modal-console p.log', count: 0, visible: :all)
+
       expect(current_project.boards.count).to eq 1
       expect(current_project.boards.first.name).to eq 'OWASPv4 Methodology'
 

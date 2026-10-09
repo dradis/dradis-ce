@@ -33,4 +33,19 @@ describe Log do
       expect(Log.latest_for(uid).state).to eq(:failed)
     end
   end
+
+  describe 'broadcasting' do
+    it 'targets only the console and status tagged with its own uid' do
+      log = Log.new(uid: 'job-uid', text: 'Worker process completed.')
+
+      expect(Turbo::StreamsChannel).to receive(:broadcast_append_to).with(
+        'job-uid', hash_including(targets: '[data-behavior~=console][data-console-uid="job-uid"]')
+      )
+      expect(Turbo::StreamsChannel).to receive(:broadcast_replace_to).with(
+        'job-uid', hash_including(targets: '[data-behavior~=status][data-console-uid="job-uid"]')
+      )
+
+      log.save!
+    end
+  end
 end

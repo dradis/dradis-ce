@@ -46,7 +46,7 @@ DradisDatatable.prototype.handleBulkDeleteSuccess = function (rows, data) {
   if (data.success) {
     if (data.jobId) {
       // Background deletion
-      this.showConsole(data.streamTag, data.statusHtml);
+      this.showConsole(data.jobId, data.streamTag, data.statusHtml);
     } else {
       // Inline deletion
       this.showAlert(data.msg, 'success');
@@ -102,7 +102,7 @@ DradisDatatable.prototype.toggleBulkDeleteBtn = function (isShown) {
   $(bulkDeleteBtn[0].node).toggleClass('d-none', !isShown);
 };
 
-DradisDatatable.prototype.showConsole = function (streamTag, statusHtml) {
+DradisDatatable.prototype.showConsole = function (jobId, streamTag, statusHtml) {
   // the table may set the url to redirect to when closing the console
   var closeUrl = this.$paths.data('table-close-console-url');
 
@@ -115,7 +115,9 @@ DradisDatatable.prototype.showConsole = function (streamTag, statusHtml) {
   $('#result').show();
 
   // start streaming the job's log into the console
-  $('#modal-console [data-behavior~=console]').empty();
+  $('#modal-console [data-behavior~=console]')
+    .empty()
+    .attr('data-console-uid', jobId);
   $('#modal-console [data-behavior~=status]').replaceWith(statusHtml);
   $('#modal-console [data-behavior~=console-mount]').html(streamTag);
   window.initBehaviors(document.getElementById('modal-console'));
