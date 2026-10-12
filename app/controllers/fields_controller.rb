@@ -1,4 +1,8 @@
 class FieldsController < AuthenticatedController
+  # The JSON requests are read through field_params, so skip the duplicate
+  # `field` wrapper key Rails adds, which strong params reports as unpermitted.
+  wrap_parameters false
+
   # Returns the form view given a source text
   def form
     @form_data = FieldParser.source_to_fields_array(field_params[:source])
@@ -19,6 +23,6 @@ class FieldsController < AuthenticatedController
   private
 
   def field_params
-    params.permit(:index, :source, field_values: {}, form: [:name, :value])
+    params.permit(:format, :index, :source, field_values: {}, form: [:name, :value])
   end
 end

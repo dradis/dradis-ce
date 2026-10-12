@@ -5,15 +5,18 @@
     - [gem]
   - Bugs fixes:
     - Avatars: display a local image while Gravatar loads
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Editor: keep the cursor in place after uploading an image
+    - Combobox:
+      - show inline validation errors on dropdowns that fail validation
     - Bug tracker items:
       - [item]
   - Echo enhancements:
     - [Echo entity]:
       - [future tense verb] [Echo enhancement]
   - New integrations:
-    - [integration]
+    - Calculators:
+      - AIVSS-SSVC
+      - STRIDE
   - Integration enhancements:
     - [integration]:
       - [future tense verb] [integration enhancement]
