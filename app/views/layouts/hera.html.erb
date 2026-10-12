@@ -61,7 +61,7 @@
           <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
           <%= render 'layouts/hera/noscript' %>
           <%= render 'layouts/hera/project_teaser' unless defined?(Dradis::Pro) %>
-          <%= flash_messages %>
+          <div id="flash-messages"><%= flash_messages %></div>
           <%= content_for?(:content) ? yield(:content) : yield %>
         </main>
         <%= render 'layouts/hera/footer' %>
