@@ -1,0 +1,9 @@
+<div class="console-header" data-behavior="status" data-console-uid="<%= log&.uid %>" data-log-state="<%= log&.state %>">
+  <span class="status-dot <%= log_status_class(log) %>"></span>
+  <span class="console-summary"><%= log_status_summary(log) %></span>
+  <div class="console-header-actions ms-auto d-flex align-items-center gap-2">
+    <button type="button" class="btn btn-sm console-copy-btn <%= 'invisible' unless log %>" data-clipboard-target="[data-behavior~=console][data-console-uid='<%= log&.uid %>']" title="Copy log output">
+      <i class="fa-solid fa-copy"></i> Copy log
+    </button>
+  </div>
+</div>

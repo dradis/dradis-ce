@@ -19,6 +19,9 @@ $text-small: 0.9rem;
 $shadow-color-light: $grey-200;
 $shadow-color-dark: $grey-800;
 
+// Console (compile-time only — used inside lighten(), cannot be a CSS custom property)
+$console-bg: lighten($black, 5%);
+
 // Navbar
 $navbar-height: calc(3.2rem - 1px); // 1px to account for border
 

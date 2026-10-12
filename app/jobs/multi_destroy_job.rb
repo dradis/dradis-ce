@@ -30,5 +30,8 @@ class MultiDestroyJob < ApplicationJob
     end
 
     logger.write { 'Worker process completed.' }
+  rescue => exception
+    logger.write { "There was an error deleting: #{exception.message}" }
+    logger.write { 'Worker process failed.' }
   end
 end
