@@ -65,7 +65,7 @@ body:not(.unauthenticated) {
 
 .content-grid {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr;
   grid-template-rows: 1fr auto;
   width: 100vw;
 
@@ -113,6 +113,14 @@ body:not(.unauthenticated) {
       );
     }
   }
+}
+
+// Holds the view content and the secondary sidebar. Swapped as a unit when
+// navigating between views.
+.content-body {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  min-width: 0;
 }
 
 footer {

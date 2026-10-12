@@ -56,19 +56,21 @@
       <aside>
         <%= yield(:node_sidebar) if content_for?(:node_sidebar) %>
       </aside>
-      <div class="view-content" data-behavior="view-content">
-        <main class="container-fluid">
-          <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
-          <%= render 'layouts/hera/noscript' %>
-          <%= render 'layouts/hera/project_teaser' unless defined?(Dradis::Pro) %>
-          <%= flash_messages %>
-          <%= content_for?(:content) ? yield(:content) : yield %>
-        </main>
-        <%= render 'layouts/hera/footer' %>
+      <div class="content-body">
+        <div class="view-content" data-behavior="view-content">
+          <main class="container-fluid">
+            <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
+            <%= render 'layouts/hera/noscript' %>
+            <%= render 'layouts/hera/project_teaser' unless defined?(Dradis::Pro) %>
+            <%= flash_messages %>
+            <%= content_for?(:content) ? yield(:content) : yield %>
+          </main>
+          <%= render 'layouts/hera/footer' %>
+        </div>
+        <% if content_for?(:sidebar) %>
+          <%= render "layouts/hera/secondary_sidebar" %>
+        <% end %>
       </div>
-      <% if content_for?(:sidebar) %>
-        <%= render "layouts/hera/secondary_sidebar" %>
-      <% end %>
     </div>
 
     <%= yield(:poller) if content_for?(:poller) %>
