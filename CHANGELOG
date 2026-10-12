@@ -1,6 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
+  - Nodes: Add a node from the node tree
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
