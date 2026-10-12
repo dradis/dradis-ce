@@ -5,14 +5,13 @@
 
     if (!$dataElement.length || $chartElement.find('svg').length) return;
 
-    const margin = { top: 20, bottom: 30 };
+    const margin = { top: 20, bottom: 0 };
     const width = 354;
     const height = 180 - margin.top - margin.bottom;
     const x = d3.scaleBand().rangeRound([0, width]);
     const y = d3.scaleLinear().range([height, 0]);
-    const xAxis = d3.axisBottom(x).tickSize(0);
-    const svg = d3
-      .select($chartElement[0])
+    const container = d3.select($chartElement[0]);
+    const svg = container
       .append('svg')
       .attr('width', width)
       .attr('height', height + margin.top + margin.bottom)
@@ -21,7 +20,7 @@
 
     const groups = $dataElement.data('groups');
     const data = groups.map(group => ({
-      letter: group.unassigned ? 'N/A' : group.name,
+      letter: group.name,
       frequency: group.count,
     }));
     const xDomain = data.map(d => d.letter);
@@ -29,15 +28,6 @@
 
     x.domain(xDomain);
     y.domain([0, highest]);
-
-    const xAxisGroup = svg
-      .append('g')
-      .attr('class', 'x axis')
-      .attr('transform', `translate(0,${height})`)
-      .call(xAxis);
-
-    xAxisGroup.selectAll('text').style('fill', 'inherit');
-    xAxisGroup.selectAll('path').style('stroke', 'none');
 
     const bars = svg.append('g');
 
@@ -65,7 +55,7 @@
       .text(d => d.frequency);
 
     groups.forEach((group, index) => {
-      ['.tick', '.bar', '.counter'].forEach(selector => {
+      ['.bar', '.counter'].forEach(selector => {
         const $element = $chartElement.find(selector).eq(index);
 
         if (group.unassigned) {
@@ -75,6 +65,30 @@
         }
       });
     });
+
+    buildLegend(container, groups);
+  };
+
+  const buildLegend = (container, groups) => {
+    const items = container
+      .append('ul')
+      .attr('class', 'issue-chart-legend')
+      .selectAll('li')
+      .data(groups)
+      .enter()
+      .append('li')
+      .attr('class', group => (group.unassigned ? 'legend-item untagged' : 'legend-item'))
+      .attr('title', group => group.name);
+
+    items
+      .append('span')
+      .attr('class', 'legend-swatch')
+      .style('background-color', group => (group.unassigned ? null : group.color));
+
+    items
+      .append('span')
+      .attr('class', 'legend-label')
+      .text(group => group.name);
   };
 
   document.addEventListener('turbo:frame-load', initIssuesChart);
