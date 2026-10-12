@@ -28,7 +28,7 @@ module AvatarHelper
 
     source = user.try(:avatar).presence || opt[:fallback_image]
     if opt[:email]
-      source = avatar_url(user, size: opt[:size], email: true)
+      source = email_avatar_url(user, size: opt[:size])
     else
       img_properties[:data] = { controller: 'gravatar', gravatar_url: avatar_url(user, size: opt[:size]) }
     end
@@ -40,18 +40,17 @@ module AvatarHelper
   end
 
   def avatar_url(user, options = {})
-    if user.try(:avatar).present?
-      return options[:email] ? URI.join(root_url, user.avatar).to_s : user.avatar
-    end
+    return user.avatar if user.try(:avatar).present?
+    return image_path(DEFAULT_PROFILE_IMAGE) if user.nil? || !user.email.include?('@')
 
-    if user.nil? || !user.email.include?('@')
-      return options[:email] ? DEFAULT_EMAIL_AVATAR_URL : image_path(DEFAULT_PROFILE_IMAGE)
-    end
+    gravatar_url(user, options, default: '404')
+  end
 
-    gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
-    size = options.fetch(:size, DEFAULT_PROFILE_IMAGE_SIZE).to_i * 2 # Retina displays mean dot density can be higher.
-    default = options[:email] ? ERB::Util.url_encode(DEFAULT_EMAIL_AVATAR_URL) : '404'
-    "https://secure.gravatar.com/avatar/#{gravatar_id}?r=PG&s=#{size}&d=#{default}"
+  def email_avatar_url(user, options = {})
+    return URI.join(root_url, user.avatar).to_s if user.try(:avatar).present?
+    return DEFAULT_EMAIL_AVATAR_URL if user.nil? || !user.email.include?('@')
+
+    gravatar_url(user, options, default: DEFAULT_EMAIL_AVATAR_URL)
   end
 
   def tribute_hash(users)
@@ -62,5 +61,13 @@ module AvatarHelper
         avatar_url: avatar_url(user)
       }
     end
+  end
+
+  private
+
+  def gravatar_url(user, options, default:)
+    gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
+    size = options.fetch(:size, DEFAULT_PROFILE_IMAGE_SIZE).to_i * 2 # Retina displays mean dot density can be higher.
+    "https://secure.gravatar.com/avatar/#{gravatar_id}?r=PG&s=#{size}&d=#{ERB::Util.url_encode(default)}"
   end
 end
