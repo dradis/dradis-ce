@@ -132,23 +132,6 @@ document.addEventListener('turbo:load', function () {
       );
     }, 1);
 
-    // Navigate to tab
-    let searchParams = new URLSearchParams(window.location.search);
-    if (searchParams.has('tab')) {
-      let tab = searchParams.get('tab');
-      $($(`[data-bs-toggle~=tab][href="#${tab}"]`)).tab('show');
-    }
-
-    // Update address bar with current tab param
-    $(parentElement)
-      .find('[data-bs-toggle~=tab]')
-      .on('shown.bs.tab', function (e) {
-        let currentTab = $(e.target).attr('href').substring(1);
-        searchParams.set('tab', currentTab);
-        let urlWithTab = `?${searchParams.toString()}`;
-        history.pushState({ turbo: true, url: urlWithTab }, '', urlWithTab);
-      });
-
     // Initialize clipboard.js
     const clipboard = new Clipboard(
       parentElement.querySelectorAll('[data-clipboard-text]')
