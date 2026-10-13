@@ -247,6 +247,8 @@ document.addEventListener('turbo:load', function () {
   - Controller specs: `sign_in(user)` from `spec/support/controller_helpers.rb` (mocks `request.env['warden']`)
   - Request specs: `include Warden::Test::Helpers` → `login_as(user)` (same as feature specs)
 - **Controller macros:** `login_as_user` in `spec/support/controller_macros.rb` mocks `authenticated?` and `current_user`
+- **Don't repeat a feature spec across similar resource views.** When testing shared behavior (e.g. the Textile form/editor), test it once on one representative page (e.g. an issue page). Don't duplicate it across notes, nodes, evidence, etc.
+- **Keep JS feature specs to a minimum.** Specs with `js: true` (Selenium + Firefox) are notably slow. Only use them for behavior that needs a real browser, and cover everything else with model, request, or non-JS feature specs.
 - **DataTables in feature specs:** Action columns often use `data-column-visible="false"`. Use `visible: :all` to find hidden links, or `execute_script` to submit forms directly.
 
 
