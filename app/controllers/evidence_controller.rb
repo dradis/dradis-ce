@@ -3,6 +3,7 @@ class EvidenceController < NestedNodeResourceController
   include ConflictResolver
   include EvidenceHelper
   include LiquidEnabledResource
+  include LockableResource
   include Mentioned
   include MultipleDestroy
   include NodesSidebar
@@ -12,6 +13,9 @@ class EvidenceController < NestedNodeResourceController
   before_action :set_or_initialize_evidence
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
+  before_action :set_form_cancel_path, only: [:new, :edit]
+  # Must run after :set_form_cancel_path; the lockout page links back to it.
+  before_action :check_edit_lock, only: :edit
 
   def show
     @issue = @evidence.issue
@@ -59,6 +63,7 @@ class EvidenceController < NestedNodeResourceController
       copy_attachments(@evidence) if @evidence.node_changed?
 
       if @evidence.save
+        @evidence.release_edit_session(current_user)
         publish_event('evidence.updated', @evidence.to_event_payload)
         check_for_edit_conflicts(@evidence, updated_at_before_save)
         format.html do
@@ -118,6 +123,10 @@ class EvidenceController < NestedNodeResourceController
     }
   end
 
+  def lockable_resource
+    @evidence
+  end
+
   # Look for the Evidence we are going to be working with based on the :id
   # passed by the user.
   def set_or_initialize_evidence
@@ -144,5 +153,9 @@ class EvidenceController < NestedNodeResourceController
     else
       "node-#{@node.id}-evidence"
     end
+  end
+
+  def set_form_cancel_path
+    @form_cancel_path = evidence_redirect_path(params[:return_to])
   end
 end
