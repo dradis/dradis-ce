@@ -2,9 +2,11 @@
   - Editing: Warn user if another user is currently editing a record
   - [entity]:
     - [future tense verb] [feature]
+  - Nodes: Add a node from the node tree
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
+    - Avatars: display a local image while Gravatar loads
     - Editor: keep the cursor in place after uploading an image
     - Combobox:
       - show inline validation errors on dropdowns that fail validation
@@ -14,7 +16,9 @@
     - [Echo entity]:
       - [future tense verb] [Echo enhancement]
   - New integrations:
-    - Calculators: Add AIVSS-SSVC
+    - Calculators:
+      - AIVSS-SSVC
+      - STRIDE
   - Integration enhancements:
     - [integration]:
       - [future tense verb] [integration enhancement]
