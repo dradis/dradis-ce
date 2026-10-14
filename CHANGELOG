@@ -1,11 +1,12 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
+  - Nodes: Add a node from the node tree
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Avatars: display a local image while Gravatar loads
+    - Editor: keep the cursor in place after uploading an image
     - Combobox:
       - show inline validation errors on dropdowns that fail validation
     - Bug tracker items:
@@ -14,7 +15,9 @@
     - [Echo entity]:
       - [future tense verb] [Echo enhancement]
   - New integrations:
-    - [integration]
+    - Calculators:
+      - AIVSS-SSVC
+      - STRIDE
   - Integration enhancements:
     - [integration]:
       - [future tense verb] [integration enhancement]
