@@ -26,6 +26,25 @@ describe 'comments' do
       expect(response.body).to include('Unsubscribe')
     end
 
+    describe 'comment count' do
+      let(:page) { Capybara.string(response.body) }
+
+      it 'hides the count when there are no comments' do
+        get_comments
+
+        expect(page).to have_css('[data-behavior~=comment-count].d-none', text: '0')
+        expect(page).not_to have_text('There have been no comments yet.')
+      end
+
+      it 'shows the count when there are comments' do
+        create_list(:comment, 2, commentable: issue)
+
+        get_comments
+
+        expect(page).to have_css('[data-behavior~=comment-count]:not(.d-none)', text: '2')
+      end
+    end
+
     describe 'subscribers' do
       let(:page) { Capybara.string(response.body) }
 
