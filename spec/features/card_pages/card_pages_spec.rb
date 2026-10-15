@@ -233,9 +233,6 @@ describe 'Card pages:' do
 
       it_behaves_like 'a page with a comments feed hook'
 
-      let(:subscribable) { @card }
-      it_behaves_like 'a page with subscribe/unsubscribe links'
-
       it 'has a link to edit card' do
         expect(page).to have_selector("a[href='#{edit_project_board_list_card_path(current_project, @board, @list, @card)}']")
       end

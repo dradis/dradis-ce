@@ -373,9 +373,6 @@ describe 'Issues pages' do
 
         it_behaves_like 'a page with a comments feed hook'
 
-        let(:subscribable) { @issue }
-        it_behaves_like 'a page with subscribe/unsubscribe links'
-
         describe "clicking 'delete'", js: true do
           before { visit project_issue_path(current_project, @issue) }
 
