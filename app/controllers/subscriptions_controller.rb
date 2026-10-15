@@ -1,15 +1,6 @@
 class SubscriptionsController < AuthenticatedController
   before_action :authorize_subscribable
 
-  layout false
-
-  def index
-    @subscriptions = subscribable.subscriptions.includes(:user)
-
-    # Used for showing/hiding subscribe and unsubscribe links
-    @subscription = @subscriptions.find { |subscription| subscription.user == current_user }
-  end
-
   def create
     subscribe
 

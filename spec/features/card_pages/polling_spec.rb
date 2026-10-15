@@ -163,10 +163,10 @@ describe 'card pages', js: true do
 
     login_to_project_as_user
     @other_user = create(:user)
-    @board      = create(:board, project: current_project)
-    @list       = create(:list, board: @board)
+    @board = create(:board, project: current_project)
+    @list = create(:list, board: @board)
     @other_list = create(:list, board: @board)
-    @card       = create(:card, list: @list)
+    @card = create(:card, list: @list)
     @other_card = create(:card, list: @list, previous_id: @card.id)
   end
 
@@ -178,7 +178,6 @@ describe 'card pages', js: true do
 
       # Wait for ajax
       find('[data-behavior~=fetch-comments] .comment-feed')
-      find('[data-behavior~=fetch-subscriptions] .subscriptions-feed')
     end
 
     let(:action) { :show }

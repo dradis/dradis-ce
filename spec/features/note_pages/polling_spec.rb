@@ -8,8 +8,8 @@ describe 'note pages', js: true do
   before do
     login_to_project_as_user
     @other_user = create(:user, :admin)
-    @node       = create(:node, project: current_project)
-    @note       = create(:note, node: @node)
+    @node = create(:node, project: current_project)
+    @note = create(:note, node: @node)
   end
 
   shared_examples 'a note page with poller' do
@@ -60,7 +60,6 @@ describe 'note pages', js: true do
 
       # Wait for ajax
       find('[data-behavior~=fetch-comments] .comment-feed')
-      find('[data-behavior~=fetch-subscriptions] .subscriptions-feed')
     end
 
     it_behaves_like 'a note page with poller'

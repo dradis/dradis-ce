@@ -49,9 +49,9 @@ describe 'evidence pages', js: true do
   before do
     login_to_project_as_user
     @other_user = create(:user)
-    @node       = create(:node, project: @project)
-    issue       = create(:issue, node: @project.issue_library)
-    @evidence   = create(:evidence, node: @node, issue: issue)
+    @node = create(:node, project: @project)
+    issue = create(:issue, node: @project.issue_library)
+    @evidence = create(:evidence, node: @node, issue: issue)
   end
 
   describe 'when I am viewing an Evidence' do
@@ -60,7 +60,6 @@ describe 'evidence pages', js: true do
 
       # Wait for ajax
       find('[data-behavior~=fetch-comments] .comment-feed')
-      find('[data-behavior~=fetch-subscriptions] .subscriptions-feed')
     end
 
     it_behaves_like 'an evidence page with poller'

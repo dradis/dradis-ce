@@ -13,13 +13,4 @@ describe 'subscriptions' do
       end.to change(Subscription, :count).by(1)
     end
   end
-
-  describe 'GET /subscriptions' do
-    it 'lists subscribers for the subscribable' do
-      get '/subscriptions',
-        params: { subscription: { subscribable_type: 'Issue', subscribable_id: issue.id } }
-
-      expect(response).to have_http_status(:ok)
-    end
-  end
 end
