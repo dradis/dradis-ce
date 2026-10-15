@@ -1,4 +1,3 @@
+<% count = @comment.commentable.comments.count %>
 $("#<%= dom_id(@comment) %>").parent().remove()
-<% if @comment.commentable.comments.empty? %>
-  $('[data-notice~=no-comments]').show()
-<% end %>
+$('[data-behavior~=comment-count]').text(<%= count %>).toggleClass('d-none', <%= count.zero? %>)

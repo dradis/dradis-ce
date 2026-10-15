@@ -1,10 +1,17 @@
+<% comment_count = @comments.size %>
 <% if @commentable.respond_to?(:project) %>
-  <h4 class="d-flex header-underline">Comments <span class="badge bg-primary text-white ms-2" id="comment-count"><%= @comments.count %></span></h4>
+  <h4 class="d-flex header-underline">
+    Comments <span class="badge bg-primary text-white ms-2 <%= 'd-none' if comment_count.zero? %>" data-behavior="comment-count"><%= comment_count %></span>
+    <%= render 'subscriptions/header', subscribable: @commentable, subscription: @subscription, subscriptions: @subscriptions %>
+  </h4>
   <%= render 'comments/feed' %>
 <% else %>
   <div class="card">
     <div class="card-header bg-secondary">
-      <div class="card-title">Comments <span id="comment-count">(<%= @comments.count %>)</span></div>
+      <div class="card-title d-flex align-items-center">
+        Comments <span class="badge bg-primary text-white ms-2 <%= 'd-none' if comment_count.zero? %>" data-behavior="comment-count"><%= comment_count %></span>
+        <%= render 'subscriptions/header', subscribable: @commentable, subscription: @subscription, subscriptions: @subscriptions %>
+      </div>
     </div>
     <div class="card-body">
       <%= render 'comments/feed' %>

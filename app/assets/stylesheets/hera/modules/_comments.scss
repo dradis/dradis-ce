@@ -53,10 +53,80 @@
   }
 }
 
-.subscriptions-feed {
+.subscribers {
+  margin-right: 0.5rem;
+
+  .dropdown-item-text {
+    white-space: nowrap;
+
+    .gravatar img {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .dropdown-menu {
+    text-transform: none;
+  }
+
   .gravatar {
     float: none;
+    margin-right: 0;
   }
+
+  .subscribers-overflow {
+    align-items: center;
+    background-color: var(--secondary-bg-strong);
+    border-radius: 50%;
+    color: var(--text-default);
+    display: inline-flex;
+    font-size: 0.75rem;
+    font-weight: bold;
+    height: 1.75rem;
+    justify-content: center;
+    width: 1.75rem;
+  }
+
+  .subscribers-stack {
+    align-items: center;
+    display: flex;
+
+    > * {
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px var(--primary-bg);
+      transition: margin-left 0.2s ease-in-out;
+    }
+
+    > * + * {
+      margin-left: -0.5rem;
+    }
+  }
+
+  .subscribers-toggle {
+    background: none;
+    border: 0;
+    border-radius: 1rem;
+    cursor: pointer;
+    padding: 0;
+
+    &:focus-visible {
+      outline: none;
+
+      &:not([aria-expanded=true]) {
+        box-shadow: $focus-shadow;
+      }
+    }
+
+    &:hover .subscribers-stack > * + * {
+      margin-left: -0.25rem;
+    }
+  }
+}
+
+// Turbo marks the frame busy while subscribing, so a second click can't
+// send a duplicate request
+.subscriptions-header[busy] a {
+  opacity: 0.65;
+  pointer-events: none;
 }
 
 // tribute @-mentions plugin styles

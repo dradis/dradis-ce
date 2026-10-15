@@ -7,11 +7,11 @@ submit.attr('disabled', false).val(submit.data('disable-with'))
 
 $('#<%= dom_id(@comment) %>').find('.actions').addClass('current_user')
 
-$('[data-notice~=no-comments]').hide()
+<% count = @comment.commentable.comments.count %>
+$('[data-behavior~=comment-count]').text(<%= count %>).toggleClass('d-none', <%= count.zero? %>)
 
 $('[data-behavior~=content-textile]').each(function() {
   new QuoteSelector(this);
 });
 
-$('[data-behavior~=subscribe]').addClass('d-none');
-$('[data-behavior~=unsubscribe]').removeClass('d-none');
+$('[data-behavior~=subscriptions-header]').replaceWith("<%= j render 'subscriptions/header', subscribable: @comment.commentable, subscription: @subscription, subscriptions: @subscriptions %>")

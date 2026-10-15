@@ -31,7 +31,6 @@
 //= require hera/modules/notifications
 //= require hera/modules/rtp_validation
 //= require hera/modules/state_button
-//= require hera/modules/subscriptions
 
 //= require hera/modules/datatable/main
 //= require hera/modules/datatable/checkbox

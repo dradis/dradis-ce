@@ -358,10 +358,9 @@ class ActivitiesPoller {
     // loaded/refreshed the page just after the comment was posted:
     // `commentId` is a global set by activities/poll.js.erb
     if (commentableId === this.modelId && !$(`#comment_${commentId}`).length) {
-      $('[data-notice~=no-comments]').hide();
       $('[data-behavior~=comment-list]').append(content);
-      const count = parseInt($('#comment-count').html());
-      $('#comment-count').html(count + 1);
+      const $count = $('[data-behavior~=comment-count]');
+      $count.html(parseInt($count.html()) + 1).removeClass('d-none');
     }
   }
 
@@ -374,14 +373,12 @@ class ActivitiesPoller {
     const comment = $(`#comment_${commentId}`);
     if (comment.length) {
       comment.remove();
-      let count = parseInt($('#comment-count').html());
+      const $count = $('[data-behavior~=comment-count]');
+      let count = parseInt($count.html());
       if (count > 0) {
         count = count - 1;
       }
-      $('#comment-count').html(count);
-      if (count === 0) {
-        $('[data-notice~=no-comments]').removeClass('d-none');
-      }
+      $count.html(count).toggleClass('d-none', count === 0);
     }
   }
 

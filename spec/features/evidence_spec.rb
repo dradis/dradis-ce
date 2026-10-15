@@ -47,9 +47,6 @@ describe 'evidence' do
 
     it_behaves_like 'a page with a comments feed hook'
 
-    let(:subscribable) { @evidence }
-    it_behaves_like 'a page with subscribe/unsubscribe links'
-
     describe "clicking \'delete\'", js: true do
       let(:submit_form) do
         page.accept_confirm do
