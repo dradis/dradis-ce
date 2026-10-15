@@ -122,6 +122,13 @@
   }
 }
 
+// Turbo marks the frame busy while subscribing, so a second click can't
+// send a duplicate request
+.subscriptions-header[busy] a {
+  opacity: 0.65;
+  pointer-events: none;
+}
+
 // tribute @-mentions plugin styles
 .tribute-container {
   position: absolute;

@@ -8,7 +8,7 @@
    } %>
 
 <%= turbo_frame_tag dom_id(subscribable, :subscriptions),
-      class: 'actions d-flex align-items-center ms-auto pt-1',
+      class: 'actions d-flex align-items-center ms-auto pt-1 subscriptions-header',
       data: { behavior: 'subscriptions-header' } do %>
   <% if subscribers.any? %>
     <% hidden_count = subscribers.size - max_avatars %>

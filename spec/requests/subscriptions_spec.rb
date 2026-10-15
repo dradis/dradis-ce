@@ -28,6 +28,17 @@ describe 'subscriptions' do
       expect(page).to have_link('Unsubscribe')
       expect(page).to have_css('[data-behavior~=subscribers-toggle] .gravatar', count: 1)
     end
+
+    it 'renders the comments header when the user is already subscribed' do
+      Subscription.subscribe(user: @logged_in_as, to: issue)
+
+      expect do
+        post '/subscriptions', params: params, headers: frame_headers
+      end.not_to change(Subscription, :count)
+
+      expect(response).to have_http_status(:ok)
+      expect(Capybara.string(response.body)).to have_link('Unsubscribe')
+    end
   end
 
   describe 'DELETE /subscriptions/:id' do

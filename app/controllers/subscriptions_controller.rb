@@ -36,10 +36,9 @@ class SubscriptionsController < AuthenticatedController
     end
   end
 
+  # Ignores duplicates if they already subscribed, e.g. in another tab
   def subscribe
-    subscription = Subscription.new(subscription_params)
-    subscription.user = current_user
-    subscription.save
+    Subscription.subscribe(user: current_user, to: subscribable)
   end
 
   def subscribable
