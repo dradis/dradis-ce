@@ -6,7 +6,7 @@
      }
    } %>
 
-<span class="actions d-flex align-items-center ms-auto pt-1" data-behavior="subscriptions-header">
+<span class="actions d-flex align-items-center ms-auto pt-1" data-behavior="subscriptions-header" data-subscribed="<%= subscription.present? %>">
   <% if subscriptions.any? %>
     <% names = subscriptions.map { |subscription| subscription.user&.name }.compact %>
     <% hidden_count = names.size - max_avatars %>

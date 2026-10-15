@@ -1,16 +1,13 @@
-$(document).on('dradis:fetch', '[data-behavior~=fetch-subscriptions]', function(event) {
-  var fetchContainer = event.target;
+// The dots-menu Subscribe/Unsubscribe items live in fragment caches shared by
+// every user, so both are rendered hidden. The comments header is rendered per
+// user, so use it to reveal the right one.
+$(document).on('dradis:fetch', '[data-behavior~=fetch-comments]', (event) => {
+  const header = event.target.querySelector('[data-behavior~=subscriptions-header]');
+  if (!header) return;
 
-  fetchContainer.querySelectorAll('[data-behavior~=subscription-actions]').forEach(function(item) {
-    // Vanilla js returns a string while jquery returns a boolean instead
-    if (item.dataset.subscribed === 'true') {
-      document.querySelectorAll('[data-behavior=unsubscribe]').forEach(function(item) {
-        item.classList.remove('d-none');
-      });
-    } else {
-      document.querySelectorAll('[data-behavior=subscribe]').forEach(function(item) {
-        item.classList.remove('d-none');
-      });
-    }
+  // dataset returns a string, not a boolean
+  const behavior = header.dataset.subscribed === 'true' ? 'unsubscribe' : 'subscribe';
+  document.querySelectorAll(`[data-behavior~=${behavior}]`).forEach((item) => {
+    item.classList.remove('d-none');
   });
 });
