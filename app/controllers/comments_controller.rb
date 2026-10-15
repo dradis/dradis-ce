@@ -11,6 +11,10 @@ class CommentsController < AuthenticatedController
 
   def index
     @comments = commentable.comments.includes(:inline_thread, :user)
+    @subscriptions = commentable.subscriptions.includes(:user)
+
+    # Used for showing the subscribe or unsubscribe link
+    @subscription = @subscriptions.find { |subscription| subscription.user == current_user }
   end
 
   def create

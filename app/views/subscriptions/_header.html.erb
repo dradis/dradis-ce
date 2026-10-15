@@ -1,0 +1,60 @@
+<% max_avatars = 4 %>
+<% subscription_params = {
+     subscription: {
+       subscribable_type: subscribable.class.to_s,
+       subscribable_id: subscribable.id
+     }
+   } %>
+
+<span class="actions d-flex align-items-center ms-auto pt-1" data-behavior="subscriptions-header">
+  <% if subscriptions.any? %>
+    <% names = subscriptions.map { |subscription| subscription.user&.name }.compact %>
+    <% hidden_count = names.size - max_avatars %>
+    <% names_summary = hidden_count > 0 ? [*names.first(max_avatars), pluralize(hidden_count, 'other')] : names %>
+
+    <div class="action dropdown subscribers" data-behavior="subscribers">
+      <button class="subscribers-toggle"
+              type="button"
+              aria-expanded="false"
+              aria-label="Show all <%= pluralize(subscriptions.size, 'subscriber') %>"
+              data-behavior="subscribers-toggle"
+              data-bs-toggle="dropdown">
+        <span class="subscribers-stack" data-bs-placement="top" data-bs-toggle="tooltip" title="<%= names_summary.to_sentence %>">
+          <% subscriptions.first(max_avatars).each do |subscription| %>
+            <%= avatar_image(subscription.user, size: 28, title: nil) %>
+          <% end %>
+          <% if subscriptions.size > max_avatars %>
+            <span class="subscribers-overflow" data-behavior="subscribers-overflow">
+              +<%= subscriptions.size - max_avatars %>
+            </span>
+          <% end %>
+        </span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><h6 class="dropdown-header"><%= pluralize(subscriptions.size, 'subscriber') %></h6></li>
+        <% subscriptions.each do |subscription| %>
+          <li>
+            <span class="dropdown-item-text">
+              <%= avatar_image(subscription.user, size: 24, include_name: true) %>
+              <% if subscription.user == current_user %>
+                <span class="text-muted">(you)</span>
+              <% end %>
+            </span>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="action">
+    <% if subscription %>
+      <%= link_to main_app.subscription_path(subscribable, subscription_params), method: :delete do %>
+        <i class="fa-solid fa-bell-slash fa-fw"></i> Unsubscribe
+      <% end %>
+    <% else %>
+      <%= link_to main_app.subscriptions_path(subscription_params), method: :post do %>
+        <i class="fa-solid fa-bell fa-fw"></i> Subscribe
+      <% end %>
+    <% end %>
+  </div>
+</span>
