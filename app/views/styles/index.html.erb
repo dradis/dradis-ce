@@ -18,7 +18,6 @@
     <a href="#icons" class="nav-link">Icons</a>
     <a href="#modals" class="nav-link">Modals</a>
     <a href="#toolbar" class="nav-link">Rich Toolbar</a>
-    <a href="#subscribers" class="nav-link">Subscribers</a>
     <a href="#tables" class="nav-link">Tables</a>
     <a href="#tabs-pills" class="nav-link">Tabs & Pills</a>
     <a href="#input" class="nav-link">Text Input with Inset Button</a>
@@ -1281,76 +1280,6 @@
   data-behavior="rich-toolbar" 
   data-rich-toolbar="defaults fields image">
 </textarea>', 'html').html_safe %>
-  </div>
-</div>
-
-<!-- Subscribers -->
-<div class="content-container">
-  <div class="scroll-offset" id="subscribers"></div>
-  <div class="style-header">
-    <h4 class="header-underline">Subscribers</h4>
-    <a class="reveal-code" data-bs-toggle="collapse" href="#subscribers-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
-  </div>
-  <div class="style-example">
-    <p>Subscribing to a record notifies you about new comments, so the control lives in the Comments header. Subscribers show as up to 4 stacked avatars, with a "+N" for the rest. Hovering the stack lists the names; clicking it opens the full list. With no subscribers, only the Subscribe link shows.</p>
-
-    <strong>No subscribers, no comments</strong>
-    <h4 class="d-flex header-underline mt-2">
-      Comments
-      <span class="actions d-flex align-items-center ms-auto pt-1">
-        <div class="action">
-          <a href="#"><i class="fa-solid fa-bell fa-fw"></i> Subscribe</a>
-        </div>
-      </span>
-    </h4>
-
-    <strong class="d-block mt-4">Subscribed, with more than 4 subscribers</strong>
-    <h4 class="d-flex header-underline mt-2">
-      Comments <span class="badge bg-primary text-white ms-2">3</span>
-      <span class="actions d-flex align-items-center ms-auto pt-1">
-        <div class="action dropdown subscribers">
-          <button class="subscribers-toggle" type="button" aria-expanded="false" aria-label="Show all 6 subscribers" data-bs-toggle="dropdown">
-            <span class="subscribers-stack" data-bs-placement="top" data-bs-toggle="tooltip" title="Ana Lopez, Ben Carter, Chloe Kim, Dev Patel, and 2 others">
-              <% 4.times do %>
-                <%= avatar_image(current_user, size: 28, title: nil) %>
-              <% end %>
-              <span class="subscribers-overflow">+2</span>
-            </span>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><h6 class="dropdown-header">6 subscribers</h6></li>
-            <% ['Ana Lopez', 'Ben Carter', 'Chloe Kim', 'Dev Patel', 'Eli Moss', 'Fay Wong'].each do |name| %>
-              <li><span class="dropdown-item-text"><%= avatar_image(current_user, size: 24, title: nil) %> <%= name %></span></li>
-            <% end %>
-          </ul>
-        </div>
-        <div class="action">
-          <a href="#"><i class="fa-solid fa-bell-slash fa-fw"></i> Unsubscribe</a>
-        </div>
-      </span>
-    </h4>
-  </div>
-
-  <div class="style-code-wrapper collapse" id="subscribers-code">
-    <%= highlight_code('
-<!-- Rendered by app/views/subscriptions/_header.html.erb -->
-<span class="actions d-flex align-items-center ms-auto pt-1">
-  <div class="action dropdown subscribers">
-    <button class="subscribers-toggle" type="button" data-bs-toggle="dropdown">
-      <span class="subscribers-stack" data-bs-toggle="tooltip" title="Ana Lopez, Ben Carter, ...">
-        <span class="gravatar"><img ...></span> <!-- up to 4 -->
-        <span class="subscribers-overflow">+2</span>
-      </span>
-    </button>
-    <ul class="dropdown-menu dropdown-menu-end">
-      <li><h6 class="dropdown-header">6 subscribers</h6></li>
-      <li><span class="dropdown-item-text">...</span></li>
-    </ul>
-  </div>
-  <div class="action">
-    <a href="#"><i class="fa-solid fa-bell fa-fw"></i> Subscribe</a>
-  </div>
-</span>', 'html').html_safe %>
   </div>
 </div>
 
