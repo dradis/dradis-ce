@@ -10,21 +10,6 @@ describe 'comments' do
     let(:get_comments) { get '/comments', params: { comment: comment_params } }
     let(:page) { Capybara.string(response.body) }
 
-    it 'shows a subscribe link when the user is not subscribed' do
-      get_comments
-
-      expect(page).to have_link('Subscribe')
-      expect(page).not_to have_link('Unsubscribe')
-    end
-
-    it 'shows an unsubscribe link when the user is subscribed' do
-      Subscription.subscribe(user: @logged_in_as, to: issue)
-
-      get_comments
-
-      expect(page).to have_link('Unsubscribe')
-    end
-
     describe 'comment count' do
       it 'hides the count when there are no comments' do
         get_comments
@@ -55,6 +40,8 @@ describe 'comments' do
         let(:subscribers) { [] }
 
         it 'only shows the subscribe link' do
+          expect(page).to have_link('Subscribe')
+          expect(page).not_to have_link('Unsubscribe')
           expect(page).not_to have_css('[data-behavior~=subscribers]')
         end
       end
@@ -84,7 +71,8 @@ describe 'comments' do
       context 'when the current user is subscribed' do
         let(:subscribers) { [@logged_in_as] }
 
-        it 'marks the current user in the dropdown' do
+        it 'shows the unsubscribe link and marks the current user in the dropdown' do
+          expect(page).to have_link('Unsubscribe')
           expect(page).to have_css('[data-behavior~=subscribers] .dropdown-item-text', text: /#{Regexp.escape(@logged_in_as.name)}\s+\(you\)/)
         end
       end

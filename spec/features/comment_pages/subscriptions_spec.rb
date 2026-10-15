@@ -8,24 +8,7 @@ describe 'comment subscriptions', js: true do
     find('[data-behavior~=subscriptions-header]')
   end
 
-  it 'subscribes the user in the comments header after they post a comment' do
-    within('[data-behavior~=subscriptions-header]') do
-      expect(page).to have_link('Subscribe')
-      expect(page).not_to have_css('[data-behavior~=subscribers]')
-    end
-
-    within('[data-behavior~=add-comment]') do
-      find('textarea').set('A new comment')
-      click_button 'Add comment'
-    end
-
-    within('[data-behavior~=subscriptions-header]') do
-      expect(page).to have_link('Unsubscribe')
-      expect(page).to have_css('[data-behavior~=subscribers-toggle] .gravatar', count: 1)
-    end
-  end
-
-  it 'subscribes and unsubscribes from the comments header without reloading the page' do
+  it 'updates the comments header in place when subscribing, unsubscribing and commenting' do
     page.execute_script('window.notReloaded = true')
 
     within('[data-behavior~=subscriptions-header]') do
@@ -39,5 +22,15 @@ describe 'comment subscriptions', js: true do
     end
 
     expect(page.evaluate_script('window.notReloaded')).to be(true)
+
+    within('[data-behavior~=add-comment]') do
+      find('textarea').set('A new comment')
+      click_button 'Add comment'
+    end
+
+    within('[data-behavior~=subscriptions-header]') do
+      expect(page).to have_link('Unsubscribe')
+      expect(page).to have_css('[data-behavior~=subscribers-toggle] .gravatar', count: 1)
+    end
   end
 end

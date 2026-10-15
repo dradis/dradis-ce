@@ -54,10 +54,13 @@ describe 'subscriptions' do
       expect(page).not_to have_css('[data-behavior~=subscribers]')
     end
 
-    it 'does nothing when the user is no longer subscribed' do
-      delete "/subscriptions/#{issue.id}", params: params
+    it 'renders the comments header when the user is no longer subscribed' do
+      expect do
+        delete "/subscriptions/#{issue.id}", params: params, headers: frame_headers
+      end.not_to change(Subscription, :count)
 
-      expect(response).to redirect_to(root_path)
+      expect(response).to have_http_status(:ok)
+      expect(Capybara.string(response.body)).to have_link('Subscribe')
     end
   end
 end
