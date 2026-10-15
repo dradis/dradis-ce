@@ -1,10 +1,12 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
+  - Comments: Move subscribing into the comments header and show subscribers as stacked avatars
   - Nodes: Add a node from the node tree
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
+    - Comments: update the comment count when you post or delete a comment
     - Avatars: display a local image while Gravatar loads
     - Editor: keep the cursor in place after uploading an image
     - Combobox:
