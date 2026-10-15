@@ -15,4 +15,3 @@ $('[data-behavior~=content-textile]').each(function() {
 });
 
 $('[data-behavior~=subscriptions-header]').replaceWith("<%= j render 'subscriptions/header', subscribable: @comment.commentable, subscription: @subscription, subscriptions: @subscriptions %>")
-document.querySelectorAll('[data-behavior~=subscriptions-header] [data-bs-toggle~=tooltip]').forEach((element) => new bootstrap.Tooltip(element));

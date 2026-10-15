@@ -79,10 +79,6 @@ describe 'comments' do
         it 'lists every subscriber in the dropdown' do
           expect(page).to have_css('[data-behavior~=subscribers] .dropdown-item-text', count: 6)
         end
-
-        it 'summarises the remaining subscribers in the tooltip' do
-          expect(page).to have_css('[data-behavior~=subscribers] [data-bs-toggle=tooltip][title$="and 2 others"]')
-        end
       end
 
       context 'when the current user is subscribed' do

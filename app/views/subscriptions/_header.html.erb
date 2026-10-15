@@ -12,8 +12,6 @@
       data: { behavior: 'subscriptions-header' } do %>
   <% if subscribers.any? %>
     <% hidden_count = subscribers.size - max_avatars %>
-    <% names = subscribers.map(&:name) %>
-    <% names_summary = hidden_count > 0 ? [*names.first(max_avatars), pluralize(hidden_count, 'other')] : names %>
 
     <div class="action dropdown subscribers" data-behavior="subscribers">
       <button class="subscribers-toggle"
@@ -22,7 +20,7 @@
               aria-label="Show all <%= pluralize(subscribers.size, 'subscriber') %>"
               data-behavior="subscribers-toggle"
               data-bs-toggle="dropdown">
-        <span class="subscribers-stack" data-bs-placement="top" data-bs-toggle="tooltip" title="<%= names_summary.to_sentence %>">
+        <span class="subscribers-stack">
           <% subscribers.first(max_avatars).each do |subscriber| %>
             <%= avatar_image(subscriber, size: 28, title: nil) %>
           <% end %>

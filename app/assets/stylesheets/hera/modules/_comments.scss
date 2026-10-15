@@ -109,8 +109,11 @@
     padding: 0;
 
     &:focus-visible {
-      box-shadow: $focus-shadow;
       outline: none;
+
+      &:not([aria-expanded=true]) {
+        box-shadow: $focus-shadow;
+      }
     }
 
     &:hover .subscribers-stack > * + * {
