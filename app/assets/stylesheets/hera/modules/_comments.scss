@@ -56,11 +56,6 @@
 .subscribers {
   margin-right: 0.5rem;
 
-  .gravatar {
-    float: none;
-    margin-right: 0;
-  }
-
   .dropdown-item-text {
     white-space: nowrap;
 
@@ -71,6 +66,11 @@
 
   .dropdown-menu {
     text-transform: none;
+  }
+
+  .gravatar {
+    float: none;
+    margin-right: 0;
   }
 
   .subscribers-overflow {

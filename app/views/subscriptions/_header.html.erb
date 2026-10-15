@@ -1,4 +1,5 @@
 <% max_avatars = 4 %>
+<% subscribers = subscriptions.filter_map(&:user) %>
 <% subscription_params = {
      subscription: {
        subscribable_type: subscribable.class.to_s,
@@ -6,37 +7,39 @@
      }
    } %>
 
-<span class="actions d-flex align-items-center ms-auto pt-1" data-behavior="subscriptions-header">
-  <% if subscriptions.any? %>
-    <% names = subscriptions.map { |subscription| subscription.user&.name }.compact %>
-    <% hidden_count = names.size - max_avatars %>
+<%= turbo_frame_tag dom_id(subscribable, :subscriptions),
+      class: 'actions d-flex align-items-center ms-auto pt-1',
+      data: { behavior: 'subscriptions-header' } do %>
+  <% if subscribers.any? %>
+    <% hidden_count = subscribers.size - max_avatars %>
+    <% names = subscribers.map(&:name) %>
     <% names_summary = hidden_count > 0 ? [*names.first(max_avatars), pluralize(hidden_count, 'other')] : names %>
 
     <div class="action dropdown subscribers" data-behavior="subscribers">
       <button class="subscribers-toggle"
               type="button"
               aria-expanded="false"
-              aria-label="Show all <%= pluralize(subscriptions.size, 'subscriber') %>"
+              aria-label="Show all <%= pluralize(subscribers.size, 'subscriber') %>"
               data-behavior="subscribers-toggle"
               data-bs-toggle="dropdown">
         <span class="subscribers-stack" data-bs-placement="top" data-bs-toggle="tooltip" title="<%= names_summary.to_sentence %>">
-          <% subscriptions.first(max_avatars).each do |subscription| %>
-            <%= avatar_image(subscription.user, size: 28, title: nil) %>
+          <% subscribers.first(max_avatars).each do |subscriber| %>
+            <%= avatar_image(subscriber, size: 28, title: nil) %>
           <% end %>
-          <% if subscriptions.size > max_avatars %>
+          <% if hidden_count > 0 %>
             <span class="subscribers-overflow" data-behavior="subscribers-overflow">
-              +<%= subscriptions.size - max_avatars %>
+              +<%= hidden_count %>
             </span>
           <% end %>
         </span>
       </button>
       <ul class="dropdown-menu dropdown-menu-end">
-        <li><h6 class="dropdown-header"><%= pluralize(subscriptions.size, 'subscriber') %></h6></li>
-        <% subscriptions.each do |subscription| %>
+        <li><span class="dropdown-header"><%= pluralize(subscribers.size, 'subscriber') %></span></li>
+        <% subscribers.each do |subscriber| %>
           <li>
             <span class="dropdown-item-text">
-              <%= avatar_image(subscription.user, size: 24, include_name: true) %>
-              <% if subscription.user == current_user %>
+              <%= avatar_image(subscriber, size: 24, include_name: true, alt: '', title: nil) %>
+              <% if subscriber == current_user %>
                 <span class="text-muted">(you)</span>
               <% end %>
             </span>
@@ -48,13 +51,13 @@
 
   <div class="action">
     <% if subscription %>
-      <%= link_to main_app.subscription_path(subscribable, subscription_params), method: :delete do %>
+      <%= link_to main_app.subscription_path(subscribable, subscription_params), data: { turbo_method: :delete } do %>
         <i class="fa-solid fa-bell-slash fa-fw"></i> Unsubscribe
       <% end %>
     <% else %>
-      <%= link_to main_app.subscriptions_path(subscription_params), method: :post do %>
+      <%= link_to main_app.subscriptions_path(subscription_params), data: { turbo_method: :post } do %>
         <i class="fa-solid fa-bell fa-fw"></i> Subscribe
       <% end %>
     <% end %>
   </div>
-</span>
+<% end %>

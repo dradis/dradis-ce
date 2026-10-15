@@ -25,18 +25,19 @@ describe 'comment subscriptions', js: true do
     end
   end
 
-  it 'subscribes from the comments header and keeps the dots menu in sync' do
-    within('[data-behavior~=subscriptions-header]') { click_link 'Subscribe' }
+  it 'subscribes and unsubscribes from the comments header without reloading the page' do
+    page.execute_script('window.notReloaded = true')
 
-    expect(page).to have_text('Subscribed!')
     within('[data-behavior~=subscriptions-header]') do
+      click_link 'Subscribe'
       expect(page).to have_link('Unsubscribe')
+      expect(page).to have_css('[data-behavior~=subscribers-toggle] .gravatar', count: 1)
+
+      click_link 'Unsubscribe'
+      expect(page).to have_link('Subscribe')
+      expect(page).not_to have_css('[data-behavior~=subscribers]')
     end
 
-    within('.actions', match: :first) do
-      find('.dots-dropdown').click
-      expect(page).to have_link('Unsubscribe')
-      expect(page).not_to have_link('Subscribe', exact: true)
-    end
+    expect(page.evaluate_script('window.notReloaded')).to be(true)
   end
 end

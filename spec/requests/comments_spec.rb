@@ -4,31 +4,28 @@ describe 'comments' do
   before { login_to_project_as_user }
 
   let(:issue) { create(:issue, node: @project.issue_library) }
+  let(:comment_params) { { commentable_type: 'Issue', commentable_id: issue.id } }
 
   describe 'GET /comments' do
-    let(:get_comments) do
-      get '/comments',
-        params: { comment: { commentable_type: 'Issue', commentable_id: issue.id } }
-    end
+    let(:get_comments) { get '/comments', params: { comment: comment_params } }
+    let(:page) { Capybara.string(response.body) }
 
-    it 'shows a subscribe button when the user is not subscribed' do
+    it 'shows a subscribe link when the user is not subscribed' do
       get_comments
 
-      expect(response.body).to include('Subscribe')
-      expect(response.body).not_to include('Unsubscribe')
+      expect(page).to have_link('Subscribe')
+      expect(page).not_to have_link('Unsubscribe')
     end
 
-    it 'shows an unsubscribe button when the user is subscribed' do
+    it 'shows an unsubscribe link when the user is subscribed' do
       Subscription.subscribe(user: @logged_in_as, to: issue)
 
       get_comments
 
-      expect(response.body).to include('Unsubscribe')
+      expect(page).to have_link('Unsubscribe')
     end
 
     describe 'comment count' do
-      let(:page) { Capybara.string(response.body) }
-
       it 'hides the count when there are no comments' do
         get_comments
 
@@ -46,8 +43,6 @@ describe 'comments' do
     end
 
     describe 'subscribers' do
-      let(:page) { Capybara.string(response.body) }
-
       before do
         subscribers.each do |user|
           Subscription.subscribe(user: user, to: issue)
@@ -57,9 +52,9 @@ describe 'comments' do
       end
 
       context 'when there are no subscribers' do
-        let(:subscribers) { create_list(:user, 0) }
+        let(:subscribers) { [] }
 
-        it 'only shows the subscribe button' do
+        it 'only shows the subscribe link' do
           expect(page).not_to have_css('[data-behavior~=subscribers]')
         end
       end
@@ -97,6 +92,26 @@ describe 'comments' do
           expect(page).to have_css('[data-behavior~=subscribers] .dropdown-item-text', text: /#{Regexp.escape(@logged_in_as.name)}\s+\(you\)/)
         end
       end
+    end
+  end
+
+  describe 'POST /comments' do
+    it 'shows the updated comment count' do
+      create(:comment, commentable: issue)
+
+      post '/comments', params: { comment: comment_params.merge(content: 'New comment') }, xhr: true
+
+      expect(response.body).to include(".text(2).toggleClass('d-none', false)")
+    end
+  end
+
+  describe 'DELETE /comments/:id' do
+    it 'hides the comment count after the last comment is deleted' do
+      comment = create(:comment, commentable: issue, user: @logged_in_as)
+
+      delete "/comments/#{comment.id}", xhr: true
+
+      expect(response.body).to include(".text(0).toggleClass('d-none', true)")
     end
   end
 end
