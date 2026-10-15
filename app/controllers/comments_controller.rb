@@ -11,10 +11,7 @@ class CommentsController < AuthenticatedController
 
   def index
     @comments = commentable.comments.includes(:inline_thread, :user)
-    @subscriptions = commentable.subscriptions.includes(:user)
-
-    # Used for showing the subscribe or unsubscribe link
-    @subscription = @subscriptions.find { |subscription| subscription.user == current_user }
+    load_subscriptions
   end
 
   def create
@@ -28,6 +25,9 @@ class CommentsController < AuthenticatedController
         user: current_user
       )
     end
+
+    # Posting a comment subscribes its author, so the header needs refreshing
+    load_subscriptions
   end
 
   def update
@@ -72,6 +72,13 @@ class CommentsController < AuthenticatedController
     else
       raise 'Invalid commentable'
     end
+  end
+
+  def load_subscriptions
+    @subscriptions = commentable.subscriptions.includes(:user)
+
+    # Used for showing the subscribe or unsubscribe link
+    @subscription = @subscriptions.find { |subscription| subscription.user == current_user }
   end
 
   # Overwrite method from concerns/mentioned.rb

@@ -16,3 +16,6 @@ $('[data-behavior~=content-textile]').each(function() {
 
 $('[data-behavior~=subscribe]').addClass('d-none');
 $('[data-behavior~=unsubscribe]').removeClass('d-none');
+
+$('[data-behavior~=subscriptions-header]').replaceWith("<%= j render 'subscriptions/header', subscribable: @comment.commentable, subscription: @subscription, subscriptions: @subscriptions %>")
+document.querySelectorAll('[data-behavior~=subscriptions-header] [data-bs-toggle~=tooltip]').forEach((element) => new bootstrap.Tooltip(element));
