@@ -1,6 +1,6 @@
 <% if @commentable.respond_to?(:project) %>
   <h4 class="d-flex header-underline">
-    Comments <span class="badge bg-primary text-white ms-2 <%= 'd-none' if @comments.empty? %>" data-behavior="comment-count" id="comment-count"><%= @comments.size %></span>
+    Comments <span class="badge bg-primary text-white ms-2 <%= 'd-none' if @comments.empty? %>" data-behavior="comment-count"><%= @comments.size %></span>
     <%= render 'subscriptions/header', subscribable: @commentable, subscription: @subscription, subscriptions: @subscriptions %>
   </h4>
   <%= render 'comments/feed' %>
@@ -8,7 +8,7 @@
   <div class="card">
     <div class="card-header bg-secondary">
       <div class="card-title d-flex align-items-center">
-        Comments <span class="badge bg-primary text-white ms-2 <%= 'd-none' if @comments.empty? %>" data-behavior="comment-count" id="comment-count"><%= @comments.size %></span>
+        Comments <span class="badge bg-primary text-white ms-2 <%= 'd-none' if @comments.empty? %>" data-behavior="comment-count"><%= @comments.size %></span>
         <%= render 'subscriptions/header', subscribable: @commentable, subscription: @subscription, subscriptions: @subscriptions %>
       </div>
     </div>

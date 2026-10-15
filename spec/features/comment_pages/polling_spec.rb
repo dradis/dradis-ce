@@ -18,7 +18,7 @@ describe 'comment pages', js: true do
           expect(page).to have_selector("#comment_#{@new_comment.id}") # , visible: :all)
         end
 
-        expect(find('#comment-count').text.to_i).to eq(2)
+        expect(page).to have_selector('[data-behavior~=comment-count]', text: '2')
       end
     end
 
@@ -48,7 +48,7 @@ describe 'comment pages', js: true do
           expect(page).not_to have_selector("#comment_#{@comment.id}")
         end
 
-        expect(find('#comment-count').text.to_i).to eq(0)
+        expect(page).not_to have_selector('[data-behavior~=comment-count]')
       end
     end
 
