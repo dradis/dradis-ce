@@ -151,9 +151,21 @@ body:not(.has-sub-nav) {
     }
 
     .page-tips {
+      // !important to override the .bg-info utility's !important background
       .bg-info {
-        padding: calc(var(--padding) / 2);
+        background-color: var(--secondary-bg) !important;
+        border: 1px solid var(--border-color);
         border-radius: $border-radius;
+        color: var(--text-default);
+        padding: calc(var(--padding) / 2);
+
+        a:not(.btn) {
+          color: var(--tips-link);
+
+          &:hover {
+            color: var(--tips-link-hover);
+          }
+        }
       }
     }
 

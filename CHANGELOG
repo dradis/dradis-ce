@@ -5,6 +5,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
+    - Sidebar tips: tone down the tips box in dark mode and keep its links readable
     - Avatars: display a local image while Gravatar loads
     - Editor: keep the cursor in place after uploading an image
     - Combobox:
