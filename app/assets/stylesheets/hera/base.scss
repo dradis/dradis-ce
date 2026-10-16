@@ -55,6 +55,18 @@ a {
   font-size: 0.9rem;
 }
 
+.alert {
+  a:not(.btn) {
+    color: inherit;
+    text-decoration: underline;
+
+    &:hover {
+      color: inherit;
+      text-decoration-thickness: 0.15em;
+    }
+  }
+}
+
 .alert-danger {
   background-color: $red-100 !important;
   border: 1px solid $red-200;
