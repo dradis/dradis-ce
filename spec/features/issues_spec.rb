@@ -81,7 +81,7 @@ describe 'Issues pages' do
               with: "#[Title]#\nRspec issue\n\n#[Description]#\nNew description\n\n"
           end
 
-          it 'creates a new Issue under the Issue library with the right Category and Author'  do
+          it 'creates a new Issue under the Issue library with the right Category and Author' do
             expect { submit_form }.to change { current_project.issues.count }.by(1)
             issue = current_project.issues.last
             expect(current_path).to eq(project_issue_path(current_project, issue))
@@ -433,7 +433,7 @@ describe 'Issues pages' do
 
           visit project_issue_revisions_path(current_project, issue)
 
-          within '.js-diff-body' do
+          within '[data-behavior~=revision-diff]' do
             expect(page).to have_text('issue[0m[32mupdated[0m text') # match the format of the inline diff
           end
         end
