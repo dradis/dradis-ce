@@ -5,6 +5,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
+    - Diffs: remove stray escape characters around highlighted changes
     - Avatars: display a local image while Gravatar loads
     - Editor: keep the cursor in place after uploading an image
     - Combobox:
