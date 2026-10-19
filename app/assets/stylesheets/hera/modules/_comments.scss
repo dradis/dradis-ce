@@ -76,7 +76,6 @@
   .subscribers-overflow {
     align-items: center;
     background-color: var(--secondary-bg-strong);
-    border-radius: 50%;
     color: var(--text-default);
     display: inline-flex;
     font-size: 0.75rem;
@@ -94,10 +93,10 @@
       border-radius: 50%;
       box-shadow: 0 0 0 2px var(--primary-bg);
       transition: margin-left 0.2s ease-in-out;
-    }
 
-    > * + * {
-      margin-left: -0.5rem;
+      &:not(:first-child) {
+        margin-left: -0.5rem;
+      }
     }
   }
 
@@ -105,7 +104,6 @@
     background: none;
     border: 0;
     border-radius: 1rem;
-    cursor: pointer;
     padding: 0;
 
     &:focus-visible {
@@ -116,17 +114,10 @@
       }
     }
 
-    &:hover .subscribers-stack > * + * {
+    &:hover .subscribers-stack > :not(:first-child) {
       margin-left: -0.25rem;
     }
   }
-}
-
-// Turbo marks the frame busy while subscribing, so a second click can't
-// send a duplicate request
-.subscriptions-header[busy] a {
-  opacity: 0.65;
-  pointer-events: none;
 }
 
 // tribute @-mentions plugin styles
