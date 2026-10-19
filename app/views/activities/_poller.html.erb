@@ -7,7 +7,7 @@
   data-board-path="<%= project_board_path(current_project, @board) unless @board.nil? %>"
   data-boards-path="<%= main_app.project_boards_path(current_project) %>"
   data-card-id="<%= @card.try(:id) %>"
-  data-card-path="<%= project_board_list_card_path(current_project, @card.board, @card.list, @card) if @card.try(:persisted?) %>",
+  data-card-path="<%= project_board_list_card_path(current_project, @card.board, @card.list, @card) if @card.try(:persisted?) %>"
   data-controller="<%= controller_name %>"
   data-id="<%= params[:id] %>"
   data-last-poll="<%= Time.now.to_i %>"

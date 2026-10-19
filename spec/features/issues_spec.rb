@@ -430,9 +430,18 @@ describe 'Issues pages' do
 
           visit project_issue_revisions_path(current_project, issue)
 
-          within '.js-diff-body' do
+          within '[data-behavior~=revision-diff]' do
             expect(page).to have_text('issue[0m[32mupdated[0m text') # match the format of the inline diff
           end
+        end
+
+        it 'highlights issue revisions without ANSI escape characters', js: true do
+          visit project_issue_revisions_path(current_project, issue)
+
+          diff = find('[data-behavior~=revision-diff]')
+          expect(diff).to have_css('del', exact_text: 'issue')
+          expect(diff).to have_css('ins', exact_text: 'updated')
+          expect(diff.evaluate_script('this.textContent')).to eq('issueupdated text')
         end
       end
 

@@ -7,6 +7,7 @@
     - [gem]
   - Bugs fixes:
     - Comments: update the comment count when you post or delete a comment
+    - Diffs: remove stray escape characters around highlighted changes
     - Avatars: display a local image while Gravatar loads
     - Editor: keep the cursor in place after uploading an image
     - Combobox:
