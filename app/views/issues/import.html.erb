@@ -4,7 +4,7 @@
   <%= render 'sidebar'%>
 <% end %>
 
-<ol class="breadcrumb">
+<ol class="breadcrumb" data-behavior="import-issues-breadcrumb">
   <li class="breadcrumb-item">
     <%= link_to current_project.name, project_path(current_project) %>
   </li>
@@ -16,7 +16,7 @@
 <!-- Main content -->
 <div class="content-container">
   <div id="issue-viewer">
-    <div class="results">
+    <div class="results" data-behavior="import-issues-results" data-query="<%= @query %>">
       <div class="page page-none">
 
         <div class="header">
