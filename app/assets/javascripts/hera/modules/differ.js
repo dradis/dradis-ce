@@ -1,7 +1,7 @@
 class Differ {
   constructor() {
-    this.delRegex = /\[31m([\s\S]*?)\[0m/g;
-    this.insRegex = /\[32m([\s\S]*?)\[0m/g;
+    this.delRegex = /\x1b\[31m([\s\S]*?)\x1b\[0m/g;
+    this.insRegex = /\x1b\[32m([\s\S]*?)\x1b\[0m/g;
   }
 
   ansiToHTML(text) {
@@ -27,11 +27,10 @@ class Differ {
   }
 }
 
-document.addEventListener('turbo:load', function() {
-  if ($('.js-diff-body').length) {
-    let differ = new Differ(),
-        content = $('.js-diff-body').html();
+document.addEventListener('turbo:load', () => {
+  const differ = new Differ();
 
-    $('.js-diff-body').html(differ.ansiToHTML(content));
-  }
+  document.querySelectorAll('[data-behavior~=revision-diff]').forEach((element) => {
+    element.innerHTML = differ.ansiToHTML(element.innerHTML);
+  });
 });
