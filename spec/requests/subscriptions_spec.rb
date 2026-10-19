@@ -8,14 +8,10 @@ describe 'subscriptions' do
   let(:frame_headers) { { 'Turbo-Frame' => "subscriptions_issue_#{issue.id}" } }
 
   describe 'POST /subscriptions' do
-    it 'subscribes the current user to the subscribable' do
+    it 'subscribes the current user and redirects back for regular requests' do
       expect do
         post '/subscriptions', params: params
       end.to change(Subscription, :count).by(1)
-    end
-
-    it 'redirects back for regular requests' do
-      post '/subscriptions', params: params
 
       expect(response).to redirect_to(root_path)
     end
