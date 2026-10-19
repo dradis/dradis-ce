@@ -1,5 +1,6 @@
 <% max_avatars = 4 %>
 <% subscribers = subscriptions.filter_map(&:user) %>
+<% subscription = subscriptions.find { |item| item.user_id == current_user.id } %>
 <% subscription_params = {
      subscription: {
        subscribable_type: subscribable.class.to_s,

@@ -14,4 +14,4 @@ $('[data-behavior~=content-textile]').each(function() {
   new QuoteSelector(this);
 });
 
-$('[data-behavior~=subscriptions-header]').replaceWith("<%= j render 'subscriptions/header', subscribable: @comment.commentable, subscription: @subscription, subscriptions: @subscriptions %>")
+$('[data-behavior~=subscriptions-header]').replaceWith("<%= j render 'subscriptions/header', subscribable: @comment.commentable, subscriptions: @subscriptions %>")

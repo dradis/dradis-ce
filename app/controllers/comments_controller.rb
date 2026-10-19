@@ -76,9 +76,6 @@ class CommentsController < AuthenticatedController
 
   def load_subscriptions
     @subscriptions = commentable.subscriptions.includes(:user)
-
-    # Used for showing the subscribe or unsubscribe link
-    @subscription = @subscriptions.find { |subscription| subscription.user == current_user }
   end
 
   # Overwrite method from concerns/mentioned.rb

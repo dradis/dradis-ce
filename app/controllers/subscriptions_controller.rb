@@ -23,13 +23,9 @@ class SubscriptionsController < AuthenticatedController
   # header back. Plain requests keep the redirect.
   def render_header_or_redirect(notice:)
     if turbo_frame_request?
-      subscriptions = subscribable.subscriptions.includes(:user)
-      subscription = subscriptions.find { |item| item.user == current_user }
-
       render partial: 'subscriptions/header', locals: {
         subscribable: subscribable,
-        subscription: subscription,
-        subscriptions: subscriptions
+        subscriptions: subscribable.subscriptions.includes(:user)
       }
     else
       redirect_back fallback_location: root_path, notice: notice
