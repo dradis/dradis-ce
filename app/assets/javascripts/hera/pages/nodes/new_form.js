@@ -32,3 +32,21 @@
     }
   });
 })();
+
+// One modal adds both top-level nodes and subnodes. Links that add a subnode
+// carry the parent node, links that add a top-level node carry nothing.
+document.addEventListener('show.bs.modal', (event) => {
+  const modal = event.target;
+
+  if (!modal.matches('[data-behavior~=add-node]')) return;
+
+  const { parentId = '', parentLabel = '' } = event.relatedTarget.dataset;
+  const isSubnode = Boolean(parentId);
+
+  modal.querySelectorAll('[data-behavior~=parent-node-id]').forEach((input) => {
+    input.value = parentId;
+  });
+  modal.querySelector('[data-behavior~=parent-node-label]').textContent = parentLabel;
+  modal.querySelector('[data-behavior~=top-level-node-title]').hidden = isSubnode;
+  modal.querySelector('[data-behavior~=subnode-title]').hidden = !isSubnode;
+});
