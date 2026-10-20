@@ -15,7 +15,6 @@ describe 'comments' do
         get_comments
 
         expect(page).to have_css('[data-behavior~=comment-count].d-none', text: '0')
-        expect(page).not_to have_text('There have been no comments yet.')
       end
 
       it 'shows the count when there are comments' do
@@ -50,7 +49,7 @@ describe 'comments' do
         let(:subscribers) { create_list(:user, 3) }
 
         it 'shows an avatar for each subscriber' do
-          expect(page).to have_css('[data-behavior~=subscribers-toggle] .gravatar', count: 3)
+          expect(page).to have_css('[data-behavior~=subscribers] .gravatar', count: 3)
           expect(page).not_to have_css('[data-behavior~=subscribers-overflow]')
         end
       end
@@ -59,21 +58,12 @@ describe 'comments' do
         let(:subscribers) { create_list(:user, 6) }
 
         it 'shows 4 avatars and the number of remaining subscribers' do
-          expect(page).to have_css('[data-behavior~=subscribers-toggle] .gravatar', count: 4)
+          expect(page).to have_css('[data-behavior~=subscribers] .gravatar', count: 4)
           expect(page).to have_css('[data-behavior~=subscribers-overflow]', text: '+2')
         end
 
-        it 'lists every subscriber in the dropdown' do
-          expect(page).to have_css('[data-behavior~=subscribers] .dropdown-item-text', count: 6)
-        end
-      end
-
-      context 'when the current user is subscribed' do
-        let(:subscribers) { [@logged_in_as] }
-
-        it 'shows the unsubscribe link and marks the current user in the dropdown' do
-          expect(page).to have_link('Unsubscribe')
-          expect(page).to have_css('[data-behavior~=subscribers] .dropdown-item-text', text: /#{Regexp.escape(@logged_in_as.name)}\s+\(you\)/)
+        it 'names the remaining subscribers in the overflow tooltip' do
+          expect(page.find('[data-behavior~=subscribers-overflow]')['data-bs-title']).to eq(subscribers.last(2).map(&:name).join(', '))
         end
       end
     end

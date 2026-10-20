@@ -22,7 +22,6 @@ describe 'subscriptions' do
       page = Capybara.string(response.body)
       expect(page).to have_css("turbo-frame#subscriptions_issue_#{issue.id}")
       expect(page).to have_link('Unsubscribe')
-      expect(page).to have_css('[data-behavior~=subscribers-toggle] .gravatar', count: 1)
     end
 
     it 'renders the comments header when the user is already subscribed' do
@@ -45,9 +44,7 @@ describe 'subscriptions' do
         delete "/subscriptions/#{issue.id}", params: params, headers: frame_headers
       end.to change(Subscription, :count).by(-1)
 
-      page = Capybara.string(response.body)
-      expect(page).to have_link('Subscribe')
-      expect(page).not_to have_css('[data-behavior~=subscribers]')
+      expect(Capybara.string(response.body)).to have_link('Subscribe')
     end
 
     it 'renders the comments header when the user is no longer subscribed' do

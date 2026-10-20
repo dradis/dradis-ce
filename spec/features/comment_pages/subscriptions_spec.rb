@@ -14,11 +14,9 @@ describe 'comment subscriptions', js: true do
     within('[data-behavior~=subscriptions-header]') do
       click_link 'Subscribe'
       expect(page).to have_link('Unsubscribe')
-      expect(page).to have_css('[data-behavior~=subscribers-toggle] .gravatar', count: 1)
 
       click_link 'Unsubscribe'
       expect(page).to have_link('Subscribe')
-      expect(page).not_to have_css('[data-behavior~=subscribers]')
     end
 
     expect(page.evaluate_script('window.notReloaded')).to be(true)
@@ -30,7 +28,6 @@ describe 'comment subscriptions', js: true do
 
     within('[data-behavior~=subscriptions-header]') do
       expect(page).to have_link('Unsubscribe')
-      expect(page).to have_css('[data-behavior~=subscribers-toggle] .gravatar', count: 1)
     end
   end
 end

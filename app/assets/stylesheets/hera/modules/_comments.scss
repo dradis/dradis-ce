@@ -54,23 +54,36 @@
 }
 
 .subscribers {
+  align-items: center;
+  display: flex;
   margin-right: 0.5rem;
 
-  .dropdown-item-text {
-    white-space: nowrap;
-
-    .gravatar img {
-      margin-right: 0.5rem;
-    }
+  &:hover > :not(:first-child) {
+    margin-left: -0.25rem;
   }
 
-  .dropdown-menu {
-    text-transform: none;
+  > * {
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px var(--primary-bg);
+    transition: margin-left 0.2s ease-in-out;
+
+    &:focus-visible {
+      box-shadow: $focus-shadow;
+      outline: none;
+    }
+
+    &:not(:first-child) {
+      margin-left: -0.5rem;
+    }
   }
 
   .gravatar {
     float: none;
     margin-right: 0;
+  }
+
+  .subscriber {
+    display: inline-flex;
   }
 
   .subscribers-overflow {
@@ -83,40 +96,6 @@
     height: 1.75rem;
     justify-content: center;
     width: 1.75rem;
-  }
-
-  .subscribers-stack {
-    align-items: center;
-    display: flex;
-
-    > * {
-      border-radius: 50%;
-      box-shadow: 0 0 0 2px var(--primary-bg);
-      transition: margin-left 0.2s ease-in-out;
-
-      &:not(:first-child) {
-        margin-left: -0.5rem;
-      }
-    }
-  }
-
-  .subscribers-toggle {
-    background: none;
-    border: 0;
-    border-radius: 1rem;
-    padding: 0;
-
-    &:focus-visible {
-      outline: none;
-
-      &:not([aria-expanded=true]) {
-        box-shadow: $focus-shadow;
-      }
-    }
-
-    &:hover .subscribers-stack > :not(:first-child) {
-      margin-left: -0.25rem;
-    }
   }
 }
 

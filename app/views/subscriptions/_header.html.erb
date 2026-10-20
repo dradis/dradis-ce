@@ -14,37 +14,21 @@
   <% if subscribers.any? %>
     <% hidden_count = subscribers.size - max_avatars %>
 
-    <div class="action dropdown subscribers" data-behavior="subscribers">
-      <button class="subscribers-toggle"
-              type="button"
-              aria-expanded="false"
-              aria-label="Show all <%= pluralize(subscribers.size, 'subscriber') %>"
-              data-behavior="subscribers-toggle"
-              data-bs-toggle="dropdown">
-        <span class="subscribers-stack">
-          <% subscribers.first(max_avatars).each do |subscriber| %>
-            <%= avatar_image(subscriber, size: 28, title: nil) %>
-          <% end %>
-          <% if hidden_count > 0 %>
-            <span class="subscribers-overflow" data-behavior="subscribers-overflow">
-              +<%= hidden_count %>
-            </span>
-          <% end %>
+    <div class="action subscribers" data-behavior="subscribers">
+      <% subscribers.first(max_avatars).each do |subscriber| %>
+        <span class="subscriber" tabindex="0" data-bs-toggle="tooltip" data-bs-title="<%= subscriber.name %>">
+          <%= avatar_image(subscriber, size: 28, title: nil) %>
         </span>
-      </button>
-      <ul class="dropdown-menu dropdown-menu-end">
-        <li><span class="dropdown-header"><%= pluralize(subscribers.size, 'subscriber') %></span></li>
-        <% subscribers.each do |subscriber| %>
-          <li>
-            <span class="dropdown-item-text">
-              <%= avatar_image(subscriber, size: 24, include_name: true, alt: '', title: nil) %>
-              <% if subscriber == current_user %>
-                <span class="text-muted">(you)</span>
-              <% end %>
-            </span>
-          </li>
-        <% end %>
-      </ul>
+      <% end %>
+      <% if hidden_count > 0 %>
+        <span class="subscribers-overflow"
+              tabindex="0"
+              data-behavior="subscribers-overflow"
+              data-bs-toggle="tooltip"
+              data-bs-title="<%= subscribers.drop(max_avatars).map(&:name).join(', ') %>">
+          +<%= hidden_count %>
+        </span>
+      <% end %>
     </div>
   <% end %>
 
