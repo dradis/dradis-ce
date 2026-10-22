@@ -22,17 +22,11 @@ describe Tag do
   end
 
   describe '#tagged?' do
-    let(:tag) { create(:tag) }
-    let(:issue) { create(:issue) }
+    it 'tells whether the taggable has the tag' do
+      tag = create(:tag)
+      issue = create(:issue)
 
-    it 'is true when the taggable has the tag' do
-      issue.tags << tag
-
-      expect(tag.tagged?(issue)).to be true
-    end
-
-    it 'is false when the taggable does not have the tag' do
-      expect(tag.tagged?(issue)).to be false
+      expect { issue.tags << tag }.to change { tag.tagged?(issue) }.from(false).to(true)
     end
   end
 
