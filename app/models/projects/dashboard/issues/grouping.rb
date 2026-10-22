@@ -33,11 +33,6 @@ module Projects
             lists.map { |list| new(key: list.key, label: list.label, values: list.values) }
         end
 
-        def self.find(project, key)
-          groupings = available(project)
-          groupings.find { |grouping| grouping.key == key } || groupings.first
-        end
-
         attr_reader :key, :label, :values
 
         def initialize(key:, label:, values:)
