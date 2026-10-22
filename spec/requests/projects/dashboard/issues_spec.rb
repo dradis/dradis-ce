@@ -4,21 +4,43 @@ describe 'Projects::Dashboard::Issues', type: :request do
   before { login_to_project_as_user }
 
   describe 'GET /projects/:project_id/dashboard/issues' do
-    it 'renders tagged issues' do
+    it 'renders the issues grouped by tag without a grouping selector' do
       tag = create(:tag, name: '!000001_sqli', project: current_project)
       issue = create(:issue, node: current_project.issue_library)
       issue.tags << tag
 
       get project_dashboard_issues_path(current_project)
 
-      expect(response.body).to include(tag.display_name)
-      expect(response.body).to include(issue.title)
+      expect(response.body).to include(tag.display_name, issue.title, 'data-groups=')
+      expect(response.body).not_to include('name="grouping"')
     end
 
-    it 'renders the empty state without issues' do
-      get project_dashboard_issues_path(current_project)
+    context 'with several groupings' do
+      let(:other_grouping) do
+        value = double(display_name: 'Mine', color: '#112233', tagged?: true)
+        Projects::Dashboard::Issues::Grouping.new(key: 'other', label: 'Other', values: [value])
+      end
 
-      expect(response.body).to include('Use issues to represent vulnerabilities or findings.')
+      before do
+        allow(Projects::Dashboard::Issues::Grouping).to receive(:available).and_wrap_original do |original, project|
+          original.call(project) + [other_grouping]
+        end
+      end
+
+      it 'renders the selector and groups by the requested grouping' do
+        issue = create(:issue, node: current_project.issue_library)
+
+        get project_dashboard_issues_path(current_project, grouping: 'other')
+
+        expect(response.body).to include('<option selected="selected" value="other">Other</option>')
+        expect(response.body).to include('Mine', issue.title)
+      end
+
+      it 'falls back to the first grouping when the requested one is unknown' do
+        get project_dashboard_issues_path(current_project, grouping: 'bogus')
+
+        expect(response.body).to include('<option selected="selected" value="tags">Tags</option>')
+      end
     end
   end
 end

@@ -263,9 +263,9 @@ class ComboBox {
         selectedValues.push(value);
       }
 
-      this.$target.val(selectedValues).trigger('change');
+      this.setTargetValue(selectedValues);
     } else {
-      this.$target.val(value).trigger('change');
+      this.setTargetValue(value);
       this.hideMenu();
     }
 
@@ -448,9 +448,9 @@ class ComboBox {
     if (this.isMultiSelect) {
       let selectedValues = this.$target.val() || [];
       selectedValues.push(sanitizedValue);
-      this.$target.val(selectedValues).trigger('change');
+      this.setTargetValue(selectedValues);
     } else {
-      this.$target.val(sanitizedValue).trigger('change');
+      this.setTargetValue(sanitizedValue);
     }
   }
 
@@ -459,7 +459,7 @@ class ComboBox {
       selectedValues = this.$target
         .val()
         .filter((value) => value != valueToRemove);
-    this.$target.val(selectedValues).trigger('change');
+    this.setTargetValue(selectedValues);
   }
 
   // ==========================================================================
@@ -577,8 +577,26 @@ class ComboBox {
     return $elements.filter((_, el) => el.getAttribute(attr) === String(value));
   }
 
+  setTargetValue(value) {
+    this.$target.val(value);
+    this.$target[0].dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  // Popper doesn't notice the control growing (e.g. multi-select chips wrapping
+  // onto more lines), so re-position the menu whenever the control resizes.
+  setupPopper() {
+    if (this.popper) return;
+
+    this.popper = Popper.createPopper(this.$combobox[0], this.$comboboxMenu[0], {
+      placement: 'bottom-end',
+    });
+    new ResizeObserver(() => this.popper.update()).observe(this.$combobox[0]);
+  }
+
   showMenu() {
     this.$comboboxMenu.css('display', 'block');
+    this.setupPopper();
+    this.popper.update();
     this.$combobox.attr('aria-expanded', 'true');
     this.$filter?.focus();
   }

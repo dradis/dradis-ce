@@ -21,6 +21,15 @@ describe Tag do
     end
   end
 
+  describe '#tagged?' do
+    it 'tells whether the taggable has the tag' do
+      tag = create(:tag)
+      issue = create(:issue)
+
+      expect { issue.tags << tag }.to change { tag.tagged?(issue) }.from(false).to(true)
+    end
+  end
+
   describe '#valid?' do
     it 'requires a name' do
       tag = Tag.new()

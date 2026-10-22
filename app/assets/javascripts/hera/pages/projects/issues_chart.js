@@ -19,24 +19,16 @@
       .append('g')
       .attr('transform', `translate(0,${margin.top})`);
 
-    const tags = $dataElement.data('tags');
-    const issuesByTag = $dataElement.data('issues-count');
-    let highest = 0;
-    const data = [];
-    const xDomain = [];
-
-    for (const key in tags) {
-      const issuesCount = issuesByTag[key];
-      highest = issuesCount > highest ? issuesCount : highest;
-      data.push({ letter: tags[key][0], frequency: issuesCount });
-      xDomain.push(tags[key][0]);
-    }
-
-    data.push({ letter: 'N/A', frequency: issuesByTag.unassigned });
-    xDomain.push('N/A');
+    const groups = $dataElement.data('groups');
+    const data = groups.map(group => ({
+      letter: group.unassigned ? 'N/A' : group.name,
+      frequency: group.count,
+    }));
+    const xDomain = data.map(d => d.letter);
+    const highest = Math.max(...data.map(d => d.frequency));
 
     x.domain(xDomain);
-    y.domain([0, Math.max(highest, issuesByTag.unassigned)]);
+    y.domain([0, highest]);
 
     const xAxisGroup = svg
       .append('g')
@@ -46,10 +38,6 @@
 
     xAxisGroup.selectAll('text').style('fill', 'inherit');
     xAxisGroup.selectAll('path').style('stroke', 'none');
-    xAxisGroup
-      .selectAll('text')
-      .filter((d, index, nodes) => index === nodes.length - 1)
-      .classed('untagged', true);
 
     const bars = svg.append('g');
 
@@ -76,16 +64,17 @@
       .attr('class', 'counter')
       .text(d => d.frequency);
 
-    Object.keys(tags).forEach((key, index) => {
-      $chartElement.find('.tick').eq(index).attr('fill', tags[key][1]);
-      $chartElement.find('.bar').eq(index).attr('fill', tags[key][1]);
-      $chartElement.find('.counter').eq(index).attr('fill', tags[key][1]);
-    });
+    groups.forEach((group, index) => {
+      ['.tick', '.bar', '.counter'].forEach(selector => {
+        const $element = $chartElement.find(selector).eq(index);
 
-    const untaggedIndex = Object.keys(tags).length;
-    $chartElement.find('.tick').eq(untaggedIndex).addClass('untagged');
-    $chartElement.find('.bar').eq(untaggedIndex).addClass('untagged');
-    $chartElement.find('.counter').eq(untaggedIndex).addClass('untagged');
+        if (group.unassigned) {
+          $element.addClass('untagged');
+        } else {
+          $element.attr('fill', group.color);
+        }
+      });
+    });
   };
 
   document.addEventListener('turbo:frame-load', initIssuesChart);
