@@ -35,6 +35,12 @@ describe 'Projects::Dashboard::Issues', type: :request do
         expect(response.body).to include('<option selected="selected" value="other">Other</option>')
         expect(response.body).to include('Mine', issue.title)
       end
+
+      it 'falls back to the first grouping when the requested one is unknown' do
+        get project_dashboard_issues_path(current_project, grouping: 'bogus')
+
+        expect(response.body).to include('<option selected="selected" value="tags">Tags</option>')
+      end
     end
   end
 end

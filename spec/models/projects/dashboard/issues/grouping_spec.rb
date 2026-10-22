@@ -7,12 +7,6 @@ describe Projects::Dashboard::Issues::Grouping do
   let!(:critical) { create(:tag, name: '!9467bd_critical', project: project) }
   let!(:low) { create(:tag, name: '!6baed6_low', project: project) }
 
-  describe '.find' do
-    it 'falls back to the first grouping for an unknown key' do
-      expect(described_class.find(project, 'bogus').key).to eq 'tags'
-    end
-  end
-
   describe '#groups' do
     it 'lists each issue under every tag it has, then the untagged ones as unassigned' do
       tagged = create(:issue, node: node).tap { |issue| issue.tags << critical }
