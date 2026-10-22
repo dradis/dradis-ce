@@ -33,17 +33,13 @@ describe 'Projects::Dashboard::Issues', type: :request do
 
     context 'with several groupings' do
       let(:other_grouping) do
-        Class.new(Projects::Dashboard::Issues::Grouping) do
-          def key = 'other'
-          def label = 'Other'
-          def values = [OpenStruct.new(display_name: 'Mine', color: '#112233')]
-          def matches?(_value, _issue) = true
-        end
+        value = double(display_name: 'Mine', color: '#112233', tagged?: true)
+        Projects::Dashboard::Issues::Grouping.new(key: 'other', label: 'Other', values: [value])
       end
 
       before do
         allow(Projects::Dashboard::Issues::Grouping).to receive(:available).and_wrap_original do |original, project|
-          original.call(project) + [other_grouping.new(project)]
+          original.call(project) + [other_grouping]
         end
       end
 
