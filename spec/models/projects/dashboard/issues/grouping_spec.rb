@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Projects::Dashboard::Issues::Grouping do
   let(:project) { create(:project) }
-  let(:grouping) { described_class.new(project) }
+  let(:grouping) { described_class.available(project).first }
   let(:node) { project.issue_library }
   let!(:critical) { create(:tag, name: '!9467bd_critical', project: project) }
   let!(:low) { create(:tag, name: '!6baed6_low', project: project) }
@@ -63,7 +63,7 @@ describe Projects::Dashboard::Issues::Grouping do
     it 'puts issues that only have tags outside the project in the unassigned group' do
       outsider = create(:issue, node: node)
       outsider.tags << create(:tag, name: '!000000_other')
-      allow(grouping).to receive(:values).and_return([critical])
+      grouping = described_class.new(key: 'tags', label: 'Tags', values: [critical])
 
       expect(grouping.groups([outsider]).last.issues).to eq [outsider]
     end

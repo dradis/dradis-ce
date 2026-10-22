@@ -2,9 +2,9 @@ module Projects
   module Dashboard
     module Issues
       # Splits a project's issues into Groups for the dashboard "Issues so far"
-      # widget. The differences between where the groups come from (`key`,
-      # `label`, `values` and `values_for`) live here, so the views and JS only
-      # deal with the Groups returned by `#groups`.
+      # widget, one per value. A value is a Tag, or anything that quacks like one
+      # (`display_name`, `color` and `tagged?(issue)`). The views and JS only deal
+      # with the Groups returned by `#groups`.
       class Grouping
         # One bucket of issues, e.g. a tag or a list field value. This is all the
         # views and the chart JS know about.
@@ -22,8 +22,15 @@ module Projects
           end
         end
 
+        # Report template properties (and so ListField) only exist in Pro. In CE
+        # this is just the tags grouping.
         def self.available(project)
-          [new(project)]
+          lists = (project.report_template_properties&.issue_fields&.lists || []).map do |field|
+            ListField.new(project, field)
+          end
+
+          [new(key: 'tags', label: 'Tags', values: project.tags.to_a)] +
+            lists.map { |list| new(key: list.key, label: list.label, values: list.values) }
         end
 
         def self.find(project, key)
@@ -31,23 +38,12 @@ module Projects
           groupings.find { |grouping| grouping.key == key } || groupings.first
         end
 
-        attr_reader :project
+        attr_reader :key, :label, :values
 
-        def initialize(project)
-          @project = project
-        end
-
-        def key
-          'tags'
-        end
-
-        def label
-          'Tags'
-        end
-
-        # Anything that responds to `display_name` and `color`.
-        def values
-          @values ||= project.tags.to_a
+        def initialize(key:, label:, values:)
+          @key = key
+          @label = label
+          @values = values
         end
 
         # Returns one Group per value, followed by an "Unassigned" Group holding the
@@ -58,7 +54,7 @@ module Projects
           unassigned = []
 
           issues.each do |issue|
-            matched = values_for(issue)
+            matched = values.select { |value| value.tagged?(issue) }
 
             if matched.empty?
               unassigned << issue
@@ -72,12 +68,6 @@ module Projects
           end
 
           groups << Group.new(name: 'Unassigned', issues: unassigned, unassigned: true)
-        end
-
-        private
-
-        def values_for(issue)
-          values.select { |tag| issue.tags.include?(tag) }
         end
       end
     end
