@@ -48,7 +48,7 @@ describe 'comment pages', js: true do
           expect(page).not_to have_selector("#comment_#{@comment.id}")
         end
 
-        expect(page).not_to have_selector('[data-behavior~=comment-count]')
+        expect(page).to have_selector('[data-behavior~=comment-count]', text: '0')
       end
     end
 

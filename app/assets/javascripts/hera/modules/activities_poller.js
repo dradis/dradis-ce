@@ -361,7 +361,7 @@ class ActivitiesPoller {
       $('[data-notice~=no-comments]').addClass('d-none');
       $('[data-behavior~=comment-list]').append(content);
       const $count = $('[data-behavior~=comment-count]');
-      $count.html(parseInt($count.html()) + 1).removeClass('d-none');
+      $count.html(parseInt($count.html()) + 1);
     }
   }
 
@@ -379,7 +379,7 @@ class ActivitiesPoller {
       if (count > 0) {
         count = count - 1;
       }
-      $count.html(count).toggleClass('d-none', count === 0);
+      $count.html(count);
       $('[data-notice~=no-comments]').toggleClass('d-none', count > 0);
     }
   }
