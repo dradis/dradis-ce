@@ -24,7 +24,7 @@ class NotesController < NestedNodeResourceController
     @note.category ||= Category.default
 
     if @note.save
-      track_created(@note)
+      publish_event('note.created', @note.to_event_payload)
       redirect_to project_node_note_path(current_project, @node, @note), notice: 'Note created'
     else
       initialize_nodes_sidebar
@@ -50,7 +50,7 @@ class NotesController < NestedNodeResourceController
     copy_attachments(@note) if @note.node_changed?
 
     if @note.save
-      track_updated(@note)
+      publish_event('note.updated', @note.to_event_payload)
       check_for_edit_conflicts(@note, updated_at_before_save)
       # if the note has just been moved to another node, we must reload
       # here so that @note.node is correct and we redirect to the right URL
@@ -65,7 +65,7 @@ class NotesController < NestedNodeResourceController
   # Remove a Note from the back-end database.
   def destroy
     if @note.destroy
-      track_destroyed(@note)
+      publish_event('note.destroyed', @note.to_event_payload)
       redirect_to project_node_path(current_project, @node), notice: 'Note deleted'
     else
       redirect_to project_node_note_path(current_project, @node, @note), alert: 'Could not delete note'

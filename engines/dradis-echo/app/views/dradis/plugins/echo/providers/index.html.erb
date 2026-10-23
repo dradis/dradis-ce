@@ -1,0 +1,63 @@
+<% content_for :title, 'Echo Providers' %>
+
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to 'Dashboard', main_app.root_path %></li>
+    <li class="breadcrumb-item"><%= link_to 'Echo', prompts_path %></li>
+    <li class="breadcrumb-item active">Providers</li>
+  </ol>
+<% end %>
+
+<%= content_for :sidebar do %>
+  <div class="header">
+    <div class="header-inner">
+      <h5 class="header-name">About Providers</h5>
+      <div class="options">
+        <%= link_to '#providers-tips', data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle Providers Tips</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div id="providers-tips" class="page-tips collapse show">
+    <div class="bg-info">
+      <p>
+        Providers connect Echo to your LLM service. Configure connections to OpenAI, Anthropic, or a self-hosted Ollama instance, then assign them to agents in the Configuration section.
+      </p>
+      <p class="text-end card-link mb-0">
+        More about
+        <%= link_to 'Providers', 'https://dradis.com/support/guides/echo/providers.html', target: '_blank' %>
+      </p>
+    </div>
+  </div>
+<% end %>
+
+<div class="content-container">
+  <h4 class="header-underline">Providers
+    <span class="actions pt-1">
+      <div class="action">
+        <div class="dropdown">
+          <%= link_to 'javascript:void(0)', class: 'dropdown-toggle', data: { bs_toggle: 'dropdown' } do %>
+            <i class="fa-solid fa-plus me-1"></i>New Provider
+          <% end %>
+          <ul class="dropdown-menu">
+            <% Dradis::Plugins::Echo::Provider::ALLOWED_TYPES.each do |type| %>
+              <li><%= link_to type, new_provider_path(type: type), class: 'dropdown-item' %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </span>
+  </h4>
+
+  <% if @providers.any? %>
+    <div class="provider-list">
+      <%= render partial: 'provider', collection: @providers %>
+    </div>
+  <% else %>
+    <%= render 'shared/empty_state',
+          docs_link: 'https://dradis.com/support/guides/echo/providers.html',
+          name: 'provider',
+          text: 'Use providers to connect Echo to your LLM services. Configure connections to OpenAI, Anthropic, or a self-hosted Ollama instance to power your AI tools.' %>
+  <% end %>
+</div>

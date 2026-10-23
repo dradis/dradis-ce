@@ -7,6 +7,7 @@ class EvidenceController < NestedNodeResourceController
   include MultipleDestroy
   include NodesSidebar
   include NotificationsReader
+  include Publishable
 
   before_action :set_or_initialize_evidence
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
@@ -29,16 +30,16 @@ class EvidenceController < NestedNodeResourceController
 
     respond_to do |format|
       if @evidence.save
-        track_created(@evidence)
-        format.html {
+        publish_event('evidence.created', @evidence.to_event_payload)
+        format.html do
           redirect_to [current_project, @evidence.node, @evidence],
             notice: "Evidence added for node #{@evidence.node.label}."
-        }
+        end
       else
-        format.html {
+        format.html do
           initialize_nodes_sidebar
           render 'new'
-        }
+        end
       end
       format.js
     end
@@ -58,17 +59,17 @@ class EvidenceController < NestedNodeResourceController
       copy_attachments(@evidence) if @evidence.node_changed?
 
       if @evidence.save
-        track_updated(@evidence)
+        publish_event('evidence.updated', @evidence.to_event_payload)
         check_for_edit_conflicts(@evidence, updated_at_before_save)
         format.html do
           redirect_to evidence_redirect_path(params[:return_to]), notice: 'Evidence updated.'
         end
 
       else
-        format.html {
+        format.html do
           initialize_nodes_sidebar
           render 'edit'
-        }
+        end
       end
       format.js
     end
@@ -77,8 +78,8 @@ class EvidenceController < NestedNodeResourceController
   def destroy
     respond_to do |format|
       if @evidence.destroy
-        track_destroyed(@evidence)
-        format.html {
+        publish_event('evidence.destroyed', @evidence.to_event_payload)
+        format.html do
           notice = "Successfully deleted evidence for '#{@evidence.issue.title}.'"
           # Evidence can be deleted from 3 places:
           # 1. from the issue evidence tab
@@ -91,13 +92,13 @@ class EvidenceController < NestedNodeResourceController
           else
             redirect_back fallback_location: project_node_path(current_project, @node), notice: notice
           end
-        }
+        end
         format.js
       else
-        format.html {
+        format.html do
           redirect_to [current_project, @node, @evidence],
             notice: "Error while deleting evidence: #{@evidence.errors}"
-        }
+        end
         format.js
       end
     end
@@ -107,7 +108,7 @@ class EvidenceController < NestedNodeResourceController
 
   def autogenerate_issue
     @evidence.issue = Issue.autogenerate_from(@evidence)
-    track_created(@evidence.issue)
+    publish_event('issue.created', @evidence.issue.to_event_payload)
   end
 
   def liquid_resource_assigns
@@ -132,11 +133,11 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def evidence_params
-    params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
+    params.require(:evidence).permit(:author, :content, :issue_id, :node_id, :state)
   end
 
   def set_auto_save_key
-    @auto_save_key =  if @evidence&.persisted?
+    @auto_save_key = if @evidence&.persisted?
       "evidence-#{@evidence.id}"
     elsif params[:template]
       "node-#{@node.id}-evidence-#{params[:template]}"

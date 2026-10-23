@@ -1,0 +1,24 @@
+<%# locals: (session:, request_id: nil) -%>
+<%# request_id is accepted-and-ignored: turbo-rails injects it into every broadcast %>
+<%# partial's locals (non-nil in-request), so strict locals must tolerate it or %>
+<%# broadcast_composer_state 500s. Route-free and locals-only so it renders from %>
+<%# ReplyJob on every idle<->generating transition; session_controller reads %>
+<%# data-generating to keep the textarea in step with the server-rendered button. %>
+<%# Lock on generating? OR reply_pending?: the composer_state replace that flips a %>
+<%# freshly-created session to generating can race the client's in-flight subscribe %>
+<%# and be dropped; folding reply_pending? in server-renders the initial lock without %>
+<%# depending on that broadcast. Later transitions are subscribed and broadcast-driven. %>
+<% locked = session.generating? || session.reply_pending? %>
+<%= tag.div id: dom_id(session, :composer_state),
+      data: { behavior: 'echo-composer-state', generating: locked } do %>
+  <div class="echo-composer-actions">
+    <% if locked %>
+      <span class="echo-composer-hint"><i class="fa-solid fa-lock"></i> Roslin is responding — you can send once it finishes.</span>
+    <% else %>
+      <span class="echo-composer-hint">Anyone on this project can join the conversation.</span>
+    <% end %>
+    <button type="submit" class="btn btn-primary"<%= ' disabled'.html_safe if locked %>>
+      <i class="fa-solid fa-paper-plane me-1"></i> Send
+    </button>
+  </div>
+<% end %>

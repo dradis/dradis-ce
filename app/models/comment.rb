@@ -52,7 +52,7 @@ class Comment < ApplicationRecord
     case action.to_s
     when 'create'
       subscribe_mentioned()
-      create_notifications(action: :mention, actor: actor,  recipients: mentions)
+      create_notifications(action: :mention, actor: actor, recipients: mentions)
 
       # We're finding subscribers that have not been mention here
       # using ActiveRecord because create_notifications expect recipients
@@ -86,9 +86,9 @@ class Comment < ApplicationRecord
     elsif resource.respond_to?(:project)
       scope.merge(resource.project.testers_for_mentions)
     else
-      ids = scope.select { |user|
+      ids = scope.select do |user|
         Ability.new(user).can?(:read, resource)
-      }.map(&:id)
+      end.map(&:id)
 
       # Ensure we return an ActiveRecord::Relation object
       scope.where(id: ids)

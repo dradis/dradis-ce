@@ -1,0 +1,41 @@
+<% content_for :title, 'Echo Agents' %>
+
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to 'Dashboard', main_app.root_path %></li>
+    <li class="breadcrumb-item"><%= link_to 'Echo', prompts_path %></li>
+    <li class="breadcrumb-item active">Agents</li>
+  </ol>
+<% end %>
+
+<%= content_for :sidebar do %>
+  <div class="header">
+    <div class="header-inner">
+      <h5 class="header-name">About Agents</h5>
+      <div class="options">
+        <%= link_to '#agents-tips', data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle Agents Tips</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div id="agents-tips" class="page-tips collapse show">
+    <div class="bg-info">
+      <p>
+        Agents connect Echo to your LLM providers. Enable agents and assign a provider to each one to start using AI-assisted features across your projects.
+      </p>
+      <p class="text-end card-link mb-0">
+        More about
+        <%= link_to 'Echo', 'https://dradis.com/support/guides/echo/', target: '_blank' %>
+      </p>
+    </div>
+  </div>
+<% end %>
+
+<div class="content-container">
+  <h4 class="header-underline">Agents</h4>
+
+  <% @agents.each do |agent| %>
+    <%= render 'agent', agent: agent %>
+  <% end %>
+</div>

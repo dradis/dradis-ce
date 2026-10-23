@@ -244,6 +244,10 @@ fieldset.check_boxes {
   background-image: var(--form-select-caret);
 }
 
+.form-text {
+  color: var(--text-muted);
+}
+
 h1,
 h2,
 h3,
@@ -310,6 +314,14 @@ mark {
   }
 }
 
+.popover-footer {
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+}
+
 p:last-child {
   margin-bottom: 0;
 }
@@ -324,6 +336,20 @@ pre {
     background: initial;
     color: var(--pre-code-color);
     padding: 0;
+  }
+}
+
+.progress {
+  --bs-progress-bg: var(--secondary-bg);
+
+  &.empty {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+
+    .progress-bar {
+      background-color: transparent;
+      width: 100%;
+    }
   }
 }
 
@@ -363,7 +389,7 @@ pre {
 }
 
 .text-primary {
-  color: $primary !important;
+  color: var(--text-link) !important;
 }
 
 .text-success {

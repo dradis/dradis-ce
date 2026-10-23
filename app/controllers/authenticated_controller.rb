@@ -16,6 +16,7 @@ class AuthenticatedController < SetupRequiredController
   before_action :set_paper_trail_whodunnit
   # before_action :render_onboarding_tour
 
+  helper :hera
   layout 'hera'
 
   # This is a central location where we can manage authorization errors (e.g.

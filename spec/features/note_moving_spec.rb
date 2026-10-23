@@ -30,6 +30,10 @@ describe 'moving a note', js: true do
     click_move_note
   end
 
+  after do
+    FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
+  end
+
   let(:text) { "#[Description]#\nTest Note\n" }
   let(:current_note) { @note = create(:note, text: text, node: @node_5) }
 

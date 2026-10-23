@@ -58,9 +58,9 @@ describe 'Upload API' do
       let(:file_fixture) { file_fixture_upload(file_path, 'plain/text') }
       let(:uploader) { 'Dradis::Plugins::Projects::Upload::Package' }
 
-      let(:params) {
+      let(:params) do
         { file: file_fixture, uploader: uploader, state: 'draft' }
-      }
+      end
 
       it 'calls the relevant importer' do
         expect(Dradis::Plugins::Projects::Upload::Package::Importer).to(

@@ -69,6 +69,17 @@ And then run the container:
 docker run -it -p 3000:80 dradis/dradis-ce
 ```
 
+### Development Containers
+Dradis comes preconfigured with the necessary files to develop in a [Development Container](https://containers.dev/)
+
+If you are using VSCode, get started by installing the `Dev Containers` extension. 
+
+Otherwise, build and start the containers by pointing Docker Compose at the `compose.yaml` file in the `/.devcontainers` directory:
+
+```
+docker compose -f .devcontainer/compose.yaml up --build -d
+```
+
 
 ## Getting help
 

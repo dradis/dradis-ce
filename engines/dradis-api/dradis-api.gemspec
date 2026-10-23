@@ -16,7 +16,9 @@ Gem::Specification.new do |gem|
   gem.summary       = 'Dradis HTTP API'
   gem.homepage      = 'https://dradis.com/ce/'
 
-  gem.files         = `git ls-files`.split($\)
+  gem.files = Dir.chdir(File.expand_path(__dir__)) do
+    Dir['{app,config,db,lib,templates}/**/*', 'CHANGELOG', 'CHANGELOG.md', 'LICENSE', 'Rakefile', 'README.md']
+  end
   gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']

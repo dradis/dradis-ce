@@ -60,7 +60,8 @@ module Hera::CEHelper
   end
 
   def navbar_brand
-    link_to main_app.project_path(current_project), class: 'navbar-brand' do
+    project = defined?(current_project) ? current_project : Project.new
+    link_to main_app.project_path(project), class: 'navbar-brand' do
       image_tag 'logo_small.png', alt: 'Dradis CE logo', class: 'p-lg-0'
     end
   end

@@ -1,7 +1,7 @@
 module Dradis::CE::API
   module V3
     class NodesController < Dradis::CE::API::APIController
-      include ActivityTracking
+      include EventPublisher
       include Dradis::CE::API::ProjectScoped
 
       def index
@@ -17,7 +17,7 @@ module Dradis::CE::API
         @node = current_project.nodes.new(node_params)
 
         if @node.save
-          track_created(@node)
+          publish_event('node.created', @node.to_event_payload)
           render status: 201, location: dradis_api.node_url(@node)
         else
           render_validation_errors(@node)
@@ -27,7 +27,7 @@ module Dradis::CE::API
       def update
         @node = current_project.nodes.find(params[:id])
         if @node.update(node_params)
-          track_updated(@node)
+          publish_event('node.updated', @node.to_event_payload)
           render node: @node
         else
           render_validation_errors(@node)
@@ -37,7 +37,7 @@ module Dradis::CE::API
       def destroy
         node = current_project.nodes.find(params[:id])
         node.destroy
-        track_destroyed(node)
+        publish_event('node.destroyed', node.to_event_payload)
         render_successful_destroy_message
       end
 

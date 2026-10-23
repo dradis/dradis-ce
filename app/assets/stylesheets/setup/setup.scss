@@ -16,11 +16,11 @@ body {
 
 a {
   color: var(--text-link);
+  text-decoration: none;
   transition: color 0.2s ease-in-out;
 
   &:hover {
     color: var(--text-link-hover);
-    text-decoration: none;
   }
 }
 
@@ -38,27 +38,34 @@ a {
 }
 
 .btn-experience {
-  border: 1.5px solid $border-color;
+  border: 1.5px solid var(--text-link);
   border-radius: 5px;
   box-shadow: 0px 0px 0px 0px rgba(62, 66, 66, 0.1);
+  color: var(--text-link);
   height: 100%;
   padding: 1.375rem 1.85rem;
   text-align: left;
-  transition: box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
   width: 100%;
 
   &:focus,
-  &:hover {
-    border-color: $primary;
+  &:hover,
+  &:active,
+  &:not(:disabled):not(.disabled):active {
+    background: var(--text-link);
+    border-color: var(--text-link);
     box-shadow: 0px 0px 50px 0px rgba(62, 66, 66, 0.1);
+    color: var(--text-inverted);
   }
 
   p {
-    color: $primary;
+    color: inherit;
     font-weight: bold;
   }
 
   span {
+    color: inherit;
     display: block;
     font-size: 0.8rem;
     position: relative;
@@ -66,7 +73,7 @@ a {
 
     i {
       bottom: 0;
-      color: $primary;
+      color: inherit;
       font-size: 1rem;
       position: absolute;
       right: 0;
@@ -84,8 +91,9 @@ a {
 }
 
 .btn-primary {
-  background-color: $primary;
-  border-color: $primary;
+  background-color: var(--brand-bg);
+  border-color: var(--brand-bg);
+  color: $white;
 
   &:hover,
   &:focus,
@@ -94,27 +102,22 @@ a {
   &:not(:disabled):not(.disabled):active {
     background-color: darken($primary, 10);
     border-color: darken($primary, 10);
+    color: $white;
   }
 }
 
 .btn-outline-primary {
-  border-color: $primary;
-  color: $primary;
+  border-color: var(--text-link);
+  color: var(--text-link);
 
   &:hover,
   &:focus,
   &:focus-visible,
   &:active,
   &:not(:disabled):not(.disabled):active {
-    border-color: $primary;
-    background: $primary;
-    color: $white;
-  }
-}
-
-.container {
-  &.narrow {
-    max-width: 500px;
+    background: var(--text-link);
+    border-color: var(--text-link);
+    color: var(--text-inverted);
   }
 }
 
@@ -124,8 +127,24 @@ a {
   width: 100%;
 }
 
+.form-control,
+.form-select {
+  background-color: transparent;
+  border-color: var(--border-color);
+  color: var(--text-default);
+
+  &:focus {
+    background: transparent;
+    border-color: var(--brand-bg);
+    box-shadow: 0 0 0 0.2rem
+      color-mix(in srgb, var(--brand-bg) 50%, transparent);
+    color: var(--text-default);
+    outline: 0;
+  }
+}
+
 .h-100vh {
-  height: 100vh;
+  min-height: 100vh;
 }
 
 h1 {
@@ -143,21 +162,28 @@ label {
   max-width: 150px;
 }
 
+.setup-wrapper {
+  background: var(--primary-bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
+  max-width: 600px;
+}
+
 .setup-progress {
   margin: 3rem auto 0;
   position: relative;
   width: 66%;
 
   &:after {
-    border-top: 1.5px solid $primary;
+    border-top: 1.5px solid var(--brand-bg);
     content: '';
     display: block;
   }
 
   &-indicator {
     align-items: center;
-    background-color: $white;
-    border: 1.5px solid $primary;
+    background-color: var(--primary-bg-subtle);
+    border: 1.5px solid var(--brand-bg);
     border-radius: 50%;
     display: flex;
     font-size: 0.8rem;
@@ -169,7 +195,7 @@ label {
     width: 1.3rem;
 
     &.active {
-      background-color: $primary;
+      background-color: var(--brand-bg);
     }
 
     &:first-of-type {

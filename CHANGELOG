@@ -1,19 +1,25 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
-  - Mail: add support for SMTP configuration via environment variables for Docker deployments; smtp.yml remains supported for VM deployments during the deprecation transition
+  - Nodes: Add a node from the node tree
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Sidebar tips: tone down the tips box in dark mode and keep its links readable
+    - Diffs: remove stray escape characters around highlighted changes
+    - Avatars: display a local image while Gravatar loads
+    - Editor: keep the cursor in place after uploading an image
+    - Combobox:
+      - show inline validation errors on dropdowns that fail validation
     - Bug tracker items:
       - [item]
   - Echo enhancements:
     - [Echo entity]:
       - [future tense verb] [Echo enhancement]
   - New integrations:
-    - [integration]
+    - Calculators:
+      - AIVSS-SSVC
+      - STRIDE
   - Integration enhancements:
     - [integration]:
       - [future tense verb] [integration enhancement]
@@ -29,6 +35,66 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v5.4.0 (September 2026)
+  - Issues: warn user if another user is currently editing the record
+  - QA: Add QA states to evidence
+  - Webhooks: Add Evidence, Node and Note CRUD events
+  - Upgraded gems:
+    - mail, rubyzip, sqlite3
+  - Bugs fixes:
+    - Activity tracking: avoid raising an error when an unrelated event shares a name prefix with a tracked namespace
+    - Combobox: show the correct selected option when its value contains a double quote
+
+v5.3.0 (August 2026)
+  - Cards: add option to move a task to a different list
+  - Echo: add multiplayer chat sessions on Issues — start a conversation from a saved prompt, follow up with more messages, and watch Roslin's reply stream live to everyone viewing
+  - Integration enhancements:
+    - Burp: Add Type as an available Issue field
+    - CSV: Add support for the Mappings Manager
+    - Projects: Fix error handling of the package upload when an invalid template is found
+  - Upgraded gems:
+    - rails, rails-html-sanitizer, sqlite3, websocket-driver
+  - Bugs fixes:
+    - Echo:
+      - Preserve line breaks in streamed Ollama responses for models that emit them as standalone tokens
+      - Remove a stray leading blank line from streamed responses
+      - Send only completed conversation turns to the AI provider, so a failed or in-progress reply can no longer break the next one
+      - Show a generic message when a reply fails instead of surfacing the provider's raw error
+      - Return a graceful error instead of a server error when a chat session is started with a blank prompt
+    - Kit import: correctly associate the imported project with its Word report template when multiple export integrations are enabled
+  - REST/JSON API enhancements:
+    - Return a 404 instead of a server error for project-scoped endpoints requested without a valid project
+    - Set the author field to the authenticated user when creating notes and evidence
+
+v5.2.0 (July 2026)
+  - UI: add dark mode support to the login and setup wizard pages
+  - Upgraded gems:
+    - concurrent-ruby, crass, faraday, msgpack, net-imap, nokogiri, puma
+
+v5.1.0 (May 2026)
+  - DataTables: add sticky table toolbar that tracks below the navigation bar when scrolling
+  - Mail: add support for SMTP configuration via environment variables for Docker deployments; smtp.yml remains supported for VM deployments during the deprecation transition
+  - Show don't gate: 
+    - Node-level Methodologies
+    - Projects
+  - Upgraded gems:
+    - addressable, erb, faraday, net-imap, nokogiri, rack
+  - Bugs fixes:
+    - Liquid: stop stripping comparison operators from Liquid tags in issue and evidence fields
+    - Fields: show a visible border on dropdown fields in the editor
+  - Echo enhancements:
+    - Providers: add OpenAI, Anthropic, and Google Gemini as LLM provider options alongside Ollama
+    - Add inline grammar checking via LanguageTool
+
+v5.0.2 (May 2026)
+  - Update the Gemfile to use rubygems for dradis-pentera
+  - Version bump to align with Pro
+  - Upgraded gems:
+    - addressable, nokogiri, rack
+
+v5.0.1 (April 2026)
+  - Version bump to align with Pro
 
 v5.0.0 (March 2026)
   - Activities: Remove ActivityTracking for Issues and use EventPublisher

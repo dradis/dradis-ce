@@ -10,6 +10,10 @@ RSpec.describe Nodes::Merger do
     let(:source_node) { create(:node, parent_id: root_node, project: root_node.project) }
     let(:target_node) { create(:node, parent_id: root_node, project: root_node.project) }
 
+    after do
+      FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
+    end
+
     it { should eq source_node }
 
     it 'moves notes to target node' do
@@ -69,15 +73,11 @@ RSpec.describe Nodes::Merger do
         conditions: { node_id: target_node.id })
 
       expect(target_attachment).to be_an Attachment
-
-      FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
     end
 
     it 'increases the target node attachment count' do
       create(:attachment, node: source_node)
       expect { merge_nodes }.to change { target_node.attachments.count }.by 1
-
-      FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
     end
 
     describe 'property merges' do
@@ -213,15 +213,11 @@ RSpec.describe Nodes::Merger do
       it 'does not move attachments to target node' do
         create(:attachment, node: source_node)
         expect { merge_nodes }.not_to change { target_node.attachments.count }
-
-        FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
       end
 
       it 'does not change source node attachments count' do
         create(:attachment, node: source_node)
         expect { merge_nodes }.not_to change { source_node.attachments.count }
-
-        FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
       end
     end
   end

@@ -1,3 +1,4 @@
+@import 'hera/modules/active_project';
 @import 'hera/modules/attachments';
 @import 'hera/modules/buttons';
 @import 'hera/modules/colors';
@@ -7,6 +8,7 @@
 @import 'hera/modules/divider';
 @import 'hera/modules/dropdown';
 @import 'hera/modules/dots_menu';
+@import 'hera/modules/edit_locked';
 @import 'hera/modules/editor_toolbar';
 @import 'hera/modules/icons';
 @import 'hera/modules/inline_editable';
@@ -198,10 +200,6 @@
     margin-left: auto;
 
     .action {
-      &:not(:first-child)::before {
-        content: '-';
-      }
-
       &:first-child {
         margin-left: auto;
       }
@@ -306,6 +304,12 @@
 }
 
 .nav-tabs {
+  & + .card {
+    border-top: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
   .nav-link {
     &.active {
       background-color: var(--primary-bg);

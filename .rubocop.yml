@@ -12,6 +12,10 @@ AllCops:
 Style/AndOr:
   Enabled: true
 
+# Use { } for single-line blocks and do...end for multi-line blocks.
+Style/BlockDelimiters:
+  Enabled: true
+
 # Do not use braces for hash literals when they are the last argument of a
 # method call.
 Style/HashAsLastArrayItem:
@@ -44,10 +48,20 @@ Layout/EmptyLinesAroundMethodBody:
 Layout/EmptyLinesAroundModuleBody:
   Enabled: true
 
+Layout/ExtraSpacing:
+  Enabled: true
+  AllowForAlignment: false
+  AllowBeforeTrailingComments: true
+
 Layout/FirstArgumentIndentation:
   Enabled: true
 
 # Use Ruby >= 1.9 syntax for hashes. Prefer { a: :b } over { :a => :b }.
+Layout/HashAlignment:
+  Enabled: true
+  EnforcedColonStyle: key
+  EnforcedHashRocketStyle: key
+
 Style/HashSyntax:
   Enabled: true
   EnforcedShorthandSyntax: never
@@ -76,6 +90,7 @@ Layout/SpaceAroundKeyword:
 
 Layout/SpaceAroundOperators:
   Enabled: true
+  AllowForAlignment: false
 
 Layout/SpaceBeforeFirstArg:
     Enabled: true

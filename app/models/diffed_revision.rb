@@ -4,7 +4,7 @@ class DiffedRevision
   def initialize(revision, record)
     raise 'undiffable revision' unless revision.event == 'update'
     @revision = revision
-    @record   = record
+    @record = record
   end
 
   def diff

@@ -1,9 +1,18 @@
 Rails.application.routes.draw do
   get 'up', to: ->(env) { [204, {}, ['']] }
 
+  # ------------------------------------------------------------ Show Don't Gate
+  if !defined?(Dradis::Pro)
+    # Static pages
+    get 'projects', to: 'static_pages#projects_index', as: :static_projects
+    get 'projects/1/addons/issuelib', to: 'static_pages#issuelib_index', as: :static_issuelib
+    get 'projects/1/addons/issuelib/import', to: 'static_pages#issuelib_import', as: :static_issuelib_import
+    get 'projects/1/addons/remediationtracker', to: 'static_pages#remediationtracker_index', as: :static_remediationtracker
+  end
+
   # ------------------------------------------------------------ Authentication
   # Sign in / sign out
-  get '/login'  => 'sessions#new'
+  get '/login' => 'sessions#new'
   get '/logout' => 'sessions#destroy'
   resource :session
 
@@ -36,6 +45,10 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :lockable do |options|
+    resource :editing_session, only: :destroy, controller: options[:controller]
+  end
+
   resources :notifications, only: [:index, :update]
 
   resources :projects, only: [:index, :show] do
@@ -47,9 +60,9 @@ Rails.application.routes.draw do
 
     resources :boards do
       resources :lists, except: [:index] do
-        member { post :move }
+        resource :position, only: [:update], controller: 'lists/position'
         resources :cards, except: [:index] do
-          member { post :move }
+          resource :position, only: [:update], controller: 'cards/position'
           resources :revisions, only: [:index, :show]
         end
       end
@@ -70,6 +83,7 @@ Rails.application.routes.draw do
       resources :evidence, concerns: :multiple_destroy, controller: 'issues/evidence', only: [:index, :new]
       resources :nodes, only: [:show], controller: 'issues/nodes'
       resources :revisions, only: [:index, :show]
+      concerns :lockable, controller: 'issues/editing_sessions'
     end
 
     resources :methodologies do
@@ -111,24 +125,30 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
+    namespace :dashboard, module: 'projects/dashboard' do
+      resources :issues, only: [:index]
+    end
+
     resources :tags, except: [:show] do
       collection { post :sort }
     end
 
     namespace :qa do
-      resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable]
+      resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable] do
+        resources :evidence, only: [:edit, :index, :show, :update], controller: 'issues/evidence', concerns: [:multiple_update, :previewable]
+      end
     end
 
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'
 
     # ------------------------------------------------------- Export Manager
-    get  '/export' => 'export#index', as: :export_manager
+    get '/export' => 'export#index', as: :export_manager
 
     # ------------------------------------------------------- Upload Manager
-    get  '/upload'        => 'upload#index',  as: :upload_manager
-    post '/upload'        => 'upload#create'
-    post '/upload/parse'  => 'upload#parse'
+    get '/upload' => 'upload#index', as: :upload_manager
+    post '/upload' => 'upload#create'
+    post '/upload/parse' => 'upload#parse'
   end
 
   resources :console, only: [] do
@@ -166,11 +186,6 @@ Rails.application.routes.draw do
 
   if defined?(Dradis::Pro)
   else
-    # Static pages
-    get 'projects/1/addons/issuelib', to: 'static_pages#issuelib_index', as: :static_issuelib
-    get 'projects/1/addons/issuelib/import', to: 'static_pages#issuelib_import', as: :static_issuelib_import
-    get 'projects/1/addons/remediationtracker', to: 'static_pages#remediationtracker_index', as: :static_remediationtracker
-
     root to: 'setup/passwords#new'
   end
 

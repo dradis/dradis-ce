@@ -1,0 +1,58 @@
+module Dradis::Plugins::Echo
+  class Projects::InteractionsController < AuthenticatedController
+    include ProjectScoped
+    include TurboConfigCheck
+    layout false
+
+    before_action :check_turbo_config, only: [:index]
+    before_action :set_type
+    before_action :set_prompt, only: [:preview]
+    before_action :set_record
+
+    def index
+      @prompts = Prompt.find_or_seed_for(current_user, @type)
+      @sessions = Session.for_record(@record).order(updated_at: :desc)
+    end
+
+    def preview; end
+
+    private
+
+    def liquid_assigns
+      @liquid_assigns ||= LiquidCachedAssigns.new(project: current_project).merge!(record_assigns)
+    end
+
+    def liquid_parse(template)
+      HTML::Pipeline::Dradis::LiquidFilter.call(template, liquid_assigns: liquid_assigns)
+    end
+    helper_method :liquid_parse
+
+    def record_assigns
+      case @type
+      when :issue
+        { 'issue' => IssueDrop.new(@record) }
+      else
+        raise ArgumentError, "Unsupported prompt scope: #{@type}"
+      end
+    end
+
+    def record_params
+      params.permit(:id, :type, :project_id, :record)
+    end
+
+    def set_prompt
+      @prompt = current_user.prompts.for(@type).find(params[:id])
+    end
+
+    def set_record
+      raise ActiveRecord::RecordNotFound if @type.blank?
+
+      @record = current_project.send(@type.to_s.pluralize).find(record_params[:record])
+    end
+
+    def set_type
+      allowed = Prompt::SCOPES.map(&:to_s)
+      @type = allowed.include?(record_params[:type]) ? record_params[:type].to_sym : nil
+    end
+  end
+end

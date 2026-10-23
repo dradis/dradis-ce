@@ -1,12 +1,23 @@
 Dradis::Plugins::Echo::Engine.routes.draw do
   scope '/addons/echo' do
-    resources :configurations, only: [:index] do
-      patch :update, on: :collection
-    end
+    resources :agents, only: [:index, :edit, :update]
+    resources :providers, except: [:show]
 
     resources :projects, only: [] do
-      resources :prompts, only: [:index, :show, :create], module: :projects do
-        get :preview, on: :member
+      scope module: 'projects' do
+        resources :interactions, only: [:index] do
+          get :preview, on: :member
+        end
+
+        resources :grammar_corrections, only: [:create]
+        resources :grammar_suggestions, only: [:create]
+
+        resources :sessions, only: [:show, :create] do
+          scope module: 'sessions' do
+            resource :reply, only: [:create]
+            resources :messages, only: [:create]
+          end
+        end
       end
     end
 

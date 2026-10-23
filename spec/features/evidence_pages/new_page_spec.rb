@@ -83,6 +83,20 @@ describe 'Evidence new page' do
         match_array(%w[Evidence Evidence Node])
     end
 
+    it 'creates evidence with the selected review state' do
+      within('[data-behavior~=combobox-container]:has(#evidence_node_ids)') do
+        find('.combobox').click
+        find('.combobox-option', text: @node.label).click
+      end
+
+      click_button 'Toggle Dropdown'
+      expect(page).to have_field 'evidence_state_draft', checked: true, visible: :all
+      choose 'evidence_state_ready_for_review', allow_label_click: true
+
+      expect { click_button('Create Evidence') }.to change { Evidence.count }.by(1)
+      expect(Evidence.last.state).to eq 'ready_for_review'
+    end
+
     it 'assigns the current user as the evidence author' do
       within('[data-behavior~=combobox-container]:has(#evidence_node_ids)') do
         find('.combobox').click

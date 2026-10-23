@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="auto">
   <head>
     <title><%= content_for?(:title) ? yield(:title) : 'Dradis Community Edition' %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -13,9 +13,9 @@
 
   <body class="<%= controller_name %> <%= action_name %>">
     <%= render 'layouts/hera/noscript' %>
-    <div class="container narrow">
-      <div class="row h-100vh">
-        <div class="col-12 d-flex flex-column justify-content-between">
+    <div class="container">
+      <div class="row h-100vh justify-content-center">
+        <div class="col d-flex flex-column justify-content-between my-4 setup-wrapper">
           <div class="logo">
             <%= image_tag 'logo_full_small.png', class: 'img-fluid' %>
           </div>

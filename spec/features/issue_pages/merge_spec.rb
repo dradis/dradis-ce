@@ -64,9 +64,9 @@ describe 'issue pages' do
         expect(Issue.last.reload.tag_list).to eq(tag_name)
       end
 
-      let(:submit_form) {
+      let(:submit_form) do
         submit_and_wait
-      }
+      end
       include_examples 'deleted item is listed in Trash', :issue
     end
   end

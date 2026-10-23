@@ -17,6 +17,7 @@ module Dradis::CE::API
 
       def create
         @note = @node.notes.build(note_params)
+        @note.author = current_user.email
         @note.category ||= Category.default
         if @note.save
           track_created(@note)

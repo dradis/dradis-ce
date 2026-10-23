@@ -20,12 +20,12 @@ describe 'Dradis::Plugins::Projects::Upload::V3::Template::Importer', skip: true
   end
 
   let(:importer_class) { Dradis::Plugins::Projects::Upload::Template }
-  let(:with_node_boards) {
+  let(:with_node_boards) do
     Rails.root.join('spec', 'fixtures', 'files', 'templates', 'with_node_boards.xml')
-  }
-  let(:without_node_id) {
+  end
+  let(:without_node_id) do
     Rails.root.join('spec', 'fixtures', 'files', 'templates', 'without_node_id.xml')
-  }
+  end
 
   context 'uploading a template with boards' do
     before { @importer.import(file: with_node_boards) }

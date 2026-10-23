@@ -13,31 +13,21 @@ class BaseDrop < Liquid::Drop
     # call below and we want to skip this. Otherwise, proceed as normal.
     return if @wrapping
 
-    # Skip this if we're in the #escape method
-    return if method_name == :escape
-
     @wrapping = true
 
     original_method = instance_method(method_name)
 
     define_method(method_name) do |*args, &block|
       result = original_method.bind(self).call(*args, &block)
-      escape(result)
+      self.class.sanitize(result)
     end
 
     @wrapping = false
   end
 
-  private
+  def self.sanitize(obj)
+    return obj if obj.nil? || !obj.is_a?(String) || obj.empty?
 
-  def escape(obj)
-    if obj.nil? ||
-        !obj.is_a?(String) ||
-        obj.empty?
-
-      return obj
-    end
-
-    HTML::Pipeline::SanitizationFilter.call(obj).to_s
+    HTML::LiquidSafeSanitizer.call(obj)
   end
 end

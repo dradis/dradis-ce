@@ -1,4 +1,22 @@
 <div class="actions">
+  <% if @lists.count > 1 %>
+    <span class="action dropdown">
+      <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-table-columns fa-fw"></i> <%= @list.name %></a>
+      <div class="dropdown-menu">
+        <% @lists.each do |list| %>
+          <%= link_to_if(
+            list.id != @list.id,
+            list.name,
+            project_board_list_card_position_path(current_project, @board, @list, @card, new_list_id: list.id),
+            method: :patch,
+            class: 'dropdown-item'
+          ) do %>
+            <a href="javascript:void(0)" class="dropdown-item disabled"><%= list.name %></a>
+          <% end %>
+        <% end %>
+      </div>
+    </span>
+  <% end %>
   <span class="action">
     <%= link_to edit_project_board_list_card_path(current_project, @board, @list, @card) do %>
       <i class="fa-solid fa-pencil fa-fw"></i> Edit

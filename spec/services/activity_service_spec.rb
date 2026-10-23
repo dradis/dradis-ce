@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 describe ActivityService do
-  before { described_class.subscribe_namespace('test') }
+  before { @subscriber = described_class.subscribe_namespace('test') }
+  after { ActiveSupport::Notifications.unsubscribe(@subscriber) }
 
   let(:user) { create(:user) }
   let(:project) { create(:project) }
 
-  let(:payload) {
+  let(:payload) do
     {
       action: 'test',
       project: {
@@ -20,7 +21,7 @@ describe ActivityService do
         name: user.name
       }
     }
-  }
+  end
 
   it 'enqueues ActivityTrackingJob for subscribed events' do
     expect do
@@ -32,5 +33,11 @@ describe ActivityService do
       trackable_type: 'Issue',
       user_id: user.id
     )
+  end
+
+  it 'does not enqueue ActivityTrackingJob for events that only share a name prefix' do
+    expect do
+      ActiveSupport::Notifications.instrument('testing.event')
+    end.not_to have_enqueued_job(ActivityTrackingJob)
   end
 end

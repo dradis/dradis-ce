@@ -142,7 +142,7 @@ describe 'Issues API' do
         expect(response.status).to eq(201)
 
         retrieved_issue = JSON.parse(response.body)
-        database_issue  = current_project.issues.find(retrieved_issue['id'])
+        database_issue = current_project.issues.find(retrieved_issue['id'])
 
         expect(database_issue.tag_list).to eq(tag_name)
       end
@@ -167,17 +167,17 @@ describe 'Issues API' do
 
       it 'throws 422 if issue is invalid' do
         params = { issue: { text: 'A' * (65535 + 1) } }
-        expect {
+        expect do
           post '/api/issues', params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
-        }.not_to change { current_project.issues.count }
+        end.not_to change { current_project.issues.count }
         expect(response.status).to eq(422)
       end
 
       it 'throws 422 if state is invalid' do
         params = { issue: { text: "#[Title]#\nIssue test\n", state: 'fakestate' } }
-        expect {
+        expect do
           post '/api/issues', params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
-        }.not_to change { current_project.issues.count }
+        end.not_to change { current_project.issues.count }
         expect(response.status).to eq(422)
       end
     end

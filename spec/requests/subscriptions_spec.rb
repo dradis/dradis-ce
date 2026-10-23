@@ -7,10 +7,10 @@ describe 'subscriptions' do
 
   describe 'POST /subscriptions' do
     it 'subscribes the current user to the subscribable' do
-      expect {
+      expect do
         post '/subscriptions',
           params: { subscription: { subscribable_type: 'Issue', subscribable_id: issue.id } }
-      }.to change(Subscription, :count).by(1)
+      end.to change(Subscription, :count).by(1)
     end
   end
 

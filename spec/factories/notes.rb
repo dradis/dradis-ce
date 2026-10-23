@@ -7,8 +7,8 @@ FactoryBot.define do
   end
 
   trait :with_liquid do
-    content {
+    content do
       "#[Title]#\nFoo\n\n#[Description]#\nLiquid: {{note.title}}\n\nProject: {{project.name}}"
-    }
+    end
   end
 end

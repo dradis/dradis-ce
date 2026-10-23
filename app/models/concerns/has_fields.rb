@@ -12,7 +12,7 @@ module HasFields
   def title
     fields.fetch(
       'Title',
-      '(No #[Title]# field)'
+      "#{self.class.name.demodulize.titleize} ##{self.id}"
     )
   end
 

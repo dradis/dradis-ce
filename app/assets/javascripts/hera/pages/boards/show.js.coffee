@@ -21,7 +21,7 @@ class SortableBoards
       url: url
       data: params
       dataType: 'json'
-      type: 'post'
+      type: 'patch'
       success: (data, status, xhr) ->
         if data.is_card
           $cardLink = $(".card[data-card-id='#{data.id}'] a")

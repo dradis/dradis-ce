@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :evidence do
     content { "#[EvidenceBlock1]#\nThis particular instance is terrible!\n\n" }
     author { 'factory_bot' }
+    state { :published }
     association :node
 
     after(:build) do |evidence|
@@ -11,9 +12,9 @@ FactoryBot.define do
     end
 
     trait :with_liquid do
-      content {
+      content do
         "#[Title]#\nFoo\n\n#[Description]#\nLiquid: {{evidence.title}}\n\nProject: {{project.name}}"
-      }
+      end
     end
   end
 end

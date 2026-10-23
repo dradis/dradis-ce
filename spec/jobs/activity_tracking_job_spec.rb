@@ -8,26 +8,26 @@ describe ActivityTrackingJob do #, type: :job do
 
   describe '#perform' do
     it 'creates activities' do
-      project   = create(:project)
-      parent_node  = create(:node, project: project)
+      project = create(:project)
+      parent_node = create(:node, project: project)
       parent_issue = create(:issue, node: project.issue_library)
 
-      node      = create(:node, project: project)
-      issue     = create(:issue, node: project.issue_library)
-      note      = create(:note, node: parent_node)
-      evidence  = create(:evidence, issue: parent_issue, node: parent_node)
-      comment   = create(:comment, commentable: parent_issue)
+      node = create(:node, project: project)
+      issue = create(:issue, node: project.issue_library)
+      note = create(:note, node: parent_node)
+      evidence = create(:evidence, issue: parent_issue, node: parent_node)
+      comment = create(:comment, commentable: parent_issue)
 
-      models  = [node, issue, note, evidence, comment]
+      models = [node, issue, note, evidence, comment]
       actions = [:create, :update, :destroy]
-      user    = create(:user)
+      user = create(:user)
 
       models.each do |model|
         actions.each do |action|
           trackable = model
           trackable.destroy if action == :destroy
 
-          expect {
+          expect do
             described_class.new.perform(
               action: action.to_s,
               project_id: project.id,
@@ -35,7 +35,7 @@ describe ActivityTrackingJob do #, type: :job do
               trackable_type: trackable.class.to_s,
               user_id: user.id
             )
-          }.to change { Activity.count }.by(1)
+          end.to change { Activity.count }.by(1)
 
           activity = Activity.last
 

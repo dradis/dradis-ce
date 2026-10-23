@@ -11,9 +11,9 @@ require 'rails_helper'
 describe 'Pro export template', skip: true do
   before { login_to_project_as_user }
 
-  let(:export_options) {
+  let(:export_options) do
     { plugin: Dradis::Plugins::Projects, project_id: current_project.id }
-  }
+  end
 
   context 'exporting boards' do
     before do

@@ -8,7 +8,7 @@ class AttachmentsController < AuthenticatedController
   # Retrieve all the associated attachments for a given :node_id
   def index
     @attachments = Node.find(params[:node_id]).attachments
-    @attachments.each do |a| a.close end
+    @attachments.each { |a| a.close }
   end
 
   # Create a new attachment for a given :node_id using a file that has been
@@ -35,7 +35,7 @@ class AttachmentsController < AuthenticatedController
   def show
     filename = params[:filename]
 
-    @attachment  = Attachment.find(filename, conditions: { node_id: @node.id })
+    @attachment = Attachment.find(filename, conditions: { node_id: @node.id })
     send_options = { filename: @attachment.filename }
 
     # Figure out the best way of displaying the file (by default send it as
@@ -93,10 +93,10 @@ class AttachmentsController < AuthenticatedController
   # new jQuery uploader
   def build_attachment_json
     json = {
-      name:        @attachment.filename,
-      size:        File.size(@attachment.fullpath),
-      url:         project_node_attachment_path(current_project, @node, @attachment.filename),
-      delete_url:  project_node_attachment_path(current_project, @node, @attachment.filename),
+      name: @attachment.filename,
+      size: File.size(@attachment.fullpath),
+      url: project_node_attachment_path(current_project, @node, @attachment.filename),
+      delete_url: project_node_attachment_path(current_project, @node, @attachment.filename),
       delete_type: 'DELETE'
     }
 

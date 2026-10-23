@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_02_034852) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_14_000000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -105,6 +105,34 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_02_034852) do
     t.index ["name"], name: "index_configurations_on_name", unique: true
   end
 
+  create_table "dradis_plugins_echo_agents", force: :cascade do |t|
+    t.integer "agent_type", default: 1, null: false
+    t.boolean "enabled", default: true, null: false
+    t.string "model_override"
+    t.string "name", null: false
+    t.text "env"
+    t.integer "provider_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_dradis_plugins_echo_agents_on_name", unique: true
+    t.index ["provider_id"], name: "index_dradis_plugins_echo_agents_on_provider_id"
+  end
+
+  create_table "dradis_plugins_echo_messages", force: :cascade do |t|
+    t.integer "session_id", null: false
+    t.integer "parent_id"
+    t.integer "user_id"
+    t.integer "role", default: 0, null: false
+    t.integer "status", default: 0, null: false
+    t.text "content"
+    t.text "metadata"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["parent_id"], name: "index_dradis_plugins_echo_messages_on_parent_id"
+    t.index ["session_id"], name: "index_dradis_plugins_echo_messages_on_session_id"
+    t.index ["user_id"], name: "index_dradis_plugins_echo_messages_on_user_id"
+  end
+
   create_table "dradis_plugins_echo_prompts", force: :cascade do |t|
     t.string "title", null: false
     t.string "icon", null: false
@@ -117,6 +145,39 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_02_034852) do
     t.index ["user_id"], name: "index_dradis_plugins_echo_prompts_on_user_id"
   end
 
+  create_table "dradis_plugins_echo_providers", force: :cascade do |t|
+    t.string "address"
+    t.text "api_key"
+    t.string "model"
+    t.string "name", null: false
+    t.string "type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "dradis_plugins_echo_sessions", force: :cascade do |t|
+    t.integer "agent_id", null: false
+    t.integer "user_id"
+    t.string "record_type", null: false
+    t.integer "record_id", null: false
+    t.integer "status", default: 0, null: false
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["agent_id"], name: "index_dradis_plugins_echo_sessions_on_agent_id"
+    t.index ["record_type", "record_id"], name: "index_dradis_plugins_echo_sessions_on_record"
+    t.index ["user_id"], name: "index_dradis_plugins_echo_sessions_on_user_id"
+  end
+
+  create_table "editing_sessions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "record_type", null: false
+    t.integer "record_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["record_type", "record_id"], name: "index_editing_sessions_uniqueness", unique: true
+    t.index ["user_id"], name: "index_editing_sessions_on_user_id"
+  end
+
   create_table "evidence", force: :cascade do |t|
     t.integer "node_id"
     t.integer "issue_id"
@@ -124,6 +185,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_02_034852) do
     t.string "author"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.integer "state", default: 0, null: false
     t.index ["issue_id"], name: "index_evidence_on_issue_id"
     t.index ["node_id"], name: "index_evidence_on_node_id"
   end
@@ -277,7 +339,14 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_02_034852) do
   add_foreign_key "boards", "nodes", on_delete: :cascade
   add_foreign_key "comments", "inline_threads"
   add_foreign_key "comments", "users", on_delete: :nullify
+  add_foreign_key "dradis_plugins_echo_agents", "dradis_plugins_echo_providers", column: "provider_id"
+  add_foreign_key "dradis_plugins_echo_messages", "dradis_plugins_echo_messages", column: "parent_id"
+  add_foreign_key "dradis_plugins_echo_messages", "dradis_plugins_echo_sessions", column: "session_id"
+  add_foreign_key "dradis_plugins_echo_messages", "users", on_delete: :nullify
   add_foreign_key "dradis_plugins_echo_prompts", "users"
+  add_foreign_key "dradis_plugins_echo_sessions", "dradis_plugins_echo_agents", column: "agent_id"
+  add_foreign_key "dradis_plugins_echo_sessions", "users", on_delete: :nullify
+  add_foreign_key "editing_sessions", "users"
   add_foreign_key "inline_threads", "users"
   add_foreign_key "inline_threads", "users", column: "resolved_by_id"
   add_foreign_key "mapping_fields", "mappings"

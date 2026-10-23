@@ -2,7 +2,7 @@ module Publishable
   extend ActiveSupport::Concern
 
   included do
-    before_action :ensure_reviewer, only: [:create, :update, :multiple_update]
+    before_action :ensure_reviewer, only: [:create, :create_multiple, :update, :multiple_update]
     before_action :remove_unused_state_param, only: [:update]
   end
 

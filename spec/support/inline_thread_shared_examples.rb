@@ -65,7 +65,7 @@ shared_examples 'inline threads' do
 
   describe 'POST /inline_threads' do
     it 'creates a new thread with initial comment' do
-      expect {
+      expect do
         post inline_threads_path,
           params: {
             inline_thread: {
@@ -76,7 +76,7 @@ shared_examples 'inline threads' do
             }
           },
           headers: turbo_stream_headers
-      }.to change { InlineThread.count }.by(1)
+      end.to change { InlineThread.count }.by(1)
         .and change { Comment.count }.by(1)
 
       expect(response.media_type).to eq('text/vnd.turbo-stream.html')
@@ -97,10 +97,10 @@ shared_examples 'inline threads' do
     it 'destroys a thread owned by the current user' do
       thread = create(:inline_thread, commentable: commentable, user: @logged_in_as)
 
-      expect {
+      expect do
         delete inline_thread_path(thread),
           headers: turbo_stream_headers
-      }.to change { InlineThread.count }.by(-1)
+      end.to change { InlineThread.count }.by(-1)
 
       expect(response.media_type).to eq('text/vnd.turbo-stream.html')
     end
@@ -143,11 +143,11 @@ shared_examples 'inline threads' do
     it 'creates a reply comment on the thread' do
       thread = create(:inline_thread, commentable: commentable)
 
-      expect {
+      expect do
         post inline_thread_comments_path(thread),
           params: { comment: { content: 'Good point, will fix' } },
           headers: turbo_stream_headers
-      }.to change { thread.comments.count }.by(1)
+      end.to change { thread.comments.count }.by(1)
 
       expect(response.media_type).to eq('text/vnd.turbo-stream.html')
 

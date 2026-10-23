@@ -1,0 +1,53 @@
+<div class="provider-row">
+  <div class="d-flex align-items-start gap-3">
+    <div class="provider-icon-wrap flex-shrink-0">
+      <%= image_tag "dradis/plugins/echo/#{provider.icon_name}.svg",
+            class: 'provider-icon',
+            alt: provider.type_name %>
+    </div>
+    <div>
+      <div class="d-flex align-items-center gap-2">
+        <span class="fw-semibold"><%= provider.name %></span>
+        <span class="badge bg-secondary"><%= provider.type_name %></span>
+      </div>
+      <div class="provider-details mt-1">
+        <% if provider.model.present? %>
+          <span>
+            <span class="provider-detail-label">Model</span>
+            <code class="provider-detail-value"><%= provider.model %></code>
+          </span>
+        <% end %>
+        <% if provider.address.present? %>
+          <span>
+            <span class="provider-detail-label">Address</span>
+            <code class="provider-detail-value"><%= provider.address %></code>
+          </span>
+        <% end %>
+        <% if provider.api_key.present? %>
+          <span>
+            <span class="provider-detail-label">API Key</span>
+            <code class="provider-detail-value">(set)</code>
+          </span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex gap-2 flex-shrink-0">
+    <%= link_to edit_provider_path(provider), class: 'btn btn-warning btn-sm' do %>
+      <i class="fa-solid fa-pencil"></i> Edit
+    <% end %>
+    <% if provider.agents.exists? %>
+      <span data-bs-toggle="tooltip" data-bs-title="<%= provider.name %> is in use and cannot be deleted.">
+        <button class="btn btn-danger btn-sm" disabled>
+          <i class="fa-solid fa-xmark"></i> Delete
+        </button>
+      </span>
+    <% else %>
+      <%= button_to provider_path(provider), method: :delete,
+            class: 'btn btn-danger btn-sm',
+            form: { data: { turbo_confirm: "Delete #{provider.name}?" } } do %>
+        <i class="fa-solid fa-xmark"></i> Delete
+      <% end %>
+    <% end %>
+  </div>
+</div>

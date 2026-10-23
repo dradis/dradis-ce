@@ -1,5 +1,5 @@
 class QA::IssuesController < AuthenticatedController
-  include ActivityTracking
+  include EventPublisher
   include LiquidEnabledResource
   include Mentioned
   include ProjectScoped
@@ -23,7 +23,7 @@ class QA::IssuesController < AuthenticatedController
 
   def update
     if @issue.update(state: @state, updated_at: Time.now)
-      track_state_change(@issue)
+      publish_event('issue.state_change', @issue.to_event_payload)
 
       redirect_to *next_issue_or_index_path
     else
@@ -38,7 +38,7 @@ class QA::IssuesController < AuthenticatedController
       if @issues.update(state: @state)
 
         @issues.each do |issue|
-          track_state_change(issue)
+          publish_event('issue.state_change', issue.to_event_payload)
         end
 
         format.html do
@@ -55,6 +55,14 @@ class QA::IssuesController < AuthenticatedController
   end
 
   private
+
+  # Override EventPublisher#event_action_payload to use the semantic action
+  # name ('state_change') instead of the RESTful controller actions
+  # ('update'/'multiple_update') so the activity feed shows the correct verb.
+  def event_action_payload
+    action_map = { 'multiple_update' => 'state_change', 'update' => 'state_change' }
+    super.merge(action: action_map.fetch(action_name, action_name))
+  end
 
   def issue_params
     params.permit(:state)

@@ -1,7 +1,7 @@
 class EvidenceDrop < BaseDrop
   include EscapedFields
 
-  delegate :content, :title, to: :@record
+  delegate :content, :state, :title, to: :@record
 
   def issue
     IssueDrop.new(@record.issue)
