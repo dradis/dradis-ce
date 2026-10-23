@@ -52,26 +52,19 @@ describe 'subscriptions' do
   end
 
   describe 'POST /subscriptions' do
-    it 'subscribes the current user and redirects back for regular requests' do
+    it 'subscribes the current user and sends them to the subscriptions header' do
       expect do
         post '/subscriptions', params: params
       end.to change(Subscription, :count).by(1)
 
-      expect(response).to redirect_to(root_path)
-    end
-
-    it 'sends Turbo Frame requests to the subscriptions header' do
-      post '/subscriptions', params: params, headers: frame_headers
-
       expect(response).to redirect_to(subscriptions_path(params))
-      expect(response).to have_http_status(:see_other)
     end
 
-    it 'sends Turbo Frame requests to the subscriptions header when the user is already subscribed' do
+    it 'sends them to the subscriptions header when the user is already subscribed' do
       Subscription.subscribe(user: @logged_in_as, to: issue)
 
       expect do
-        post '/subscriptions', params: params, headers: frame_headers
+        post '/subscriptions', params: params
       end.not_to change(Subscription, :count)
 
       expect(response).to redirect_to(subscriptions_path(params))
@@ -79,20 +72,19 @@ describe 'subscriptions' do
   end
 
   describe 'DELETE /subscriptions/:id' do
-    it 'unsubscribes the current user and sends Turbo Frame requests to the subscriptions header' do
+    it 'unsubscribes the current user and sends them to the subscriptions header' do
       Subscription.subscribe(user: @logged_in_as, to: issue)
 
       expect do
-        delete "/subscriptions/#{issue.id}", params: params, headers: frame_headers
+        delete "/subscriptions/#{issue.id}", params: params
       end.to change(Subscription, :count).by(-1)
 
       expect(response).to redirect_to(subscriptions_path(params))
-      expect(response).to have_http_status(:see_other)
     end
 
-    it 'sends Turbo Frame requests to the subscriptions header when the user is no longer subscribed' do
+    it 'sends them to the subscriptions header when the user is no longer subscribed' do
       expect do
-        delete "/subscriptions/#{issue.id}", params: params, headers: frame_headers
+        delete "/subscriptions/#{issue.id}", params: params
       end.not_to change(Subscription, :count)
 
       expect(response).to redirect_to(subscriptions_path(params))

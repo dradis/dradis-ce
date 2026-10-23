@@ -13,29 +13,19 @@ class SubscriptionsController < AuthenticatedController
   def create
     subscribe
 
-    render_header_or_redirect(notice: 'Subscribed!')
+    redirect_to subscriptions_path(subscription: subscription_params)
   end
 
   def destroy
     unsubscribe
 
-    render_header_or_redirect(notice: 'Unsubscribed!')
+    redirect_to subscriptions_path(subscription: subscription_params)
   end
 
   private
 
   def authorize_subscribable
     authorize! :read, subscribable.try(:project) || subscribable
-  end
-
-  # The comments header submits inside a Turbo Frame, so send it back to the
-  # header. Plain requests keep the redirect.
-  def render_header_or_redirect(notice:)
-    if turbo_frame_request?
-      redirect_to subscriptions_path(subscription: subscription_params), status: :see_other
-    else
-      redirect_back fallback_location: root_path, notice: notice
-    end
   end
 
   # Ignores duplicates if they already subscribed, e.g. in another tab
