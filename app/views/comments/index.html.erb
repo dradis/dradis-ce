@@ -1,10 +1,20 @@
+<% subscriptions_header = turbo_frame_tag dom_id(@commentable, :subscriptions),
+     class: 'actions d-flex align-items-center ms-auto pt-1',
+     data: { behavior: 'subscriptions-header' },
+     src: main_app.subscriptions_path(subscription: subscription_params_for(@commentable)) %>
 <% if @commentable.respond_to?(:project) %>
-  <h4 class="d-flex header-underline">Comments <span class="badge bg-primary text-white ms-2" id="comment-count"><%= @comments.count %></span></h4>
+  <h4 class="d-flex header-underline">
+    Comments <span class="badge bg-primary text-white ms-2" data-behavior="comment-count"><%= @comments.size %></span>
+    <%= subscriptions_header %>
+  </h4>
   <%= render 'comments/feed' %>
 <% else %>
   <div class="card">
     <div class="card-header bg-secondary">
-      <div class="card-title">Comments <span id="comment-count">(<%= @comments.count %>)</span></div>
+      <div class="card-title d-flex align-items-center">
+        Comments <span class="badge bg-primary text-white ms-2" data-behavior="comment-count"><%= @comments.size %></span>
+        <%= subscriptions_header %>
+      </div>
     </div>
     <div class="card-body">
       <%= render 'comments/feed' %>

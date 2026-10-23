@@ -1,10 +1,14 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
+  - Comments: Move subscribing into the comments header and show subscribers as stacked avatars
   - Nodes: Add a node from the node tree
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
+    - Comments:
+      - update the comment count when you post or delete a comment
+      - show the no-comments notice again after the last comment is deleted
     - Sidebar tips: tone down the tips box in dark mode and keep its links readable
     - Diffs: remove stray escape characters around highlighted changes
     - Avatars: display a local image while Gravatar loads

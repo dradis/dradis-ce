@@ -15,8 +15,8 @@ describe 'note pages' do
   end
 
   example 'show page with wrong Node ID in URL' do
-    node       = create(:node, project: current_project)
-    note       = create(:note, node: node)
+    node = create(:node, project: current_project)
+    note = create(:note, node: node)
     wrong_node = create(:node, project: current_project)
     expect do
       visit project_node_note_path(current_project, wrong_node, note)
@@ -37,16 +37,13 @@ describe 'note pages' do
 
     it "shows the note's contents" do
       should have_selector 'h5', text: 'Title'
-      should have_selector 'p',  text: 'My note'
+      should have_selector 'p', text: 'My note'
       should have_selector 'h5', text: 'Description'
-      should have_selector 'p',  text: 'My description'
+      should have_selector 'p', text: 'My description'
     end
 
     let(:commentable) { @note }
     it_behaves_like 'a page with a comments feed'
-
-    let(:subscribable) { @note }
-    it_behaves_like 'a page with subscribe/unsubscribe links'
 
     describe "clicking 'delete'", js: true do
       let(:submit_form) do
@@ -238,7 +235,7 @@ describe 'note pages' do
     end
 
     context 'when a NoteTemplate is specified' do
-      let(:params)  { { template: 'simple_note' } }
+      let(:params) { { template: 'simple_note' } }
 
       it 'pre-populates the textarea with the template contents' do
         click_link 'Fields'

@@ -5,6 +5,7 @@ class SubscriptionsController < AuthenticatedController
 
   def index
     @subscriptions = subscribable.subscriptions.includes(:user)
+    @subscribers = @subscriptions.filter_map(&:user)
 
     # Used for showing/hiding subscribe and unsubscribe links
     @subscription = @subscriptions.find { |subscription| subscription.user == current_user }
@@ -13,13 +14,13 @@ class SubscriptionsController < AuthenticatedController
   def create
     subscribe
 
-    redirect_back fallback_location: root_path, notice: 'Subscribed!'
+    redirect_to subscriptions_path(subscription: subscription_params)
   end
 
   def destroy
     unsubscribe
 
-    redirect_back fallback_location: root_path, notice: 'Unsubscribed!'
+    redirect_to subscriptions_path(subscription: subscription_params)
   end
 
   private
@@ -28,10 +29,9 @@ class SubscriptionsController < AuthenticatedController
     authorize! :read, subscribable.try(:project) || subscribable
   end
 
+  # Ignores duplicates if they already subscribed, e.g. in another tab
   def subscribe
-    subscription = Subscription.new(subscription_params)
-    subscription.user = current_user
-    subscription.save
+    Subscription.subscribe(user: current_user, to: subscribable)
   end
 
   def subscribable
@@ -56,6 +56,7 @@ class SubscriptionsController < AuthenticatedController
       subscribable_type: subscription_params[:subscribable_type],
       subscribable_id: subscription_params[:subscribable_id]
     )
-    subscription.destroy
+    # Nothing to do if they already unsubscribed, e.g. in another tab
+    subscription&.destroy
   end
 end

@@ -102,20 +102,5 @@
 
       <%= render_view_hooks('issues/comments') %>
     </div>
-
-    <div class="content-container">
-      <%= content_tag :div,
-          spinner_tag,
-          data: {
-            behavior: 'fetch fetch-subscriptions',
-            path: subscriptions_path(
-              subscription: {
-                subscribable_type: @issue.class,
-                subscribable_id: @issue.id
-              }
-            )
-          }
-        %>
-    </div>
   </div>
 </div>
