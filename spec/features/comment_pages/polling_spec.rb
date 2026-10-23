@@ -8,17 +8,23 @@ describe 'comment pages', js: true do
   shared_examples 'a commentable page with poller' do
     describe 'and someone else adds a comment' do
       before do
-        @new_comment = create(:comment, commentable: @commentable, user: @other_user)
-        create(:activity, action: :create, trackable: @new_comment, user: @other_user)
+        # A user who isn't subscribed yet, so the header has to refresh to show them
+        @commenter = create(:user)
+        @new_comment = create(:comment, commentable: @commentable, user: @commenter)
+        create(:activity, action: :create, trackable: @new_comment, user: @commenter)
         call_poller
       end
 
-      it 'displays the new comment' do
+      it 'displays the new comment and its author as a subscriber' do
         within('[data-behavior~=comment-list]') do
           expect(page).to have_selector("#comment_#{@new_comment.id}") # , visible: :all)
         end
 
         expect(page).to have_selector('[data-behavior~=comment-count]', text: '2')
+
+        within('[data-behavior~=subscriptions-header]') do
+          expect(page).to have_css("[data-bs-title='#{@commenter.name}']")
+        end
       end
     end
 

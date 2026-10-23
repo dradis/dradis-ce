@@ -362,6 +362,9 @@ class ActivitiesPoller {
       $('[data-behavior~=comment-list]').append(content);
       const $count = $('[data-behavior~=comment-count]');
       $count.html(parseInt($count.html()) + 1);
+
+      // Commenting subscribes the author
+      document.querySelector('[data-behavior~=subscriptions-header]')?.reload();
     }
   }
 
