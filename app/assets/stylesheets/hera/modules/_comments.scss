@@ -56,20 +56,34 @@
 .subscribers {
   align-items: center;
   display: flex;
+  isolation: isolate;
   margin-right: 0.5rem;
 
   &:hover > :not(:first-child) {
     margin-left: -0.25rem;
   }
 
+  // Must stay before `> *` so the focus z-index wins.
+  @for $i from 1 through 5 {
+    > :nth-child(#{$i}) {
+      z-index: 6 - $i;
+    }
+  }
+
   > * {
     border-radius: 50%;
     box-shadow: 0 0 0 2px var(--primary-bg);
-    transition: margin-left 0.2s ease-in-out;
+    position: relative;
+    transition: margin-left 0.2s ease-in-out, transform 0.2s ease-in-out;
 
     &:focus-visible {
       box-shadow: $focus-shadow;
       outline: none;
+      z-index: 10;
+    }
+
+    &:hover {
+      transform: scale(1.2);
     }
 
     &:not(:first-child) {
