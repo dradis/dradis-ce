@@ -2,6 +2,9 @@
   <% cache ['comment-feed', @commentable, @comments] do %>
     <div data-behavior="comment-list">
       <%= render(partial: 'comments/comment', collection: @comments, cached: true) if @comments.any? %>
+      <div data-notice="no-comments" class="comment <%= 'd-none' if @comments.any? %>">
+        There have been no comments yet.
+      </div>
     </div>
   <% end %>
   <%= render 'comments/new' %>

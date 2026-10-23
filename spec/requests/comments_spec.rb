@@ -26,6 +26,22 @@ describe 'comments' do
       end
     end
 
+    describe 'empty state' do
+      it 'shows the empty state when there are no comments' do
+        get_comments
+
+        expect(page).to have_css('[data-notice~=no-comments]:not(.d-none)', text: 'There have been no comments yet.')
+      end
+
+      it 'hides the empty state when there are comments' do
+        create(:comment, commentable: issue)
+
+        get_comments
+
+        expect(page).to have_css('[data-notice~=no-comments].d-none', visible: :all)
+      end
+    end
+
     it 'renders a frame that loads the subscriptions header from the subscriptions controller' do
       get_comments
 
@@ -42,6 +58,12 @@ describe 'comments' do
 
       expect(response.body).to include(".text(2).toggleClass('d-none', false)")
     end
+
+    it 'hides the empty state' do
+      post '/comments', params: { comment: comment_params.merge(content: 'New comment') }, xhr: true
+
+      expect(response.body).to include("$('[data-notice~=no-comments]').addClass('d-none')")
+    end
   end
 
   describe 'DELETE /comments/:id' do
@@ -51,6 +73,23 @@ describe 'comments' do
       delete "/comments/#{comment.id}", xhr: true
 
       expect(response.body).to include(".text(0).toggleClass('d-none', true)")
+    end
+
+    it 'shows the empty state after the last comment is deleted' do
+      comment = create(:comment, commentable: issue, user: @logged_in_as)
+
+      delete "/comments/#{comment.id}", xhr: true
+
+      expect(response.body).to include("$('[data-notice~=no-comments]').toggleClass('d-none', false)")
+    end
+
+    it 'keeps the empty state hidden while other comments remain' do
+      create(:comment, commentable: issue)
+      comment = create(:comment, commentable: issue, user: @logged_in_as)
+
+      delete "/comments/#{comment.id}", xhr: true
+
+      expect(response.body).to include("$('[data-notice~=no-comments]').toggleClass('d-none', true)")
     end
   end
 end

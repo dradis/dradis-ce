@@ -9,6 +9,7 @@ $('#<%= dom_id(@comment) %>').find('.actions').addClass('current_user')
 
 <% count = @comment.commentable.comments.count %>
 $('[data-behavior~=comment-count]').text(<%= count %>).toggleClass('d-none', <%= count.zero? %>)
+$('[data-notice~=no-comments]').addClass('d-none')
 
 $('[data-behavior~=content-textile]').each(function() {
   new QuoteSelector(this);
