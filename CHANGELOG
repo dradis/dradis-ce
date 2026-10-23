@@ -9,6 +9,7 @@
     - Comments:
       - update the comment count when you post or delete a comment
       - show the no-comments notice again after the last comment is deleted
+    - Sidebar tips: tone down the tips box in dark mode and keep its links readable
     - Diffs: remove stray escape characters around highlighted changes
     - Avatars: display a local image while Gravatar loads
     - Editor: keep the cursor in place after uploading an image
