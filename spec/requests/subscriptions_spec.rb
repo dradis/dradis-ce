@@ -5,7 +5,6 @@ describe 'subscriptions' do
 
   let(:issue) { create(:issue, node: @project.issue_library) }
   let(:params) { { subscription: { subscribable_type: 'Issue', subscribable_id: issue.id } } }
-  let(:frame_headers) { { 'Turbo-Frame' => "subscriptions_issue_#{issue.id}" } }
 
   describe 'GET /subscriptions' do
     let(:page) { Capybara.string(response.body) }
@@ -15,7 +14,7 @@ describe 'subscriptions' do
         Subscription.subscribe(user: user, to: issue)
       end
 
-      get '/subscriptions', params: params, headers: frame_headers
+      get '/subscriptions', params: params
     end
 
     context 'when there are no subscribers' do
@@ -40,13 +39,11 @@ describe 'subscriptions' do
     context 'when there are more than 4 subscribers' do
       let(:subscribers) { create_list(:user, 6) }
 
-      it 'shows 4 avatars and the number of remaining subscribers' do
+      it 'shows 4 avatars and names the remaining subscribers in the overflow badge' do
         expect(page).to have_css('[data-behavior~=subscribers] .gravatar', count: 4)
-        expect(page).to have_css('[data-behavior~=subscribers-overflow]', text: '+2')
-      end
 
-      it 'names the remaining subscribers in the overflow tooltip' do
-        expect(page.find('[data-behavior~=subscribers-overflow]')['data-bs-title']).to eq(subscribers.last(2).map(&:name).join(', '))
+        overflow = page.find('[data-behavior~=subscribers-overflow]', text: '+2')
+        expect(overflow['data-bs-title']).to eq(subscribers.last(2).map(&:name).join(', '))
       end
     end
   end
