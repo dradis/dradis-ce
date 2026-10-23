@@ -1,6 +1,15 @@
 class SubscriptionsController < AuthenticatedController
   before_action :authorize_subscribable
 
+  layout false
+
+  def index
+    @subscriptions = subscribable.subscriptions.includes(:user)
+
+    # Used for showing/hiding subscribe and unsubscribe links
+    @subscription = @subscriptions.find { |subscription| subscription.user == current_user }
+  end
+
   def create
     subscribe
 
@@ -19,14 +28,11 @@ class SubscriptionsController < AuthenticatedController
     authorize! :read, subscribable.try(:project) || subscribable
   end
 
-  # The comments header submits inside a Turbo Frame, so it only needs the
-  # header back. Plain requests keep the redirect.
+  # The comments header submits inside a Turbo Frame, so send it back to the
+  # header. Plain requests keep the redirect.
   def render_header_or_redirect(notice:)
     if turbo_frame_request?
-      render partial: 'subscriptions/header', locals: {
-        subscribable: subscribable,
-        subscriptions: subscribable.subscriptions.includes(:user)
-      }
+      redirect_to subscriptions_path(subscription: subscription_params), status: :see_other
     else
       redirect_back fallback_location: root_path, notice: notice
     end

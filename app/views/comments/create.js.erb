@@ -14,5 +14,5 @@ $('[data-behavior~=content-textile]').each(function() {
   new QuoteSelector(this);
 });
 
-$('[data-behavior~=subscriptions-header]').replaceWith("<%= j render 'subscriptions/header', subscribable: @comment.commentable, subscriptions: @subscriptions %>")
-window.initBehaviors(document.querySelector('[data-behavior~=subscriptions-header]'));
+// Posting a comment subscribes its author
+document.getElementById('<%= dom_id(@comment.commentable, :subscriptions) %>').reload();

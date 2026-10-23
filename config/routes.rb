@@ -172,7 +172,7 @@ Rails.application.routes.draw do
     resource :kit, only: [:new, :create]
   end
 
-  resources :subscriptions, only: [:create, :destroy]
+  resources :subscriptions, only: [:index, :create, :destroy]
 
   # -------------------------------------------------------------- Static pages
   resource :markup, controller: :markup, only: [] do

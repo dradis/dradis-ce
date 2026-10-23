@@ -26,46 +26,11 @@ describe 'comments' do
       end
     end
 
-    describe 'subscribers' do
-      before do
-        subscribers.each do |user|
-          Subscription.subscribe(user: user, to: issue)
-        end
+    it 'renders a frame that loads the subscriptions header from the subscriptions controller' do
+      get_comments
 
-        get_comments
-      end
-
-      context 'when there are no subscribers' do
-        let(:subscribers) { [] }
-
-        it 'only shows the subscribe link' do
-          expect(page).to have_link('Subscribe')
-          expect(page).not_to have_link('Unsubscribe')
-          expect(page).not_to have_css('[data-behavior~=subscribers]')
-        end
-      end
-
-      context 'when there are up to 4 subscribers' do
-        let(:subscribers) { create_list(:user, 3) }
-
-        it 'shows an avatar for each subscriber' do
-          expect(page).to have_css('[data-behavior~=subscribers] .gravatar', count: 3)
-          expect(page).not_to have_css('[data-behavior~=subscribers-overflow]')
-        end
-      end
-
-      context 'when there are more than 4 subscribers' do
-        let(:subscribers) { create_list(:user, 6) }
-
-        it 'shows 4 avatars and the number of remaining subscribers' do
-          expect(page).to have_css('[data-behavior~=subscribers] .gravatar', count: 4)
-          expect(page).to have_css('[data-behavior~=subscribers-overflow]', text: '+2')
-        end
-
-        it 'names the remaining subscribers in the overflow tooltip' do
-          expect(page.find('[data-behavior~=subscribers-overflow]')['data-bs-title']).to eq(subscribers.last(2).map(&:name).join(', '))
-        end
-      end
+      frame = page.find("turbo-frame#subscriptions_issue_#{issue.id}")
+      expect(frame['src']).to eq(subscriptions_path(subscription: { subscribable_type: 'Issue', subscribable_id: issue.id }))
     end
   end
 

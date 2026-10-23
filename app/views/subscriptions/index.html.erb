@@ -1,16 +1,13 @@
 <% max_avatars = 4 %>
-<% subscribers = subscriptions.filter_map(&:user) %>
-<% subscription = subscriptions.find { |item| item.user_id == current_user.id } %>
+<% subscribers = @subscriptions.filter_map(&:user) %>
 <% subscription_params = {
      subscription: {
-       subscribable_type: subscribable.class.to_s,
-       subscribable_id: subscribable.id
+       subscribable_type: @subscribable.class.to_s,
+       subscribable_id: @subscribable.id
      }
    } %>
 
-<%= turbo_frame_tag dom_id(subscribable, :subscriptions),
-      class: 'actions d-flex align-items-center ms-auto pt-1',
-      data: { behavior: 'subscriptions-header' } do %>
+<%= turbo_frame_tag dom_id(@subscribable, :subscriptions) do %>
   <% if subscribers.any? %>
     <% hidden_count = subscribers.size - max_avatars %>
 
@@ -33,8 +30,8 @@
   <% end %>
 
   <div class="action">
-    <% if subscription %>
-      <%= link_to main_app.subscription_path(subscribable, subscription_params), data: { turbo_method: :delete } do %>
+    <% if @subscription %>
+      <%= link_to main_app.subscription_path(@subscribable, subscription_params), data: { turbo_method: :delete } do %>
         <i class="fa-solid fa-bell-slash fa-fw"></i> Unsubscribe
       <% end %>
     <% else %>
