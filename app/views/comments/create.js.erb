@@ -16,4 +16,4 @@ $('[data-behavior~=content-textile]').each(function() {
 });
 
 // Posting a comment subscribes its author
-document.getElementById('<%= dom_id(@comment.commentable, :subscriptions) %>').reload();
+document.getElementById('<%= dom_id(@comment.commentable, :subscriptions) %>')?.reload();
