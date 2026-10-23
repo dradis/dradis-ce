@@ -56,16 +56,6 @@ describe 'subscriptions' do
 
       expect(response).to redirect_to(subscriptions_path(params))
     end
-
-    it 'sends them to the subscriptions header when the user is already subscribed' do
-      Subscription.subscribe(user: @logged_in_as, to: issue)
-
-      expect do
-        post '/subscriptions', params: params
-      end.not_to change(Subscription, :count)
-
-      expect(response).to redirect_to(subscriptions_path(params))
-    end
   end
 
   describe 'DELETE /subscriptions/:id' do

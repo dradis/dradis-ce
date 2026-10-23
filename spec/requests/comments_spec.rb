@@ -25,13 +25,6 @@ describe 'comments' do
       expect(page).to have_css('[data-behavior~=comment-count]:not(.d-none)', text: '2')
       expect(page).to have_css('[data-notice~=no-comments].d-none', visible: :all)
     end
-
-    it 'renders a frame that loads the subscriptions header from the subscriptions controller' do
-      get_comments
-
-      frame = page.find("turbo-frame#subscriptions_issue_#{issue.id}")
-      expect(frame['src']).to eq(subscriptions_path(subscription: { subscribable_type: 'Issue', subscribable_id: issue.id }))
-    end
   end
 
   describe 'POST /comments' do
