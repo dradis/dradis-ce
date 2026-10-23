@@ -1,18 +1,11 @@
 <% max_avatars = 4 %>
-<% subscribers = @subscriptions.filter_map(&:user) %>
-<% subscription_params = {
-     subscription: {
-       subscribable_type: @subscribable.class.to_s,
-       subscribable_id: @subscribable.id
-     }
-   } %>
 
 <%= turbo_frame_tag dom_id(@subscribable, :subscriptions) do %>
-  <% if subscribers.any? %>
-    <% hidden_count = subscribers.size - max_avatars %>
+  <% if @subscribers.any? %>
+    <% hidden_count = @subscribers.size - max_avatars %>
 
     <div class="action subscribers" data-behavior="subscribers">
-      <% subscribers.first(max_avatars).each do |subscriber| %>
+      <% @subscribers.first(max_avatars).each do |subscriber| %>
         <span class="subscriber" tabindex="0" data-bs-toggle="tooltip" data-bs-title="<%= subscriber.name %>">
           <%= avatar_image(subscriber, size: 28, title: nil) %>
         </span>
@@ -22,7 +15,7 @@
               tabindex="0"
               data-behavior="subscribers-overflow"
               data-bs-toggle="tooltip"
-              data-bs-title="<%= subscribers.drop(max_avatars).map(&:name).join(', ') %>">
+              data-bs-title="<%= @subscribers.drop(max_avatars).map(&:name).join(', ') %>">
           +<%= hidden_count %>
         </span>
       <% end %>
@@ -31,11 +24,11 @@
 
   <div class="action">
     <% if @subscription %>
-      <%= link_to main_app.subscription_path(@subscribable, subscription_params), data: { turbo_method: :delete } do %>
+      <%= link_to main_app.subscription_path(@subscribable, subscription: subscription_params_for(@subscribable)), data: { turbo_method: :delete } do %>
         <i class="fa-solid fa-bell-slash fa-fw"></i> Unsubscribe
       <% end %>
     <% else %>
-      <%= link_to main_app.subscriptions_path(subscription_params), data: { turbo_method: :post } do %>
+      <%= link_to main_app.subscriptions_path(subscription: subscription_params_for(@subscribable)), data: { turbo_method: :post } do %>
         <i class="fa-solid fa-bell fa-fw"></i> Subscribe
       <% end %>
     <% end %>

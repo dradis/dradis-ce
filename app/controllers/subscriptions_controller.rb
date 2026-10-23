@@ -5,6 +5,7 @@ class SubscriptionsController < AuthenticatedController
 
   def index
     @subscriptions = subscribable.subscriptions.includes(:user)
+    @subscribers = @subscriptions.filter_map(&:user)
 
     # Used for showing/hiding subscribe and unsubscribe links
     @subscription = @subscriptions.find { |subscription| subscription.user == current_user }
