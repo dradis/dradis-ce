@@ -1,11 +1,11 @@
-<% max_avatars = 4 %>
+<% avatar_limit = 4 %>
 
 <%= turbo_frame_tag dom_id(@subscribable, :subscriptions) do %>
   <% if @subscribers.any? %>
-    <% hidden_count = @subscribers.size - max_avatars %>
+    <% hidden_count = @subscribers.size - avatar_limit %>
 
     <div class="action subscribers" data-behavior="subscribers">
-      <% @subscribers.first(max_avatars).each do |subscriber| %>
+      <% @subscribers.first(avatar_limit).each do |subscriber| %>
         <span class="subscriber" tabindex="0" data-bs-toggle="tooltip" data-bs-title="<%= subscriber.name %>">
           <%= avatar_image(subscriber, size: 28, title: nil) %>
         </span>
@@ -15,7 +15,7 @@
               tabindex="0"
               data-behavior="subscribers-overflow"
               data-bs-toggle="tooltip"
-              data-bs-title="<%= @subscribers.drop(max_avatars).map(&:name).join(', ') %>">
+              data-bs-title="<%= @subscribers.drop(avatar_limit).map(&:name).join(', ') %>">
           +<%= hidden_count %>
         </span>
       <% end %>
