@@ -4,7 +4,7 @@
   - Comments: Move subscribing into the comments header and show subscribers as stacked avatars
   - Nodes: Add a node from the node tree
   - Upgraded gems:
-    - [gem]
+    - crass
   - Bugs fixes:
     - Comments:
       - update the comment count when you post or delete a comment
