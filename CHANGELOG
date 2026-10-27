@@ -1,8 +1,9 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
-  - Nodes: show edit errors next to their fields instead of in an alert
-  - Nodes: Add a node from the node tree
+  - Nodes:
+    - show edit errors next to their fields instead of in an alert
+    - add a node from the node tree
   - Upgraded gems:
     - crass, sanitize
   - Bugs fixes:
