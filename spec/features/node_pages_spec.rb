@@ -414,6 +414,8 @@ describe 'node pages' do
 
       it 'displays an error message to the user' do
         submit_form
+        expect(page).to have_content('Please review the problems below:')
+        expect(page).to have_selector '#node_raw_properties.is-invalid'
         expect(page).to have_content('Raw properties contains invalid JSON')
       end
 

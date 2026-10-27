@@ -11,6 +11,8 @@
   <div id="node_properties_editor">
     <div class="note-text-inner">
       <%= simple_form_for [current_project, @node] do |f| %>
+        <%= f.error_notification %>
+
         <%= f.input :label, label: "New name" %>
 
         <%=
