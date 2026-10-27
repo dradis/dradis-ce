@@ -3,7 +3,7 @@
     - [future tense verb] [feature]
   - Nodes: Add a node from the node tree
   - Upgraded gems:
-    - crass
+    - crass, sanitize
   - Bugs fixes:
     - Sidebar tips: tone down the tips box in dark mode and keep its links readable
     - Diffs: remove stray escape characters around highlighted changes
