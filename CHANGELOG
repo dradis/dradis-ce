@@ -1,11 +1,11 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
+  - Nodes: show edit errors next to their fields instead of in an alert
   - Nodes: Add a node from the node tree
   - Upgraded gems:
     - crass, sanitize
   - Bugs fixes:
-    - Nodes: show edit errors next to their fields instead of in an alert
     - Sidebar tips: tone down the tips box in dark mode and keep its links readable
     - Diffs: remove stray escape characters around highlighted changes
     - Avatars: display a local image while Gravatar loads
