@@ -14,7 +14,6 @@
         <i class="fa-solid fa-trash fa-fw"></i> Delete
       <% end %>
       <a href="#modal_move_note" class="dropdown-item" tabindex="-1" data-bs-toggle="modal"><i class="fa-solid fa-mail-forward fa-fw"></i> Move</a>
-      <%= render partial: 'subscriptions/actions', locals: { subscribable: @note, dots_menu: true } %>
       <%= link_to(project_node_note_revisions_path(@node.project, @node, @note), class: 'dropdown-item') do %>
         <i class="fa-solid fa-history fa-fw"></i> View History
       <% end %>

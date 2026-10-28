@@ -1,35 +1,36 @@
-<div data-behavior="subscription-actions" data-subscribed="<%= !@subscription.nil? %>">
-  <% cache ['subscriptions-feed', @subscriptions] do %>
-    <% if @subscribable.respond_to?(:project) %>
-      <h4 class="d-flex header-underline">
-        Subscribers
-        <span class="badge bg-primary text-white mx-2">
-          <%= @subscribable.subscriptions.count %>
+<% avatar_limit = 4 %>
+
+<%= turbo_frame_tag dom_id(@subscribable, :subscriptions) do %>
+  <% if @subscribers.any? %>
+    <% hidden_count = @subscribers.size - avatar_limit %>
+
+    <div class="action subscribers" data-behavior="subscribers">
+      <% @subscribers.first(avatar_limit).each do |subscriber| %>
+        <span class="subscriber" tabindex="0" data-bs-toggle="tooltip" data-bs-title="<%= subscriber.name %>">
+          <%= avatar_image(subscriber, size: 28, title: nil) %>
         </span>
-        <span class="actions pt-1">
-          <div class="action">
-            <%= render 'subscriptions/actions', subscribable: @subscribable %>
-          </div>
+      <% end %>
+      <% if hidden_count > 0 %>
+        <span class="subscribers-overflow"
+              tabindex="0"
+              data-behavior="subscribers-overflow"
+              data-bs-toggle="tooltip"
+              data-bs-title="<%= @subscribers.drop(avatar_limit).map(&:name).join(', ') %>">
+          +<%= hidden_count %>
         </span>
-      </h4>
-      <div class="subscriptions-feed">
-        <%= render 'subscriptions/subscribers', subscribable: @subscribable %>
-      </div>
-    <% else %>
-      <div class="card">
-        <div class="card-header bg-secondary">
-          <div class="card-title">
-            Subscribers
-            <span>(<%= @subscribable.subscriptions.count %>)</span>
-            <span class="actions">
-              - <%= render 'subscriptions/actions', subscribable: @subscribable %>
-            </span>
-          </div>
-        </div>
-        <div class="card-body subscriptions-feed">
-          <%= render 'subscriptions/subscribers', subscribable: @subscribable %>
-        </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   <% end %>
-</div>
+
+  <div class="action">
+    <% if @subscription %>
+      <%= link_to main_app.subscription_path(@subscribable, subscription: subscription_params_for(@subscribable)), data: { turbo_method: :delete } do %>
+        <i class="fa-solid fa-bell-slash fa-fw"></i> Unsubscribe
+      <% end %>
+    <% else %>
+      <%= link_to main_app.subscriptions_path(subscription: subscription_params_for(@subscribable)), data: { turbo_method: :post } do %>
+        <i class="fa-solid fa-bell fa-fw"></i> Subscribe
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

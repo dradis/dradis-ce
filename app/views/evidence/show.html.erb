@@ -74,20 +74,5 @@
           }
         %>
     </div>
-
-    <div class="content-container">
-      <%= content_tag :div,
-          spinner_tag,
-          data: {
-            behavior: 'fetch fetch-subscriptions',
-            path: subscriptions_path(
-              subscription: {
-                subscribable_type: @evidence.class,
-                subscribable_id: @evidence.id
-              }
-            )
-          }
-        %>
-    </div>
   </div>
 </div>
