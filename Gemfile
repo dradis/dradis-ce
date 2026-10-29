@@ -109,7 +109,7 @@ gem 'RedCloth', '~> 4.3.4', require: 'redcloth'
 gem 'rinku'
 
 # html-pipeline dependency for html sanitization
-gem 'sanitize', '6.0.2'
+gem 'sanitize', '7.0.1'
 
 # SQLite3 DB driver
 gem 'sqlite3', '~> 2.9.6'
@@ -240,9 +240,11 @@ end
 # effective.
 
 # ----------------------------------------------------------------- Calculators
+gem 'dradis-calculator_aivss-ssvc', github: 'dradis/dradis-calculator_aivss-ssvc', branch: 'main'
 gem 'dradis-calculator_cvss', '~> 5.4.0'
 gem 'dradis-calculator_dread', '~> 5.4.0'
 gem 'dradis-calculator_mitre', '~> 5.4.0'
+gem 'dradis-calculator_stride', github: 'dradis/dradis-calculator_stride', branch: 'implement-stride-calculator'
 
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv_export', '~> 5.4.0'
