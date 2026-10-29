@@ -3,25 +3,29 @@
 
   <%= f.input :title %>
 
-  <%= f.input :icon do %>
+  <div class="mb-3">
+    <%= f.label :icon, 'Icon', class: 'form-label' %>
     <%=
       f.select :icon,
         options_for_select(prompt_icons_collection, @prompt.icon),
         {},
         class: 'form-select'
     %>
-  <% end %>
+  </div>
 
-  <%=
-    f.input :scope,
-      collection: Dradis::Plugins::Echo::Prompt::SCOPES.map { |scope| [scope.to_s.titleize, scope] },
-      include_blank: false,
-      label: 'Prompt Scope'
-  %>
+  <div class="mb-3">
+    <%= f.label :scope, 'Prompt Scope', class: 'form-label' %>
+    <%=
+      f.select :scope,
+        options_for_select(Dradis::Plugins::Echo::Prompt::SCOPES.map { |scope| [scope.to_s.titleize, scope] }, @prompt.scope),
+        {},
+        class: 'form-select'
+    %>
+  </div>
 
   <%= f.input :prompt, input_html: { rows: 10 } %>
 
   <div>
-    <%= f.button :submit, class: 'btn btn-primary' %> or <%= link_to 'Cancel', prompts_path %>
+    <%= f.submit class: 'btn btn-primary' %> or <%= link_to 'Cancel', prompts_path %>
   </div>
 <% end %>

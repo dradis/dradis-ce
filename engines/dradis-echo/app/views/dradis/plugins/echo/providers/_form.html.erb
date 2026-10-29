@@ -23,7 +23,7 @@
   <%= f.input :address, label: 'API Base URL' %>
 
   <div class="form-actions">
-    <%= f.button :submit, provider.new_record? ? 'Add Provider' : 'Update Provider',
+    <%= f.submit provider.new_record? ? 'Add Provider' : 'Update Provider',
         class: 'btn btn-primary' %>
     or <%= link_to 'Cancel', providers_path %>
   </div>

@@ -12,7 +12,12 @@
 
   <p>If you want #2 but not #1, just point your Provider to a non-existing IP / port.</p>
 
-  <%= f.input :enabled, wrapper: :custom_boolean_switch, input_html: { role: 'switch' } %>
+  <div class="mb-3">
+    <div class="form-check form-switch">
+      <%= f.check_box :enabled, class: 'form-check-input', role: 'switch' %>
+      <%= f.label :enabled, 'Enabled', class: 'form-check-label' %>
+    </div>
+  </div>
 
   <hr>
 
@@ -39,10 +44,14 @@
 
   <%= f.association :provider, collection: @providers, include_blank: 'Select a provider', required: true %>
 
-  <% model_override_hint = capture do %>
-    Leave blank to use the model configured on the provider<% if agent.provider %> (currently: <code><%= agent.provider.model %></code>)<% end %>.
-  <% end %>
-  <%= f.input :model_override, hint: model_override_hint, placeholder: "Uses provider's configured model" %>
+  <div class="mb-3">
+    <%= f.label :model_override, 'Model override', class: 'form-label' %>
+    <%= f.text_field :model_override, class: 'form-control',
+        placeholder: "Uses provider's configured model" %>
+    <div class="form-text">
+      Leave blank to use the model configured on the provider<% if agent.provider %> (currently: <code><%= agent.provider.model %></code>)<% end %>.
+    </div>
+  </div>
 
   <hr>
   <h5>2. Grammar and spell checking</h5>
@@ -88,7 +97,7 @@
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, 'Update Agent', class: 'btn btn-primary' %>
+    <%= f.submit 'Update Agent', class: 'btn btn-primary' %>
     or <%= link_to 'Cancel', agents_path %>
   </div>
 <% end %>
