@@ -5,11 +5,11 @@
   - Upgraded gems:
     - crass, sanitize
   - Bugs fixes:
-    - Combobox: keep dropdown menus within the viewport and fit long option labels
     - Sidebar tips: tone down the tips box in dark mode and keep its links readable
     - Diffs: remove stray escape characters around highlighted changes
     - Avatars: display a local image while Gravatar loads
     - Editor: keep the cursor in place after uploading an image
+    - Combobox: keep dropdown menus within the viewport and fit long option labels
     - Combobox:
       - show inline validation errors on dropdowns that fail validation
     - Bug tracker items:
