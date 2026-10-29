@@ -79,7 +79,7 @@ class NodesController < NestedNodeResourceController
         format.json { render json: { success: true }.to_json }
         format.js
       else
-        format.html { render 'edit' }
+        format.html { render 'edit', status: :unprocessable_entity }
         format.json { render json: @node.errors.to_json, status: :unprocessable_entity }
         format.js
       end

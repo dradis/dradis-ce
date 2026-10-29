@@ -414,6 +414,7 @@ describe 'node pages' do
 
       it 'displays an error message to the user' do
         submit_form
+        expect(page.status_code).to eq 422
         expect(page).to have_content('Please review the problems below:')
         expect(page).to have_selector '#node_raw_properties.is-invalid'
         expect(page).to have_content('Raw properties contains invalid JSON')
@@ -426,6 +427,24 @@ describe 'node pages' do
 
       # UPGRADE: fix specs
       # include_examples "doesn't create an Activity"
+    end
+
+    describe 'submitting the form with a blank label' do
+      before { fill_in 'node_label', with: '' }
+
+      it 'shows the error under the label field' do
+        submit_form
+        expect(page).to have_selector '#node_label.is-invalid'
+        expect(page).to have_content "can't be blank"
+      end
+    end
+
+    describe 'moving the node to a parent that no longer exists' do
+      it 'shows why the move failed' do
+        page.driver.submit :patch, project_node_path(current_project, @node), node: { parent_id: 0 }
+        expect(page).to have_content 'Please review the problems below:'
+        expect(page).to have_content 'Parent is missing/invalid.'
+      end
     end
   end
 end
