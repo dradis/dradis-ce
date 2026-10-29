@@ -442,8 +442,7 @@ describe 'node pages' do
     describe 'moving the node to a parent that no longer exists' do
       it 'shows why the move failed' do
         page.driver.submit :patch, project_node_path(current_project, @node), node: { parent_id: 0 }
-        expect(page).to have_content 'Please review the problems below:'
-        expect(page).to have_content 'Parent is missing/invalid.'
+        expect(page).to have_css '.alert', text: 'Parent is missing/invalid.'
       end
     end
   end

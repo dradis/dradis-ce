@@ -11,10 +11,7 @@
   <div id="node_properties_editor">
     <div class="note-text-inner">
       <%= simple_form_for [current_project, @node] do |f| %>
-        <%= f.error_notification %>
-        <% if @node.errors[:parent_id].any? %>
-          <%= f.full_error :parent_id, class: 'invalid-feedback d-block' %>
-        <% end %>
+        <%= f.error_notification message: @node.errors.full_messages_for(:parent_id).to_sentence.presence %>
 
         <%= f.input :label, label: "New name" %>
 
