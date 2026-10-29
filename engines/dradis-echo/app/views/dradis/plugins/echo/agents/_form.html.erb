@@ -1,15 +1,6 @@
-<%= form_with model: agent, scope: :agent, url: agent_path(agent),
-              data: { controller: 'dradis--plugins--echo--agent' } do |f| %>
-
-  <% if agent.errors.any? %>
-    <div class="alert alert-danger">
-      <ul class="mb-0">
-        <% agent.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= simple_form_for agent, as: :agent, url: agent_path(agent),
+              html: { data: { controller: 'dradis--plugins--echo--agent' } } do |f| %>
+  <%= f.error_notification %>
 
   <p>
     Roslin is a writing assistant. When enabled, Roslin provides two capabilities:
@@ -21,12 +12,7 @@
 
   <p>If you want #2 but not #1, just point your Provider to a non-existing IP / port.</p>
 
-  <div class="mb-3">
-    <div class="form-check form-switch">
-      <%= f.check_box :enabled, class: 'form-check-input', role: 'switch' %>
-      <%= f.label :enabled, 'Enabled', class: 'form-check-label' %>
-    </div>
-  </div>
+  <%= f.input :enabled, wrapper: :custom_boolean_switch, input_html: { role: 'switch' } %>
 
   <hr>
 
@@ -51,22 +37,12 @@
 
   <p>Learn about <a href="https://dradis.com/academy/data-sovereignty/shadow-ai-pentest-data-leakage.html" target="_blank">Shadow AI in pentesting</a>.</p>
 
-  <div class="mb-3">
-    <%= f.label :provider_id, 'Provider', class: 'form-label' %>
-    <%= f.select :provider_id,
-          @providers.map { |p| [p.name, p.id] },
-          { include_blank: 'Select a provider' },
-          class: 'form-select', required: true %>
-  </div>
+  <%= f.association :provider, collection: @providers, include_blank: 'Select a provider', required: true %>
 
-  <div class="mb-3">
-    <%= f.label :model_override, 'Model override', class: 'form-label' %>
-    <%= f.text_field :model_override, class: 'form-control',
-        placeholder: "Uses provider's configured model" %>
-    <div class="form-text">
-      Leave blank to use the model configured on the provider<% if agent.provider %> (currently: <code><%= agent.provider.model %></code>)<% end %>.
-    </div>
-  </div>
+  <% model_override_hint = capture do %>
+    Leave blank to use the model configured on the provider<% if agent.provider %> (currently: <code><%= agent.provider.model %></code>)<% end %>.
+  <% end %>
+  <%= f.input :model_override, hint: model_override_hint, placeholder: "Uses provider's configured model" %>
 
   <hr>
   <h5>2. Grammar and spell checking</h5>
@@ -112,7 +88,7 @@
   </div>
 
   <div class="form-actions">
-    <%= f.submit 'Update Agent', class: 'btn btn-primary' %>
+    <%= f.button :submit, 'Update Agent', class: 'btn btn-primary' %>
     or <%= link_to 'Cancel', agents_path %>
   </div>
 <% end %>

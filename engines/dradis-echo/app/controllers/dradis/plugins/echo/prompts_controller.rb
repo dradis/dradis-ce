@@ -31,7 +31,7 @@ module Dradis::Plugins::Echo
       if @prompt.save
         redirect_to prompts_path, notice: 'Prompt was successfully updated.'
       else
-        render :edit
+        render :edit, status: :unprocessable_entity
       end
     end
 

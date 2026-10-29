@@ -1,15 +1,6 @@
-<%= form_with model: provider, scope: :provider,
+<%= simple_form_for provider, as: :provider,
       url: provider.new_record? ? providers_path : provider_path(provider) do |f| %>
-
-  <% if provider.errors.any? %>
-    <div class="alert alert-danger">
-      <ul class="mb-0">
-        <% provider.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= f.error_notification %>
 
   <%= f.hidden_field :type, value: provider.type_name %>
 
@@ -17,32 +8,22 @@
     <span class="badge bg-secondary"><%= provider.type_name %></span>
   </div>
 
-  <div class="mb-3">
-    <%= f.label :name, class: 'form-label' %>
-    <%= f.text_field :name, class: 'form-control', required: true %>
-  </div>
+  <%= f.input :name %>
 
   <% if provider.requires_api_key? %>
-    <div class="mb-3">
-      <%= f.label :api_key, 'API Key', class: 'form-label' %>
-      <%= f.password_field :api_key, class: 'form-control',
+    <%= f.input :api_key,
+          as: :password,
+          label: 'API Key',
           placeholder: provider.api_key.present? ? '(already set)' : nil,
           required: provider.new_record? %>
-    </div>
   <% end %>
 
-  <div class="mb-3">
-    <%= f.label :model, class: 'form-label' %>
-    <%= f.text_field :model, class: 'form-control', required: true %>
-  </div>
+  <%= f.input :model %>
 
-  <div class="mb-3">
-    <%= f.label :address, 'API Base URL', class: 'form-label' %>
-    <%= f.text_field :address, class: 'form-control', required: true %>
-  </div>
+  <%= f.input :address, label: 'API Base URL' %>
 
   <div class="form-actions">
-    <%= f.submit provider.new_record? ? 'Add Provider' : 'Update Provider',
+    <%= f.button :submit, provider.new_record? ? 'Add Provider' : 'Update Provider',
         class: 'btn btn-primary' %>
     or <%= link_to 'Cancel', providers_path %>
   </div>
