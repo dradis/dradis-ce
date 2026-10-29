@@ -16,6 +16,7 @@
   - Echo enhancements:
     - [Echo entity]:
       - [future tense verb] [Echo enhancement]
+    - Providers, agents and prompts: show errors next to their fields instead of in a list
   - New integrations:
     - Calculators:
       - AIVSS-SSVC
