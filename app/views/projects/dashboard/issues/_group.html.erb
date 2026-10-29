@@ -1,0 +1,19 @@
+<% group_id = "issues-group-#{current_project.id}-#{group_counter}" %>
+<%= tag.div class: "card issue-group #{'unassigned' if group.unassigned?}", data: { issues_summary_target: 'group', group_color: group.color } do %>
+  <a data-bs-toggle="collapse" href="#<%= group_id %>" class="card-header" data-behavior="card-header">
+    <h5><%= group.name %><span class="float-end"><i class="fa-solid fa-caret-up" data-behavior="caret-icon"></i></span></h5>
+  </a>
+  <div id="<%= group_id %>" class="collapse show">
+    <div class="card-body p-0">
+      <ul class="list-group">
+        <% group.issues.each do |issue| %>
+          <li class="list-group-item p-0">
+            <%= link_to [current_project, issue], class: 'd-block px-3 py-2 text-reset', data: { turbo_frame: '_top' } do %>
+              <i class="fa-solid fa-bug me-2 issue-group-icon"></i><%= issue.title %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>

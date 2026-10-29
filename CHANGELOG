@@ -5,6 +5,7 @@
   - Upgraded gems:
     - crass, sanitize
   - Bugs fixes:
+    - Dashboard: keep issue chart columns distinct when group labels match
     - Sidebar tips: tone down the tips box in dark mode and keep its links readable
     - Diffs: remove stray escape characters around highlighted changes
     - Avatars: display a local image while Gravatar loads

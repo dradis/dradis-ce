@@ -40,12 +40,6 @@ body.projects {
       justify-content: center;
       align-items: center;
 
-      .bar.untagged,
-      .counter.untagged,
-      .tick.untagged {
-        fill: var(--untagged-color);
-      }
-
       svg text {
         font-size: 14px;
       }
@@ -59,10 +53,11 @@ body.projects {
       }
     }
 
-    #issues-accordion {
+    .issues-accordion {
       margin-top: 1rem;
 
       .card {
+        border-color: var(--issue-group-color, var(--untagged-color));
         margin-bottom: 1rem;
 
         .card-body {
@@ -93,6 +88,7 @@ body.projects {
         }
 
         .card-header {
+          background-color: var(--issue-group-color, var(--untagged-color));
           color: $white;
 
           h5 {
@@ -104,17 +100,12 @@ body.projects {
           margin-bottom: 0;
         }
 
-        &.untagged {
-          border-color: var(--untagged-color);
+        .issue-group-icon {
+          color: var(--issue-group-color, var(--untagged-color));
+        }
 
-          .card-header {
-            background-color: var(--untagged-color);
-            color: var(--untagged-text);
-          }
-
-          .fa-bug {
-            color: var(--untagged-color);
-          }
+        &.unassigned .card-header {
+          color: var(--untagged-text);
         }
       }
     }

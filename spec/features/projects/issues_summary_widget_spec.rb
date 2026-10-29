@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 describe 'Issues Summary widget', js: true do
-  before { login_to_project_as_user }
+  before do
+    login_as_user
+    @project = create(:project)
+    @project.assign_owner(@logged_in_as)
+  end
 
   context 'with issues' do
     let(:issue) { create(:issue, node: current_project.issue_library) }
@@ -54,6 +58,84 @@ describe 'Issues Summary widget', js: true do
       click_link issue.title
 
       expect(page).to have_current_path(project_issue_path(current_project, issue))
+    end
+  end
+
+  context 'with another grouping' do
+    let(:issue) { create(:issue, node: current_project.issue_library) }
+    let(:group_class) { Projects::Dashboard::Issues::Group }
+    let(:groups) do
+      [
+        group_class.new(key: 'value', name: 'N/A', color: '#112233', issues: [issue]),
+        group_class.new(key: 'unassigned', name: 'Unassigned', issues: [], unassigned: true)
+      ]
+    end
+    let(:strategy) { double(key: 'list:Risk', label: 'Risk', groups: groups) }
+
+    before do
+      issue
+      allow(Projects::Dashboard::Issues::Grouping).to receive(:available).and_wrap_original do |original, project|
+        original.call(project) + [strategy]
+      end
+    end
+
+    def choose_grouping(label)
+      within('[data-behavior~=combobox-container]') do
+        find('[data-behavior~=combobox]').click
+        find('[data-behavior~=combobox-option]', text: label, exact_text: true).click
+      end
+    end
+
+    it 'switches both views, remembers the selection and separates identical chart labels' do
+      visit project_path(current_project)
+      expect(page).to have_css('[data-issues-summary-target="group"]', text: 'Unassigned')
+
+      choose_grouping('Risk')
+
+      expect(page).to have_css('[data-issues-summary-target="group"]', text: 'N/A')
+      expect(page).not_to have_css('[data-issues-summary-target="group"]', text: 'Unassigned')
+      expect(page).to have_css('[data-behavior~=issue-chart-bar]', count: 2, visible: :all)
+      positions = page.all('[data-behavior~=issue-chart-bar]', visible: :all).map { |bar| bar['x'] }
+      expect(positions.uniq.size).to eq 2
+
+      visit project_path(current_project)
+      expect(page).to have_css('[data-behavior~=combobox]', text: 'Risk')
+      expect(page).to have_css('[data-issues-summary-target="group"]', text: 'N/A')
+
+      choose_grouping('Tags')
+      expect(page).to have_css('[data-issues-summary-target="group"]', text: 'Unassigned')
+    end
+
+    it 'falls back when the saved grouping was removed' do
+      visit project_path(current_project)
+      choose_grouping('Risk')
+      expect(page).to have_css('[data-issues-summary-target="group"]', text: 'N/A')
+      allow(Projects::Dashboard::Issues::Grouping).to receive(:available).and_call_original
+
+      visit project_path(current_project)
+
+      expect(page).to have_css('[data-issues-summary-target="group"]', text: 'Unassigned')
+      expect(page).not_to have_css('[data-behavior~=combobox]')
+    end
+
+    it 'loads and changes grouping when browser storage is unavailable' do
+      visit project_path(current_project)
+      expect(page).to have_css('[data-behavior~=combobox]')
+      page.execute_script(<<~JS)
+        Storage.prototype.getItem = Storage.prototype.setItem = () => { throw new Error('Storage unavailable'); };
+        const frame = document.querySelector('[data-controller="issues-summary"]');
+        frame.innerHTML = '';
+        frame.removeAttribute('src');
+        frame.removeAttribute('data-controller');
+      JS
+      page.execute_script(<<~JS)
+        document.querySelector('[data-issues-summary-url-value]').setAttribute('data-controller', 'issues-summary');
+      JS
+      expect(page).to have_css('[data-behavior~=issue-chart-bar]')
+
+      choose_grouping('Risk')
+
+      expect(page).to have_css('[data-issues-summary-target="group"]', text: 'N/A')
     end
   end
 
