@@ -22,4 +22,30 @@ describe 'Echo prompts' do
       expect(titles).to match_array(Dradis::Plugins::Echo::Prompt.defaults_for(:issue).map(&:title))
     end
   end
+
+  describe 'GET /addons/echo/prompts/new' do
+    it 'keeps the icon on each icon option' do
+      get '/addons/echo/prompts/new', params: { scope: 'issue' }
+
+      icons = Nokogiri::HTML(response.body).css('#prompt_icon option').map { |option| option['data-combobox-option-icon'] }
+      expect(icons).not_to be_empty
+      expect(icons).to all(start_with('fa-solid fa-'))
+    end
+  end
+
+  describe 'PATCH /addons/echo/prompts/:id' do
+    let(:prompt) { @logged_in_as.prompts.create!(prompt: 'Summarize this', scope: 'issue', title: 'Summary') }
+
+    context 'without a title' do
+      before { patch "/addons/echo/prompts/#{prompt.id}", params: { prompt: { title: '' } } }
+
+      it 'keeps the saved title and shows the error next to the title field' do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(prompt.reload.title).to eq('Summary')
+
+        errors = Nokogiri::HTML(response.body).css('.invalid-feedback').map { |error| error.text.strip }
+        expect(errors).to include("Title can't be blank")
+      end
+    end
+  end
 end

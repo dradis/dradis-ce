@@ -1,46 +1,22 @@
-<%= form_with model: @prompt do |f| %>
+<%= simple_form_for @prompt do |f| %>
+  <%= f.error_notification %>
 
-  <% if @prompt.errors.any? %>
-    <div style="color: red" class="mb-3">
-      <h2><%= pluralize(@prompt.errors.count, "error") %> prohibited this prompt from being saved:</h2>
+  <%= f.input :title %>
 
-      <ul>
-        <% @prompt.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%=
+    f.input :icon,
+      collection: prompt_icons_collection,
+      include_blank: false
+  %>
 
-  <div class="mb-3">
-    <%= f.label :title, 'Title', class: 'form-label' %>
-    <%= f.text_field :title, value: @prompt.title, class: 'form-control', required: true %>
-  </div>
+  <%=
+    f.input :scope,
+      collection: Dradis::Plugins::Echo::Prompt::SCOPES.map { |scope| [scope.to_s.titleize, scope] },
+      include_blank: false,
+      label: 'Prompt Scope'
+  %>
 
-  <div class="mb-3">
-    <%= f.label :icon, 'Icon', class: 'form-label' %>
-    <%=
-      f.select :icon,
-        options_for_select(prompt_icons_collection, @prompt.icon),
-        {},
-        class: 'form-select'
-    %>
-  </div>
-
-  <div class="mb-3">
-    <%= f.label :scope, 'Prompt Scope', class: 'form-label' %>
-    <%=
-      f.select :scope,
-        options_for_select(Dradis::Plugins::Echo::Prompt::SCOPES.map { |scope| [scope.to_s.titleize, scope] }, @prompt.scope),
-        {},
-        class: 'form-select'
-    %>
-  </div>
-
-  <div class="mb-3">
-    <%= f.label :prompt, 'Prompt', class: 'form-label' %>
-    <%= f.text_area :prompt, value: @prompt.prompt, class: 'form-control', rows: 10, required: true %>
-  </div>
+  <%= f.input :prompt, input_html: { rows: 10 } %>
 
   <div>
     <%= f.submit class: 'btn btn-primary' %> or <%= link_to 'Cancel', prompts_path %>
