@@ -10,6 +10,7 @@
     - Diffs: remove stray escape characters around highlighted changes
     - Avatars: display a local image while Gravatar loads
     - Editor: keep the cursor in place after uploading an image
+    - Combobox: keep dropdown menus within the viewport and fit long option labels
     - Combobox:
       - show inline validation errors on dropdowns that fail validation
     - Bug tracker items:

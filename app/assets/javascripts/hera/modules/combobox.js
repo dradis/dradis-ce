@@ -565,6 +565,7 @@ class ComboBox {
     }
 
     this.updateComboboxUI($options);
+    this.popper?.update();
   }
 
   // ==========================================================================
@@ -579,11 +580,17 @@ class ComboBox {
 
   showMenu() {
     this.$comboboxMenu.css('display', 'block');
+    this.popper?.destroy();
+    this.popper = Popper.createPopper(this.$combobox[0], this.$comboboxMenu[0], {
+      placement: 'bottom-end',
+    });
     this.$combobox.attr('aria-expanded', 'true');
     this.$filter?.focus();
   }
 
   hideMenu() {
+    this.popper?.destroy();
+    this.popper = null;
     this.$comboboxMenu.css('display', 'none');
     this.$combobox.attr('aria-expanded', 'false');
     this.$filter?.val(null).trigger('input');
