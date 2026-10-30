@@ -2,6 +2,7 @@
   - Editing: Warn user if another user is currently editing a record
   - [entity]:
     - [future tense verb] [feature]
+  - Forms: show errors next to their fields instead of at the top of the form
   - Nodes: Add a node from the node tree
   - Upgraded gems:
     - crass, sanitize
