@@ -1,5 +1,7 @@
 body.projects {
   .summary-panel {
+    position: relative;
+
     #boards-summary {
       display: flex;
       flex-wrap: wrap;
@@ -42,6 +44,19 @@ body.projects {
 
       svg text {
         font-size: 14px;
+      }
+    }
+
+    // Show the selector in the panel header, above the underline.
+    .issues-grouping-selector {
+      position: absolute;
+      right: 0;
+      top: -0.25rem;
+
+      .combobox {
+        font-size: 0.875rem;
+        min-height: auto;
+        padding-block: 0.25rem;
       }
     }
 
