@@ -37,9 +37,10 @@
     <%= render partial: 'qa/state_button', locals: { f: f, record: @evidence } %> or
     <%=
       link_to 'Cancel',
-      evidence_redirect_path(params[:return_to]),
+      @form_cancel_path,
       data: {
-        behavior: 'clear-local-auto-save'
+        behavior: class_names('clear-local-auto-save', 'record-locking': @evidence.persisted?),
+        'record-locking-path': @evidence.persisted? ? project_node_evidence_editing_session_path(current_project, @node, @evidence) : nil
       }
     %>
   </div>
