@@ -1,5 +1,5 @@
 <%= simple_form_for provider, as: :provider,
-      url: provider.new_record? ? providers_path : provider_path(provider) do |f| %>
+  url: provider.new_record? ? providers_path : provider_path(provider) do |f| %>
   <%= f.error_notification %>
 
   <%= f.hidden_field :type, value: provider.type_name %>

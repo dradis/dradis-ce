@@ -1,5 +1,5 @@
 <%= simple_form_for agent, as: :agent, url: agent_path(agent),
-              html: { data: { controller: 'dradis--plugins--echo--agent' } } do |f| %>
+  html: { data: { controller: 'dradis--plugins--echo--agent' } } do |f| %>
   <%= f.error_notification %>
 
   <p>
@@ -44,14 +44,11 @@
 
   <%= f.association :provider, collection: @providers, include_blank: 'Select a provider', required: true %>
 
-  <div class="mb-3">
-    <%= f.label :model_override, 'Model override', class: 'form-label' %>
-    <%= f.text_field :model_override, class: 'form-control',
-        placeholder: "Uses provider's configured model" %>
-    <div class="form-text">
-      Leave blank to use the model configured on the provider<% if agent.provider %> (currently: <code><%= agent.provider.model %></code>)<% end %>.
-    </div>
-  </div>
+  <%=
+    f.input :model_override,
+      hint: "Leave blank to use the model configured on the provider#{" (currently: #{agent.provider.model})" if agent.provider}.",
+      placeholder: "Uses provider's configured model"
+  %>
 
   <hr>
   <h5>2. Grammar and spell checking</h5>

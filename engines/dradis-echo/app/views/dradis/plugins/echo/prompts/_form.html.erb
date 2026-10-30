@@ -3,25 +3,18 @@
 
   <%= f.input :title %>
 
-  <div class="mb-3">
-    <%= f.label :icon, 'Icon', class: 'form-label' %>
-    <%=
-      f.select :icon,
-        options_for_select(prompt_icons_collection, @prompt.icon),
-        {},
-        class: 'form-select'
-    %>
-  </div>
+  <%=
+    f.input :icon,
+      collection: prompt_icons_collection,
+      include_blank: false
+  %>
 
-  <div class="mb-3">
-    <%= f.label :scope, 'Prompt Scope', class: 'form-label' %>
-    <%=
-      f.select :scope,
-        options_for_select(Dradis::Plugins::Echo::Prompt::SCOPES.map { |scope| [scope.to_s.titleize, scope] }, @prompt.scope),
-        {},
-        class: 'form-select'
-    %>
-  </div>
+  <%=
+    f.input :scope,
+      collection: Dradis::Plugins::Echo::Prompt::SCOPES.map { |scope| [scope.to_s.titleize, scope] },
+      include_blank: false,
+      label: 'Prompt Scope'
+  %>
 
   <%= f.input :prompt, input_html: { rows: 10 } %>
 
