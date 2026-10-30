@@ -222,9 +222,17 @@ document.addEventListener('turbo:load', function () {
   });
 
   // Native <turbo-frame> navigations (including loading="lazy") don't fire
-  // turbo:load
-  document.addEventListener('turbo:frame-load', function (event) {
-    initBehaviors(event.target);
+  // turbo:load. Turbo repaints between swapping the frame contents and firing
+  // turbo:frame-load, so initialize behaviors as part of the swap itself to
+  // avoid painting uninitialized markup (e.g. a native select before its
+  // ComboBox replaces it).
+  document.addEventListener('turbo:before-frame-render', function (event) {
+    const render = event.detail.render;
+
+    event.detail.render = function (currentElement, newElement) {
+      render(currentElement, newElement);
+      initBehaviors(currentElement);
+    };
   });
 
   // Turbo Stream actions (replace/update/append) patch the DOM directly and

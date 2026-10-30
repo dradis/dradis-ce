@@ -1,0 +1,8 @@
+<%= form_with url: project_dashboard_issues_path(current_project), method: :get, class: 'issues-grouping-selector' do |form| %>
+  <%= form.select :grouping,
+    options_for_select(@groupings.map { |grouping| [grouping.label, grouping.key] }, @grouping.key),
+    {},
+    class: 'form-select',
+    aria: { label: 'Group issues by' },
+    data: { action: 'change->issues-summary#change', issues_summary_target: 'selector' } %>
+<% end %>
