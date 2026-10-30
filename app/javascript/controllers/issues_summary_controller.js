@@ -25,7 +25,7 @@ export default class extends Controller {
   chartTargetConnected(element) {
     const groups = JSON.parse(element.dataset.groups);
     const color = group => group.color || 'var(--untagged-color)';
-    const margin = { top: 20, bottom: 30 };
+    const margin = { top: 20, bottom: 0 };
     const width = 354;
     const height = 180 - margin.top - margin.bottom;
     const x = d3.scaleBand().domain(groups.map(group => group.key)).rangeRound([0, width]);
@@ -35,17 +35,6 @@ export default class extends Controller {
       .attr('height', height + margin.top + margin.bottom)
       .append('g')
       .attr('transform', `translate(0,${margin.top})`);
-
-    svg.append('g').selectAll('[data-behavior~=issue-chart-label]')
-      .data(groups)
-      .enter().append('text')
-      .attr('data-behavior', 'issue-chart-label')
-      .attr('fill', color)
-      .attr('x', group => x(group.key) + x.bandwidth() / 2)
-      .attr('y', height + 9)
-      .attr('dy', '0.71em')
-      .attr('text-anchor', 'middle')
-      .text(group => group.name);
 
     const bars = svg.append('g');
     bars.selectAll('[data-behavior~=issue-chart-bar]')
@@ -68,6 +57,21 @@ export default class extends Controller {
       .attr('dy', -5)
       .attr('text-anchor', 'middle')
       .text(group => group.count);
+
+    // A wrapping legend stays readable with many groups or long names, where
+    // x-axis labels would overlap.
+    const items = d3.select(element).append('ul')
+      .attr('class', 'issue-chart-legend')
+      .selectAll('[data-behavior~=issue-chart-legend-item]')
+      .data(groups)
+      .enter().append('li')
+      .attr('class', 'issue-chart-legend-item')
+      .attr('data-behavior', 'issue-chart-legend-item')
+      .attr('title', group => group.name)
+      .style('--issue-group-color', group => group.color);
+
+    items.append('span').attr('class', 'issue-chart-legend-swatch');
+    items.append('span').attr('class', 'issue-chart-legend-label').text(group => group.name);
   }
 
   chartTargetDisconnected(element) {

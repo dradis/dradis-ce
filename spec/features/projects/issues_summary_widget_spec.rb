@@ -21,6 +21,14 @@ describe 'Issues Summary widget', js: true do
       expect(page).to have_css('[data-behavior="issue-chart"] svg')
     end
 
+    it 'labels the chart with a legend item for each group' do
+      visit project_path(current_project)
+
+      expect(page).to have_css('[data-behavior~=issue-chart-legend-item]', count: 2)
+      expect(page).to have_css('[data-behavior~=issue-chart-legend-item]', text: issue.tags.first.display_name)
+      expect(page).to have_css('[data-behavior~=issue-chart-legend-item]', text: 'Unassigned')
+    end
+
     it 'initializes the chart once when called repeatedly' do
       visit project_path(current_project)
 
@@ -66,10 +74,11 @@ describe 'Issues Summary widget', js: true do
     let(:group_class) { Projects::Dashboard::Issues::Group }
     let(:groups) do
       [
-        group_class.new(key: 'value', name: 'N/A', color: '#112233', issues: [issue]),
+        group_class.new(key: 'value', name: 'Unassigned', color: '#112233', issues: [issue]),
         group_class.new(key: 'unassigned', name: 'Unassigned', issues: [], unassigned: true)
       ]
     end
+    let(:risk_group) { '[data-issues-summary-target="group"][data-group-color="#112233"]' }
     let(:strategy) { double(key: 'list:Risk', label: 'Risk', groups: groups) }
 
     before do
@@ -92,24 +101,26 @@ describe 'Issues Summary widget', js: true do
 
       choose_grouping('Risk')
 
-      expect(page).to have_css('[data-issues-summary-target="group"]', text: 'N/A')
-      expect(page).not_to have_css('[data-issues-summary-target="group"]', text: 'Unassigned')
+      expect(page).to have_css(risk_group, text: 'Unassigned')
+      expect(page).to have_css('[data-issues-summary-target="group"]', count: 1)
       expect(page).to have_css('[data-behavior~=issue-chart-bar]', count: 2, visible: :all)
       positions = page.all('[data-behavior~=issue-chart-bar]', visible: :all).map { |bar| bar['x'] }
       expect(positions.uniq.size).to eq 2
+      expect(page).to have_css('[data-behavior~=issue-chart-legend-item]', text: 'Unassigned', count: 2)
 
       visit project_path(current_project)
       expect(page).to have_css('[data-behavior~=combobox]', text: 'Risk')
-      expect(page).to have_css('[data-issues-summary-target="group"]', text: 'N/A')
+      expect(page).to have_css(risk_group)
 
       choose_grouping('Tags')
       expect(page).to have_css('[data-issues-summary-target="group"]', text: 'Unassigned')
+      expect(page).not_to have_css(risk_group)
     end
 
     it 'falls back when the saved grouping was removed' do
       visit project_path(current_project)
       choose_grouping('Risk')
-      expect(page).to have_css('[data-issues-summary-target="group"]', text: 'N/A')
+      expect(page).to have_css(risk_group)
       allow(Projects::Dashboard::Issues::Grouping).to receive(:available).and_call_original
 
       visit project_path(current_project)
@@ -135,7 +146,7 @@ describe 'Issues Summary widget', js: true do
 
       choose_grouping('Risk')
 
-      expect(page).to have_css('[data-issues-summary-target="group"]', text: 'N/A')
+      expect(page).to have_css(risk_group)
     end
   end
 
