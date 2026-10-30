@@ -155,5 +155,11 @@ describe FileBackedModel do
       should_not be_valid()
       expect(subject.errors[:name]).to_not be_empty
     end
+
+    it 'only reports a blank name as missing' do
+      subject.name = ''
+      should_not be_valid()
+      expect(subject.errors[:name]).to eq(["can't be blank"])
+    end
   end
 end
