@@ -5,7 +5,7 @@ Dir[Dradis::Plugins::Echo::Engine.root.join('spec/factories/*.rb')].sort.each { 
 describe 'Echo agents' do
   before { login_as_user(create(:user, :admin)) }
 
-  let(:agent) { create(:system_agent, name: Dradis::Plugins::Echo::Agents::Roslin::NAME) }
+  let(:agent) { Dradis::Plugins::Echo::Agents::Roslin.provision! }
 
   describe 'PATCH /addons/echo/agents/:id' do
     context 'without a provider' do
