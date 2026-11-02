@@ -23,12 +23,17 @@ class CommentsController < AuthenticatedController
         notifiable: @comment,
         user: current_user
       )
+    else
+      render :create, status: :unprocessable_entity
     end
   end
 
   def update
     if @comment.update(comment_params)
       track_updated(@comment, project: project)
+      redirect_to @comment
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 

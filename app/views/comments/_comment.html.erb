@@ -1,11 +1,11 @@
-<%= content_tag :div,
+<%= turbo_frame_tag dom_id(comment, :frame),
   class: "comment-wrapper dradis-#{comment.commentable_type.parameterize}",
   data: {
     behavior: 'comment',
     id: comment.id,
     timestamp: comment.created_at.to_i
   } do %>
-  <%= div_for comment, data: { author_id: comment.user_id } do %>
+  <%= div_for comment, data: { author_id: comment.user_id, comment_feed_target: 'comment' } do %>
     <div class="body">
       <div class="d-flex">
         <%= avatar_image(comment.user, size: 35) %>
@@ -18,32 +18,39 @@
                 Missing User
               <% end %>
             </span>
-            <div class="actions">
-              <%= link_to main_app.edit_comment_path(comment), remote: true, data: { action: 'edit' } do %>
-                <i class="fa-solid fa-pencil"></i> Edit
-              <% end %>
-              <%= link_to main_app.comment_path(comment),
-                          method: :delete,
-                          data: { confirm: "Are you sure?\n\nProceeding will delete this comment, making it no longer visible to anyone." },
-                          remote: true,
-                          class: 'text-error' do %>
-                <i class="fa-solid fa-trash"></i> Delete
-              <% end %>
-            </div>
+            <% unless local_assigns[:editing] %>
+              <div class="actions" data-behavior="comment-actions">
+                <%= link_to main_app.edit_comment_path(comment) do %>
+                  <i class="fa-solid fa-pencil"></i> Edit
+                <% end %>
+                <%= link_to main_app.comment_path(comment),
+                  class: 'text-error',
+                  data: {
+                    turbo_confirm: "Are you sure?\n\nProceeding will delete this comment, making it no longer visible to anyone.",
+                    turbo_method: :delete
+                  } do %>
+                  <i class="fa-solid fa-trash"></i> Delete
+                <% end %>
+              </div>
+            <% end %>
           </div>
           <span class="time">
             <%= link_to local_time_ago(comment.created_at), "##{dom_id(comment)}", data: { turbo: false } %>
           </span>
         </div>
       </div>
-      <div class="content content-textile" data-behavior="content-textile">
-        <% if comment.inline_thread_id? %>
-          <blockquote>
-            <%= comment.inline_thread.quoted_text.chomp %>
-          </blockquote>
-        <% end %>
-        <%= comment_formatter(comment.content) %>
-      </div>
+      <% if local_assigns[:editing] %>
+        <%= render 'comments/form', comment: comment %>
+      <% else %>
+        <div class="content content-textile" data-behavior="content-textile">
+          <% if comment.inline_thread_id? %>
+            <blockquote>
+              <%= comment.inline_thread.quoted_text.chomp %>
+            </blockquote>
+          <% end %>
+          <%= comment_formatter(comment.content) %>
+        </div>
+      <% end %>
     </div>
   <% end %>
 <% end %>

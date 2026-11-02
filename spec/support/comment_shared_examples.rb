@@ -55,6 +55,7 @@ shared_examples 'a page with a comments feed' do |commentable_factory|
 
     it 'allows adding a comment' do
       submit_form
+      expect(page).to have_css('#comment-count', exact_text: (@comments.size + 1).to_s)
     end
 
     describe 'local caching', js: true do
@@ -62,7 +63,7 @@ shared_examples 'a page with a comments feed' do |commentable_factory|
 
       context 'when comment is not saved' do
         it 'prefills textarea with cached value' do
-          within 'form[data-behavior~=local-auto-save]' do
+          within 'form[data-behavior~=add-comment]' do
             fill_in 'comment[content]', with: 'test comment'
             # debounceTimer is 0 in test env, see local.js
           end
@@ -74,7 +75,7 @@ shared_examples 'a page with a comments feed' do |commentable_factory|
 
       context 'when comment is saved' do
         it 'clears cached value' do
-          within 'form[data-behavior~=local-auto-save]' do
+          within 'form[data-behavior~=add-comment]' do
             fill_in 'comment[content]', with: 'test comment'
             # debounceTimer is 0 in test env, see local.js
             click_button 'Add comment'
@@ -182,6 +183,7 @@ shared_examples 'a page with a comments feed' do |commentable_factory|
 
     it 'allows deleting a comment from the same user' do
       submit_form
+      expect(page).to have_css('#comment-count', exact_text: (@comments.size - 1).to_s)
     end
 
     include_examples 'creates an Activity', :destroy
