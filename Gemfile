@@ -112,7 +112,7 @@ gem 'rinku'
 gem 'sanitize', '7.0.1'
 
 # SQLite3 DB driver
-gem 'sqlite3', '~> 2.9.6'
+gem 'sqlite3', '~> 2.10.2'
 # gem 'pg'
 
 # --------------------------------------------------------- Dradis Professional
