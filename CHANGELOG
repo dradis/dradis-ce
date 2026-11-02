@@ -4,7 +4,7 @@
     - [future tense verb] [feature]
   - Nodes: Add a node from the node tree
   - Upgraded gems:
-    - crass, rack, sanitize, sqlite3
+    - addressable, crass, rack, sanitize, sqlite3
   - Bugs fixes:
     - Dashboard: keep issue chart columns distinct when group labels match
     - Sidebar tips: tone down the tips box in dark mode and keep its links readable
