@@ -4,7 +4,7 @@
     - [future tense verb] [feature]
   - Nodes: Add a node from the node tree
   - Upgraded gems:
-    - addressable, crass, rack, sanitize, sqlite3
+    - addressable, crass, loofah, nokogiri, rack, rails-html-sanitizer, sanitize, sqlite3
   - Bugs fixes:
     - Comments:
       - show why a comment can't be saved and keep the draft
