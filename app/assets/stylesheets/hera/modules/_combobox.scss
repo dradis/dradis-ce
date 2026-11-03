@@ -98,13 +98,15 @@
   box-shadow: 0 0 1rem 0 rgba(34, 34, 34, 0.1);
   display: none;
   font-size: 0.9rem;
-  position: absolute;
   margin: 0;
   max-height: 80vh;
+  max-width: calc(100vw - #{$spacer});
+  min-width: 100%;
   overflow-y: auto;
   padding: 0.25rem 0;
+  position: absolute;
+  width: max-content;
   z-index: 4;
-  width: 100%;
 }
 
 .combobox-multi-option {
