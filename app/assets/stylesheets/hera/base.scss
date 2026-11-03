@@ -355,6 +355,10 @@ pre {
 
 .required-input {
   color: $red;
+
+  .text-muted & {
+    color: inherit;
+  }
 }
 
 ::selection,
