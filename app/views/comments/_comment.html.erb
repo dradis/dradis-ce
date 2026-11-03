@@ -42,7 +42,7 @@
       <% if local_assigns[:editing] %>
         <%= render 'comments/form', comment: comment %>
       <% else %>
-        <div class="content content-textile" data-behavior="content-textile">
+        <div class="content content-textile" data-behavior="content-textile" data-turbo="false">
           <% if comment.inline_thread_id? %>
             <blockquote>
               <%= comment.inline_thread.quoted_text.chomp %>
