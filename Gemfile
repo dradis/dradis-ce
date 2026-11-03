@@ -91,7 +91,7 @@ gem 'bcrypt', '3.1.22'
 gem 'json', '2.3.0'
 
 # XML manipulation
-gem 'nokogiri', '>= 1.19.4'
+gem 'nokogiri', '>= 1.19.5'
 
 # MySQL backend
 # gem 'mysql2', '~> 0.5.6'
@@ -100,7 +100,7 @@ gem 'nokogiri', '>= 1.19.4'
 # before 1.0.4, so make sure we're using 1.0.4+:
 # see https://github.com/rails/rails-html-sanitizer/commit/f3ba1a839a
 # and https://github.com/flavorjones/loofah/issues/144
-gem 'rails-html-sanitizer', '~> 1.7.1'
+gem 'rails-html-sanitizer', '~> 1.7.2'
 
 # Textile markup
 gem 'RedCloth', '~> 4.3.4', require: 'redcloth'
@@ -112,7 +112,7 @@ gem 'rinku'
 gem 'sanitize', '7.0.1'
 
 # SQLite3 DB driver
-gem 'sqlite3', '~> 2.9.6'
+gem 'sqlite3', '~> 2.10.2'
 # gem 'pg'
 
 # --------------------------------------------------------- Dradis Professional

@@ -32,10 +32,11 @@
     <%= f.button :submit, class: 'btn btn-primary' %> or
     <%=
       link_to 'Cancel',
-      @note.new_record? ? project_node_path(@node.project, @node) : project_node_note_path(@node.project, @node, @note),
+      @form_cancel_path,
       class: 'cancel-link',
       data: {
-        behavior: 'clear-local-auto-save'
+        behavior: class_names('clear-local-auto-save', 'record-locking': @note.persisted?),
+        'record-locking-path': @note.persisted? ? project_node_note_editing_session_path(current_project, @node, @note) : nil
       }
     %>
   </div>
