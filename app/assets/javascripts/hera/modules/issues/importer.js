@@ -3,12 +3,10 @@ document.addEventListener('turbo:load', () => {
     if ($('[data-behavior~=import-issues-results]').length && $('[data-behavior=dradis-datatable]').length) {
       const query = $('[data-behavior~=import-issues-results]').attr('data-query') || '';
 
-      const datatablesFilter = $('.dataTables_filter input');
-      datatablesFilter.val(query);
-      datatablesFilter.focus();
-
       const table = $('[data-behavior=dradis-datatable]').DataTable();
       table.search(query).draw();
+
+      $('.dataTables_filter input').focus();
     }
 
     // Clicking on 'add-issue' triggers a call to Issues#create
