@@ -28,6 +28,9 @@ gem 'stimulus-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.13'
 
+# Use Redis adapter to run Action Cable in production
+gem 'redis', '~> 4.7.0'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
@@ -120,7 +123,7 @@ gem 'sqlite3', '~> 2.10.2'
 gem 'cancancan', '~> 1.10'
 
 # Redis-based background worker
-gem 'resque'
+gem 'resque', '>= 3.2'
 
 # Forms that integrate with Twitter's Bootstrap
 gem 'simple_form'
