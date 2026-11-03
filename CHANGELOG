@@ -7,6 +7,7 @@
     - addressable, crass, loofah, nokogiri, rack, rails-html-sanitizer, sanitize, sqlite3
   - Bugs fixes:
     - Comments:
+      - show another user's edits and deletions without leaving stray lines in the feed
       - show why a comment can't be saved and keep the draft
       - update the comment count when adding or deleting a comment
     - Dashboard: keep issue chart columns distinct when group labels match
