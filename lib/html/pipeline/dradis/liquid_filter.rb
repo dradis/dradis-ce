@@ -8,7 +8,7 @@ module HTML
         ].freeze
 
         def call
-          @text = HTML::IgnoreLiquidInTextileBlockCodes.call(@text)
+          text = HTML::IgnoreLiquidInTextileBlockCodes.call(@text)
 
           assigns = context.fetch(:liquid_assigns, {})
 
@@ -18,7 +18,7 @@ module HTML
             strict_variables: true
           }
 
-          Liquid::Template.parse(@text).render(assigns, options)
+          Liquid::Template.parse(text).render(assigns, options)
         rescue Liquid::SyntaxError
           @text
         end
