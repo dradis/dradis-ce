@@ -44,12 +44,37 @@ describe HTML::IgnoreLiquidInTextileBlockCodes do
       end
     end
 
-    context "with blank line and a Field after multi paragraph block code" do
+    context 'with blank line and a Field after multi paragraph block code' do
       it "does not wrap lines after the Field with liquid 'raw' tags" do
         source = "bc.. multi paragraph\r\nblock code\r\n\r\nstill in the block code\r\n\r\n#[Title]#\r\nline 1\r\nline 2"
         result = described_class.call(source)
         expect(result.lines.select { |line| line.include?('{% raw %}') }.size).to eq(4)
       end
+    end
+  end
+
+  describe 'URLs with unclosed Liquid' do
+    it 'wraps the URL of a Textile link with liquid "raw" tags' do
+      source = "\"Link text\":https://te{{t.com\n"
+      result = "\"Link text\":{% raw %}https://te{{t.com{% endraw %}\n"
+      expect(described_class.call(source)).to eq(result)
+    end
+
+    it 'wraps a bare URL with liquid "raw" tags' do
+      source = "p. https://hello.world/hereit{%is now\n"
+      result = "p. {% raw %}https://hello.world/hereit{%is{% endraw %} now\n"
+      expect(described_class.call(source)).to eq(result)
+    end
+
+    it 'does not wrap a URL with closed Liquid on the same line' do
+      source = "https://example.com/{{ issue.title }}\n"
+      expect(described_class.call(source)).to eq(source)
+    end
+
+    it 'does not nest "raw" tags for URLs inside block codes' do
+      source = "bc. https://te{{t.com\nhttps://hello{{world"
+      result = "{% raw %}bc. https://te{{t.com{% endraw %}\n{% raw %}https://hello{{world{% endraw %}\n"
+      expect(described_class.call(source)).to eq(result)
     end
   end
 end

@@ -4,6 +4,10 @@ module HTML
     BLOCK_PARAGRAPH_TYPES = (
       ['bq. ', 'bq.. ', 'h5. ', 'p. '] + BLOCK_CODE_TYPES
     ).freeze
+    # An http(s) URL containing "{{" or "{%" with no closing "}}" / "%}" later
+    # on the same line. Not handled: a URL with an unclosed "{{" followed by
+    # real Liquid on the same line (the later "}}" makes it look closed).
+    UNCLOSED_LIQUID_IN_URL_RE = %r{https?://\S*?\{[{%](?!.*[}%]\})\S*}
 
     class << self
       def call(text)
@@ -35,7 +39,7 @@ module HTML
           if current_block_code_type
             output << "{% raw %}#{line.chomp}{% endraw %}\n"
           else
-            output << line
+            output << line.gsub(UNCLOSED_LIQUID_IN_URL_RE) { |url| "{% raw %}#{url}{% endraw %}" }
           end
         end
 
