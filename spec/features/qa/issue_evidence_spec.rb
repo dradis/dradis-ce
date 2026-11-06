@@ -103,6 +103,17 @@ describe 'QA issue evidence' do
     end
   end
 
+  describe 'edit page' do
+    before { visit edit_project_qa_issue_evidence_path(current_project, issue, evidence) }
+
+    it 'renders an uploader targeting the evidence node' do
+      expect(page).to have_css('[data-behavior~=jquery-upload]', count: 1)
+      within '[data-behavior~=jquery-upload]' do
+        expect(page).to have_css("form[action='#{project_node_attachments_path(current_project, node, format: :json)}']")
+      end
+    end
+  end
+
   describe 'bulk state update', js: true do
     before do
       visit project_qa_issue_path(current_project, issue)
