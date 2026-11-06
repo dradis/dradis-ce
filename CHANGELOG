@@ -12,6 +12,7 @@ v5.5.0 (November 2026)
     - Avatars: display a local image while Gravatar loads
     - Editor: keep the cursor in place after uploading an image
     - Combobox: keep dropdown menus within the viewport and fit long option labels
+    - Uploads: report failed background uploads as failed in the API
     - Combobox:
       - show inline validation errors on dropdowns that fail validation
   - New integrations:
