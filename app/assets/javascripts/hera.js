@@ -17,7 +17,6 @@
 
 //= require hera/modules/auto_save/local
 //= require hera/modules/charts
-//= require hera/modules/comments
 //= require hera/modules/console_updater
 //= require hera/modules/differ
 //= require hera/modules/editor_toolbar

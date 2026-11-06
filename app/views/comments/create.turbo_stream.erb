@@ -1,0 +1,9 @@
+<% if @comment.persisted? %>
+  <%= turbo_stream.append dom_id(@commentable, :comments) do %>
+    <%= render 'comments/comment', comment: @comment %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace dom_id(@commentable, :new_comment) do %>
+  <%= render 'comments/new', comment: @comment.persisted? ? Comment.new(commentable: @commentable) : @comment %>
+<% end %>

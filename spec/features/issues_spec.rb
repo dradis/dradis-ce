@@ -373,6 +373,19 @@ describe 'Issues pages' do
 
         it_behaves_like 'a page with a comments feed hook'
 
+        context 'when a comment links to another page' do
+          let(:create_comments) do
+            create(:comment, commentable: @issue, content: "See \"all issues\":#{project_issues_path(current_project)}")
+          end
+
+          it 'follows the link instead of loading it into the comment', js: true do
+            within('[data-behavior~=comment-feed]') { click_link 'all issues' }
+
+            expect(page).to have_current_path(project_issues_path(current_project))
+            expect(page).not_to have_content('Content missing')
+          end
+        end
+
         let(:subscribable) { @issue }
         it_behaves_like 'a page with subscribe/unsubscribe links'
 

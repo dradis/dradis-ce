@@ -1,28 +1,37 @@
-<%= form_with model: [@comment],
-  local: false,
+<%= simple_form_for comment,
   html: {
     data: {
-      behavior: 'local-auto-save',
-      auto_save_key: "comment-#{@comment.id}"
+      auto_save_key: "comment-#{comment.id}",
+      comment_form_invalid_value: comment.errors.any?,
+      controller: 'comment-form'
     }
-  } do |f| %>
+  },
+  namespace: dom_id(comment) do |f| %>
 
-  <%= f.text_area :content,
-                  value: @comment.content,
-                  rows: 5,
-                  required: 'required',
-                  class: 'form-control mt-3',
-                  data: {
-                    behavior: 'mentionable rich-toolbar drop-zone',
-                    'rich-toolbar': 'defaults image',
-                    'rich-toolbar-uploader': '[data-behavior~=jquery-upload]',
-                  } %>
-  <%= f.submit "Update comment", class: "btn btn-primary mt-2 ms-0", style: 'vertical-align: baseline;' %> or
+  <% if comment.errors[:commentable].any? %>
+    <%= f.error_notification message: comment.errors.full_messages_for(:commentable).to_sentence %>
+  <% end %>
+
+  <%=
+    f.input :content,
+      full_error_html: { class: 'd-block' },
+      input_html: {
+        class: 'mt-3',
+        data: {
+          behavior: 'mentionable rich-toolbar drop-zone',
+          'rich-toolbar': 'defaults image',
+          'rich-toolbar-uploader': '[data-behavior~=jquery-upload]'
+        },
+        rows: 5
+      },
+      label: false,
+      required: true
+  %>
+  <%= f.button :submit, 'Update comment', class: 'align-baseline btn-primary ms-0 mt-2' %> or
   <%= link_to 'Cancel',
-                comment_path(@comment),
-                class: 'cancel-link',
-                remote: true,
-                data: {
-                  behavior: 'cancel-comment clear-local-auto-save'
-                } %>
+    comment_path(comment),
+    class: 'cancel-link',
+    data: {
+      behavior: 'cancel-comment clear-local-auto-save'
+    } %>
 <% end %>

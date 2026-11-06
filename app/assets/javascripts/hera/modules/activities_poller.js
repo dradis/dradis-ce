@@ -353,36 +353,23 @@ class ActivitiesPoller {
 
   // ------ COMMENTS ------
 
+  // The count and the empty notice are updated by the comment-feed controller.
+
   static addComment(commentableId, content) {
     // Make sure comment isn't already on the page, e.g. if they
     // loaded/refreshed the page just after the comment was posted:
     // `commentId` is a global set by activities/poll.js.erb
-    if (commentableId === this.modelId && !$(`#comment_${commentId}`).length) {
-      $('[data-notice~=no-comments]').hide();
+    if (commentableId === this.modelId && !this._findComment(commentId).length) {
       $('[data-behavior~=comment-list]').append(content);
-      const count = parseInt($('#comment-count').html());
-      $('#comment-count').html(count + 1);
     }
   }
 
   static updateComment(commentId, commentableId, content) {
-    const comment = $(`#comment_${commentId}`);
-    comment.replaceWith(content);
+    this._findComment(commentId).replaceWith(content);
   }
 
   static deleteComment(commentId) {
-    const comment = $(`#comment_${commentId}`);
-    if (comment.length) {
-      comment.remove();
-      let count = parseInt($('#comment-count').html());
-      if (count > 0) {
-        count = count - 1;
-      }
-      $('#comment-count').html(count);
-      if (count === 0) {
-        $('[data-notice~=no-comments]').removeClass('d-none');
-      }
-    }
+    this._findComment(commentId).remove();
   }
 
   // private
@@ -427,6 +414,10 @@ class ActivitiesPoller {
     // the former will return both elements, the latter will only return the
     // first.
     return $(`[id='node_${nodeId}']`);
+  }
+
+  static _findComment(commentId) {
+    return $(`[data-behavior~=comment][data-id='${commentId}']`);
   }
 
   static _findNoteLink(noteId) {
