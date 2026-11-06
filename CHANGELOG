@@ -5,7 +5,7 @@
   - Forms: show errors next to their fields instead of at the top of the form
   - Nodes: Add a node from the node tree
   - Upgraded gems:
-    - addressable, crass, loofah, nokogiri, rack, rails-html-sanitizer, sanitize, sqlite3
+    - addressable, crass, loofah, nokogiri, rack, rails, rails-html-sanitizer, sanitize, sqlite3
   - Bugs fixes:
     - Dashboard: keep issue chart columns distinct when group labels match
     - Sidebar tips: tone down the tips box in dark mode and keep its links readable
