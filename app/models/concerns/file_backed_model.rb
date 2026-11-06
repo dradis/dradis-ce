@@ -20,7 +20,7 @@ module FileBackedModel
       attr_accessor :content, :filename, :updated_at
 
       validates_presence_of :name
-      validates_format_of :name, with: /\A\w+[\w\s]*\z/, message: 'needs to be simple: please use letters, numbers and spaces'
+      validates_format_of :name, with: /\A\w+[\w\s]*\z/, allow_blank: true, message: 'needs to be simple: please use letters, numbers and spaces'
     end
   end
 
