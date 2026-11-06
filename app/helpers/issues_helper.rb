@@ -86,6 +86,12 @@ module IssuesHelper
     end
   end
 
+  def state_badge(record)
+    return unless record.state
+
+    tag.span(record.state.humanize, class: "badge badge-state-#{record.state.dasherize}")
+  end
+
   def state_icons
     state_icons = []
     Issue.states.keys.each do |state|
