@@ -8,6 +8,7 @@
       records: @issues
     }
   %>
+  <%= render partial: 'attachments/attachment_box', locals: { attachments_node: current_project.plugin_uploads_node } %>
 <% end %>
 
 <% content_for :breadcrumbs do %>

@@ -130,6 +130,15 @@ shared_examples 'qa pages' do |item_type|
       expect(page).to have_selector('.alert-success', text: "#{item_type.to_s.humanize} updated.")
     end
 
+    it 'renders an uploader targeting the project uploads node' do
+      uploads_node = current_project.plugin_uploads_node
+
+      expect(page).to have_css('[data-behavior~=jquery-upload]', count: 1)
+      within '[data-behavior~=jquery-upload]' do
+        expect(page).to have_css("form[action='#{project_node_attachments_path(current_project, uploads_node, format: :json)}']")
+      end
+    end
+
     it 'redirects the user back to #show after cancelling' do
       expect(current_path).to eq polymorphic_path([:edit, current_project, :qa, records.first])
 

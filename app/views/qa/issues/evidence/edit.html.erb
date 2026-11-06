@@ -12,6 +12,7 @@
       records: @evidence_for_review
     }
   %>
+  <%= render partial: 'attachments/attachment_box', locals: { attachments_node: @node } %>
 <% end %>
 
 <div class="row p-0">
