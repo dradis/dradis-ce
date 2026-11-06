@@ -20,9 +20,10 @@ class UploadJob < ApplicationJob
       state: state
     )
 
-    importer.import(file: file)
+    # Importers return false to reject a file; nil or anything else is success
+    raise 'The file could not be imported.' if importer.import(file: file) == false
 
-    logger.write { 'Worker process completed.' }
+    logger.complete!
 
   rescue => exception
     logger.write { "There was an error with the upload: #{exception.message}" }
@@ -32,6 +33,7 @@ class UploadJob < ApplicationJob
         sleep(0.2)
       end
     end
+    logger.fail!
     tracker.update_state(state: :failed, message: exception.message)
   end
 end
