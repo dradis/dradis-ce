@@ -29,6 +29,11 @@ class MultiDestroyJob < ApplicationJob
       end
     end
 
-    logger.write { 'Worker process completed.' }
+    logger.complete!
+  rescue => exception
+    logger.write { "There was an error deleting: #{exception.message}" }
+    logger.fail!
+    # No tracker here, so re-raise for Resque to mark it failed
+    raise
   end
 end
