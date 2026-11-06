@@ -100,6 +100,22 @@ th {
   color: var(--badge-lavender-color);
 }
 
+// The state colors are light in both themes, so the text keeps the light theme body color
+.badge-state-draft {
+  background-color: $state-draft-color;
+  color: $grey-900;
+}
+
+.badge-state-published {
+  background-color: $state-published-color;
+  color: $grey-900;
+}
+
+.badge-state-ready-for-review {
+  background-color: $state-review-color;
+  color: $grey-900;
+}
+
 .bg-info {
   background-color: $green-100 !important;
   color: $green-900;
