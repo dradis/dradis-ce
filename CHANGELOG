@@ -1,4 +1,5 @@
 v5.5.0 (November 2026)
+  - Tables: show issue and evidence states as colored badges
   - Editing: Warn user if another user is currently editing a record
   - Forms: show errors next to their fields instead of at the top of the form
   - Nodes: Add a node from the node tree
