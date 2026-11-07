@@ -1,5 +1,5 @@
 class ListsController < AuthenticatedController
-  include ActivityTracking
+  include EventPublisher
   include ProjectScoped
 
   before_action :set_current_board
@@ -14,7 +14,7 @@ class ListsController < AuthenticatedController
     @list.previous_id = @board.last_list.try(:id)
 
     if @list.save
-      track_created(@list)
+      publish_event('list.created', @list.to_event_payload)
       redirect_to [current_project, @board], notice: 'List added.'
     else
       redirect_to [current_project, @board], alert: @list.errors.full_messages.join('; ')
@@ -25,7 +25,7 @@ class ListsController < AuthenticatedController
 
   def update
     if @list.update(list_params)
-      track_updated(@list)
+      publish_event('list.updated', @list.to_event_payload)
       redirect_to [current_project, @board], notice: 'List renamed.'
     else
       redirect_to [current_project, @board], alert: @list.errors.full_messages.join('; ')
@@ -34,7 +34,7 @@ class ListsController < AuthenticatedController
 
   def destroy
     if @list.destroy
-      track_destroyed(@list)
+      publish_event('list.destroyed', @list.to_event_payload)
       redirect_to [current_project, @board], notice: 'List deleted.'
     else
       redirect_to [current_project, @board], notice: "Error deleting list: #{@list.errors.full_messages.join('; ')}"

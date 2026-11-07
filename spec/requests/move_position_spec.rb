@@ -56,6 +56,14 @@ describe 'move position' do
     end
 
     include_examples 'validates move params'
+
+    context 'with a valid position' do
+      let(:params) { { next_id: list_1.id } }
+      let(:model) { list_2 }
+      let(:submit_form) { subject }
+
+      include_examples 'creates an Activity', :update
+    end
   end
 
   context 'cards' do
