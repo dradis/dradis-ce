@@ -30,7 +30,7 @@ class QA::Issues::EvidenceController < AuthenticatedController
 
   def update
     if @evidence.update(state: @state, updated_at: Time.now)
-      publish_event('evidence.updated', @evidence.to_event_payload)
+      publish_event('evidence.state_change', @evidence.to_event_payload)
 
       redirect_to(*next_evidence_or_index_path)
     else
@@ -45,7 +45,7 @@ class QA::Issues::EvidenceController < AuthenticatedController
     respond_to do |format|
       if @evidence.update(state: @state)
         @evidence.each do |evidence|
-          publish_event('evidence.updated', evidence.to_event_payload)
+          publish_event('evidence.state_change', evidence.to_event_payload)
         end
 
         format.html do

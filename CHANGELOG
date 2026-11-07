@@ -6,6 +6,7 @@ v5.5.0 (November 2026)
   - Upgraded gems:
     - addressable, crass, loofah, nokogiri, rack, rails, rails-html-sanitizer, sanitize, sqlite3
   - Bugs fixes:
+    - Evidence: publish a dedicated state change event for single and bulk QA updates
     - Dashboard: keep issue chart columns distinct when group labels match
     - Sidebar tips: tone down the tips box in dark mode and keep its links readable
     - Diffs: remove stray escape characters around highlighted changes
@@ -18,6 +19,8 @@ v5.5.0 (November 2026)
     - Calculators:
       - AIVSS-SSVC
       - STRIDE
+  - REST/JSON API enhancements:
+    - Evidence: add state selection on API v3 create/update and include state in responses
 
 v5.4.0 (September 2026)
   - Issues: warn user if another user is currently editing the record
