@@ -12,15 +12,16 @@ v5.5.0 (November 2026)
     - Diffs: remove stray escape characters around highlighted changes
     - Avatars: display a local image while Gravatar loads
     - Editor: keep the cursor in place after uploading an image
-    - Combobox: keep dropdown menus within the viewport and fit long option labels
     - Combobox:
-      - show inline validation errors on dropdowns that fail validation
+      - Keep dropdown menus within the viewport and fit long option labels
+      - Show inline validation errors on dropdowns that fail validation
   - New integrations:
     - Calculators:
       - AIVSS-SSVC
       - STRIDE
   - REST/JSON API enhancements:
     - Evidence: add state selection on API v3 create/update and include state in responses
+    - Boards: add support for repositioning lists and moving cards within and between lists
 
 v5.4.0 (September 2026)
   - Issues: warn user if another user is currently editing the record

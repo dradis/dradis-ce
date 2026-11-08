@@ -20,7 +20,7 @@ describe 'move position' do
       expect(flash[:alert]).to eq('Something fishy is going on...')
     end
     it 'prevents request with invalid next id' do
-      params.merge!(prev_id: invalid_next_id)
+      params.merge!(next_id: invalid_next_id)
       subject
       expect(response).to redirect_to(project_board_path(current_project, board))
       expect(flash[:alert]).to eq('Something fishy is going on...')

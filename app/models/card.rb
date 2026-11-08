@@ -1,4 +1,5 @@
 class Card < ApplicationRecord
+  include Card::Position
   include Commentable
   include Eventable
   include HasFields

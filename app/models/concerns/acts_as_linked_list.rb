@@ -9,6 +9,18 @@ module ActsAsLinkedList
     @last_item ||= self.ordered_items.last
   end
 
+  def move(item, prev_id: nil, next_id: nil)
+    prev_item = items.find_by(id: prev_id)
+    next_item = items.find_by(id: next_id)
+    unless (prev_id.blank? || prev_item) && (next_id.blank? || next_item) &&
+        valid_position?(item, prev_item, next_item)
+      item.errors.add(:base, 'Position must reference adjacent items in the destination')
+      raise ActiveRecord::RecordInvalid, item
+    end
+
+    self.class.move(item, prev_item: prev_item, next_item: next_item)
+  end
+
   def ordered_items
     return [] if first_item.nil?
 
@@ -64,5 +76,13 @@ module ActsAsLinkedList
         new_next.update_attribute(:previous_id, item.id) if new_next
       end
     end
+  end
+
+  private
+
+  def valid_position?(item, prev_item, next_item)
+    return false if prev_item == item || next_item == item
+
+    items.find_by(previous_id: prev_item&.id) == next_item
   end
 end
