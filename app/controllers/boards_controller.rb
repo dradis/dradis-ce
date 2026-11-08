@@ -1,5 +1,5 @@
 class BoardsController < AuthenticatedController
-  include ActivityTracking
+  include EventPublisher
   include ProjectScoped
 
   before_action :set_board, only: [:show, :update, :destroy]
@@ -7,7 +7,7 @@ class BoardsController < AuthenticatedController
   before_action :redirect_if_node_board, only: :show
 
   def index
-    @boards    = current_project.methodology_library.boards
+    @boards = current_project.methodology_library.boards
     @templates = Methodology.all
 
     respond_to do |format|
@@ -39,7 +39,7 @@ class BoardsController < AuthenticatedController
         end
 
         board = Board.last
-        track_created(board)
+        publish_event('board.created', board.to_event_payload)
         redirect_to [current_project, board], notice: 'Methodology added.'
       rescue Exception => e
         logger.error e.message
@@ -49,7 +49,7 @@ class BoardsController < AuthenticatedController
       @board = current_project.boards.new(board_params)
 
       if @board.save
-        track_created(@board)
+        publish_event('board.created', @board.to_event_payload)
 
         list1 = @board.lists.create name: 'To Do'
         list2 = @board.lists.create name: 'In Progress', previous_list: list1
@@ -64,7 +64,7 @@ class BoardsController < AuthenticatedController
 
   def update
     if @board.update(board_params)
-      track_updated(@board)
+      publish_event('board.updated', @board.to_event_payload)
       redirect_to [current_project, @board], notice: 'Methodology renamed.'
     else
       redirect_to project_boards_path(current_project), alert: @board.errors.full_messages.join('; ')
@@ -73,7 +73,7 @@ class BoardsController < AuthenticatedController
 
   def destroy
     if @board.destroy
-      track_destroyed(@board)
+      publish_event('board.destroyed', @board.to_event_payload)
       redirect_to project_boards_path(current_project), notice: 'Methodology deleted.'
     else
       redirect_to project_boards_path(current_project), notice: "Error deleting methodology: #{@board.errors.full_message.join('; ')}"

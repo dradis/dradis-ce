@@ -10,6 +10,12 @@ describe List do
 
   it { should validate_length_of(:name).is_at_most(DB_MAX_STRING_LENGTH) }
 
+  it 'includes the project in its event payload' do
+    list = build_stubbed(:list)
+    allow(list).to receive(:project).and_return(double(id: 123))
+    expect(list.to_event_payload).to eq(id: list.id, class: 'List', project: { id: 123 })
+  end
+
   describe 'acts as linked list' do
     let(:model) { List }
     let(:list_item) { 'card' }

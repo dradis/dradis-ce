@@ -1,6 +1,6 @@
 class CardsController < AuthenticatedController
-  include ActivityTracking
   include ContentFromTemplate
+  include EventPublisher
   include LockableResource
   include Mentioned
   include NotificationsReader
@@ -33,7 +33,7 @@ class CardsController < AuthenticatedController
     @card.previous_id = @list.last_card.try(:id)
 
     if @card.save
-      track_created(@card)
+      publish_event('card.created', @card.to_event_payload)
       redirect_to [current_project, @board, @list, @card], notice: 'Task added.'
     else
       initialize_sidebar
@@ -47,7 +47,7 @@ class CardsController < AuthenticatedController
   def update
     if @card.update(card_params)
       @card.release_edit_session(current_user)
-      track_updated(@card)
+      publish_event('card.updated', @card.to_event_payload)
       redirect_to [current_project, @board, @list, @card], notice: 'Task updated.'
     else
       initialize_sidebar
@@ -57,7 +57,7 @@ class CardsController < AuthenticatedController
 
   def destroy
     if @card.destroy
-      track_destroyed(@card)
+      publish_event('card.destroyed', @card.to_event_payload)
       redirect_to [current_project, @board], notice: 'Task deleted'
     else
       redirect_to [current_project, @board, @list, @card], notice: "Error deleting task: #{@card.errors.full_messages.join('; ')}"
