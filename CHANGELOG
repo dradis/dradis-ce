@@ -6,6 +6,7 @@ v5.5.0 (November 2026)
   - Upgraded gems:
     - addressable, crass, loofah, nokogiri, rack, rails, rails-html-sanitizer, sanitize, sqlite3
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - Evidence: publish a dedicated state change event for single and bulk QA updates
     - Dashboard: keep issue chart columns distinct when group labels match
     - Sidebar tips: tone down the tips box in dark mode and keep its links readable
@@ -29,6 +30,7 @@ v5.4.0 (September 2026)
   - Upgraded gems:
     - mail, rubyzip, sqlite3
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - Activity tracking: avoid raising an error when an unrelated event shares a name prefix with a tracked namespace
     - Combobox: show the correct selected option when its value contains a double quote
 
@@ -42,6 +44,7 @@ v5.3.0 (August 2026)
   - Upgraded gems:
     - rails, rails-html-sanitizer, sqlite3, websocket-driver
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - Echo:
       - Preserve line breaks in streamed Ollama responses for models that emit them as standalone tokens
       - Remove a stray leading blank line from streamed responses
@@ -67,6 +70,7 @@ v5.1.0 (May 2026)
   - Upgraded gems:
     - addressable, erb, faraday, net-imap, nokogiri, rack
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - Liquid: stop stripping comparison operators from Liquid tags in issue and evidence fields
     - Fields: show a visible border on dropdown fields in the editor
   - Echo enhancements:
@@ -117,6 +121,7 @@ v5.0.0 (March 2026)
   - Upgraded gems:
     - bcrypt, nokogiri, rack, rails, tilt
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - Nodes: Display error message and preserve input on properties update
     - Notifications: Ensure correct link for note and issue comments
   - REST/JSON API enhancements:
@@ -133,6 +138,7 @@ v4.19.0 (November 2025)
   - Upgraded gems:
     - rack, rails, uri
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - Editor: Add disabled button styling
     - Datatables: Ensure correct record ordering when applying sorting
     - Sidebar: Prevent the toggle button from being covered by the scrollbar
@@ -172,6 +178,7 @@ v4.18.0 (September 2025)
   - Upgraded gems:
     - resque, rexml, selenium-webdriver, thor
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - Combobox: Prevent forcing the selection of the first available option for multi-select forms
 
 v4.17.1 (July 2025)
@@ -184,6 +191,7 @@ v4.17.0 (July 2025)
   - Logs: Update logs to use string UIDs
   - Upgraded gems: nokogiri, sqlite3
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - Calculators: Render Calculator links in tools menu
     - Liquid: Don't present dropdown options when creating new issue/evidence from template if the options contain Liquid filters
     - Quote Selector: Scroll to comment box in Safari after selecting quote content
@@ -228,6 +236,7 @@ v4.13.0 (July 2024)
   - Liquid: Make project-level collections available for Liquid syntax
   - Upgraded gems: nokogiri, rails, redcloth, rexml
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - Navigation: Restore functionality of native browser back/forward buttons
   - Security Fixes:
     - Medium: Authenticated (author) horizontal privilege escalation affecting attachments
@@ -238,6 +247,7 @@ v4.12.0 (May 2024)
   - Upgraded gems:
     - nokogiri, rails
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - Projects: Fix redirection when updating an issue or content block
     - Sidebar: Prevent version number from overlapping listed records
   - New integrations:
@@ -255,6 +265,7 @@ v4.11.0 (January 2024)
   - Upgraded gems:
     - rails
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - Evidence: Prevent loading old Evidence template content at the Issue level
     - Methodologies: validate presence of content
   - Integration enhancements:
@@ -279,6 +290,7 @@ v4.10.0 (September 2023)
   - Upgraded gems:
     - font-awesome-sass, nokogiri, puma, rails, sanitize, selenium-webdriver
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - QA: Enable @mentions and formatting toolbar for comments in QA show views
   - REST/JSON API enhancements:
     - Boards, Lists, Cards: add initial implementation
@@ -291,6 +303,7 @@ v4.9.0 (June 2023)
   - Upgraded gems:
     - bootstrap, popper_js, simple_form
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - QA: Redirect to correct view when changing states on QA edit views
   - Integration enhancements:
     - Acunetix: Parse inline code, not just code blocks
@@ -326,6 +339,7 @@ v4.7.0 (February 2023)
   - Upgraded gems:
     - nokogiri, pg, rails, rails-html-sanitizer, sanitize, sinatra
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - Methodologies: Ensure params are validated when moving list/card
   - REST/JSON API enhancements:
     - Author: Add author field for notes, issues, and evidence
@@ -337,6 +351,7 @@ v4.6.0 (November 2022)
   - Upgraded gems:
     - nokogiri
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - Comments: Align comment header content in Safari
   - New integrations:
     - Core Impact
@@ -346,6 +361,7 @@ v4.5.0 (August 2022)
   - Upgraded Dradis to run on ruby 3.1.2
   - Upgraded gems: acts_as_tree, bootsnap, bundler-audit, factory_bot, paper_trail, rails, rails-html-sanitizer, timecop, thor, unicorn
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - Attachments: Fix attachments not showing or being validated correctly
     - Evidence:
       - Add validation for creating evidences in the issue view
@@ -369,6 +385,7 @@ v4.4.0 (June 2022)
   - Upgraded gems:
     - nokogiri, rack, sinatra
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - Cards: Prevent adding 'card' class to card comments
   - Integration enhancements:
     - Nikto: Make references available as an issue field
@@ -378,6 +395,7 @@ v4.3.0 (April 2022)
   - Uploads: Allow subsequent file uploads from the same scanner without needing to re-select the scanner
   - Upgraded gems: nokogiri, puma, rails
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - Editor:
       - Add keyboard shortcut support for windows and linux
       - Allow text selection expansion using shift-click
@@ -413,6 +431,7 @@ v4.2.0 (February 2022)
   - Upgraded gems:
     - mini_racer, puma, rails
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - Comments: Show sticky toolbar when adding long comments
     - Tables: Prevents the select all button from selecting filtered out rows when a filter is been applied
     - Subscriptions: Fixes a caching issue preventing users from subscribing or
@@ -456,6 +475,7 @@ v4.1.0 (November 2021)
   - Upgraded gems:
     - nokogiri, puma, rails
   - Bugs fixes:
+    - Evidence: show the State column in the node evidence table
     - Conflict resolver
       - Apply the correct warning when a conflict happens on edit
     - Methodologies:
