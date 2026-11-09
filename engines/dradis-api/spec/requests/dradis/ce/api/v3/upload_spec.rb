@@ -70,14 +70,14 @@ describe 'Upload API' do
         post_upload
       end
 
-      it 'responds with a failed state when the importer rejects the file' do
+      it 'responds with a failed state and the reason when the importer rejects the file' do
         allow_any_instance_of(Dradis::Plugins::Projects::Upload::Package::Importer).to(
           receive(:import).and_return(false)
         )
 
         post_upload
 
-        expect(JSON.parse(response.body)['state']).to eq 'failed'
+        expect(JSON.parse(response.body)).to include('state' => 'failed', 'message' => 'The file could not be imported.')
       end
     end
   end

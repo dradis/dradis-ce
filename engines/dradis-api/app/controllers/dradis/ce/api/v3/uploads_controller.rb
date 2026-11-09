@@ -23,6 +23,7 @@ module Dradis::CE::API
           imported = process_upload_inline(attachment: attachment)
           @job_id = :inline
           @state = imported ? :completed : :failed
+          @message = 'The file could not be imported.' unless imported
         end
       end
 
