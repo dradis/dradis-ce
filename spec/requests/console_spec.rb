@@ -12,6 +12,16 @@ describe 'console requests' do
       expect(response.body).to include('var working = true;')
     end
 
+    it 'stops polling when a line is written after the final line' do
+      logger = Log.new
+      logger.complete!
+      logger.write('Job id is 123.')
+
+      get status_console_index_path, params: { item_id: logger.uid, format: :js }, xhr: true
+
+      expect(response.body).to include('var working = false;')
+    end
+
     it 'stops polling once the job has failed' do
       logger = Log.new
       logger.fail!

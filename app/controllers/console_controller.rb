@@ -15,6 +15,6 @@ class ConsoleController < AuthenticatedController
       'uid = ? and id > ?',
       @job_id, params[:after].to_i
     )
-    @working = !@logs.last.finished? if @logs.any?
+    @working = @logs.none?(&:finished?) if @logs.any?
   end
 end
