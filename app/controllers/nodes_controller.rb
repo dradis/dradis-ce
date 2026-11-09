@@ -122,7 +122,7 @@ class NodesController < NestedNodeResourceController
     rtp_default_evidence_fields = rtp ? rtp.evidence_fields.defaults.field_names : []
 
     @note_columns = note_dynamic_fields | extra_field_names
-    @evidence_columns = rtp_default_evidence_fields | evidence_dynamic_fields | extra_field_names | ['State']
+    @evidence_columns = default_evidence_field_names | rtp_default_evidence_fields | evidence_dynamic_fields | extra_field_names
 
     @default_note_columns = default_field_names
     @default_evidence_columns = (rtp_default_evidence_fields.presence || default_evidence_field_names)
