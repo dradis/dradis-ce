@@ -5,12 +5,12 @@ module Dradis::CE::API
       include Dradis::CE::API::ProjectScoped
 
       def index
-        @boards = current_project.boards.includes(:lists, lists: [:cards]).order('updated_at desc')
+        @boards = current_project.boards.includes(lists: { cards: :assignees }).order('updated_at desc')
         @boards = @boards.page(params[:page].to_i) if params[:page]
       end
 
       def show
-        @board = current_project.boards.includes(:lists, lists: [:cards]).find(params[:id])
+        @board = current_project.boards.includes(lists: { cards: :assignees }).find(params[:id])
       end
 
       def create
