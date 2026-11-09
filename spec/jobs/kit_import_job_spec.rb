@@ -56,13 +56,14 @@ RSpec.describe KitImportJob do
       expect(output.string).to include(Log::COMPLETED)
     end
 
-    it 'writes only the failed line when the import raises' do
+    it 'writes only the failed line when the project package is rejected' do
       logger = Log.new.write('Testing...')
-      allow_any_instance_of(described_class).to receive(:import_methodology_templates).and_raise('Boom')
+      allow_any_instance_of(Dradis::Plugins::Projects::Upload::Package::Importer).to receive(:import).and_return(false)
 
       described_class.perform_now(@tmp_file, logger: logger)
 
       texts = Log.where(uid: logger.uid).pluck(:text)
+      expect(texts).to include('An error occurred: The project package could not be imported.')
       expect(texts.last).to eq Log::FAILED
       expect(texts).to_not include(Log::COMPLETED)
     end

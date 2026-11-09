@@ -174,7 +174,7 @@ class KitImportJob < ApplicationJob
       plugin: Dradis::Plugins::Projects::Upload::Package,
       default_user_id: current_user.id
     )
-    importer.import(file: project_package)
+    raise 'The project package could not be imported.' if importer.import(file: project_package) == false
 
     logger.info { "  - New Project #{@project.id} created." }
   end
