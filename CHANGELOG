@@ -12,8 +12,8 @@ v5.5.0 (November 2026)
     - Diffs: remove stray escape characters around highlighted changes
     - Avatars: display a local image while Gravatar loads
     - Editor: keep the cursor in place after uploading an image
-    - Combobox: keep dropdown menus within the viewport and fit long option labels
     - Combobox:
+      - keep dropdown menus within the viewport and fit long option labels
       - show inline validation errors on dropdowns that fail validation
   - New integrations:
     - Calculators:
