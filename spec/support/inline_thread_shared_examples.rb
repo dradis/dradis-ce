@@ -10,6 +10,8 @@ shared_examples 'inline threads' do
     }
   end
 
+  let(:mention) { "Thanks @#{@logged_in_as.email}" }
+
   let(:turbo_stream_headers) do
     { 'Accept' => 'text/vnd.turbo-stream.html' }
   end
@@ -33,6 +35,22 @@ shared_examples 'inline threads' do
       expect(json.first['id']).to eq(thread.id)
       expect(json.first['anchor']['exact']).to eq('Apache bugs')
       expect(json.first['comments'].length).to eq(1)
+    end
+
+    it 'returns threads whose comments mention a user' do
+      thread = create(:inline_thread, commentable: commentable)
+      create(:comment, inline_thread: thread, commentable: commentable, content: mention)
+
+      get inline_threads_path(
+        format: :json,
+        inline_thread: {
+          commentable_type: commentable.class.to_s,
+          commentable_id: commentable.id
+        }
+      )
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body).first['comments'].first['content']).to include('gravatar-inline')
     end
 
     it 'returns empty array when no threads exist' do
@@ -60,6 +78,16 @@ shared_examples 'inline threads' do
       expect(response).to have_http_status(:ok)
       expect(response.body).to include('turbo-frame')
       expect(response.body).to include(thread.quoted_text)
+    end
+
+    it 'renders a comment that mentions a user' do
+      thread = create(:inline_thread, commentable: commentable)
+      create(:comment, inline_thread: thread, commentable: commentable, content: mention)
+
+      get inline_thread_path(thread)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include('gravatar-inline')
     end
   end
 
@@ -90,6 +118,22 @@ shared_examples 'inline threads' do
       comment = thread.comments.first
       expect(comment.content).to eq('This needs revision')
       expect(comment.commentable).to eq(commentable)
+    end
+
+    it 'creates a thread whose comment mentions a user' do
+      post inline_threads_path,
+        params: {
+          inline_thread: {
+            commentable_type: commentable.class.to_s,
+            commentable_id: commentable.id,
+            anchor: valid_anchor,
+            comments_attributes: { '0' => { content: mention } }
+          }
+        },
+        headers: turbo_stream_headers
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include('gravatar-inline')
     end
   end
 
@@ -155,6 +199,17 @@ shared_examples 'inline threads' do
       expect(comment.content).to eq('Good point, will fix')
       expect(comment.commentable).to eq(commentable)
       expect(comment.user).to eq(@logged_in_as)
+    end
+
+    it 'creates a reply that mentions a user' do
+      thread = create(:inline_thread, commentable: commentable)
+
+      post inline_thread_comments_path(thread),
+        params: { comment: { content: mention } },
+        headers: turbo_stream_headers
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include('gravatar-inline')
     end
   end
 end
