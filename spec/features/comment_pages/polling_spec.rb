@@ -25,7 +25,7 @@ describe 'comment pages', js: true do
     describe 'and someone else adds a comment that mentions a user' do
       before do
         @new_comment = create(:comment, commentable: @commentable, content: "Thanks @#{@logged_in_as.email}", user: @other_user)
-        create(:activity, action: :create, trackable: @new_comment, user: @other_user)
+        create(:activity, action: :create, trackable: @new_comment, user: @other_user, project: current_project)
         call_poller
       end
 
