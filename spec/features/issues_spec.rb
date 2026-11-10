@@ -404,7 +404,7 @@ describe 'Issues pages' do
 
         context 'with states' do
           it 'shows the issue states in the view' do
-            expect(page).to have_text "(#{@issue.state.humanize})"
+            expect(page).to have_css("[href='#info-tab'] .badge-state-#{@issue.state.dasherize}", text: @issue.state.humanize)
           end
         end
 
