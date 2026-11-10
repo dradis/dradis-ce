@@ -242,32 +242,28 @@ export default class extends Controller {
     return this.highlighter?.contentEl.querySelectorAll('[data-behavior~=grammar-suggestion-highlight]').length ?? 0;
   }
 
-  _showWidgetError(message) {
+  _renderWidget(hasProblems, summaryText) {
     const successEl  = document.querySelector('[data-behavior~=roslin-status-success]');
     const errorEl    = document.querySelector('[data-behavior~=roslin-status-error]');
     const summaryEl  = document.querySelector('[data-behavior~=roslin-issues-summary]');
     const collapseEl = document.querySelector('[data-behavior~=roslin-widget]');
 
-    if (successEl) successEl.classList.add('d-none');
-    if (errorEl)   errorEl.classList.remove('d-none');
-    if (summaryEl) summaryEl.textContent = message;
-    if (collapseEl) collapseEl.classList.add('show');
+    if (successEl) successEl.classList.toggle('d-none', hasProblems);
+    if (errorEl)   errorEl.classList.toggle('d-none', !hasProblems);
+    if (summaryEl) summaryEl.textContent = summaryText;
+    if (collapseEl) collapseEl.classList.toggle('show', hasProblems);
+  }
+
+  _showWidgetError(message) {
+    this._renderWidget(true, message);
   }
 
   _updateWidget(count) {
-    const successEl  = document.querySelector('[data-behavior~=roslin-status-success]');
-    const errorEl    = document.querySelector('[data-behavior~=roslin-status-error]');
-    const summaryEl  = document.querySelector('[data-behavior~=roslin-issues-summary]');
-    const collapseEl = document.querySelector('[data-behavior~=roslin-widget]');
-
     const summaryText = count > 0
       ? `${count} issue${count === 1 ? '' : 's'} found`
       : 'No grammar or spelling errors!';
 
-    if (successEl) successEl.classList.toggle('d-none', count > 0);
-    if (errorEl)   errorEl.classList.toggle('d-none', count === 0);
-    if (summaryEl) summaryEl.textContent = summaryText;
-    if (collapseEl) collapseEl.classList.toggle('show', count > 0);
+    this._renderWidget(count > 0, summaryText);
   }
 
   _refreshContent(newRaw) {
