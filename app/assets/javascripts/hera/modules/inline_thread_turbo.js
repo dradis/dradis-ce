@@ -119,7 +119,7 @@ class InlineThreadTurbo {
       if (e.detail.success) {
         this.clearErrors();
         this.fetchAndHighlight();
-      } else {
+      } else if (!this.isTurboStream(e.detail.fetchResponse)) {
         this.showError(e.target);
       }
     });
@@ -230,5 +230,10 @@ class InlineThreadTurbo {
       input.value = value;
       return input;
     });
+  }
+
+  // A Turbo Stream response renders its own errors next to the field.
+  isTurboStream(fetchResponse) {
+    return !!fetchResponse?.contentType?.startsWith('text/vnd.turbo-stream.html');
   }
 }

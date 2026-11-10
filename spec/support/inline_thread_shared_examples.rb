@@ -156,5 +156,16 @@ shared_examples 'inline threads' do
       expect(comment.commentable).to eq(commentable)
       expect(comment.user).to eq(@logged_in_as)
     end
+
+    it 'shows the error under the reply field when the reply is blank' do
+      thread = create(:inline_thread, commentable: commentable)
+
+      post inline_thread_comments_path(thread),
+        params: { comment: { content: '' } },
+        headers: turbo_stream_headers
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.body).to include('Content can&#39;t be blank')
+    end
   end
 end

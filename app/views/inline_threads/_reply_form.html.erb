@@ -1,10 +1,13 @@
 <div id="thread_<%= inline_thread.id %>_reply_form">
-  <%= form_with url: inline_thread_comments_path(inline_thread) do |f| %>
-    <%= f.text_area :content,
-          name: 'comment[content]',
-          class: 'form-control form-control-sm mb-2',
-          placeholder: 'Reply...',
-          rows: 2 %>
+  <%= simple_form_for local_assigns.fetch(:comment) { Comment.new },
+    namespace: dom_id(inline_thread, :reply),
+    url: inline_thread_comments_path(inline_thread) do |f| %>
+    <%=
+      f.input :content,
+        input_html: { class: 'form-control-sm', rows: 2 },
+        label: false,
+        placeholder: 'Reply...'
+    %>
     <%= f.submit 'Reply', class: 'btn btn-sm btn-primary' %>
   <% end %>
 </div>
