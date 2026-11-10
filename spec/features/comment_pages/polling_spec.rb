@@ -22,6 +22,20 @@ describe 'comment pages', js: true do
       end
     end
 
+    describe 'and someone else adds a comment that mentions a user' do
+      before do
+        @new_comment = create(:comment, commentable: @commentable, content: "Thanks @#{@logged_in_as.email}", user: @other_user)
+        create(:activity, action: :create, trackable: @new_comment, user: @other_user)
+        call_poller
+      end
+
+      it 'displays the new comment with the mention as plain text' do
+        within("#comment_#{@new_comment.id}") do
+          expect(page).to have_text("Thanks @#{@logged_in_as.email}")
+        end
+      end
+    end
+
     describe 'and someone else updates a comment' do
       before do
         @comment.update(content: 'content updated')
