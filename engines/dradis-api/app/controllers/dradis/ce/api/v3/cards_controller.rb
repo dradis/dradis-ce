@@ -1,8 +1,8 @@
 module Dradis::CE::API
   module V3
     class CardsController < Dradis::CE::API::APIController
-      include ActivityTracking
       include Dradis::CE::API::ProjectScoped
+      include EventPublisher
 
       before_action :set_board
       before_action :set_list
@@ -22,7 +22,7 @@ module Dradis::CE::API
         @card.previous_id = @list.last_card.try(:id)
 
         if @card.save
-          track_created(@card)
+          publish_event('card.created', @card.to_event_payload)
           render status: 201, location: board_list_card_path(@board, @list, @card)
         else
           render_validation_errors(@card)
@@ -32,7 +32,7 @@ module Dradis::CE::API
       def update
         @card = @list.cards.find(params[:id])
         if @card.update(card_params)
-          track_updated(@card)
+          publish_event('card.updated', @card.to_event_payload)
           render list: @card
         else
           render_validation_errors(@card)
@@ -42,7 +42,7 @@ module Dradis::CE::API
       def destroy
         @card = @list.cards.find(params[:id])
         @card.destroy
-        track_destroyed(@card)
+        publish_event('card.destroyed', @card.to_event_payload)
         render_successful_destroy_message
       end
 

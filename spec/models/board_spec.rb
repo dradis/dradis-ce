@@ -9,6 +9,12 @@ describe Board do
 
   it { should validate_length_of(:name).is_at_most(DB_MAX_STRING_LENGTH) }
 
+  it 'includes the project in its event payload' do
+    board = build_stubbed(:board)
+    allow(board).to receive(:project).and_return(double(id: 123))
+    expect(board.to_event_payload).to eq(id: board.id, class: 'Board', project: { id: 123 })
+  end
+
   describe 'acts as linked list' do
     let(:model) { Board }
     let(:list_item) { 'list' }

@@ -1,5 +1,6 @@
 class List < ApplicationRecord
   include ActsAsLinkedList
+  include Eventable
   list_item_name :card
 
   # -- Relationships --------------------------------------------------------
@@ -24,6 +25,10 @@ class List < ApplicationRecord
   # -- Class Methods ----------------------------------------------------------
 
   # -- Instance Methods -----------------------------------------------------
+  def local_event_payload
+    { project: { id: project.id } }
+  end
+
   def next_list
     board.lists.find_by(previous_id: id)
   end

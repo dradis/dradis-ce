@@ -1,5 +1,5 @@
 class Lists::PositionController < AuthenticatedController
-  include ActivityTracking
+  include EventPublisher
   include LinkedListMoveValidator
   include ProjectScoped
 
@@ -11,7 +11,7 @@ class Lists::PositionController < AuthenticatedController
   def update
     Board.move(@list, prev_item: @prev_item, next_item: @next_item)
 
-    track_updated(@list)
+    publish_event('list.updated', @list.to_event_payload)
 
     render json: @list
   end
