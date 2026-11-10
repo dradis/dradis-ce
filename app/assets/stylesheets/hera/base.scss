@@ -100,20 +100,23 @@ th {
   color: var(--badge-lavender-color);
 }
 
-// The state colors are light in both themes, so the text keeps the light theme body color
+// The state colors are tinted into the background, so the text keeps the body color in both themes
 .badge-state-draft {
-  background-color: $state-draft-color;
-  color: $grey-900;
+  background-color: rgba($state-draft-color, 0.18);
+  border: 1px solid rgba($state-draft-color, 0.7);
+  color: var(--text-default);
 }
 
 .badge-state-published {
-  background-color: $state-published-color;
-  color: $grey-900;
+  background-color: rgba($state-published-color, 0.18);
+  border: 1px solid rgba($state-published-color, 0.7);
+  color: var(--text-default);
 }
 
 .badge-state-ready-for-review {
-  background-color: $state-review-color;
-  color: $grey-900;
+  background-color: rgba($state-review-color, 0.18);
+  border: 1px solid rgba($state-review-color, 0.7);
+  color: var(--text-default);
 }
 
 .bg-info {
