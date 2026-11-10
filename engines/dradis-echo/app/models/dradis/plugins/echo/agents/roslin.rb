@@ -6,7 +6,8 @@ module Dradis::Plugins::Echo
       extend self
 
       DEFAULT_ENV = {
-        'LANGUAGETOOL_ADDRESS' => LanguageToolService::DEFAULT_ADDRESS
+        'LANGUAGETOOL_ADDRESS' => LanguageToolService::DEFAULT_ADDRESS,
+        'LANGUAGETOOL_LANGUAGE' => LanguageToolService::DEFAULT_LANGUAGE
       }.freeze
       NAME = 'Roslin'.freeze
 
@@ -55,6 +56,12 @@ module Dradis::Plugins::Echo
         instance.env && instance.env['LANGUAGETOOL_ADDRESS'].present?
       rescue ActiveRecord::RecordNotFound
         false
+      end
+
+      # The language LanguageTool checks against. Agents provisioned before
+      # LANGUAGETOOL_LANGUAGE existed (or with it cleared) fall back to the default.
+      def language_tool_language
+        instance.env['LANGUAGETOOL_LANGUAGE'].to_s.strip.presence || LanguageToolService::DEFAULT_LANGUAGE
       end
 
       def language_tool_reachable?

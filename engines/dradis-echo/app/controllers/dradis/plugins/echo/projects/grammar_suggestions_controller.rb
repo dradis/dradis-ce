@@ -9,10 +9,13 @@ module Dradis::Plugins::Echo
 
       matches = LanguageToolService.new(
         fields: fields,
-        address: Agents::Roslin.instance.env['LANGUAGETOOL_ADDRESS']
+        address: Agents::Roslin.instance.env['LANGUAGETOOL_ADDRESS'],
+        language: Agents::Roslin.language_tool_language
       ).call
 
       render json: matches
+    rescue LanguageToolService::RejectedError => e
+      render json: { error: e.message }, status: :bad_gateway
     rescue LanguageToolService::UnavailableError => e
       render json: { error: e.message }, status: :service_unavailable
     end

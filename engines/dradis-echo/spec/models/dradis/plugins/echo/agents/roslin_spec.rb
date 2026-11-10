@@ -29,6 +29,36 @@ describe Dradis::Plugins::Echo::Agents::Roslin do
     end
   end
 
+  describe '.language_tool_language' do
+    let(:agent) { create(:system_agent, name: described_class::NAME, env: env) }
+
+    before { agent }
+
+    context 'when LANGUAGETOOL_LANGUAGE is set' do
+      let(:env) { { 'LANGUAGETOOL_LANGUAGE' => 'en-GB' } }
+
+      it 'returns the configured language' do
+        expect(described_class.language_tool_language).to eq('en-GB')
+      end
+    end
+
+    context 'when LANGUAGETOOL_LANGUAGE is missing' do
+      let(:env) { { 'LANGUAGETOOL_ADDRESS' => 'http://languagetool:8081' } }
+
+      it 'returns the default language' do
+        expect(described_class.language_tool_language).to eq(Dradis::Plugins::Echo::LanguageToolService::DEFAULT_LANGUAGE)
+      end
+    end
+
+    context 'when LANGUAGETOOL_LANGUAGE is blank' do
+      let(:env) { { 'LANGUAGETOOL_LANGUAGE' => ' ' } }
+
+      it 'returns the default language' do
+        expect(described_class.language_tool_language).to eq(Dradis::Plugins::Echo::LanguageToolService::DEFAULT_LANGUAGE)
+      end
+    end
+  end
+
   describe '.instance' do
     it 'finds the system agent named Roslin' do
       agent = create(:system_agent, name: described_class::NAME)
