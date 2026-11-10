@@ -12,8 +12,6 @@ class InlineThreadsController < AuthenticatedController
   layout false
 
   before_action :authorize_commentable
-  # Replaces Mentioned's #show-only callback: all these actions render comments.
-  before_action :find_mentionable_users, only: [:create, :index, :show]
   before_action :require_comment, only: [:create]
 
   def index

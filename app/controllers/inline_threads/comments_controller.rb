@@ -6,9 +6,6 @@ class InlineThreads::CommentsController < AuthenticatedController
   layout false
   load_and_authorize_resource :inline_thread
 
-  # Replaces Mentioned's #show-only callback: #create renders the new comment.
-  before_action :find_mentionable_users, only: [:create]
-
   def create
     @comment = @inline_thread.comments.build(comment_params)
     @comment.commentable = @inline_thread.commentable

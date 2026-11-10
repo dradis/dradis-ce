@@ -2,15 +2,20 @@ module Mentioned
   extend ActiveSupport::Concern
 
   included do
-    # If this needs to be any more complicated put the before actions
-    # in each individual controller.
-    actions = controller_path == 'comments' ? [:index, :create, :show, :update] : [:show]
-    before_action :find_mentionable_users, only: actions
+    # Resource #show pages render the meta tag Tribute uses for @mention
+    # autocomplete (see the layout). Views that format comments load the users
+    # on demand through the mentionable_users helper.
+    before_action :enable_mention_autocomplete, only: [:show]
+    helper_method :mentionable_users
   end
 
   protected
 
-  def find_mentionable_users
+  def enable_mention_autocomplete
+    @mention_autocomplete = true
+  end
+
+  def mentionable_users
     @mentionable_users ||= begin
       resource = (project || instance_variable_get("@#{controller_name.singularize}") || commentable)
       Comment.mentionable_users(resource)

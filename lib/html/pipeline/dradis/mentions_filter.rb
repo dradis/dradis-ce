@@ -11,7 +11,7 @@ module HTML
       #   view_context: Needed to render the avatars
       class MentionsFilter < HTML::Pipeline::MentionFilter
         def link_to_mentioned_user(login)
-          user = context[:mentionable_users].find { |u| u.email == login }
+          user = context[:mentionable_users]&.find { |u| u.email == login }
           return unless user
 
           result[:mentioned_usernames] |= [login]
