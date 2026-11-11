@@ -1,0 +1,9 @@
+# Backs the setup wizard's shared password form, so its errors show next to
+# the fields like every other form.
+class SharedPasswordForm
+  include ActiveModel::Model
+
+  attr_accessor :password, :password_confirmation
+
+  validates :password, confirmation: true, presence: true
+end

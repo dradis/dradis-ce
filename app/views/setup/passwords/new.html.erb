@@ -2,19 +2,14 @@
 
 <%= render partial: 'setup/progress' %>
 
-<%= form_tag( setup_password_path ) do -%>
+<%= simple_form_for @password_form, url: setup_password_path do |f| %>
+  <%= f.error_notification class: 'mt-5' %>
+
   <h1>Let's start with setting your shared password</h1>
   <p class="small">This shared password will be used by every user accessing this Dradis server.</p>
 
-  <div class="mb-3">
-    <%= label_tag :password, nil, class: 'form-label' %>
-    <%= password_field_tag :password, nil, class: 'form-control', autofocus: true, autocomplete: 'off' %>
-  </div>
-
-  <div class="mb-3">
-    <%= label_tag :password_confirmation, nil, class: 'form-label' %>
-    <%= password_field_tag :password_confirmation, nil, class: 'form-control', autocomplete: 'off' %>
-  </div>
+  <%= f.input :password, autofocus: true, input_html: { autocomplete: 'off' } %>
+  <%= f.input :password_confirmation, input_html: { autocomplete: 'off' }, required: true %>
 
   <%= button_tag :submit, class: 'btn btn-primary' do %>
     Next <i class="fa-solid fa-long-arrow-right"></i>
