@@ -16,7 +16,7 @@ module Dradis::Plugins::Echo
 
       render json: matches
     rescue LanguageToolService::RejectedError => e
-      render json: { error: e.message }, status: :bad_gateway
+      render json: { error: "#{e.message} Check the Roslin agent settings." }, status: :bad_gateway
     rescue LanguageToolService::UnavailableError => e
       render json: { error: e.message }, status: :service_unavailable
     end

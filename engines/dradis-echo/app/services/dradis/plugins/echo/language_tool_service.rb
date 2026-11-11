@@ -36,10 +36,11 @@ module Dradis::Plugins::Echo
       end
 
       # LanguageTool explains rejected requests (e.g. an unknown language code) in
-      # a plain-text body. Surface it so users can fix their configuration.
+      # a plain-text body that can list every supported language code. Surface the
+      # start of it so users can fix their configuration.
       unless response.is_a?(Net::HTTPSuccess)
-        detail = response.body.to_s.strip.truncate(300).presence || "HTTP #{response.code}"
-        raise RejectedError, "LanguageTool rejected the request: #{detail}"
+        detail = response.body.to_s.strip.truncate(120, separator: ' ').presence || "HTTP #{response.code}"
+        raise RejectedError, "LanguageTool error: #{detail}"
       end
 
       JSON.parse(response.body).fetch('matches', []).map do |m|

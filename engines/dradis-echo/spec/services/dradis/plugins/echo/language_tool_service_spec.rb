@@ -77,17 +77,27 @@ describe Dradis::Plugins::Echo::LanguageToolService do
     context 'when LanguageTool rejects the request' do
       before do
         stub_http(
-          body: "Error: 'en-XX' is not a language code known to LanguageTool.",
+          body: "Error: 'xy-z1' is not a language code known to LanguageTool. " \
+                'Supported language codes are: ar, ast-ES, be-BY, br-FR, ca-ES, ca-ES-balear, da-DK',
           code: '400',
           response_class: Net::HTTPBadRequest
         )
       end
 
-      it 'raises RejectedError with the LanguageTool message' do
+      it 'raises RejectedError with the start of the LanguageTool message' do
         expect { service.call }.to raise_error(
           described_class::RejectedError,
-          "LanguageTool rejected the request: Error: 'en-XX' is not a language code known to LanguageTool."
+          "LanguageTool error: Error: 'xy-z1' is not a language code known to LanguageTool. " \
+          'Supported language codes are: ar, ast-ES, be-BY, br-FR,...'
         )
+      end
+    end
+
+    context 'when LanguageTool rejects the request without a message' do
+      before { stub_http(body: '', code: '400', response_class: Net::HTTPBadRequest) }
+
+      it 'raises RejectedError with the HTTP status' do
+        expect { service.call }.to raise_error(described_class::RejectedError, 'LanguageTool error: HTTP 400')
       end
     end
 
