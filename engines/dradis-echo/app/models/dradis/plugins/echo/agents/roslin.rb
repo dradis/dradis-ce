@@ -52,22 +52,22 @@ module Dradis::Plugins::Echo
         false
       end
 
-      def language_tool_configured?
-        instance.env && instance.env['LANGUAGETOOL_ADDRESS'].present?
-      rescue ActiveRecord::RecordNotFound
-        false
+      # Stored values win, and defaults fill in any keys added since the agent
+      # was provisioned.
+      def env
+        DEFAULT_ENV.merge(instance.env.to_h)
       end
 
-      # The language LanguageTool checks against. Agents provisioned before
-      # LANGUAGETOOL_LANGUAGE existed (or with it cleared) fall back to the default.
-      def language_tool_language
-        instance.env['LANGUAGETOOL_LANGUAGE'].to_s.strip.presence || LanguageToolService::DEFAULT_LANGUAGE
+      def language_tool_configured?
+        env['LANGUAGETOOL_ADDRESS'].present?
+      rescue ActiveRecord::RecordNotFound
+        false
       end
 
       def language_tool_reachable?
         return false unless language_tool_configured?
 
-        address = instance.env['LANGUAGETOOL_ADDRESS']
+        address = env['LANGUAGETOOL_ADDRESS']
         Rails.cache.fetch("echo:languagetool:reachable:#{address}", expires_in: 5.minutes) do
           LanguageToolService.reachable?(address)
         end

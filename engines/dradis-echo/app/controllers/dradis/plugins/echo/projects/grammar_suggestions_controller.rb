@@ -6,11 +6,12 @@ module Dradis::Plugins::Echo
       raw_text = params.key?(:text) ? params[:text].to_s : @record.content
 
       fields = FieldParser.source_to_fields(raw_text)
+      env = Agents::Roslin.env
 
       matches = LanguageToolService.new(
         fields: fields,
-        address: Agents::Roslin.instance.env['LANGUAGETOOL_ADDRESS'],
-        language: Agents::Roslin.language_tool_language
+        address: env['LANGUAGETOOL_ADDRESS'],
+        language: env['LANGUAGETOOL_LANGUAGE']
       ).call
 
       render json: matches
