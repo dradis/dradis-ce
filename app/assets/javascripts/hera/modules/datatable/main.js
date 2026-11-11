@@ -37,6 +37,13 @@ class DradisDatatable {
       });
     }
 
+    // Search the visible text, not the markup. DataTables only strips HTML from
+    // 'html' columns, and data-sort attributes give columns other types.
+    const searchFormatters = $.fn.dataTable.ext.type.search;
+    ['date', 'num', 'num-fmt', 'string'].forEach(function (type) {
+      searchFormatters[type] = searchFormatters.html;
+    });
+
     // Assign the instantiated DataTable as a DradisDatatable property
     this.dataTable = this.$table.DataTable({
       autoWidth: false,

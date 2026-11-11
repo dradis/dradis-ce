@@ -38,5 +38,11 @@ describe 'issue pages' do
     let(:content_attribute) { :text }
 
     it_behaves_like 'a DataTable with Dynamic Columns'
+
+    it 'does not match the markup behind the visible text when searching' do
+      find('.dataTables_filter input[type=search]').set('href')
+
+      expect(page).to have_css('.dataTables_empty')
+    end
   end
 end
