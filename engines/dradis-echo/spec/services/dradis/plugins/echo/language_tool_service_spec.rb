@@ -3,16 +3,19 @@ require 'rails_helper'
 describe Dradis::Plugins::Echo::LanguageToolService do
   let(:service) do
     described_class.new(
+      address: 'http://languagetool.local:8081',
       fields: { 'Description' => 'This are a mistake.' },
-      address: 'http://languagetool.local:8081'
+      language: 'en-GB'
     )
   end
 
-  def stub_http(body:)
-    response = instance_double(Net::HTTPResponse, body: body)
+  def stub_http(body:, response_class: Net::HTTPOK, code: '200')
+    response = response_class.new('1.1', code, '')
+    allow(response).to receive(:body).and_return(body)
     http = instance_double(Net::HTTP)
     allow(http).to receive(:post).and_return(response)
     allow(Net::HTTP).to receive(:start).and_yield(http)
+    http
   end
 
   describe '#call' do
@@ -60,6 +63,49 @@ describe Dradis::Plugins::Echo::LanguageToolService do
         stub_http(body: many_body)
 
         expect(service.call.first[:replacements].length).to eq(3)
+      end
+    end
+
+    it 'sends the language to LanguageTool' do
+      http = stub_http(body: { 'matches' => [] }.to_json)
+
+      service.call
+
+      expect(http).to have_received(:post).with('/v2/check', include('language=en-GB'))
+    end
+
+    context 'when LanguageTool rejects the request' do
+      before do
+        stub_http(
+          body: "Error: 'xy-z1' is not a language code known to LanguageTool. " \
+                'Supported language codes are: ar, ast-ES, be-BY, br-FR, ca-ES, ca-ES-balear, da-DK',
+          code: '400',
+          response_class: Net::HTTPBadRequest
+        )
+      end
+
+      it 'raises RejectedError with the start of the LanguageTool message' do
+        expect { service.call }.to raise_error(
+          described_class::RejectedError,
+          "LanguageTool error: Error: 'xy-z1' is not a language code known to LanguageTool. " \
+          'Supported language codes are: ar, ast-ES, be-BY, br-FR,...'
+        )
+      end
+    end
+
+    context 'when LanguageTool rejects the request without a message' do
+      before { stub_http(body: '', code: '400', response_class: Net::HTTPBadRequest) }
+
+      it 'raises RejectedError with the HTTP status' do
+        expect { service.call }.to raise_error(described_class::RejectedError, 'LanguageTool error: HTTP 400')
+      end
+    end
+
+    context 'when LanguageTool returns invalid JSON' do
+      before { stub_http(body: '<html>Bad gateway</html>') }
+
+      it 'raises UnavailableError' do
+        expect { service.call }.to raise_error(described_class::UnavailableError)
       end
     end
 

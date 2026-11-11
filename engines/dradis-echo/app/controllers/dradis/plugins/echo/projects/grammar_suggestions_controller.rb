@@ -6,13 +6,17 @@ module Dradis::Plugins::Echo
       raw_text = params.key?(:text) ? params[:text].to_s : @record.content
 
       fields = FieldParser.source_to_fields(raw_text)
+      env = Agents::Roslin.env
 
       matches = LanguageToolService.new(
         fields: fields,
-        address: Agents::Roslin.instance.env['LANGUAGETOOL_ADDRESS']
+        address: env['LANGUAGETOOL_ADDRESS'],
+        language: env['LANGUAGETOOL_LANGUAGE']
       ).call
 
       render json: matches
+    rescue LanguageToolService::RejectedError => e
+      render json: { error: "#{e.message} Check the Roslin agent settings." }, status: :bad_gateway
     rescue LanguageToolService::UnavailableError => e
       render json: { error: e.message }, status: :service_unavailable
     end
