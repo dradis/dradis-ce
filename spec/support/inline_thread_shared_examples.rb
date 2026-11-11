@@ -91,6 +91,40 @@ shared_examples 'inline threads' do
       expect(comment.content).to eq('This needs revision')
       expect(comment.commentable).to eq(commentable)
     end
+
+    it 'returns the reason when the first comment is blank' do
+      expect do
+        post inline_threads_path,
+          params: {
+            inline_thread: {
+              commentable_type: commentable.class.to_s,
+              commentable_id: commentable.id,
+              anchor: valid_anchor,
+              comments_attributes: { '0' => { content: '  ' } }
+            }
+          },
+          headers: turbo_stream_headers
+      end.not_to change { InlineThread.count }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body['errors']).to eq(["Content can't be blank"])
+    end
+
+    it 'returns the reason when the first comment is too long' do
+      post inline_threads_path,
+        params: {
+          inline_thread: {
+            commentable_type: commentable.class.to_s,
+            commentable_id: commentable.id,
+            anchor: valid_anchor,
+            comments_attributes: { '0' => { content: 'a' * (DB_MAX_TEXT_LENGTH + 1) } }
+          }
+        },
+        headers: turbo_stream_headers
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body['errors']).to eq(["Content is too long (maximum is #{DB_MAX_TEXT_LENGTH} characters)"])
+    end
   end
 
   describe 'DELETE /inline_threads/:id' do
