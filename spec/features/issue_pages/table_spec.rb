@@ -60,6 +60,7 @@ describe 'issue pages' do
         click_button 'Filters'
         find(risk_filter).set('High')
         expect(page).to have_css('.dataTable tbody tr', count: 1)
+        expect(page).to have_css('.dataTable tbody tr', text: @issue.title)
 
         toggle_column('Risk')
         expect(page).to have_css('.dataTable tbody tr', count: 2)
@@ -73,6 +74,7 @@ describe 'issue pages' do
         expect(page).to have_button('Filters: On')
         expect(find(title_filter).value).to eq(@issue.title)
         expect(page).to have_css('.dataTable tbody tr', count: 1)
+        expect(page).to have_css('.dataTable tbody tr', text: @issue.title)
 
         click_button 'Filters'
         expect(page).to have_button('Filters: Off')
