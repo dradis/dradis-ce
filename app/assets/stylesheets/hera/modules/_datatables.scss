@@ -17,6 +17,17 @@ div.dataTables_wrapper {
       }
     }
 
+    .column-filters {
+      input {
+        min-width: 8rem;
+        text-overflow: ellipsis;
+      }
+
+      td {
+        padding: 0.5rem;
+      }
+    }
+
     .no-sort {
       pointer-events: none;
 

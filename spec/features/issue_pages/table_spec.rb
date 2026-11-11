@@ -44,5 +44,41 @@ describe 'issue pages' do
 
       expect(page).to have_css('.dataTables_empty')
     end
+
+    describe 'column filters' do
+      let(:risk_filter) { "[data-behavior~=column-filter][aria-label='Filter Risk']" }
+      let(:title_filter) { "[data-behavior~=column-filter][aria-label='Filter Title']" }
+
+      def toggle_column(name)
+        find('.buttons-colvis').click
+        within('.dt-button-collection') { click_link name }
+        find('body').send_keys(:escape)
+      end
+
+      it 'filters a column hidden on load and clears it when the column is hidden' do
+        toggle_column('Risk')
+        click_button 'Filters'
+        find(risk_filter).set('High')
+        expect(page).to have_css('.dataTable tbody tr', count: 1)
+
+        toggle_column('Risk')
+        expect(page).to have_css('.dataTable tbody tr', count: 2)
+      end
+
+      it 'restores the filters on reload and clears them when hidden' do
+        click_button 'Filters'
+        find(title_filter).set(@issue.title)
+
+        visit project_issues_path(current_project)
+        expect(page).to have_button('Filters: On')
+        expect(find(title_filter).value).to eq(@issue.title)
+        expect(page).to have_css('.dataTable tbody tr', count: 1)
+
+        click_button 'Filters'
+        expect(page).to have_button('Filters: Off')
+        expect(page).to_not have_css(title_filter)
+        expect(page).to have_css('.dataTable tbody tr', count: 2)
+      end
+    end
   end
 end
