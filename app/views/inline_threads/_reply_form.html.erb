@@ -2,6 +2,9 @@
   <%= simple_form_for local_assigns.fetch(:comment) { Comment.new },
     namespace: dom_id(inline_thread, :reply),
     url: inline_thread_comments_path(inline_thread) do |f| %>
+    <% if f.object.errors[:commentable].any? %>
+      <%= f.error_notification message: f.object.errors.messages_for(:commentable).to_sentence %>
+    <% end %>
     <%=
       f.input :content,
         input_html: { class: 'form-control-sm', rows: 2 },

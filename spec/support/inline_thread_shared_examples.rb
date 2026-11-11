@@ -160,12 +160,42 @@ shared_examples 'inline threads' do
     it 'shows the error under the reply field when the reply is blank' do
       thread = create(:inline_thread, commentable: commentable)
 
-      post inline_thread_comments_path(thread),
-        params: { comment: { content: '' } },
-        headers: turbo_stream_headers
+      expect do
+        post inline_thread_comments_path(thread),
+          params: { comment: { content: '' } },
+          headers: turbo_stream_headers
+      end.not_to change { thread.comments.count }
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.body).to include('Content can&#39;t be blank')
+      expect(response.body).not_to include('alert-danger')
+      expect(response.body).not_to include('action="append"')
+    end
+
+    it 'shows the error under the reply field when the reply is too long' do
+      thread = create(:inline_thread, commentable: commentable)
+
+      post inline_thread_comments_path(thread),
+        params: { comment: { content: 'a' * (DB_MAX_TEXT_LENGTH + 1) } },
+        headers: turbo_stream_headers
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.body).to include("Content is too long (maximum is #{DB_MAX_TEXT_LENGTH} characters)")
+    end
+
+    it 'shows a banner when the reply fails for a reason unrelated to its content' do
+      thread = create(:inline_thread, commentable: commentable)
+      allow_any_instance_of(commentable.class).to receive(:valid?).and_return(false)
+
+      expect do
+        post inline_thread_comments_path(thread),
+          params: { comment: { content: 'Good point, will fix' } },
+          headers: turbo_stream_headers
+      end.not_to change { thread.comments.count }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.body).to include(%(<div class="alert alert-danger">This comment couldn't be saved.</div>))
+      expect(response.body).not_to include('action="append"')
     end
   end
 end
