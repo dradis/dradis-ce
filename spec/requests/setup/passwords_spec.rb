@@ -1,6 +1,7 @@
 require 'rails_helper'
 
-describe 'Setup::Passwords', skip_setup_mock: true do
+# The shared password step only exists in CE.
+describe 'Setup::Passwords', if: !defined?(Dradis::Pro), skip_setup_mock: true do
   def submit_password(password, confirmation)
     post setup_password_path, params: {
       shared_password_form: { password: password, password_confirmation: confirmation }
