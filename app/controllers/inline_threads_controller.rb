@@ -37,7 +37,8 @@ class InlineThreadsController < AuthenticatedController
       )
       publish_event('inline_thread.created', @inline_thread.to_event_payload)
     else
-      render json: { errors: comment.errors.full_messages_for(:content) }, status: :unprocessable_entity
+      errors = comment.errors.full_messages_for(:content) + comment.errors.messages_for(:commentable)
+      render json: { errors: errors }, status: :unprocessable_entity
     end
   end
 

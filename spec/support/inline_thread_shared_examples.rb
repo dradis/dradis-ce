@@ -125,6 +125,24 @@ shared_examples 'inline threads' do
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body['errors']).to eq(["Content is too long (maximum is #{DB_MAX_TEXT_LENGTH} characters)"])
     end
+
+    it 'returns a reason when the first comment fails for a reason unrelated to its content' do
+      allow_any_instance_of(commentable.class).to receive(:valid?).and_return(false)
+
+      post inline_threads_path,
+        params: {
+          inline_thread: {
+            commentable_type: commentable.class.to_s,
+            commentable_id: commentable.id,
+            anchor: valid_anchor,
+            comments_attributes: { '0' => { content: 'This needs revision' } }
+          }
+        },
+        headers: turbo_stream_headers
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body['errors']).to eq(["This comment couldn't be saved."])
+    end
   end
 
   describe 'DELETE /inline_threads/:id' do
