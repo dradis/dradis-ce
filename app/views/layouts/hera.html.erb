@@ -19,7 +19,9 @@
       <meta name="turbo-cache-control" content="reload">
     <% end %>
 
-    <%= render 'comments/mentionable_users' if @mentionable_users %>
+    <%# FIXME: Use content_for(:mention_autocomplete) / yield(:mention_autocomplete) here,
+      # and drop Mentioned's enable_mention_autocomplete callback. %>
+    <%= render 'comments/mentionable_users' if @mention_autocomplete %>
 
     <%= favicon_link_tag 'favicon.ico', data: { 
       behavior: 'favicon', 

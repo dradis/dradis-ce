@@ -6,6 +6,7 @@ v5.5.0 (November 2026)
   - Upgraded gems:
     - addressable, crass, loofah, nokogiri, rack, rails, rails-html-sanitizer, sanitize, sqlite3
   - Bugs fixes:
+    - Inline threads: keep threads highlighted and replies posting when a comment mentions someone
     - Evidence:
       - show the State column in the node evidence table
       - publish a dedicated state change event for single and bulk QA updates
