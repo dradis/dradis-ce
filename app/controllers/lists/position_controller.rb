@@ -6,7 +6,7 @@ class Lists::PositionController < AuthenticatedController
   before_action :set_list
 
   def update
-    @board.move(@list, **move_params.to_h.symbolize_keys)
+    @list.move_to(**move_params.to_h.symbolize_keys)
     publish_event('list.updated', @list.to_event_payload)
 
     render json: @list

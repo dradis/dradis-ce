@@ -29,6 +29,10 @@ class List < ApplicationRecord
     { project: { id: project.id } }
   end
 
+  def move_to(prev_id: nil, next_id: nil)
+    board.move(self, prev_id: prev_id, next_id: next_id)
+  end
+
   def next_list
     board.lists.find_by(previous_id: id)
   end

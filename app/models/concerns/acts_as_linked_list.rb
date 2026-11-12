@@ -12,13 +12,18 @@ module ActsAsLinkedList
   def move(item, prev_id: nil, next_id: nil)
     prev_item = items.find_by(id: prev_id)
     next_item = items.find_by(id: next_id)
-    unless (prev_id.blank? || prev_item) && (next_id.blank? || next_item) &&
-        valid_position?(item, prev_item, next_item)
+    unless valid_position?(item, prev_item, next_item, prev_id: prev_id, next_id: next_id)
       item.errors.add(:base, 'Position must reference adjacent items in the destination')
       raise ActiveRecord::RecordInvalid, item
     end
 
-    self.class.move(item, prev_item: prev_item, next_item: next_item)
+    item.class.transaction do
+      old_next_item = item.send("next_#{item.class.name.downcase}")
+      old_next_item.update_attribute(:previous_id, item.previous_id) if old_next_item
+
+      item.update_attribute(:previous_id, prev_item&.id)
+      next_item.update_attribute(:previous_id, item.id) if next_item
+    end
   end
 
   def ordered_items
@@ -48,39 +53,13 @@ module ActsAsLinkedList
       alias_method "last_#{name}".to_sym, :last_item
       alias_method "ordered_#{names}".to_sym, :ordered_items
     end
-
-    # Public: Moves an item to a new position by passing the new previous and
-    #   the new next items.
-    #
-    # item - The item to be moved.
-    # new_position - The hash that contains the new previous and/or new next
-    #   item using the keys :prev_item and :next_item, respectively.
-    #
-    # Returns true.
-    def move(item, new_position = {})
-      item.class.transaction do
-        next_item = item.send("next_#{item.class.name.downcase}")
-
-        # Update previous position
-        next_item.update_attribute(:previous_id, item.previous_id) if next_item
-
-        # Update new position
-        new_previous = new_position[:prev_item]
-        new_next = new_position[:next_item]
-        if new_previous
-          item.update_attribute(:previous_id, new_previous.id)
-        else
-          item.update_attribute(:previous_id, nil)
-        end
-
-        new_next.update_attribute(:previous_id, item.id) if new_next
-      end
-    end
   end
 
   private
 
-  def valid_position?(item, prev_item, next_item)
+  def valid_position?(item, prev_item, next_item, prev_id:, next_id:)
+    return false if prev_id.present? && prev_item.nil?
+    return false if next_id.present? && next_item.nil?
     return false if prev_item == item || next_item == item
 
     items.find_by(previous_id: prev_item&.id) == next_item

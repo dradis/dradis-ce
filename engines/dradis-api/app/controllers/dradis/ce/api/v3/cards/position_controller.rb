@@ -4,6 +4,7 @@ module Dradis::CE::API
       include Dradis::CE::API::ProjectScoped
       include EventPublisher
 
+      before_action :set_current_board_and_list
       before_action :set_card
 
       def update
@@ -21,9 +22,12 @@ module Dradis::CE::API
       end
 
       def set_card
+        @card = @list.cards.find(params[:card_id])
+      end
+
+      def set_current_board_and_list
         @board = current_project.boards.find(params[:board_id])
         @list = @board.lists.find(params[:list_id])
-        @card = @list.cards.find(params[:card_id])
       end
     end
   end

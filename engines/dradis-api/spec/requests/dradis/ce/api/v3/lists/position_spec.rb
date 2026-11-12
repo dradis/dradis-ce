@@ -13,7 +13,7 @@ describe 'List positions API' do
 
   it 'reorders the lists and returns the list with its cards and position' do
     card = create(:card, list: list)
-    patch url, params: { next_id: first.id }.to_json, env: @env
+    put url, params: { next_id: first.id }.to_json, env: @env
     expect(response).to have_http_status(:ok)
     body = JSON.parse(response.body)
     expect(body).to include('id' => list.id, 'previous_id' => nil)

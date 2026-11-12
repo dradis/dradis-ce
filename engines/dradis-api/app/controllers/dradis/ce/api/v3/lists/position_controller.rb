@@ -4,10 +4,11 @@ module Dradis::CE::API
       include Dradis::CE::API::ProjectScoped
       include EventPublisher
 
+      before_action :set_current_board
       before_action :set_list
 
       def update
-        @board.move(@list, **move_params.to_h.symbolize_keys)
+        @list.move_to(**move_params.to_h.symbolize_keys)
         publish_event('list.updated', @list.to_event_payload)
       rescue ActiveRecord::RecordInvalid
         render_validation_errors(@list)
@@ -19,8 +20,11 @@ module Dradis::CE::API
         params.permit(:next_id, :prev_id)
       end
 
-      def set_list
+      def set_current_board
         @board = current_project.boards.find(params[:board_id])
+      end
+
+      def set_list
         @list = @board.lists.find(params[:list_id])
       end
     end

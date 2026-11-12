@@ -14,4 +14,8 @@ module Card::Position
 
     true
   end
+
+  def next_card
+    self.list.cards.find_by(previous_id: self.id)
+  end
 end

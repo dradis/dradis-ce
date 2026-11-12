@@ -9,7 +9,7 @@ shared_examples 'a linked list model' do
   end
 end
 
-# This shared_example tests the move method for linked list items.
+# This shared_example tests the move_to method for linked list items.
 # Required instance variables:
 #   - parent - the linked list model instance of the item
 #   - list_item - the item to be moved
@@ -26,8 +26,7 @@ shared_examples 'moving the item' do
 
   describe 'when moving an item between two items' do
     it 'successfully moves an item between two items' do
-      @parent.move(
-        @list_item,
+      @list_item.move_to(
         prev_id: @new_previous_item.id,
         next_id: @new_next_item.id
       )
@@ -39,7 +38,7 @@ shared_examples 'moving the item' do
 
   describe 'when moving an item as the first item of the list' do
     it 'successfully sets the item as the first item' do
-      @parent.move(@new_next_item, next_id: @list_item.id)
+      @new_next_item.move_to(next_id: @list_item.id)
 
       expect(@new_next_item.previous_id).to be_nil
       expect(@list_item.reload.previous_id).to eq(@new_next_item.id)
