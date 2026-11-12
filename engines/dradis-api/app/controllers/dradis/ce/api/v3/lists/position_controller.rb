@@ -25,7 +25,7 @@ module Dradis::CE::API
       end
 
       def set_list
-        @list = @board.lists.find(params[:list_id])
+        @list = @board.lists.includes(cards: :assignees).find(params[:list_id])
       end
     end
   end
