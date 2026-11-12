@@ -28,12 +28,8 @@ DradisDatatable.prototype.buildColumnFilters = function () {
   this.$columnFilterInputs = this.$columnFilters.find('[data-behavior~=column-filter]');
 };
 
-DradisDatatable.prototype.hasColumnFilters = function () {
-  return this.$columnFilterInputs.filter((_index, input) => input.value).length > 0;
-};
-
-// Hiding the filters (or a column) also clears them, so rows are never
-// filtered by inputs the user can't see.
+// Closing the filters also clears them, so rows are never filtered by inputs
+// the user can't see.
 DradisDatatable.prototype.setColumnFiltersVisibility = function (isVisible) {
   const button = this.dataTable.button('columnFiltersBtn:name');
 
@@ -43,25 +39,20 @@ DradisDatatable.prototype.setColumnFiltersVisibility = function (isVisible) {
   );
   $(button.node()).attr('aria-expanded', isVisible);
 
-  // Only redraw when there's something to clear, as a redraw resets paging
-  if (!isVisible && this.hasColumnFilters()) {
+  if (!isVisible) {
     this.$columnFilterInputs.val('');
-    this.dataTable.columns().search('').draw();
+    // Keep the current page, as clearing empty filters changes no rows
+    this.dataTable.columns().search('').draw(false);
   }
 };
 
 DradisDatatable.prototype.setupColumnFilters = function () {
+  // Show the filters restored by stateSave
   this.$columnFilterInputs.each((_index, input) => {
-    const column = this.dataTable.column(input.dataset.column);
-
-    if (column.visible()) {
-      input.value = column.search();
-    } else if (column.search()) {
-      column.search('').draw();
-    }
+    input.value = this.dataTable.column(input.dataset.column).search();
   });
 
-  if (this.hasColumnFilters()) {
+  if (this.$columnFilterInputs.filter((_index, input) => input.value).length) {
     this.setColumnFiltersVisibility(true);
   }
 
@@ -69,24 +60,4 @@ DradisDatatable.prototype.setupColumnFilters = function () {
     const input = event.target;
     this.dataTable.column(input.dataset.column).search(input.value).draw();
   });
-
-  this.dataTable.on('column-visibility.dt', (_event, _settings, columnIndex, isVisible) => {
-    const column = this.dataTable.column(columnIndex);
-
-    if (!isVisible && column.search()) {
-      this.$columnFilterInputs.filter(`[data-column=${columnIndex}]`).val('');
-      column.search('').draw();
-    }
-  });
-};
-
-DradisDatatable.prototype.toggleColumnFilters = function () {
-  const isVisible = this.$columnFilters.hasClass('d-none');
-
-  this.setColumnFiltersVisibility(isVisible);
-
-  if (isVisible) {
-    // Only inputs of visible columns are in the row
-    this.$columnFilters.find('[data-behavior~=column-filter]').first().trigger('focus');
-  }
 };

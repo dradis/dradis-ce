@@ -105,12 +105,9 @@ class DradisDatatable {
             columns: columnVisibleIndexes,
           },
           {
-            action: this.toggleColumnFilters.bind(this),
+            action: () => this.setColumnFiltersVisibility(this.$columnFilters.hasClass('d-none')),
             attr: {
               'aria-expanded': false,
-            },
-            available: function () {
-              return that.$columnFilterInputs.length;
             },
             name: 'columnFiltersBtn',
             text: '<i class="fa-solid fa-filter me-1 fa-fw"></i>Filters: Off',
@@ -323,7 +320,6 @@ class DradisDatatable {
     document.addEventListener('turbo:before-cache', function () {
       if (that.stickyObserver) that.stickyObserver.disconnect();
       that.dataTable.destroy();
-      that.$columnFilters.remove();
     });
   }
 
