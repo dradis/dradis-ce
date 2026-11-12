@@ -6,7 +6,12 @@
   } do %>
   <%= text_area_tag 'inline_thread[comments_attributes][0][content]', nil,
     class: 'form-control form-control-sm',
-    data: comment_mentions_data(commentable).merge(behavior: 'inline-thread-input'),
+    data: {
+      controller: 'mentions',
+      mentions_users_value: tribute_hash(comment_mentionable_users(commentable)),
+      mentions_fallback_image_value: image_path(AvatarHelper::DEFAULT_PROFILE_IMAGE),
+      behavior: 'inline-thread-input'
+    },
     id: nil,
     placeholder: 'Add a comment...',
     required: true,

@@ -18,16 +18,6 @@ module CommentsHelper
     result[:output].to_s.html_safe
   end
 
-  def comment_mentions_data(commentable)
-    {
-      controller: 'mentions',
-      mentions_fallback_image_value: image_path(AvatarHelper::DEFAULT_PROFILE_IMAGE),
-      mentions_users_value: tribute_hash(comment_mentionable_users(commentable))
-    }
-  end
-
-  private
-
   def comment_mentionable_users(commentable)
     @comment_mentionable_users ||= {}
     @comment_mentionable_users[commentable] ||= Comment.mentionable_users(commentable).to_a

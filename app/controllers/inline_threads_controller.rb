@@ -11,12 +11,15 @@ class InlineThreadsController < AuthenticatedController
 
   def index
     @inline_threads = commentable.inline_threads
-                           .includes(comments: :user)
+                           .includes(comments: [:user, :commentable])
                            .order(created_at: :asc)
   end
 
   def show
-    @inline_thread.comments.includes(:user).load
+    ActiveRecord::Associations::Preloader.new(
+      records: [@inline_thread],
+      associations: { comments: [:user, :commentable] }
+    ).call
   end
 
   def create

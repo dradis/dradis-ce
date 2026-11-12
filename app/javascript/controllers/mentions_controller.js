@@ -1,16 +1,20 @@
 import { Controller } from '@hotwired/stimulus'
+import { application } from 'controllers/application'
 
 // The bundled Tribute has no detach API. Reuse one instance and menu for the
 // document, reading candidates from the active editor rather than the page.
 let tribute
 
 export default class extends Controller {
+  static values = { users: Array, fallbackImage: String }
+
   connect() {
     tribute ||= new Tribute({
       allowSpaces: false,
       menuItemTemplate: (item) => {
+        const controller = application.getControllerForElementAndIdentifier(tribute.current.element, 'mentions')
         const image = document.createElement('img')
-        image.src = tribute.current.element.dataset.mentionsFallbackImageValue
+        image.src = controller.fallbackImageValue
         image.width = 24
         image.height = 24
         image.alt = ''
@@ -22,7 +26,8 @@ export default class extends Controller {
       noMatchTemplate: () => '',
       selectTemplate: (item) => item ? `@${item.original.value}` : null,
       values: (_text, callback) => {
-        callback(JSON.parse(tribute.current.element.dataset.mentionsUsersValue))
+        const controller = application.getControllerForElementAndIdentifier(tribute.current.element, 'mentions')
+        callback(controller.usersValue)
       }
     })
 

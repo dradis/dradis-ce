@@ -16,6 +16,45 @@ shared_examples 'inline threads' do
     { 'Accept' => 'text/vnd.turbo-stream.html' }
   end
 
+  describe 'commentable loading' do
+    [:comments, :inline_threads, :inline_thread].each do |endpoint|
+      it "batches commentable loads when rendering #{endpoint}" do
+        thread = create(:inline_thread, commentable: commentable)
+        create_list(:comment, 3, inline_thread: thread, commentable: commentable, content: mention)
+        resource_params = { commentable_type: commentable.class.to_s, commentable_id: commentable.id }
+        path = case endpoint
+               when :comments then comments_path(comment: resource_params)
+               when :inline_threads then inline_threads_path(format: :json, inline_thread: resource_params)
+               when :inline_thread then inline_thread_path(thread)
+        end
+
+        loads = []
+        subscriber = lambda do |event|
+          loads << event.payload[:sql] if event.payload[:name] == "#{commentable.class.name} Load"
+        end
+
+        ActiveSupport::Notifications.subscribed(subscriber, 'sql.active_record') do
+          get path
+        end
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include('gravatar-inline')
+        initial_load_count = loads.size
+
+        create_list(:comment, 3, inline_thread: thread, commentable: commentable, content: mention)
+        loads.clear
+        ActiveSupport::Notifications.subscribed(subscriber, 'sql.active_record') do
+          get path
+        end
+
+        expect(response).to have_http_status(:ok)
+        # Count cached queries too: the query cache must not conceal
+        # per-comment loading as the discussion grows.
+        expect(loads.size).to be <= initial_load_count
+      end
+    end
+  end
+
   describe 'GET /inline_threads' do
     it 'returns threads as JSON' do
       thread = create(:inline_thread, commentable: commentable)

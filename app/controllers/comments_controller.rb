@@ -9,7 +9,7 @@ class CommentsController < AuthenticatedController
   before_action :authorize_commentable
 
   def index
-    @comments = commentable.comments.includes(:inline_thread, :user)
+    @comments = commentable.comments.includes(:commentable, :inline_thread, :user)
   end
 
   def create
