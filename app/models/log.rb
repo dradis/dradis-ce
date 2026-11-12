@@ -13,6 +13,10 @@ class Log < ApplicationRecord
     write(FAILED)
   end
 
+  def failed?
+    text == FAILED
+  end
+
   def finished?
     [COMPLETED, FAILED].include?(text)
   end

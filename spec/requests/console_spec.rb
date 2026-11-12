@@ -20,15 +20,17 @@ describe 'console requests' do
       get status_console_index_path, params: { item_id: logger.uid, format: :js }, xhr: true
 
       expect(response.body).to include('var working = false;')
+      expect(response.body).to include('ConsoleUpdater.failed = false;')
     end
 
-    it 'stops polling once the job has failed' do
+    it 'stops polling and flags the job as failed once the job has failed' do
       logger = Log.new
       logger.fail!
 
       get status_console_index_path, params: { item_id: logger.uid, format: :js }, xhr: true
 
       expect(response.body).to include('var working = false;')
+      expect(response.body).to include('ConsoleUpdater.failed = true;')
     end
   end
 end

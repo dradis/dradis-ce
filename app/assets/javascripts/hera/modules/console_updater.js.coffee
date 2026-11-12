@@ -1,4 +1,5 @@
 @ConsoleUpdater =
+  failed: false
   jobId: ''
   parsing: false
 
@@ -6,7 +7,10 @@
     unless ConsoleUpdater.parsing
       # danger will robinson, this is only valid for Export workers
       if $('#download').length
-        $('#download').attr('disabled', false).text('Download');
+        if ConsoleUpdater.failed
+          $('#download').text('Export failed')
+        else
+          $('#download').attr('disabled', false).text('Download');
 
       return
 
