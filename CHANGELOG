@@ -8,6 +8,7 @@
     - addressable, crass, loofah, nokogiri, rack, rails, rails-html-sanitizer, sanitize, sqlite3
   - Bugs fixes:
     - Dashboard: keep issue chart columns distinct when group labels match
+    - Issues and evidence: Keep default table columns visible when report template fields are shown
     - Sidebar tips: tone down the tips box in dark mode and keep its links readable
     - Diffs: remove stray escape characters around highlighted changes
     - Avatars: display a local image while Gravatar loads
