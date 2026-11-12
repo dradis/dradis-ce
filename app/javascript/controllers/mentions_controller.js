@@ -28,7 +28,11 @@ export default class extends Controller {
 
     if (!this.element.hasAttribute('data-tribute')) tribute.attach(this.element)
     this.onScroll = (event) => {
-      if (event.target.contains(this.element) && tribute.current.element === this.element) tribute.hideMenu()
+      // Tribute scrolls the document to reveal its menu and repositions it on
+      // window scroll. Only dismiss it when an editor's nested container moves.
+      if (event.target instanceof Element && event.target.contains(this.element) && tribute.current.element === this.element) {
+        tribute.hideMenu()
+      }
     }
     document.addEventListener('scroll', this.onScroll, true)
   }
