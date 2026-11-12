@@ -8,7 +8,6 @@
   - Upgraded gems:
     - addressable, crass, loofah, nokogiri, rack, rails, rails-html-sanitizer, sanitize, sqlite3
   - Bugs fixes:
-    - Tables: match only the visible text when searching, not the links and markup behind it
     - Dashboard: keep issue chart columns distinct when group labels match
     - Sidebar tips: tone down the tips box in dark mode and keep its links readable
     - Diffs: remove stray escape characters around highlighted changes

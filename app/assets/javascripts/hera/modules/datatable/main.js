@@ -1,11 +1,3 @@
-// Search the visible text, not the markup that data-sort columns keep.
-$(document).one('preInit.dt', function () {
-  const searchFormatters = $.fn.dataTable.ext.type.search;
-  ['date', 'num', 'num-fmt', 'string'].forEach(function (type) {
-    searchFormatters[type] = searchFormatters.html;
-  });
-});
-
 class DradisDatatable {
   constructor(tableElement) {
     this.$table = $(tableElement);
