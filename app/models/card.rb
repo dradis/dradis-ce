@@ -1,4 +1,5 @@
 class Card < ApplicationRecord
+  include Card::Position
   include Commentable
   include Eventable
   include HasFields
@@ -31,10 +32,6 @@ class Card < ApplicationRecord
   validates :list, presence: true
 
   # -- Instance Methods -----------------------------------------------------
-  def next_card
-    self.list.cards.find_by(previous_id: self.id)
-  end
-
   # We are overwriting this method for 2 reasons:
   # 1. Cards and assigness have a hbtm relation, and touch is not supported :(
   # We force here to touch updated_at on the card when changing assignees

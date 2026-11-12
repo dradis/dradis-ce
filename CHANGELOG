@@ -24,6 +24,7 @@ v5.5.0 (November 2026)
       - STRIDE
   - REST/JSON API enhancements:
     - Evidence: add state selection on API v3 create/update and include state in responses
+    - Boards: add support for repositioning lists and moving cards within and between lists
 
 v5.4.0 (September 2026)
   - Issues: warn user if another user is currently editing the record
