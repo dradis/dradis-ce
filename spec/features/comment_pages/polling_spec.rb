@@ -36,6 +36,18 @@ describe 'comment pages', js: true do
       end
     end
 
+    it 'renders a polled mention without reloading the page' do
+      comment = create(:comment,
+        commentable: @commentable,
+        content: "Thanks @#{@logged_in_as.email}",
+        user: @other_user
+      )
+      create(:activity, action: :create, trackable: comment, user: @other_user, project: current_project)
+      call_poller
+
+      expect(page).to have_css("#comment_#{comment.id} .gravatar-inline", text: @logged_in_as.name)
+    end
+
     describe 'and someone else deletes a comment' do
       before do
         @comment.destroy

@@ -76,15 +76,7 @@
       </div>
     </div>
 
-    <div class="offcanvas offcanvas-end" tabindex="-1" data-behavior="inline-thread-panel" data-bs-backdrop="false" data-bs-scroll="true" aria-labelledby="inlineThreadPanelLabel">
-      <div class="offcanvas-header">
-        <h6 class="offcanvas-title">Thread</h6>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body pt-0">
-        <%= turbo_frame_tag 'inline_thread_content', data: { behavior: 'inline-thread-content' } %>
-      </div>
-    </div>
+    <%= render 'inline_threads/panel', commentable: @issue %>
 
     <div class="content-container">
       <%= content_tag :div,

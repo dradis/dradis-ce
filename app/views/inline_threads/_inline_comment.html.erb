@@ -6,7 +6,7 @@
         <span class="user"><%= comment.user&.name || 'Unknown' %></span>
         <span class="time"><%= local_time_ago(comment.created_at) %></span>
       </div>
-      <div class="content mt-1"><%= comment_formatter(comment.content) %></div>
+      <div class="content mt-1"><%= comment_formatter(comment) %></div>
     </div>
   </div>
 </div>

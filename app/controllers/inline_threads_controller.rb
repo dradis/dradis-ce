@@ -2,11 +2,6 @@ class InlineThreadsController < AuthenticatedController
   load_and_authorize_resource except: [:index]
 
   include EventPublisher
-  # FIXME: @mentions are currently too tied to Comments
-  #   we need to revisit and untangle - but we can't
-  #   fully remove because we're half the way through
-  #   the integration.
-  include Mentioned
   include Notified
 
   layout false
@@ -16,12 +11,15 @@ class InlineThreadsController < AuthenticatedController
 
   def index
     @inline_threads = commentable.inline_threads
-                           .includes(comments: :user)
+                           .includes(comments: [:user, :commentable])
                            .order(created_at: :asc)
   end
 
   def show
-    @inline_thread.comments.includes(:user).load
+    ActiveRecord::Associations::Preloader.new(
+      records: [@inline_thread],
+      associations: { comments: [:user, :commentable] }
+    ).call
   end
 
   def create

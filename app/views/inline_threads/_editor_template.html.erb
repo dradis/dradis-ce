@@ -1,0 +1,19 @@
+<%= content_tag :template,
+  data: {
+    behavior: 'inline-thread-editor-template',
+    commentable_id: commentable.id,
+    commentable_type: commentable.class.to_s
+  } do %>
+  <%= text_area_tag 'inline_thread[comments_attributes][0][content]', nil,
+    class: 'form-control form-control-sm',
+    data: {
+      controller: 'mentions',
+      mentions_users_value: tribute_hash(comment_mentionable_users(commentable)),
+      mentions_fallback_image_value: image_path(AvatarHelper::DEFAULT_PROFILE_IMAGE),
+      behavior: 'inline-thread-input'
+    },
+    id: nil,
+    placeholder: 'Add a comment...',
+    required: true,
+    rows: 3 %>
+<% end %>

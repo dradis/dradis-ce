@@ -6,7 +6,6 @@ class IssuesController < AuthenticatedController
   include IssuesHelper
   include LiquidEnabledResource
   include LockableResource
-  include Mentioned
   include MultipleDestroy
   include NotificationsReader
   include ProjectScoped

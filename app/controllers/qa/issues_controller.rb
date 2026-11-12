@@ -2,7 +2,6 @@ class QA::IssuesController < AuthenticatedController
   include EventPublisher
   include LiquidEnabledResource
   include LockableResource
-  include Mentioned
   include ProjectScoped
   include Publishable
 

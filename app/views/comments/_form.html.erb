@@ -13,7 +13,10 @@
                   required: 'required',
                   class: 'form-control mt-3',
                   data: {
-                    behavior: 'mentionable rich-toolbar drop-zone',
+                    controller: 'mentions',
+                    mentions_users_value: tribute_hash(comment_mentionable_users(f.object.commentable)),
+                    mentions_fallback_image_value: image_path(AvatarHelper::DEFAULT_PROFILE_IMAGE),
+                    behavior: 'rich-toolbar drop-zone',
                     'rich-toolbar': 'defaults image',
                     'rich-toolbar-uploader': '[data-behavior~=jquery-upload]',
                   } %>

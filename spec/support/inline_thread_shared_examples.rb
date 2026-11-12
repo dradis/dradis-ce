@@ -10,14 +10,55 @@ shared_examples 'inline threads' do
     }
   end
 
+  let(:mention) { "Thanks @#{@logged_in_as.email}" }
+
   let(:turbo_stream_headers) do
     { 'Accept' => 'text/vnd.turbo-stream.html' }
+  end
+
+  describe 'commentable loading' do
+    [:comments, :inline_threads, :inline_thread].each do |endpoint|
+      it "batches commentable loads when rendering #{endpoint}" do
+        thread = create(:inline_thread, commentable: commentable)
+        create_list(:comment, 3, inline_thread: thread, commentable: commentable, content: mention)
+        resource_params = { commentable_type: commentable.class.to_s, commentable_id: commentable.id }
+        path = case endpoint
+               when :comments then comments_path(comment: resource_params)
+               when :inline_threads then inline_threads_path(format: :json, inline_thread: resource_params)
+               when :inline_thread then inline_thread_path(thread)
+        end
+
+        loads = []
+        subscriber = lambda do |event|
+          loads << event.payload[:sql] if event.payload[:name] == "#{commentable.class.name} Load"
+        end
+
+        ActiveSupport::Notifications.subscribed(subscriber, 'sql.active_record') do
+          get path
+        end
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include('gravatar-inline')
+        initial_load_count = loads.size
+
+        create_list(:comment, 3, inline_thread: thread, commentable: commentable, content: mention)
+        loads.clear
+        ActiveSupport::Notifications.subscribed(subscriber, 'sql.active_record') do
+          get path
+        end
+
+        expect(response).to have_http_status(:ok)
+        # Count cached queries too: the query cache must not conceal
+        # per-comment loading as the discussion grows.
+        expect(loads.size).to be <= initial_load_count
+      end
+    end
   end
 
   describe 'GET /inline_threads' do
     it 'returns threads as JSON' do
       thread = create(:inline_thread, commentable: commentable)
-      create(:comment, inline_thread: thread, commentable: commentable)
+      create(:comment, inline_thread: thread, commentable: commentable, content: mention)
 
       get inline_threads_path(
         format: :json,
@@ -33,6 +74,7 @@ shared_examples 'inline threads' do
       expect(json.first['id']).to eq(thread.id)
       expect(json.first['anchor']['exact']).to eq('Apache bugs')
       expect(json.first['comments'].length).to eq(1)
+      expect(json.first['comments'].first['content']).to include('gravatar-inline')
     end
 
     it 'returns empty array when no threads exist' do
@@ -53,13 +95,14 @@ shared_examples 'inline threads' do
   describe 'GET /inline_threads/:id' do
     it 'renders the thread in a turbo frame' do
       thread = create(:inline_thread, commentable: commentable)
-      create(:comment, inline_thread: thread, commentable: commentable)
+      create(:comment, inline_thread: thread, commentable: commentable, content: mention)
 
       get inline_thread_path(thread)
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include('turbo-frame')
       expect(response.body).to include(thread.quoted_text)
+      expect(response.body).to include('gravatar-inline')
     end
   end
 
@@ -72,7 +115,7 @@ shared_examples 'inline threads' do
               commentable_type: commentable.class.to_s,
               commentable_id: commentable.id,
               anchor: valid_anchor,
-              comments_attributes: { '0' => { content: 'This needs revision' } }
+              comments_attributes: { '0' => { content: mention } }
             }
           },
           headers: turbo_stream_headers
@@ -88,7 +131,8 @@ shared_examples 'inline threads' do
       expect(thread).to be_open
 
       comment = thread.comments.first
-      expect(comment.content).to eq('This needs revision')
+      expect(response.body).to include('gravatar-inline')
+      expect(comment.content).to eq(mention)
       expect(comment.commentable).to eq(commentable)
     end
   end
@@ -145,14 +189,15 @@ shared_examples 'inline threads' do
 
       expect do
         post inline_thread_comments_path(thread),
-          params: { comment: { content: 'Good point, will fix' } },
+          params: { comment: { content: mention } },
           headers: turbo_stream_headers
       end.to change { thread.comments.count }.by(1)
 
       expect(response.media_type).to eq('text/vnd.turbo-stream.html')
 
       comment = thread.comments.last
-      expect(comment.content).to eq('Good point, will fix')
+      expect(response.body).to include('gravatar-inline')
+      expect(comment.content).to eq(mention)
       expect(comment.commentable).to eq(commentable)
       expect(comment.user).to eq(@logged_in_as)
     end

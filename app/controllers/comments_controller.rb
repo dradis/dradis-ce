@@ -2,7 +2,6 @@ class CommentsController < AuthenticatedController
   load_and_authorize_resource
 
   include ActivityTracking
-  include Mentioned
   include Notified
 
   layout false
@@ -10,7 +9,7 @@ class CommentsController < AuthenticatedController
   before_action :authorize_commentable
 
   def index
-    @comments = commentable.comments.includes(:inline_thread, :user)
+    @comments = commentable.comments.includes(:commentable, :inline_thread, :user)
   end
 
   def create
@@ -70,7 +69,6 @@ class CommentsController < AuthenticatedController
     end
   end
 
-  # Overwrite method from concerns/mentioned.rb
   def project
     @project ||= begin
       if commentable.respond_to?(:project)

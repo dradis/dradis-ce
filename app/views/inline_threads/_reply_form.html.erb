@@ -2,6 +2,12 @@
   <%= form_with url: inline_thread_comments_path(inline_thread) do |f| %>
     <%= f.text_area :content,
           name: 'comment[content]',
+          data: {
+            controller: 'mentions',
+            mentions_users_value: tribute_hash(comment_mentionable_users(inline_thread.commentable)),
+            mentions_fallback_image_value: image_path(AvatarHelper::DEFAULT_PROFILE_IMAGE),
+            behavior: 'inline-thread-input'
+          },
           class: 'form-control form-control-sm mb-2',
           placeholder: 'Reply...',
           rows: 2 %>

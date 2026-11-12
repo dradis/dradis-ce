@@ -1,6 +1,5 @@
 class InlineThreads::CommentsController < AuthenticatedController
   include EventPublisher
-  include Mentioned
   include Notified
 
   layout false
@@ -24,10 +23,6 @@ class InlineThreads::CommentsController < AuthenticatedController
   end
 
   private
-
-  def project
-    @project ||= @inline_thread.commentable.respond_to?(:project) ? @inline_thread.commentable.project : nil
-  end
 
   def comment_params
     params.require(:comment).permit(:content)

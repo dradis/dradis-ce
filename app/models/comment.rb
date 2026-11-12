@@ -1,8 +1,7 @@
 class Comment < ApplicationRecord
+  include Comment::Mentions
   include Eventable
   include Notifiable
-
-  MENTION_PATTERN = /[a-z0-9][a-z0-9\-@\.]*/.freeze
 
   # -- Relationships --------------------------------------------------------
   belongs_to :commentable, polymorphic: true
@@ -65,36 +64,6 @@ class Comment < ApplicationRecord
     end
   end
 
-  def mentions
-    @mentions = nil if content_changed?
-    @mentions ||= begin
-      emails = []
-      HTML::Pipeline::MentionFilter.mentioned_logins_in(content, MENTION_PATTERN) do |_, login, _|
-        emails << login
-      end
-
-      Comment.mentionable_users(commentable, User.where(email: emails.uniq))
-    end
-  end
-
-  def self.mentionable_users(resource, extra_scope = nil)
-    base_scope = User.enabled
-    scope = extra_scope ? base_scope.merge(extra_scope) : base_scope
-
-    if resource.is_a?(Project)
-      scope.merge(resource.testers_for_mentions)
-    elsif resource.respond_to?(:project)
-      scope.merge(resource.project.testers_for_mentions)
-    else
-      ids = scope.select do |user|
-        Ability.new(user).can?(:read, resource)
-      end.map(&:id)
-
-      # Ensure we return an ActiveRecord::Relation object
-      scope.where(id: ids)
-    end
-  end
-
   def to_xml(xml_builder, version: 3)
     xml_builder.comment do
       xml_builder.content do
@@ -102,14 +71,6 @@ class Comment < ApplicationRecord
       end
       xml_builder.author(user&.email)
       xml_builder.created_at(created_at.to_i)
-    end
-  end
-
-  private
-
-  def subscribe_mentioned
-    mentions.each do |mention|
-      Subscription.subscribe(user: mention, to: commentable)
     end
   end
 end

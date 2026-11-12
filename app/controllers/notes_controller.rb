@@ -5,7 +5,6 @@ class NotesController < NestedNodeResourceController
   include ConflictResolver
   include LiquidEnabledResource
   include LockableResource
-  include Mentioned
   include MultipleDestroy
   include NodesSidebar
   include NotificationsReader
