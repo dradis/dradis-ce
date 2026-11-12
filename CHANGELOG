@@ -1,30 +1,30 @@
 v5.5.0 (November 2026)
-  - QA: show issue and evidence states as colored badges in tables and tabs
   - Echo: Allow Roslin's LanguageTool grammar and spell checking language to be changed
   - Editing: Warn user if another user is currently editing a record
   - Forms: show errors next to their fields instead of at the top of the form
   - Nodes: Add a node from the node tree
+  - QA: show issue and evidence states as colored badges in tables and tabs
   - Upgraded gems:
     - addressable, crass, loofah, nokogiri, rack, rails, rails-html-sanitizer, sanitize, sqlite3
   - Bugs fixes:
-    - Evidence:
-      - show the State column in the node evidence table
-      - publish a dedicated state change event for single and bulk QA updates
-    - Dashboard: keep issue chart columns distinct when group labels match
-    - Sidebar tips: tone down the tips box in dark mode and keep its links readable
-    - Diffs: remove stray escape characters around highlighted changes
     - Avatars: display a local image while Gravatar loads
-    - Editor: keep the cursor in place after uploading an image
     - Combobox:
       - keep dropdown menus within the viewport and fit long option labels
       - show inline validation errors on dropdowns that fail validation
+    - Dashboard: keep issue chart columns distinct when group labels match
+    - Diffs: remove stray escape characters around highlighted changes
+    - Editor: keep the cursor in place after uploading an image
+    - Evidence:
+      - publish a dedicated state change event for single and bulk QA updates
+      - show the State column in the node evidence table
+    - Sidebar tips: tone down the tips box in dark mode and keep its links readable
   - New integrations:
     - Calculators:
       - AIVSS-SSVC
       - STRIDE
   - REST/JSON API enhancements:
-    - Evidence: add state selection on API v3 create/update and include state in responses
     - Boards: add support for repositioning lists and moving cards within and between lists
+    - Evidence: add state selection on API v3 create/update and include state in responses
   - Security Fixes:
     - Medium: Authenticated (author) persistent cross-site scripting around issue imports
 
