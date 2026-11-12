@@ -2,6 +2,8 @@
   <%= form_with url: inline_thread_comments_path(inline_thread) do |f| %>
     <%= f.text_area :content,
           name: 'comment[content]',
+          id: nil,
+          data: comment_mentions_data(inline_thread.commentable).merge(behavior: 'inline-thread-input'),
           class: 'form-control form-control-sm mb-2',
           placeholder: 'Reply...',
           rows: 2 %>

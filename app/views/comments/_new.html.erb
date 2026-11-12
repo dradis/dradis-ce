@@ -15,11 +15,11 @@
                     rows: 5,
                     required: 'required',
                     class: 'form-control',
-                    data: {
-                      behavior: 'mentionable rich-toolbar drop-zone',
+                    data: comment_mentions_data(f.object.commentable).merge(
+                      behavior: 'rich-toolbar drop-zone',
                       'rich-toolbar': 'defaults image',
                       'rich-toolbar-uploader': '[data-behavior~=jquery-upload]'
-                    } %>
+                    ) %>
 
     <%= f.hidden_field :commentable_type %>
     <%= f.hidden_field :commentable_id %>

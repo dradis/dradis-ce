@@ -2,7 +2,6 @@ class CardsController < AuthenticatedController
   include ContentFromTemplate
   include EventPublisher
   include LockableResource
-  include Mentioned
   include NotificationsReader
   include ProjectScoped
 

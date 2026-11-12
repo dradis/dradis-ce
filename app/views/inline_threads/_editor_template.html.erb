@@ -1,0 +1,14 @@
+<%= content_tag :template,
+  data: {
+    behavior: 'inline-thread-editor-template',
+    commentable_id: commentable.id,
+    commentable_type: commentable.class.to_s
+  } do %>
+  <%= text_area_tag 'inline_thread[comments_attributes][0][content]', nil,
+    class: 'form-control form-control-sm',
+    data: comment_mentions_data(commentable).merge(behavior: 'inline-thread-input'),
+    id: nil,
+    placeholder: 'Add a comment...',
+    required: true,
+    rows: 3 %>
+<% end %>

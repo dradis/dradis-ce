@@ -9,7 +9,4 @@ $(document).on('dradis:fetch', '[data-behavior~=fetch-comments]', function(event
     }
   });
 
-  fetchContainer.querySelectorAll('[data-behavior~=mentionable]').forEach(function(item) {
-    Mentions.init($(item));
-  })
 })

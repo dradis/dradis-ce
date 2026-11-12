@@ -9,13 +9,27 @@ module CommentsHelper
       HTML::Pipeline::Dradis::MentionsFilter,
       HTML::Pipeline::Dradis::CodeHighlightFilter
     ], {
-      mentionable_users: @mentionable_users,
       no_inline_code: true,
       username_pattern: Comment::MENTION_PATTERN,
       view_context: self
     }
 
-    result = @comment_pipeline.call(comment)
+    result = @comment_pipeline.call(comment.content, mentionable_users: comment_mentionable_users(comment.commentable))
     result[:output].to_s.html_safe
+  end
+
+  def comment_mentions_data(commentable)
+    {
+      controller: 'mentions',
+      mentions_fallback_image_value: image_path(AvatarHelper::DEFAULT_PROFILE_IMAGE),
+      mentions_users_value: tribute_hash(comment_mentionable_users(commentable))
+    }
+  end
+
+  private
+
+  def comment_mentionable_users(commentable)
+    @comment_mentionable_users ||= {}
+    @comment_mentionable_users[commentable] ||= Comment.mentionable_users(commentable).to_a
   end
 end

@@ -66,7 +66,7 @@ class InlineThreadTurbo {
     this.frame.appendChild(this.buildNewThreadForm(anchor));
     this.openPanel();
 
-    const textarea = this.frame.querySelector('textarea');
+    const textarea = this.frame.querySelector('[data-behavior~=inline-thread-input]');
     if (textarea) textarea.focus();
   }
 
@@ -126,7 +126,7 @@ class InlineThreadTurbo {
 
     // Clear errors when the user starts typing again.
     this.panel.addEventListener('input', (e) => {
-      if (e.target.matches('textarea')) this.clearErrors();
+      if (e.target.matches('[data-behavior~=inline-thread-input]')) this.clearErrors();
     });
   }
 
@@ -174,13 +174,10 @@ class InlineThreadTurbo {
 
     const textareaWrapper = document.createElement('div');
     textareaWrapper.className = 'mb-2';
-    const textarea = document.createElement('textarea');
-    textarea.name = 'inline_thread[comments_attributes][0][content]';
-    textarea.className = 'form-control form-control-sm';
-    textarea.placeholder = 'Add a comment...';
-    textarea.rows = 3;
-    textarea.required = true;
-    textareaWrapper.appendChild(textarea);
+    const template = document.querySelector(
+      `[data-behavior~=inline-thread-editor-template][data-commentable-type="${this.commentableType}"][data-commentable-id="${this.commentableId}"]`
+    );
+    textareaWrapper.appendChild(template.content.cloneNode(true));
     form.appendChild(textareaWrapper);
 
     const buttonWrapper = document.createElement('div');

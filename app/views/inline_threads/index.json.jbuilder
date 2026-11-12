@@ -21,7 +21,7 @@ json.array! @inline_threads do |thread|
 
   json.comments thread.comments do |comment|
     json.id comment.id
-    json.content comment_formatter(comment.content)
+    json.content comment_formatter(comment)
     json.raw_content comment.content
     json.created_at comment.created_at.iso8601
 

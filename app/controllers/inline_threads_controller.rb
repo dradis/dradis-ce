@@ -2,11 +2,6 @@ class InlineThreadsController < AuthenticatedController
   load_and_authorize_resource except: [:index]
 
   include EventPublisher
-  # FIXME: @mentions are currently too tied to Comments
-  #   we need to revisit and untangle - but we can't
-  #   fully remove because we're half the way through
-  #   the integration.
-  include Mentioned
   include Notified
 
   layout false

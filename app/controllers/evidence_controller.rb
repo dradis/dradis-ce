@@ -4,7 +4,6 @@ class EvidenceController < NestedNodeResourceController
   include EvidenceHelper
   include LiquidEnabledResource
   include LockableResource
-  include Mentioned
   include MultipleDestroy
   include NodesSidebar
   include NotificationsReader

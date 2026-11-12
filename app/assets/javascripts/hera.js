@@ -27,7 +27,6 @@
 //= require hera/modules/inline_thread_selector
 //= require hera/modules/inline_thread_highlighter
 //= require hera/modules/inline_thread_turbo
-//= require hera/modules/mentions
 //= require hera/modules/notifications
 //= require hera/modules/rtp_validation
 //= require hera/modules/state_button
