@@ -174,7 +174,7 @@ class IssuesController < AuthenticatedController
     rtp = current_project.report_template_properties
     rtp_default_fields = rtp ? rtp.issue_fields.defaults.field_names : []
 
-    @default_columns = rtp_default_fields.presence || default_field_names
+    @default_columns = default_field_names | rtp_default_fields
     @all_columns = default_field_names | rtp_default_fields | dynamic_fields | extra_field_names
   end
 
