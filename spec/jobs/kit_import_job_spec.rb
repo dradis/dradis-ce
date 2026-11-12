@@ -48,6 +48,26 @@ RSpec.describe KitImportJob do
       expect(ProjectTemplate.find_template('dradis-template-no-methodologies')).to_not be_nil
     end
 
+    it 'writes the completed line, also to a plain Logger as the setup:kit task passes one' do
+      output = StringIO.new
+
+      described_class.perform_now(@tmp_file, logger: Logger.new(output))
+
+      expect(output.string).to include(Log::COMPLETED)
+    end
+
+    it 'writes only the failed line when the project package is rejected' do
+      logger = Log.new.write('Testing...')
+      allow_any_instance_of(Dradis::Plugins::Projects::Upload::Package::Importer).to receive(:import).and_return(false)
+
+      described_class.perform_now(@tmp_file, logger: logger)
+
+      texts = Log.where(uid: logger.uid).pluck(:text)
+      expect(texts).to include('An error occurred: The project package could not be imported.')
+      expect(texts.last).to eq Log::FAILED
+      expect(texts).to_not include(Log::COMPLETED)
+    end
+
     it 'renames project templates if template with same name already exists' do
       project_template = ProjectTemplate.new(filename: 'dradis-template-welcome')
       project_template.save

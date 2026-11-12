@@ -8,15 +8,18 @@ class KitImportJob < ApplicationJob
 
   queue_as :dradis_upload
 
+  # The failed line goes here, not in ensure, which runs first. #info: setup:kit passes a plain Logger
   rescue_from(StandardError) do |e|
     logger.info "An error occurred: #{e.message}"
     logger.debug e.backtrace.join("\n")
+    logger.info(Log::FAILED)
   end
 
   def perform(file_or_folder, logger:, user_id: nil, mapping_options: {})
+    # First, so rescue_from can log if the lookups below raise
+    @logger = logger
     @current_user = user_id ? User.find(user_id) : User.first
     @mapping_options = mapping_options
-    @logger = logger
     @project = nil
     @templates_dirs = TEMPLATE_TYPES.map do |template_type|
       [
@@ -43,9 +46,9 @@ class KitImportJob < ApplicationJob
       assign_project_rtp if @project
     end
 
+    logger.info(Log::COMPLETED)
   ensure
-    logger.info('Worker process completed.')
-    FileUtils.remove_entry working_dir
+    FileUtils.rm_rf(working_dir) if working_dir
   end
 
   private
@@ -171,7 +174,7 @@ class KitImportJob < ApplicationJob
       plugin: Dradis::Plugins::Projects::Upload::Package,
       default_user_id: current_user.id
     )
-    importer.import(file: project_package)
+    raise 'The project package could not be imported.' if importer.import(file: project_package) == false
 
     logger.info { "  - New Project #{@project.id} created." }
   end

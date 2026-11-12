@@ -42,7 +42,7 @@ describe 'upload requests' do
 
       it 'imports the uploaded template' do
         attachments_path = Attachment.pwd.join(@uploads_node.id.to_s)
-        attachment_file  = attachments_path.join('temp').to_s
+        attachment_file = attachments_path.join('temp').to_s
 
         FileUtils.mkdir_p(attachments_path)
         FileUtils.cp(small_file, attachment_file)
@@ -61,6 +61,32 @@ describe 'upload requests' do
 
         send_request
       end
+
+      context 'when the importer returns' do
+        before do
+          attachments_path = Attachment.pwd.join(@uploads_node.id.to_s)
+          FileUtils.mkdir_p(attachments_path)
+          FileUtils.cp(small_file, attachments_path.join('temp'))
+
+          allow(importer_class).to receive(:new).and_return(importer)
+        end
+
+        it 'writes the completed line when the importer returns anything but false' do
+          allow(importer).to receive(:import).and_return(nil)
+
+          send_request
+
+          expect(Log.last.text).to eq Log::COMPLETED
+        end
+
+        it 'writes the failed line when the importer rejects the file' do
+          allow(importer).to receive(:import).and_return(false)
+
+          send_request
+
+          expect(Log.last.text).to eq Log::FAILED
+        end
+      end
     end
 
     context 'big file size (> 1Mb)' do
@@ -77,7 +103,7 @@ describe 'upload requests' do
 
       it 'enqueues a background job with the right parameters' do
         attachments_path = Attachment.pwd.join(@uploads_node.id.to_s)
-        attachment_file  = attachments_path.join('temp').to_s
+        attachment_file = attachments_path.join('temp').to_s
 
         FileUtils.mkdir_p(attachments_path)
         FileUtils.cp(big_file, attachment_file)

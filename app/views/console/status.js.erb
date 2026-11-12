@@ -8,6 +8,7 @@ var working = <%= !!@working %>;
 <% end %>
 
 if (anyLogs) {
+  ConsoleUpdater.failed = <%= @failed %>;
   ConsoleUpdater.parsing = working;
   $("#console").append(logHtml);
   $("#console").prop({ scrollTop: $("#console").prop("scrollHeight") });
