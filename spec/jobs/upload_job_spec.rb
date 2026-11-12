@@ -31,23 +31,15 @@ describe UploadJob do
     expect(Log.where(uid: uid).last.text).to eq Log::COMPLETED
   end
 
-  context 'when the importer rejects the file' do
-    before { allow(importer).to receive(:import).and_return(false) }
+  it 'writes the failed line and reports the job as failed when the importer rejects the file' do
+    allow(importer).to receive(:import).and_return(false)
+    allow(tracker).to receive(:state).and_return({ state: 'failed' })
 
-    it 'writes the failed line' do
-      perform
+    perform
 
-      expect(Log.where(uid: uid).last.text).to eq Log::FAILED
-    end
-
-    it 'reports the job as failed, not completed' do
-      allow(tracker).to receive(:state).and_return({ state: 'failed' })
-
-      perform
-
-      expect(tracker).to have_received(:update_state).with(hash_including(state: :failed))
-      expect(tracker).to_not have_received(:update_state).with(state: :completed)
-    end
+    expect(Log.where(uid: uid).last.text).to eq Log::FAILED
+    expect(tracker).to have_received(:update_state).with(hash_including(state: :failed))
+    expect(tracker).to_not have_received(:update_state).with(state: :completed)
   end
 
   it 'writes the failed line when the import raises, even if the tracker is unavailable' do
