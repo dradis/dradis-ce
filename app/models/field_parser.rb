@@ -1,5 +1,5 @@
 class FieldParser
-  FIELDS_REGEX = /#\[(.+?)\]#[\r|\n](.*?)(?=#\[|\z)/m
+  FIELDS_REGEX = /#\[([^\]\r\n]+)\]#[\r|\n](.*?)(?=#\[[^\]\r\n]+\]#[\r|\n]|\z)/m
   HEADERLESS_REGEX = /^([\s\S]*?)(?=\n{,2}#\[.+?\]#|\z)/
 
   # Convert serialized form data to Dradis-style item content.
