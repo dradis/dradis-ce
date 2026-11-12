@@ -23,8 +23,38 @@ describe Dradis::Plugins::Echo::Agents::Roslin do
     end
   end
 
+  describe '.env' do
+    before { create(:system_agent, name: described_class::NAME, env: env) }
+
+    context 'when a default key is missing from the stored env' do
+      let(:env) { { 'CUSTOM' => 'value', 'LANGUAGETOOL_ADDRESS' => 'http://languagetool:8081' } }
+
+      it 'fills it in from the defaults' do
+        expect(described_class.env).to eq(
+          'CUSTOM' => 'value',
+          'LANGUAGETOOL_ADDRESS' => 'http://languagetool:8081',
+          'LANGUAGETOOL_LANGUAGE' => Dradis::Plugins::Echo::LanguageToolService::DEFAULT_LANGUAGE
+        )
+      end
+    end
+
+    context 'when the stored env overrides a default key' do
+      let(:env) { { 'LANGUAGETOOL_ADDRESS' => '', 'LANGUAGETOOL_LANGUAGE' => 'en-GB' } }
+
+      it 'keeps the stored value' do
+        expect(described_class.env).to include('LANGUAGETOOL_ADDRESS' => '', 'LANGUAGETOOL_LANGUAGE' => 'en-GB')
+      end
+    end
+  end
+
   describe '.language_tool_configured?' do
     it 'returns false when Roslin is not provisioned' do
+      expect(described_class.language_tool_configured?).to be false
+    end
+
+    it 'returns false when LANGUAGETOOL_ADDRESS is blank' do
+      create(:system_agent, name: described_class::NAME, env: { 'LANGUAGETOOL_ADDRESS' => '' })
+
       expect(described_class.language_tool_configured?).to be false
     end
   end

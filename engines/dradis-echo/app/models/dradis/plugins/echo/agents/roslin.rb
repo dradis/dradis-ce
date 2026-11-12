@@ -6,7 +6,8 @@ module Dradis::Plugins::Echo
       extend self
 
       DEFAULT_ENV = {
-        'LANGUAGETOOL_ADDRESS' => LanguageToolService::DEFAULT_ADDRESS
+        'LANGUAGETOOL_ADDRESS' => LanguageToolService::DEFAULT_ADDRESS,
+        'LANGUAGETOOL_LANGUAGE' => LanguageToolService::DEFAULT_LANGUAGE
       }.freeze
       NAME = 'Roslin'.freeze
 
@@ -51,8 +52,14 @@ module Dradis::Plugins::Echo
         false
       end
 
+      # Stored values win, and defaults fill in any keys added since the agent
+      # was provisioned.
+      def env
+        DEFAULT_ENV.merge(instance.env.to_h)
+      end
+
       def language_tool_configured?
-        instance.env && instance.env['LANGUAGETOOL_ADDRESS'].present?
+        env['LANGUAGETOOL_ADDRESS'].present?
       rescue ActiveRecord::RecordNotFound
         false
       end
@@ -60,7 +67,7 @@ module Dradis::Plugins::Echo
       def language_tool_reachable?
         return false unless language_tool_configured?
 
-        address = instance.env['LANGUAGETOOL_ADDRESS']
+        address = env['LANGUAGETOOL_ADDRESS']
         Rails.cache.fetch("echo:languagetool:reachable:#{address}", expires_in: 5.minutes) do
           LanguageToolService.reachable?(address)
         end

@@ -78,7 +78,14 @@
 
   <p>
     Set <code>LANGUAGETOOL_ADDRESS</code> to the URL of your LanguageTool server
-    (default: <code>http://localhost:8081</code>). Remove it to disable the feature.
+    (default: <code>http://localhost:8081</code>). Leave its value blank to disable the feature.
+  </p>
+
+  <p>
+    Set <code>LANGUAGETOOL_LANGUAGE</code> to the language code to check against,
+    e.g. <code>en-GB</code>, <code>de-DE</code> or <code>auto</code> to detect it
+    (default: <code>en-US</code>). See the
+    <a href="https://api.languagetool.org/v2/languages" target="_blank">supported language codes</a>.
   </p>
 
   <div class="mb-3">

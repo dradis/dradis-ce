@@ -8,7 +8,10 @@ describe 'Grammar suggestions' do
   let(:roslin_agent) do
     instance_double(Dradis::Plugins::Echo::Agent,
                     enabled?: true,
-                    env: { 'LANGUAGETOOL_ADDRESS' => 'http://languagetool:8081' })
+                    env: {
+                      'LANGUAGETOOL_ADDRESS' => 'http://languagetool:8081',
+                      'LANGUAGETOOL_LANGUAGE' => 'en-GB'
+                    })
   end
 
   let(:service_double) do
@@ -54,6 +57,17 @@ describe 'Grammar suggestions' do
 
       expect(Dradis::Plugins::Echo::LanguageToolService).to have_received(:new).with(
         hash_including(address: 'http://languagetool:8081')
+      )
+    end
+
+    it 'passes the configured LanguageTool language to the service' do
+      post "/addons/echo/projects/#{@project.id}/grammar_suggestions", params: {
+        commentable_type: 'Issue',
+        commentable_id: issue.id
+      }
+
+      expect(Dradis::Plugins::Echo::LanguageToolService).to have_received(:new).with(
+        hash_including(language: 'en-GB')
       )
     end
 
@@ -105,6 +119,19 @@ describe 'Grammar suggestions' do
       }
 
       expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'returns 502 with the LanguageTool message when LanguageTool rejects the request' do
+      allow(service_double).to receive(:call)
+        .and_raise(Dradis::Plugins::Echo::LanguageToolService::RejectedError, 'LanguageTool error: bad language.')
+
+      post "/addons/echo/projects/#{@project.id}/grammar_suggestions", params: {
+        commentable_type: 'Issue',
+        commentable_id: issue.id
+      }
+
+      expect(response).to have_http_status(:bad_gateway)
+      expect(JSON.parse(response.body)['error']).to eq('LanguageTool error: bad language. Check the Roslin agent settings.')
     end
 
     it 'returns 503 when LanguageTool is unavailable' do

@@ -41,6 +41,8 @@ export default class extends Controller {
     this.highlighter ||= new GrammarHighlighter(contentEl, this, storageKey);
 
     this._fetchMatches().then(matches => {
+      if (!matches) return;
+
       this.highlighter.highlight(matches);
       this._updateWidget(this._visibleMatchCount());
     });
@@ -74,6 +76,8 @@ export default class extends Controller {
     this.highlighter = new GrammarHighlighter(previewEl, this, storageKey);
 
     this._fetchMatches().then(matches => {
+      if (!matches) return;
+
       this.highlighter.highlight(matches);
       this._updateWidget(this._visibleMatchCount());
     });
@@ -98,12 +102,18 @@ export default class extends Controller {
       body: body.toString()
     })
       .then(r => {
-        if (!r.ok) throw new Error(`Grammar check failed: ${r.status}`);
-        return r.json();
+        if (r.ok) return r.json();
+
+        return r.json()
+          .catch(() => ({}))
+          .then(({ error }) => {
+            throw new Error(error || `Grammar check failed: ${r.status}`);
+          });
       })
       .catch(err => {
         console.warn('GrammarCheck: check failed:', err);
-        return [];
+        this._showWidgetError(err.message);
+        return null;
       });
   }
 
@@ -232,20 +242,28 @@ export default class extends Controller {
     return this.highlighter?.contentEl.querySelectorAll('[data-behavior~=grammar-suggestion-highlight]').length ?? 0;
   }
 
-  _updateWidget(count) {
+  _renderWidget(hasProblems, summaryText) {
     const successEl  = document.querySelector('[data-behavior~=roslin-status-success]');
     const errorEl    = document.querySelector('[data-behavior~=roslin-status-error]');
     const summaryEl  = document.querySelector('[data-behavior~=roslin-issues-summary]');
     const collapseEl = document.querySelector('[data-behavior~=roslin-widget]');
 
+    if (successEl) successEl.classList.toggle('d-none', hasProblems);
+    if (errorEl)   errorEl.classList.toggle('d-none', !hasProblems);
+    if (summaryEl) summaryEl.textContent = summaryText;
+    if (collapseEl) collapseEl.classList.toggle('show', hasProblems);
+  }
+
+  _showWidgetError(message) {
+    this._renderWidget(true, message);
+  }
+
+  _updateWidget(count) {
     const summaryText = count > 0
       ? `${count} issue${count === 1 ? '' : 's'} found`
       : 'No grammar or spelling errors!';
 
-    if (successEl) successEl.classList.toggle('d-none', count > 0);
-    if (errorEl)   errorEl.classList.toggle('d-none', count === 0);
-    if (summaryEl) summaryEl.textContent = summaryText;
-    if (collapseEl) collapseEl.classList.toggle('show', count > 0);
+    this._renderWidget(count > 0, summaryText);
   }
 
   _refreshContent(newRaw) {
