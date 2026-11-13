@@ -37,7 +37,7 @@ DradisDatatable.prototype.setColumnFiltersVisibility = function (isVisible) {
   button.text(
     `<i class="fa-solid fa-filter me-1 fa-fw"></i>Filters: ${isVisible ? 'On' : 'Off'}`
   );
-  $(button.node()).attr('aria-expanded', isVisible);
+  $(button.node()).attr('aria-pressed', isVisible);
 
   if (!isVisible) {
     this.$columnFilterInputs.val('');

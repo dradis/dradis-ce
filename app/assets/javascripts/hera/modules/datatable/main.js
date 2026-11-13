@@ -107,7 +107,7 @@ class DradisDatatable {
           {
             action: () => this.setColumnFiltersVisibility(this.$columnFilters.hasClass('d-none')),
             attr: {
-              'aria-expanded': false,
+              'aria-pressed': false,
             },
             name: 'columnFiltersBtn',
             text: '<i class="fa-solid fa-filter me-1 fa-fw"></i>Filters: Off',
