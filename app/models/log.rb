@@ -1,5 +1,21 @@
 class Log < ApplicationRecord
+  # The console stops polling on either line. Write them with #complete!/#fail!
+  COMPLETED = 'Worker process completed.'.freeze
+  FAILED = 'Worker process failed.'.freeze
+
   after_initialize :set_uid
+
+  def complete!
+    write(COMPLETED)
+  end
+
+  def fail!
+    write(FAILED)
+  end
+
+  def finished?
+    [COMPLETED, FAILED].include?(text)
+  end
 
   # The UUID assigned here is the authorization primitive for reading
   # the log stream. It's returned only to the user that initiated the
