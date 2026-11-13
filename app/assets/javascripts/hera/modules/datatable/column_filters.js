@@ -6,7 +6,7 @@ DradisDatatable.prototype.buildColumnFilters = function () {
   this.tableHeaders.forEach((th, index) => {
     const $cell = $('<td></td>');
 
-    if (th.dataset.columnVisible != 'false') {
+    if (th.dataset.columnVisible !== 'false') {
       const columnName = th.textContent.trim();
 
       $('<input type="search" class="form-control form-control-sm" data-behavior="column-filter">')
