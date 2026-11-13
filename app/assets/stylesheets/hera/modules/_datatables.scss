@@ -19,8 +19,9 @@ div.dataTables_wrapper {
 
     .column-filters {
       input {
-        min-width: 8rem;
+        min-width: 100%;
         text-overflow: ellipsis;
+        width: 0;
       }
 
       td {
