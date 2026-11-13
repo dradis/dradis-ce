@@ -60,4 +60,13 @@ DradisDatatable.prototype.setupColumnFilters = function () {
     const input = event.target;
     this.dataTable.column(input.dataset.column).search(input.value).draw();
   });
+
+  // Hiding a column also clears its filter, so rows are never filtered by
+  // inputs the user can't see.
+  this.dataTable.on('column-visibility.dt', (_event, _settings, column, isVisible) => {
+    if (!isVisible && this.dataTable.column(column).search()) {
+      this.$columnFilterInputs.filter(`[data-column=${column}]`).val('');
+      this.dataTable.column(column).search('').draw(false);
+    }
+  });
 };

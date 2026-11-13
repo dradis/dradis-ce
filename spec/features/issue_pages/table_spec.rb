@@ -43,7 +43,7 @@ describe 'issue pages' do
       let(:risk_filter) { "[data-behavior~=column-filter][aria-label='Filter Risk']" }
       let(:title_filter) { "[data-behavior~=column-filter][aria-label='Filter Title']" }
 
-      it 'filters a column hidden on load' do
+      it 'filters a column hidden on load and clears it when hidden again' do
         find('.buttons-colvis').click
         within('.dt-button-collection') { click_link 'Risk' }
         find('body').send_keys(:escape)
@@ -51,6 +51,11 @@ describe 'issue pages' do
         find(risk_filter).set('High')
         expect(page).to have_css('.dataTable tbody tr', count: 1)
         expect(page).to have_css('.dataTable tbody tr', text: @issue.title)
+
+        find('.buttons-colvis').click
+        within('.dt-button-collection') { click_link 'Risk' }
+        find('body').send_keys(:escape)
+        expect(page).to have_css('.dataTable tbody tr', count: 2)
       end
 
       it 'restores the filters on reload and clears them when closed' do
