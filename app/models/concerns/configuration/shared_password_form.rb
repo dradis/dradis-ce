@@ -1,6 +1,6 @@
 # Backs the setup wizard's shared password form, so its errors show next to
 # the fields like every other form.
-class SharedPasswordForm
+class Configuration::SharedPasswordForm
   include ActiveModel::Model
 
   attr_accessor :password, :password_confirmation

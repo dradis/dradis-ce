@@ -4,7 +4,7 @@ require 'rails_helper'
 describe 'Setup::Passwords', if: !defined?(Dradis::Pro) do
   def submit_password(password, confirmation)
     post setup_password_path, params: {
-      shared_password_form: { password: password, password_confirmation: confirmation }
+      configuration_shared_password_form: { password: password, password_confirmation: confirmation }
     }
   end
 
@@ -31,7 +31,7 @@ describe 'Setup::Passwords', if: !defined?(Dradis::Pro) do
   end
 
   it 'rejects a submission without a confirmation' do
-    post setup_password_path, params: { shared_password_form: { password: 'rspec_pass' } }
+    post setup_password_path, params: { configuration_shared_password_form: { password: 'rspec_pass' } }
 
     expect(response).to have_http_status(:unprocessable_entity)
     expect(response.body).to include('Password confirmation can&#39;t be blank')

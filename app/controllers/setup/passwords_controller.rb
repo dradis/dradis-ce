@@ -5,12 +5,12 @@ module Setup
       # Remove default alert message set by AuthenticatedController
       flash.discard(:alert)
 
-      @password_form = SharedPasswordForm.new
+      @password_form = ::Configuration::SharedPasswordForm.new
     end
 
     # POST /setup/password
     def create
-      @password_form = SharedPasswordForm.new(password_params)
+      @password_form = ::Configuration::SharedPasswordForm.new(password_params)
 
       if @password_form.save
         redirect_to new_setup_analytics_path
@@ -26,7 +26,7 @@ module Setup
     end
 
     def password_params
-      params.require(:shared_password_form).permit(:password, :password_confirmation)
+      params.require(:configuration_shared_password_form).permit(:password, :password_confirmation)
     end
   end
 end
