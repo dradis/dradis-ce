@@ -13,7 +13,8 @@ module Tracked
   def track_pending
     tracker.update_state(state: :pending)
     yield
-    unless tracker.state[:state] == :failed
+    # Read back from JSON, so a String, unlike the Symbols written
+    unless tracker.state[:state] == 'failed'
       tracker.update_state(state: :completed)
     end
   end

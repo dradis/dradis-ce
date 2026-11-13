@@ -33,16 +33,18 @@ module Uploadable
     attachment = args[:attachment]
 
     job_logger.write('Small attachment detected. Processing in line.')
+    imported = false
     begin
       importer = @uploader::Importer.new(
         default_user_id: current_user.id,
-        logger:     job_logger,
-        plugin:     @uploader,
+        logger: job_logger,
+        plugin: @uploader,
         project_id: current_project.id,
         state: @state,
       )
 
-      importer.import(file: attachment.fullpath)
+      # Importers return false to reject a file; nil or anything else is success
+      imported = importer.import(file: attachment.fullpath) != false
     rescue Exception => e
       # Fail noisily in test mode; re-raise the error so the test fails:
       raise if Rails.env.test?
@@ -55,7 +57,8 @@ module Uploadable
         end
       end
     end
-    job_logger.write('Worker process completed.')
+    imported ? job_logger.complete! : job_logger.fail!
+    imported
   end
 
   def validate_state
