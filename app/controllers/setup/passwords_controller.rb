@@ -12,10 +12,7 @@ module Setup
     def create
       @password_form = SharedPasswordForm.new(password_params)
 
-      if @password_form.valid?
-        ::Configuration.find_by_name('admin:password').update!(
-          value: ::BCrypt::Password.create(@password_form.password)
-        )
+      if @password_form.save
         redirect_to new_setup_analytics_path
       else
         render :new, status: :unprocessable_entity

@@ -7,4 +7,12 @@ class SharedPasswordForm
 
   validates :password, confirmation: true, presence: true
   validates :password_confirmation, presence: true
+
+  def save
+    return false unless valid?
+
+    ::Configuration.find_by_name('admin:password').update!(
+      value: ::BCrypt::Password.create(password)
+    )
+  end
 end
