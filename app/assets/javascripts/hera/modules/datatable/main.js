@@ -37,6 +37,8 @@ class DradisDatatable {
       });
     }
 
+    this.buildColumnFilters();
+
     // Assign the instantiated DataTable as a DradisDatatable property
     this.dataTable = this.$table.DataTable({
       autoWidth: false,
@@ -102,6 +104,15 @@ class DradisDatatable {
             className: 'btn',
             columns: columnVisibleIndexes,
           },
+          {
+            action: () => this.setColumnFiltersVisibility(this.$columnFilters.hasClass('d-none')),
+            attr: {
+              'aria-pressed': false,
+            },
+            name: 'columnFiltersBtn',
+            text: '<i class="fa-solid fa-filter me-1 fa-fw"></i>Filters: Off',
+            titleAttr: 'Filter rows by column',
+          },
         ],
       },
       columnDefs: [
@@ -132,6 +143,8 @@ class DradisDatatable {
         [25, 50, 100, -1],
         ['25', '50', '100', 'All'],
       ],
+      // Keep sorting on the headings row, not the column filters row below it
+      orderCellsTop: true,
       pageLength: 25,
       stateSave: true,
       stateDuration: 0, // https://datatables.net/reference/option/stateDuration#Default
@@ -242,6 +255,7 @@ class DradisDatatable {
 
   behaviors() {
     this.setupCheckboxListeners();
+    this.setupColumnFilters();
     this.setupMergeButtonToggle();
     this.setupTagButtonToggle();
     this.setupBulkDeleteButtonToggle();

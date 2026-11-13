@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Tables: add per-column filters, shown with a Filters toggle next to Columns
   - Editing: Warn user if another user is currently editing a record
   - [entity]:
     - [future tense verb] [feature]
