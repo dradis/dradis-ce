@@ -29,4 +29,12 @@ describe 'Setup::Passwords', if: !defined?(Dradis::Pro), skip_setup_mock: true d
     expect(response).to have_http_status(:unprocessable_entity)
     expect(response.body).to include('Password confirmation doesn&#39;t match Password')
   end
+
+  it 'rejects a submission without a confirmation' do
+    post setup_password_path, params: { shared_password_form: { password: 'rspec_pass' } }
+
+    expect(response).to have_http_status(:unprocessable_entity)
+    expect(response.body).to include('Password confirmation can&#39;t be blank')
+    expect(::Configuration.shared_password).to eq('improvable_dradis')
+  end
 end

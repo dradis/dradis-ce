@@ -6,4 +6,5 @@ class SharedPasswordForm
   attr_accessor :password, :password_confirmation
 
   validates :password, confirmation: true, presence: true
+  validates :password_confirmation, presence: true
 end

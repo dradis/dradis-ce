@@ -9,7 +9,7 @@
   <p class="small">This shared password will be used by every user accessing this Dradis server.</p>
 
   <%= f.input :password, autofocus: true, input_html: { autocomplete: 'off' } %>
-  <%= f.input :password_confirmation, input_html: { autocomplete: 'off' }, required: true %>
+  <%= f.input :password_confirmation, input_html: { autocomplete: 'off' } %>
 
   <%= button_tag :submit, class: 'btn btn-primary' do %>
     Next <i class="fa-solid fa-long-arrow-right"></i>
