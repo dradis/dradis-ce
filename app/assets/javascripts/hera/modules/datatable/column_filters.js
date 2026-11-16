@@ -1,7 +1,7 @@
 // Built before the DataTable is initialized, so DataTables treats the filter
 // row as part of the header and hides its cells along with their columns.
 DradisDatatable.prototype.buildColumnFilters = function () {
-  this.$columnFilters = $('<tr class="column-filters d-none"></tr>');
+  this.$columnFilters = $('<tr>', { class: 'column-filters d-none' });
 
   this.tableHeaders.forEach((th, index) => {
     const $cell = $('<td></td>');
