@@ -4,7 +4,7 @@ DradisDatatable.prototype.buildColumnFilters = function () {
   this.$columnFilters = $('<tr>', { class: 'column-filters d-none' });
 
   this.tableHeaders.forEach((th, index) => {
-    const $cell = $('<td></td>');
+    const $cell = $('<td>');
 
     if (th.dataset.columnVisible !== 'false') {
       const columnName = th.textContent.trim();
