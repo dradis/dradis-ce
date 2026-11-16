@@ -9,13 +9,14 @@ DradisDatatable.prototype.buildColumnFilters = function () {
     if (th.dataset.columnVisible !== 'false') {
       const columnName = th.textContent.trim();
 
-      $('<input type="search" class="form-control form-control-sm" data-behavior="column-filter">')
-        .attr({
-          'aria-label': `Filter ${columnName}`,
-          'data-column': index,
-          placeholder: `Filter by ${columnName}...`,
-        })
-        .appendTo($cell);
+      $('<input>', {
+        'aria-label': `Filter ${columnName}`,
+        class: 'form-control form-control-sm',
+        'data-behavior': 'column-filter',
+        'data-column': index,
+        placeholder: `Filter by ${columnName}...`,
+        type: 'search',
+      }).appendTo($cell);
     }
 
     this.$columnFilters.append($cell);
