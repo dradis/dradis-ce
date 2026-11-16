@@ -1,5 +1,6 @@
 class Board < ApplicationRecord
   include ActsAsLinkedList
+  include Eventable
   list_item_name :list
 
   # -- Relationships --------------------------------------------------------
@@ -25,13 +26,17 @@ class Board < ApplicationRecord
   # -- Validations ----------------------------------------------------------
   validates :name, presence: true, length: { maximum: DB_MAX_STRING_LENGTH }
   validates :project, presence: true
-  validate  :validate_node_has_no_other_board
+  validate :validate_node_has_no_other_board
 
   # -- Scopes -----------------------------------------------------------------
 
   # -- Class Methods ----------------------------------------------------------
 
   # -- Instance Methods -------------------------------------------------------
+  def local_event_payload
+    { project: { id: project.id } }
+  end
+
   def recovered_list
     list = self.lists.find_by(name: 'Recovered')
     if !list

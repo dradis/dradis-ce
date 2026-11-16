@@ -2,6 +2,7 @@ class Evidence < ApplicationRecord
   include Commentable
   include Eventable
   include HasFields
+  include Lockable
   include Reviewable
   include RevisionTracking
   include Subscribable

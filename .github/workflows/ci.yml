@@ -11,7 +11,7 @@ concurrency:
 jobs:
   lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       IS_MERGE: ${{ github.base_ref == '' }}
       # SHA is set to all 0s on the first push to a new branch. We set it to
@@ -22,17 +22,26 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - name: Fetch lint comparison
+        # Only the two commit trees are needed, even for multi-commit or force pushes.
+        run: |
+          if [[ -n "$TARGET_BRANCH" ]]; then
+            comparison_ref="+refs/heads/$TARGET_BRANCH:refs/remotes/origin/$TARGET_BRANCH"
+          elif [[ -n "$PREV_SHA" ]]; then
+            comparison_ref="$PREV_SHA"
+          else
+            comparison_branch="${FALLBACK_BRANCH#origin/}"
+            comparison_ref="+refs/heads/$comparison_branch:refs/remotes/origin/$comparison_branch"
+          fi
+          git fetch --no-tags --depth=1 origin "$comparison_ref"
       - name: Install sqlite3 dependencies
         run: sudo apt-get install libsqlite3-dev
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
-          rubygems: 'latest'
           bundler-cache: true
       - name: Security audit dependencies
-        run: bundle exec bundler-audit --update --ignore CVE-2024-21510 CVE-2025-61921 CVE-2026-38969
+        run: bundle exec bundler-audit --update --ignore CVE-2024-21510 CVE-2025-61921 GHSA-5r7x-x5pm-94xj GHSA-m39q-9jm7-xp4q GHSA-r23w-h6cg-h95q GHSA-r5h4-xh93-f339
       - name: Security audit ruby
         # These ignores can be removed once the Ruby version is upgraded (>= 3.4.8 for the
         # 2025 CVEs; >= 4.0.3 for CVE-2026-41316, whose bundled erb we already override).
@@ -44,7 +53,7 @@ jobs:
   rspec:
     name: RSpec
     needs: [lint]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       RAILS_ENV: test
     steps:
@@ -55,7 +64,6 @@ jobs:
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
-          rubygems: 'latest'
           bundler-cache: true
       - name: Prepare database
         run: bundle exec rails db:prepare

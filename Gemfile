@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.4.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.0.5.1'
+gem 'rails', '~> 8.0.5.2'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -91,7 +91,7 @@ gem 'bcrypt', '3.1.22'
 gem 'json', '2.3.0'
 
 # XML manipulation
-gem 'nokogiri', '>= 1.19.4'
+gem 'nokogiri', '>= 1.19.5'
 
 # MySQL backend
 # gem 'mysql2', '~> 0.5.6'
@@ -100,7 +100,7 @@ gem 'nokogiri', '>= 1.19.4'
 # before 1.0.4, so make sure we're using 1.0.4+:
 # see https://github.com/rails/rails-html-sanitizer/commit/f3ba1a839a
 # and https://github.com/flavorjones/loofah/issues/144
-gem 'rails-html-sanitizer', '~> 1.7.1'
+gem 'rails-html-sanitizer', '~> 1.7.2'
 
 # Textile markup
 gem 'RedCloth', '~> 4.3.4', require: 'redcloth'
@@ -109,10 +109,10 @@ gem 'RedCloth', '~> 4.3.4', require: 'redcloth'
 gem 'rinku'
 
 # html-pipeline dependency for html sanitization
-gem 'sanitize', '6.0.2'
+gem 'sanitize', '7.0.2'
 
 # SQLite3 DB driver
-gem 'sqlite3', '~> 2.9.6'
+gem 'sqlite3', '~> 2.10.2'
 # gem 'pg'
 
 # --------------------------------------------------------- Dradis Professional
@@ -141,7 +141,7 @@ gem 'net-smtp'
 gem 'net-pop'
 gem 'net-imap', '>= 0.6.4.1'
 
-gem 'puma', '~> 7.2.1'
+gem 'puma', '~> 7.2.2'
 
 gem 'csv'
 
@@ -240,9 +240,11 @@ end
 # effective.
 
 # ----------------------------------------------------------------- Calculators
+gem 'dradis-calculator_aivss-ssvc', github: 'dradis/dradis-calculator_aivss-ssvc', branch: 'main'
 gem 'dradis-calculator_cvss', '~> 5.4.0'
 gem 'dradis-calculator_dread', '~> 5.4.0'
 gem 'dradis-calculator_mitre', '~> 5.4.0'
+gem 'dradis-calculator_stride', github: 'dradis/dradis-calculator_stride', branch: 'implement-stride-calculator'
 
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv_export', '~> 5.4.0'

@@ -82,19 +82,19 @@ describe 'Cards::PositionController#update (move to list)' do
 
   context 'when the target list is the same as the source list' do
     let(:submit) do
-      patch project_board_list_card_position_path(current_project, board, source_list, card_c),
+      patch project_board_list_card_position_path(current_project, board, source_list, card_b),
         params: { new_list_id: source_list.id }
     end
 
     it 'does not change the card' do
-      original_previous_id = card_c.previous_id
+      original_previous_id = card_b.previous_id
       submit
-      expect(card_c.reload.previous_id).to eq(original_previous_id)
+      expect(card_b.reload.previous_id).to eq(original_previous_id)
     end
 
     it 'redirects with an alert' do
       submit
-      expect(response).to redirect_to(project_board_list_card_path(current_project, board, source_list, card_c))
+      expect(response).to redirect_to(project_board_list_card_path(current_project, board, source_list, card_b))
       expect(flash[:alert]).to eq('Task is already in that list.')
     end
   end

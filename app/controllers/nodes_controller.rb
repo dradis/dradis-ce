@@ -79,10 +79,7 @@ class NodesController < NestedNodeResourceController
         format.json { render json: { success: true }.to_json }
         format.js
       else
-        format.html do
-          flash.now[:alert] = @node.errors.full_messages.join('; ')
-          render 'edit'
-        end
+        format.html { render 'edit', status: :unprocessable_entity }
         format.json { render json: @node.errors.to_json, status: :unprocessable_entity }
         format.js
       end
@@ -125,7 +122,7 @@ class NodesController < NestedNodeResourceController
     rtp_default_evidence_fields = rtp ? rtp.evidence_fields.defaults.field_names : []
 
     @note_columns = note_dynamic_fields | extra_field_names
-    @evidence_columns = rtp_default_evidence_fields | evidence_dynamic_fields | extra_field_names
+    @evidence_columns = default_evidence_field_names | rtp_default_evidence_fields | evidence_dynamic_fields | extra_field_names
 
     @default_note_columns = default_field_names
     @default_evidence_columns = (rtp_default_evidence_fields.presence || default_evidence_field_names)

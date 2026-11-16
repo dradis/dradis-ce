@@ -64,6 +64,7 @@ Rails.application.routes.draw do
         resources :cards, except: [:index] do
           resource :position, only: [:update], controller: 'cards/position'
           resources :revisions, only: [:index, :show]
+          concerns :lockable, controller: 'cards/editing_sessions'
         end
       end
     end
@@ -108,10 +109,12 @@ Rails.application.routes.draw do
 
       resources :notes, concerns: [:multiple_destroy, :previewable] do
         resources :revisions, only: [:index, :show]
+        concerns :lockable, controller: 'notes/editing_sessions'
       end
 
       resources :evidence, except: :index, concerns: [:multiple_destroy, :previewable] do
         resources :revisions, only: [:index, :show]
+        concerns :lockable, controller: 'evidence/editing_sessions'
       end
 
       constraints(filename: /.*/) do

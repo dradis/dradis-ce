@@ -1,5 +1,7 @@
 body.projects {
   .summary-panel {
+    position: relative;
+
     #boards-summary {
       display: flex;
       flex-wrap: wrap;
@@ -36,18 +38,58 @@ body.projects {
     }
 
     .issue-chart {
-      display: flex;
-      justify-content: center;
       align-items: center;
-
-      .bar.untagged,
-      .counter.untagged,
-      .tick.untagged {
-        fill: var(--untagged-color);
-      }
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      justify-content: center;
 
       svg text {
         font-size: 14px;
+      }
+    }
+
+    .issue-chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      justify-content: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .issue-chart-legend-item {
+      align-items: center;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .issue-chart-legend-label {
+      max-width: 12rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .issue-chart-legend-swatch {
+      background-color: var(--issue-group-color, var(--untagged-color));
+      border-radius: 50%;
+      flex-shrink: 0;
+      height: 0.75rem;
+      width: 0.75rem;
+    }
+
+    // Show the selector in the panel header, above the underline.
+    .issues-grouping-selector {
+      position: absolute;
+      right: 0;
+      top: -0.25rem;
+
+      .combobox {
+        font-size: 0.875rem;
+        min-height: auto;
+        padding-block: 0.25rem;
       }
     }
 
@@ -59,10 +101,11 @@ body.projects {
       }
     }
 
-    #issues-accordion {
+    .issues-accordion {
       margin-top: 1rem;
 
       .card {
+        border-color: var(--issue-group-color, var(--untagged-color));
         margin-bottom: 1rem;
 
         .card-body {
@@ -93,6 +136,7 @@ body.projects {
         }
 
         .card-header {
+          background-color: var(--issue-group-color, var(--untagged-color));
           color: $white;
 
           h5 {
@@ -104,17 +148,12 @@ body.projects {
           margin-bottom: 0;
         }
 
-        &.untagged {
-          border-color: var(--untagged-color);
+        .issue-group-icon {
+          color: var(--issue-group-color, var(--untagged-color));
+        }
 
-          .card-header {
-            background-color: var(--untagged-color);
-            color: var(--untagged-text);
-          }
-
-          .fa-bug {
-            color: var(--untagged-color);
-          }
+        &.unassigned .card-header {
+          color: var(--untagged-text);
         }
       }
     }

@@ -18,7 +18,7 @@
       <p class="mt-4">Use the form below to upload output files from other tools.</p>
 
       <div class="mt-4">
-        <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, id: 'new_upload', data: { parse_url: project_upload_parse_path(current_project) } do %>
+        <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, data: { behavior: 'new-upload', parse_url: project_upload_parse_path(current_project) } do %>
           <div class="mb-5 mt-4 pt-2">
             <%= label_tag :uploader do %>
               <h5>1. Tool you are uploading output from</h5>
@@ -37,9 +37,9 @@
             <% end %>
             <div>
               <label class="visually-hidden" data-behavior="file-label">Choose file</label>
-              <%= file_field_tag 'file', class: 'form-control' %>
-              <%= hidden_field_tag 'item_id' %>
-              <%= hidden_field_tag 'attachment' %>
+              <%= file_field_tag 'file', class: 'form-control', data: { behavior: 'file-input' } %>
+              <%= hidden_field_tag 'item_id', nil, id: false, data: { behavior: 'item-id' } %>
+              <%= hidden_field_tag 'attachment', nil, id: false, data: { behavior: 'attachment' } %>
               <%= hidden_field_tag 'format', 'js' %>
             </div>
           </div>
@@ -47,8 +47,8 @@
 
         <p>Upload progress:</p>
         <div class="progress mb-2">
-          <div class="progress-bar progress-bar-striped">
-            <div class="percent">0%</div>
+          <div class="progress-bar progress-bar-striped" data-behavior="progress-bar">
+            <div class="percent" data-behavior="percent">0%</div>
           </div>
         </div>
 
@@ -59,11 +59,11 @@
   <div class="col-lg-6 col-xl-7 mb-4">
     <div class="content-container mb-0 h-100">
       <h4 class="header-underline">Output console</h4>
-      <div id="status"></div>
-      <%= content_tag :div, id: 'result', style: 'display:none', data: { url: status_console_index_path }  do %>
-        <div><strong>Filename</strong>: <span id="filename"></span> <span id="spinner"><%= image_tag 'loading.gif', style: "margin:0;", alt: 'loading spinner' %></span></div>
-        <div><strong>Size</strong>: <span id="filesize"></span></div>
-        <div id="console" class="mx-0 mb-0"></div>
+      <div data-behavior="status"></div>
+      <%= content_tag :div, id: 'result', style: 'display:none', data: { url: status_console_index_path, behavior: 'result' }  do %>
+        <div><strong>Filename</strong>: <span data-behavior="filename"></span> <span data-behavior="spinner"><%= image_tag 'loading.gif', style: "margin:0;", alt: 'loading spinner' %></span></div>
+        <div><strong>Size</strong>: <span data-behavior="filesize"></span></div>
+        <div id="console" class="mx-0 mb-0" data-behavior="console"></div>
       <% end %>
     </div>
   </div>

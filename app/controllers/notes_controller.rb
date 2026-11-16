@@ -4,6 +4,7 @@ class NotesController < NestedNodeResourceController
   include AttachmentsCopier
   include ConflictResolver
   include LiquidEnabledResource
+  include LockableResource
   include Mentioned
   include MultipleDestroy
   include NodesSidebar
@@ -12,6 +13,9 @@ class NotesController < NestedNodeResourceController
   before_action :find_or_initialize_note
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
+  before_action :set_form_cancel_path, only: [:new, :edit]
+  # Must run after :set_form_cancel_path; the lockout page links back to it.
+  before_action :check_edit_lock, only: :edit
 
   def new
     # See ContentFromTemplate concern
@@ -50,6 +54,7 @@ class NotesController < NestedNodeResourceController
     copy_attachments(@note) if @note.node_changed?
 
     if @note.save
+      @note.release_edit_session(current_user)
       publish_event('note.updated', @note.to_event_payload)
       check_for_edit_conflicts(@note, updated_at_before_save)
       # if the note has just been moved to another node, we must reload
@@ -90,6 +95,10 @@ class NotesController < NestedNodeResourceController
     { 'note' => NoteDrop.new(@note) }
   end
 
+  def lockable_resource
+    @note
+  end
+
   def note_params
     params.require(:note).permit(:category_id, :text, :node_id)
   end
@@ -101,6 +110,14 @@ class NotesController < NestedNodeResourceController
       "node-#{@node.id}-note-#{params[:template]}"
     else
       "node-#{@node.id}-note"
+    end
+  end
+
+  def set_form_cancel_path
+    if @note.new_record?
+      @form_cancel_path = project_node_path(current_project, @node)
+    else
+      @form_cancel_path = project_node_note_path(current_project, @node, @note)
     end
   end
 end

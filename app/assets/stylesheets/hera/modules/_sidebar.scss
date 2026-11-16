@@ -151,9 +151,21 @@ body:not(.has-sub-nav) {
     }
 
     .page-tips {
+      // !important to override the .bg-info utility's !important background
       .bg-info {
-        padding: calc(var(--padding) / 2);
+        background-color: var(--secondary-bg) !important;
+        border: 1px solid var(--border-color);
         border-radius: $border-radius;
+        color: var(--text-default);
+        padding: calc(var(--padding) / 2);
+
+        a:not(.btn) {
+          color: var(--tips-link);
+
+          &:hover {
+            color: var(--tips-link-hover);
+          }
+        }
       }
     }
 
@@ -225,13 +237,42 @@ body:not(.has-sub-nav) {
           }
 
           .node {
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
             line-height: 1.75rem;
             white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
 
             &.active>a {
               color: var(--text-default);
+            }
+
+            > .node-link {
+              flex: 1;
+              min-width: 0;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            > .children {
+              flex-basis: 100%;
+              min-width: 0;
+            }
+
+            > .add-subnode {
+              flex-shrink: 0;
+              font-size: 0.8rem;
+              padding: 0 0.25rem;
+              visibility: hidden;
+
+              &:focus-visible {
+                visibility: visible;
+              }
+            }
+
+            // Only the row under the cursor, not every ancestor of it
+            &:hover:not(:has(.node:hover)) > .add-subnode {
+              visibility: visible;
             }
           }
 

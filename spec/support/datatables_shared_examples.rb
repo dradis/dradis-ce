@@ -38,7 +38,7 @@ shared_examples 'a DataTable' do
 
   describe 'delete button', js: true do
     before do
-      unless page.has_css?('[data-table-destroy-url]')
+      unless page.has_css?('[data-table-destroy-url]', wait: 0)
         # Skip this spec if table doesn't support bulk delete
         skip
       end
@@ -84,7 +84,7 @@ shared_examples 'a DataTable' do
 
   describe 'tagging', js: true do
     before do
-      unless page.has_css?('[data-tags]')
+      unless page.has_css?('[data-tags]', wait: 0)
         # Skip this spec if table doesn't support tagging
         skip
       end

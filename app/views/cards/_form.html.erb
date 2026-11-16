@@ -44,10 +44,11 @@
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
     <%=
       link_to 'Cancel',
-      @card.new_record? ? [current_project, @board] : [current_project, @board, @list, @card],
+      @form_cancel_path,
       class: 'cancel-link',
       data: {
-        behavior: 'clear-local-auto-save'
+        behavior: class_names('clear-local-auto-save', 'record-locking': @card.persisted?),
+        'record-locking-path': @card.persisted? ? project_board_list_card_editing_session_path(current_project, @board, @list, @card) : nil
       }
     %>
   </div>

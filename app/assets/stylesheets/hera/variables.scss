@@ -34,5 +34,10 @@ $focus-shadow: 0 0 0 0.2rem unquote(#{$primary}80) !important;
 $margin: 1.5rem;
 $padding: 1.5rem;
 
+// States (from d3.js to match board progress bars)
+$state-draft-color: #ff99a8;
+$state-published-color: #84d784;
+$state-review-color: #ffc700;
+
 // This line must be last to override BS5 colors.
 @import 'bootstrap/variables';

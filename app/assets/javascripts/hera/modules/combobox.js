@@ -214,6 +214,10 @@ class ComboBox {
           this.$combobox.toggleClass('disabled', isDisabled);
         }
 
+        if (mutation.attributeName === 'class') {
+          this.refreshValidationUI();
+        }
+
         // Ensure changes to options are reflected in the combobox
         if (mutation.type === 'childList') {
           const currentFilter = this.$filter?.val();
@@ -259,9 +263,9 @@ class ComboBox {
         selectedValues.push(value);
       }
 
-      this.$target.val(selectedValues).trigger('change');
+      this.setTargetValue(selectedValues);
     } else {
-      this.$target.val(value).trigger('change');
+      this.setTargetValue(value);
       this.hideMenu();
     }
 
@@ -444,9 +448,9 @@ class ComboBox {
     if (this.isMultiSelect) {
       let selectedValues = this.$target.val() || [];
       selectedValues.push(sanitizedValue);
-      this.$target.val(selectedValues).trigger('change');
+      this.setTargetValue(selectedValues);
     } else {
-      this.$target.val(sanitizedValue).trigger('change');
+      this.setTargetValue(sanitizedValue);
     }
   }
 
@@ -455,7 +459,7 @@ class ComboBox {
       selectedValues = this.$target
         .val()
         .filter((value) => value != valueToRemove);
-    this.$target.val(selectedValues).trigger('change');
+    this.setTargetValue(selectedValues);
   }
 
   // ==========================================================================
@@ -478,6 +482,16 @@ class ComboBox {
       'disabled',
       !!this.$target.attr('disabled')?.length,
     );
+    this.refreshValidationUI();
+  }
+
+  // Wrapping the select breaks Bootstrap's `.is-invalid ~ .invalid-feedback`
+  // sibling rule, so mirror the invalid state onto the container and combobox.
+  refreshValidationUI() {
+    const isInvalid = this.$target.hasClass('is-invalid');
+
+    this.$comboboxContainer.toggleClass('is-invalid', isInvalid);
+    this.$combobox.toggleClass('is-invalid', isInvalid);
   }
 
   updateComboboxUI(options) {
@@ -551,6 +565,7 @@ class ComboBox {
     }
 
     this.updateComboboxUI($options);
+    this.popper?.update();
   }
 
   // ==========================================================================
@@ -563,13 +578,24 @@ class ComboBox {
     return $elements.filter((_, el) => el.getAttribute(attr) === String(value));
   }
 
+  setTargetValue(value) {
+    this.$target.val(value);
+    this.$target[0].dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
   showMenu() {
     this.$comboboxMenu.css('display', 'block');
+    this.popper?.destroy();
+    this.popper = Popper.createPopper(this.$combobox[0], this.$comboboxMenu[0], {
+      placement: 'bottom-end',
+    });
     this.$combobox.attr('aria-expanded', 'true');
     this.$filter?.focus();
   }
 
   hideMenu() {
+    this.popper?.destroy();
+    this.popper = null;
     this.$comboboxMenu.css('display', 'none');
     this.$combobox.attr('aria-expanded', 'false');
     this.$filter?.val(null).trigger('input');
