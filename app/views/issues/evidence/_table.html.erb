@@ -31,7 +31,7 @@
                  (link_to(evidence.node.label, label_path, data: { qa_visible: false }) +
                   link_to(evidence.node.label, qa_label_path, class: 'd-none', data: { qa_visible: true }))]
               when 'State'
-                [evidence.state_before_type_cast, evidence.state.humanize]
+                [evidence.state_before_type_cast, state_badge(evidence)]
               when 'Created'
                 [evidence.created_at.to_i, local_time_ago(evidence.created_at)]
               when 'Created by'

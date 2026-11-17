@@ -1,8 +1,7 @@
 :root {
-  /* Colors from d3.js to match board progress bars */
-  --draft-color: #ff99a8;
-  --published-color: #84d784;
-  --review-color: #ffc700;
+  --draft-color: #{$state-draft-color};
+  --published-color: #{$state-published-color};
+  --review-color: #{$state-review-color};
 }
 
 .active-project {

@@ -1,16 +1,16 @@
 module Dradis::CE::API
   module V3
     class BoardsController < Dradis::CE::API::APIController
-      include ActivityTracking
       include Dradis::CE::API::ProjectScoped
+      include EventPublisher
 
       def index
-        @boards = current_project.boards.includes(:lists, lists: [:cards]).order('updated_at desc')
+        @boards = current_project.boards.includes(lists: { cards: :assignees }).order('updated_at desc')
         @boards = @boards.page(params[:page].to_i) if params[:page]
       end
 
       def show
-        @board = current_project.boards.includes(:lists, lists: [:cards]).find(params[:id])
+        @board = current_project.boards.includes(lists: { cards: :assignees }).find(params[:id])
       end
 
       def create
@@ -19,7 +19,7 @@ module Dradis::CE::API
         @board.node_id = current_project.methodology_library.id if !params[:node_id]
 
         if @board.save
-          track_created(@board)
+          publish_event('board.created', @board.to_event_payload)
           render status: 201, location: dradis_api.board_url(@board)
         else
           render_validation_errors(@board)
@@ -29,7 +29,7 @@ module Dradis::CE::API
       def update
         @board = current_project.boards.find(params[:id])
         if @board.update(board_params)
-          track_updated(@board)
+          publish_event('board.updated', @board.to_event_payload)
           render board: @board
         else
           render_validation_errors(@board)
@@ -39,7 +39,7 @@ module Dradis::CE::API
       def destroy
         board = current_project.boards.find(params[:id])
         board.destroy
-        track_destroyed(board)
+        publish_event('board.destroyed', board.to_event_payload)
         render_successful_destroy_message
       end
 

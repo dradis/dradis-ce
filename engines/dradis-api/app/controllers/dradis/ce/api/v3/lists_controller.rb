@@ -1,8 +1,8 @@
 module Dradis::CE::API
   module V3
     class ListsController < Dradis::CE::API::APIController
-      include ActivityTracking
       include Dradis::CE::API::ProjectScoped
+      include EventPublisher
 
       before_action :set_board
 
@@ -20,7 +20,7 @@ module Dradis::CE::API
         @list.previous_id = @board.last_list.try(:id)
 
         if @list.save
-          track_created(@list)
+          publish_event('list.created', @list.to_event_payload)
           render status: 201, location: board_list_path(@board, @list)
         else
           render_validation_errors(@list)
@@ -30,7 +30,7 @@ module Dradis::CE::API
       def update
         @list = @board.lists.find(params[:id])
         if @list.update(list_params)
-          track_updated(@list)
+          publish_event('list.updated', @list.to_event_payload)
           render list: @list
         else
           render_validation_errors(@list)
@@ -40,7 +40,7 @@ module Dradis::CE::API
       def destroy
         @list = @board.lists.find(params[:id])
         @list.destroy
-        track_destroyed(@list)
+        publish_event('list.destroyed', @list.to_event_payload)
         render_successful_destroy_message
       end
 
