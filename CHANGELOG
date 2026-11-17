@@ -1,6 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - Tables:
-    - add per-column filters, shown with a Filters toggle next to Columns
+  - Tables: add per-column filters, shown with a Filters toggle next to Columns
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
