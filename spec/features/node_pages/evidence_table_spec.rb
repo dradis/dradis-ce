@@ -20,7 +20,7 @@ describe 'node pages' do
       visit project_node_path(@project, @node, tab: 'evidence-tab')
     end
 
-    let(:default_columns) { ['Title', 'Label'] }
+    let(:default_columns) { ['Title', 'Label', 'State'] }
     let(:hidden_columns) { ['Created', 'Created by', 'Updated'] }
     let(:filter) { { keyword: @evidence.title, filter_count: 1 } }
 

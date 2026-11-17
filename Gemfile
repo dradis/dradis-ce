@@ -109,7 +109,7 @@ gem 'RedCloth', '~> 4.3.4', require: 'redcloth'
 gem 'rinku'
 
 # html-pipeline dependency for html sanitization
-gem 'sanitize', '7.0.1'
+gem 'sanitize', '7.0.2'
 
 # SQLite3 DB driver
 gem 'sqlite3', '~> 2.10.2'
@@ -141,7 +141,7 @@ gem 'net-smtp'
 gem 'net-pop'
 gem 'net-imap', '>= 0.6.4.1'
 
-gem 'puma', '~> 7.2.1'
+gem 'puma', '~> 7.2.2'
 
 gem 'csv'
 
