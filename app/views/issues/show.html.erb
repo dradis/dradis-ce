@@ -17,7 +17,7 @@
   <li class="nav-item">
     <a href="#info-tab" data-bs-toggle="tab" class="nav-link active">
       <%= tag_and_name_for(@issue) %>
-      <%= "(#{@issue.state.humanize})" %>
+      <%= state_badge(@issue, class: 'ms-1') %>
     </a>
   </li>
   <li class="nav-item"><a href="#evidence-tab" class="nav-link" data-bs-toggle="tab"><i class="fa-solid fa-laptop"></i> Evidence <span class="badge bg-primary text-white" data-behavior="evidence-count"><%= @issue.evidence.count %></span></a></li>
