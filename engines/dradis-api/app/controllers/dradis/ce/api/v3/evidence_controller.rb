@@ -1,10 +1,12 @@
 module Dradis::CE::API
   module V3
     class EvidenceController < Dradis::CE::API::APIController
-      include EventPublisher
       include Dradis::CE::API::ProjectScoped
+      include EventPublisher
 
       before_action :set_node
+      before_action :set_evidence, only: [:create, :update]
+      before_action :validate_state, only: [:create, :update]
 
       def index
         @evidence = @node.evidence.order('updated_at desc')
@@ -16,7 +18,7 @@ module Dradis::CE::API
       end
 
       def create
-        @evidence = @node.evidence.build(evidence_params)
+        @evidence.assign_attributes(evidence_params)
         @evidence.author = current_user.email
         if @evidence.save
           publish_event('evidence.created', @evidence.to_event_payload)
@@ -27,7 +29,6 @@ module Dradis::CE::API
       end
 
       def update
-        @evidence = @node.evidence.find(params[:id])
         if @evidence.update(evidence_params)
           publish_event('evidence.updated', @evidence.to_event_payload)
           render evidence: @evidence
@@ -45,12 +46,24 @@ module Dradis::CE::API
 
       private
 
+      def evidence_params
+        params.require(:evidence).permit(:content, :issue_id, :state)
+      end
+
+      def set_evidence
+        @evidence = action_name == 'create' ? @node.evidence.new : @node.evidence.find(params[:id])
+      end
+
       def set_node
         @node = current_project.nodes.find(params[:node_id])
       end
 
-      def evidence_params
-        params.require(:evidence).permit(:content, :issue_id)
+      def validate_state
+        return unless evidence_params.key?(:state)
+        return if Evidence.states.key?(evidence_params[:state])
+
+        @evidence.errors.add(:state, 'invalid value.')
+        render_validation_errors(@evidence)
       end
     end
   end

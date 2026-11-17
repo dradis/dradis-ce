@@ -47,4 +47,12 @@ module ApplicationHelper # :nodoc:
       content_tag :div, nil, class: "spinner-border #{spinner_class}"
     end
   end
+
+  def state_badge(record, options = {})
+    return unless record.state
+
+    content_tag :span,
+      record.state.humanize,
+      class: class_names('badge', "badge-state-#{record.state.dasherize}", options[:class])
+  end
 end
