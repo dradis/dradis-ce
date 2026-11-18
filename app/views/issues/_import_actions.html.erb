@@ -9,7 +9,7 @@
 <% if issue.state.nil? || issue.published? %>
   <% default_state = issue.state ? 'published' : 'draft' %>
   <div class="btn-group btn-states" data-behavior="btn-states">
-    <%= link_to project_issues_path(current_project, format: :js), class: 'btn btn-primary', data: { entry_id: issue.id, text: issue.text, state: default_state, behavior: 'add-issue' } do %>
+    <%= link_to main_app.project_issues_path(current_project, format: :js), class: 'btn btn-primary', data: { entry_id: issue.id, text: issue.text, state: default_state, behavior: 'add-issue' } do %>
       <i class="fa-solid fa-plus"></i> Add issue (<span data-behavior="state-button"><%= default_state.humanize %></span>)
     <% end %>
     <a href="#" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
