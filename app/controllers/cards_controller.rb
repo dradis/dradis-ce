@@ -1,6 +1,7 @@
 class CardsController < AuthenticatedController
-  include ActivityTracking
   include ContentFromTemplate
+  include EventPublisher
+  include LockableResource
   include Mentioned
   include NotificationsReader
   include ProjectScoped
@@ -10,6 +11,9 @@ class CardsController < AuthenticatedController
   before_action :set_or_initialize_card
   before_action :initialize_sidebar, only: [:show, :new, :edit]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
+  before_action :set_form_cancel_path, only: [:new, :edit]
+  # Must run after :set_form_cancel_path; the lockout page links back to it.
+  before_action :check_edit_lock, only: :edit
 
   layout 'cards'
 
@@ -29,7 +33,7 @@ class CardsController < AuthenticatedController
     @card.previous_id = @list.last_card.try(:id)
 
     if @card.save
-      track_created(@card)
+      publish_event('card.created', @card.to_event_payload)
       redirect_to [current_project, @board, @list, @card], notice: 'Task added.'
     else
       initialize_sidebar
@@ -42,7 +46,8 @@ class CardsController < AuthenticatedController
 
   def update
     if @card.update(card_params)
-      track_updated(@card)
+      @card.release_edit_session(current_user)
+      publish_event('card.updated', @card.to_event_payload)
       redirect_to [current_project, @board, @list, @card], notice: 'Task updated.'
     else
       initialize_sidebar
@@ -52,7 +57,7 @@ class CardsController < AuthenticatedController
 
   def destroy
     if @card.destroy
-      track_destroyed(@card)
+      publish_event('card.destroyed', @card.to_event_payload)
       redirect_to [current_project, @board], notice: 'Task deleted'
     else
       redirect_to [current_project, @board, @list, @card], notice: "Error deleting task: #{@card.errors.full_messages.join('; ')}"
@@ -67,6 +72,10 @@ class CardsController < AuthenticatedController
 
   def initialize_sidebar
     @sorted_cards = @list.ordered_cards.select(&:persisted?)
+  end
+
+  def lockable_resource
+    @card
   end
 
   def set_or_initialize_card
@@ -90,6 +99,14 @@ class CardsController < AuthenticatedController
       "#{@list.id}-card-#{params[:template]}"
     else
       "#{@list.id}-card"
+    end
+  end
+
+  def set_form_cancel_path
+    if @card.new_record?
+      @form_cancel_path = [current_project, @board]
+    else
+      @form_cancel_path = [current_project, @board, @list, @card]
     end
   end
 end

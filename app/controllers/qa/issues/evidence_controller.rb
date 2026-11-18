@@ -2,6 +2,7 @@ class QA::Issues::EvidenceController < AuthenticatedController
   include DynamicFieldNamesCacher
   include EventPublisher
   include LiquidEnabledResource
+  include LockableResource
   include ProjectScoped
   include Publishable
 
@@ -10,6 +11,9 @@ class QA::Issues::EvidenceController < AuthenticatedController
   before_action :set_columns, only: :index
   before_action :set_evidence, only: [:edit, :preview, :show, :update]
   before_action :set_evidence_for_review, only: [:edit, :show]
+  before_action :set_form_cancel_path, only: :edit
+  # Must run after :set_form_cancel_path; the lockout page links back to it.
+  before_action :check_edit_lock, only: :edit
   before_action :set_node_evidence, only: :index
   before_action :validate_state, only: [:multiple_update, :update]
 
@@ -26,7 +30,7 @@ class QA::Issues::EvidenceController < AuthenticatedController
 
   def update
     if @evidence.update(state: @state, updated_at: Time.now)
-      publish_event('evidence.updated', @evidence.to_event_payload)
+      publish_event('evidence.state_change', @evidence.to_event_payload)
 
       redirect_to(*next_evidence_or_index_path)
     else
@@ -41,7 +45,7 @@ class QA::Issues::EvidenceController < AuthenticatedController
     respond_to do |format|
       if @evidence.update(state: @state)
         @evidence.each do |evidence|
-          publish_event('evidence.updated', evidence.to_event_payload)
+          publish_event('evidence.state_change', evidence.to_event_payload)
         end
 
         format.html do
@@ -65,6 +69,10 @@ class QA::Issues::EvidenceController < AuthenticatedController
 
   def evidence_params
     params.permit(:state)
+  end
+
+  def lockable_resource
+    @evidence
   end
 
   def next_evidence_or_index_path
@@ -106,6 +114,10 @@ class QA::Issues::EvidenceController < AuthenticatedController
 
   def set_evidence_for_review
     @evidence_for_review = @issue.evidence.ready_for_review
+  end
+
+  def set_form_cancel_path
+    @form_cancel_path = project_qa_issue_evidence_path(current_project, @issue, @evidence)
   end
 
   def set_issue

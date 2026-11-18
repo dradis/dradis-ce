@@ -15,7 +15,9 @@ Dradis::CE::API::Engine::routes.draw do
       scope module: :v3, constraints: Dradis::CE::API::RoutingConstraints.new(version: 3, default: true) do
         resources :boards do
           resources :lists do
+            resource :position, only: [:update], controller: 'lists/position'
             resources :cards do
+              resource :position, only: [:update], controller: 'cards/position'
             end
           end
         end

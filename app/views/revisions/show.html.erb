@@ -78,7 +78,7 @@
       <div class="content-container">
         <div class="diff">
           <h4 class="header-underline">Viewing changes from <%= @diffed_revision.updated_at %></h4>
-          <pre class='js-diff-body mt-3'><%= @diffed_revision.diff.format_as(:color) %></pre>
+          <pre class="mt-3" data-behavior="revision-diff"><%= @diffed_revision.diff.format_as(:color) %></pre>
         </div>
       </div>
     <% end %>

@@ -5,9 +5,12 @@ div.dataTables_wrapper {
     .column-actions {
       min-width: 8rem;
 
-      a {
+      a,
+      button {
         visibility: hidden;
+      }
 
+      a {
         &:first-of-type {
           padding-right: 0.5rem;
         }
@@ -164,7 +167,8 @@ div.dataTables_wrapper {
     tr {
       &:focus-within,
       &:hover {
-        .column-actions a {
+        .column-actions a,
+        .column-actions button {
           visibility: visible;
         }
       }

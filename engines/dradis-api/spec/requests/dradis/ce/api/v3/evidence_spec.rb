@@ -111,6 +111,7 @@ describe 'Evidence API' do
         retrieved_evidence = JSON.parse(response.body)
         expect(retrieved_evidence['id']).to eq @evidence.id
         expect(retrieved_evidence['author']).to eq @evidence.author
+        expect(retrieved_evidence['state']).to eq @evidence.state
         expect(retrieved_evidence['fields'].keys).to match_array(
           @evidence.local_fields.keys + %w(fizz foo)
         )
@@ -157,6 +158,36 @@ describe 'Evidence API' do
             params[:evidence][:author] = 'attacker@evil.com'
             post_evidence
             expect(node.evidence.last.author).to eq @logged_in_as.email
+          end
+        end
+
+        context 'with a state' do
+          let(:params) { { evidence: { content: 'New evidence', issue_id: issue.id, state: state } } }
+
+          Evidence.states.each_key do |state|
+            context "when the state is #{state}" do
+              let(:state) { state }
+
+              it 'creates evidence in the requested state and returns it' do
+                expect { post_evidence }.to change { node.evidence.count }.by(1)
+                expect(response).to have_http_status(:created)
+                expect(node.evidence.last.state).to eq(state)
+                expect(JSON.parse(response.body)['state']).to eq(state)
+              end
+            end
+          end
+
+          ['unknown', '', nil, 99].each do |state|
+            context "when the state is invalid (#{state.inspect})" do
+              let(:state) { state }
+
+              it 'rejects the request without creating evidence or activity' do
+                expect { post_evidence }.not_to change { Evidence.count }
+                expect(response).to have_http_status(:unprocessable_entity)
+                expect(JSON.parse(response.body)['errors']).to have_key('state')
+                expect(ActiveJob::Base.queue_adapter.enqueued_jobs).to be_empty
+              end
+            end
           end
         end
 
@@ -226,6 +257,7 @@ describe 'Evidence API' do
           it 'updates the evidence' do
             put_evidence
             expect(evidence.reload.content).to eq 'New content'
+            expect(evidence.state).to eq('published')
           end
 
           it 'returns the attributes of the updated evidence as JSON' do
@@ -248,6 +280,44 @@ describe 'Evidence API' do
             params[:evidence][:author] = 'attacker@evil.com'
             put_evidence
             expect(evidence.reload.author).to eq 'factory_bot'
+          end
+        end
+
+        context 'with a state' do
+          let(:params) { { evidence: { state: state } } }
+
+          Evidence.states.each_key do |state|
+            context "when the state is #{state}" do
+              let(:state) { state }
+
+              it 'updates the state and returns it without changing the content' do
+                events = []
+                subscriber = ->(event) { events << event }
+                ActiveSupport::Notifications.subscribed(subscriber, /\Aevidence\./) { put_evidence }
+
+                expect(events.map(&:name)).to eq(['evidence.updated'])
+                expect(events.first.payload).to include(action: 'update', state: state)
+                expect(response).to have_http_status(:ok)
+                expect(evidence.reload.state).to eq(state)
+                expect(evidence.content).to eq('My content')
+                expect(JSON.parse(response.body)['state']).to eq(state)
+              end
+            end
+          end
+
+          ['unknown', '', nil, 99].each do |state|
+            context "when the state is invalid (#{state.inspect})" do
+              let(:state) { state }
+
+              it 'rejects the request without changing evidence or creating activity' do
+                evidence
+                ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+                expect { put_evidence }.not_to change { evidence.reload.attributes }
+                expect(response).to have_http_status(:unprocessable_entity)
+                expect(JSON.parse(response.body)['errors']).to have_key('state')
+                expect(ActiveJob::Base.queue_adapter.enqueued_jobs).to be_empty
+              end
+            end
           end
         end
 
