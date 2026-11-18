@@ -24,6 +24,13 @@
   --bs-accordion-color: var(--text-default);
 }
 
+// The state colors are tinted into the background, so the text keeps the body color in both themes
+@mixin state-badge($color) {
+  background-color: rgba($color, 0.18);
+  border: 1px solid rgba($color, 0.7);
+  color: var(--text-default);
+}
+
 body:not(.unauthenticated) {
   background-color: var(--primary-bg);
   display: grid;
@@ -98,6 +105,18 @@ th {
 .badge-outline-lavender {
   border: 1px solid var(--badge-lavender-color);
   color: var(--badge-lavender-color);
+}
+
+.badge-state-draft {
+  @include state-badge($state-draft-color);
+}
+
+.badge-state-published {
+  @include state-badge($state-published-color);
+}
+
+.badge-state-ready-for-review {
+  @include state-badge($state-review-color);
 }
 
 .bg-info {

@@ -1,30 +1,19 @@
 [v#.#.#] ([month] [YYYY])
-  - Editing: Warn user if another user is currently editing a record
   - [entity]:
     - [future tense verb] [feature]
-  - Forms: show errors next to their fields instead of at the top of the form
-  - Nodes: Add a node from the node tree
   - Upgraded gems:
-    - addressable, crass, loofah, nokogiri, rack, rails, rails-html-sanitizer, sanitize, sqlite3
+    - msgpack, puma, sanitize
   - Bugs fixes:
-    - Dashboard: keep issue chart columns distinct when group labels match
-    - Sidebar tips: tone down the tips box in dark mode and keep its links readable
-    - Diffs: remove stray escape characters around highlighted changes
-    - Avatars: display a local image while Gravatar loads
-    - Editor: keep the cursor in place after uploading an image
-    - Combobox: keep dropdown menus within the viewport and fit long option labels
     - Uploads: report failed background uploads as failed in the API
-    - Combobox:
-      - show inline validation errors on dropdowns that fail validation
+    - [entity]:
+      - [future tense verb] [bug fix]
     - Bug tracker items:
       - [item]
   - Echo enhancements:
     - [Echo entity]:
       - [future tense verb] [Echo enhancement]
   - New integrations:
-    - Calculators:
-      - AIVSS-SSVC
-      - STRIDE
+    - [integration]
   - Integration enhancements:
     - [integration]:
       - [future tense verb] [integration enhancement]
@@ -40,6 +29,36 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v5.5.0 (November 2026)
+  - Echo: Allow Roslin's LanguageTool grammar and spell checking language to be changed
+  - Editing: Warn user if another user is currently editing a record
+  - Forms: show errors next to their fields instead of at the top of the form
+  - Nodes: Add a node from the node tree
+  - QA: show issue and evidence states as colored badges in tables and tabs
+  - Upgraded gems:
+    - addressable, crass, loofah, nokogiri, rack, rails, rails-html-sanitizer, sanitize, sqlite3
+  - Bugs fixes:
+    - Avatars: display a local image while Gravatar loads
+    - Combobox:
+      - keep dropdown menus within the viewport and fit long option labels
+      - show inline validation errors on dropdowns that fail validation
+    - Dashboard: keep issue chart columns distinct when group labels match
+    - Diffs: remove stray escape characters around highlighted changes
+    - Editor: keep the cursor in place after uploading an image
+    - Evidence:
+      - publish a dedicated state change event for single and bulk QA updates
+      - show the State column in the node evidence table
+    - Sidebar tips: tone down the tips box in dark mode and keep its links readable
+  - New integrations:
+    - Calculators:
+      - AIVSS-SSVC
+      - STRIDE
+  - REST/JSON API enhancements:
+    - Boards: add support for repositioning lists and moving cards within and between lists
+    - Evidence: add state selection on API v3 create/update and include state in responses
+  - Security Fixes:
+    - Medium: Authenticated (author) persistent cross-site scripting around issue imports
 
 v5.4.0 (September 2026)
   - Issues: warn user if another user is currently editing the record
