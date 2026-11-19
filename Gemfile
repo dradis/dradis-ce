@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.4.6'
+ruby '4.0.9'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 8.0.5.2'
@@ -88,7 +88,7 @@ gem 'sprockets-rails', '>= 3.0.0'
 gem 'bcrypt', '3.1.22'
 
 # Required by Rails (uglifier and activesupport)
-gem 'json', '2.3.0'
+gem 'json', '2.21.2'
 
 # XML manipulation
 gem 'nokogiri', '>= 1.19.5'
@@ -180,7 +180,7 @@ group :development do
   gem 'abbrev'
 
   gem 'bundler-audit', require: false
-  gem 'ruby_audit', '~> 3.0.0', require: false
+  gem 'ruby_audit', '~> 3.1.0', require: false
 
   gem 'rubocop', '1.79.0', require: false
 
