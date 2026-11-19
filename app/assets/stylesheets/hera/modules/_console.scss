@@ -1,0 +1,109 @@
+.console {
+  background-color: $console-bg;
+  border-radius: 0 0 5px 5px;
+  border-top: 1px solid $grey-800;
+  color: $grey-500;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-size: $text-small;
+  height: 22.5rem;
+  margin: 0 0 1rem;
+  overflow: auto;
+  padding: 1rem;
+
+  .log {
+    margin-bottom: 5px;
+
+    span {
+      white-space: pre;
+    }
+
+    &.text-success {
+      color: $green-400 !important;
+    }
+
+    &.text-warning {
+      color: $yellow-400 !important;
+    }
+
+    &.text-error {
+      color: $red-300 !important;
+    }
+  }
+}
+
+.console-header {
+  align-items: center;
+  background-color: $console-bg;
+  border-radius: 5px 5px 0 0;
+  color: $grey-200;
+  display: flex;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-size: $text-small;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 1rem;
+
+  &:has(+ * .console-info) {
+    padding-bottom: 0;
+  }
+
+  .console-copy-btn {
+    background-color: $grey-900;
+    border: 1px solid $grey-500;
+    border-radius: 4px;
+    color: $grey-500;
+    font-size: inherit;
+    padding: 0.15rem 0.5rem;
+
+    &:hover {
+      background-color: $grey-800;
+      color: lighten($grey-500, 15%);
+    }
+  }
+}
+
+.console-info {
+  background-color: $console-bg;
+  color: $grey-600;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-size: 0.75rem;
+  padding: 0 1rem 1rem 2rem;
+}
+
+.console-placeholder {
+  color: $grey-600;
+}
+
+.status-dot {
+  border-radius: 50%;
+  display: inline-block;
+  height: 0.6rem;
+  width: 0.6rem;
+
+  &.text-error {
+    background-color: $red;
+  }
+
+  &.text-muted {
+    background-color: $grey-700;
+  }
+
+  &.text-success {
+    background-color: $green;
+  }
+
+  &.text-warning {
+    animation: status-dot-pulse 2s infinite;
+    background-color: $yellow;
+  }
+}
+
+@keyframes status-dot-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}

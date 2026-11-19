@@ -1,33 +1,3 @@
-@mixin ajax-console {
-  background-color: $black;
-  border-radius: 5px;
-  color: $grey-500;
-  margin: 1rem 0;
-  height: 400px;
-  overflow: auto;
-  padding: 1rem;
-
-  .log {
-    margin-bottom: 5px;
-
-    span {
-      white-space: pre;
-    }
-
-    &.text-success {
-      color: $green-400 !important;
-    }
-
-    &.text-warning {
-      color: $yellow-400 !important;
-    }
-
-    &.text-error {
-      color: $red-300 !important;
-    }
-  }
-}
-
 @mixin comment-item {
   .gravatar {
     padding-top: 3px;

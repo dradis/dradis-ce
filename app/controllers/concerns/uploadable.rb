@@ -36,13 +36,18 @@ module Uploadable
     begin
       importer = @uploader::Importer.new(
         default_user_id: current_user.id,
-        logger:     job_logger,
-        plugin:     @uploader,
+        logger: job_logger,
+        plugin: @uploader,
         project_id: current_project.id,
         state: @state,
       )
 
-      importer.import(file: attachment.fullpath)
+      # Importers return false (after logging why) when the file isn't in their format
+      if importer.import(file: attachment.fullpath) == false
+        job_logger.write('Worker process failed.')
+      else
+        job_logger.write('Worker process completed.')
+      end
     rescue Exception => e
       # Fail noisily in test mode; re-raise the error so the test fails:
       raise if Rails.env.test?
@@ -54,8 +59,8 @@ module Uploadable
           sleep(0.2)
         end
       end
+      job_logger.write('Worker process failed.')
     end
-    job_logger.write('Worker process completed.')
   end
 
   def validate_state
