@@ -2,7 +2,7 @@
 <%#
   # The default import search form: one search box per Import::Filter the
   # plugin registers. Import addons that need nothing more render it from
-  # their issues/_import_box.
+  # their issues/_import_box, passing their own Engine as the plugin.
 %>
 <% if Dradis::Plugins::Import::Filters[plugin.plugin_name] %>
   <% Dradis::Plugins::Import::Filters[plugin.plugin_name].each do |label, klass| %>

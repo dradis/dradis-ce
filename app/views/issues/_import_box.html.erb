@@ -38,14 +38,9 @@
     </form>
   <% else %>
     <%# Each import addon ships its own search UI as issues/_import_box under
-        its engine's view path, the way send-to addons ship issues/_send_to_menu.
+        its engine's view path, the way export addons ship their tab and form.
         An addon that only registers Import::Filters can render
         issues/import_box/filters for the default search form. %>
-    <% Dradis::Plugins::with_feature(:import).each do |plugin| %>
-      <div id="<%= plugin.plugin_name %>_import">
-        <p class="mb-2"><%= plugin.plugin_description %></p>
-        <%= render "#{ActiveSupport::Inflector.underscore(ActiveSupport::Inflector.deconstantize(plugin.name))}/issues/import_box", plugin: plugin %>
-      </div>
-    <% end %>
+    <%= render_view_hooks 'issues/import_box', feature: :import %>
   <% end %>
 <% end %>
