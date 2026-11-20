@@ -4,6 +4,7 @@
   - Upgraded gems:
     - msgpack, puma, sanitize
   - Bugs fixes:
+    - Subscriptions: ignore repeat Subscribe and Unsubscribe clicks instead of showing an error
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
