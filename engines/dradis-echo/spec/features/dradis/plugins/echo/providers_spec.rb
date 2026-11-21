@@ -28,6 +28,7 @@ describe 'Echo Providers', js: true do
       fill_in 'API Base URL', with: 'http://localhost:11434'
       fill_in 'Model', with: 'qwen2.5:14b'
       click_button 'Add Provider'
+      expect(page).to have_content('Please review the problems below:')
       expect(page).to have_content("can't be blank")
     end
   end
