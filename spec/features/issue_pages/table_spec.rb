@@ -38,5 +38,41 @@ describe 'issue pages' do
     let(:content_attribute) { :text }
 
     it_behaves_like 'a DataTable with Dynamic Columns'
+
+    describe 'column filters' do
+      let(:risk_filter) { "[data-behavior~=column-filter][aria-label='Filter Risk']" }
+      let(:title_filter) { "[data-behavior~=column-filter][aria-label='Filter Title']" }
+
+      it 'filters a column hidden on load and clears it when hidden again' do
+        find('.buttons-colvis').click
+        within('.dt-button-collection') { click_link 'Risk' }
+        find('body').send_keys(:escape)
+        click_button 'Filters'
+        find(risk_filter).set('High')
+        expect(page).to have_css('.dataTable tbody tr', count: 1)
+        expect(page).to have_css('.dataTable tbody tr', text: @issue.title)
+
+        find('.buttons-colvis').click
+        within('.dt-button-collection') { click_link 'Risk' }
+        find('body').send_keys(:escape)
+        expect(page).to have_css('.dataTable tbody tr', count: 2)
+      end
+
+      it 'restores the filters on reload and clears them when closed' do
+        click_button 'Filters'
+        find(title_filter).set(@issue.title)
+
+        visit project_issues_path(current_project)
+        expect(page).to have_button('Filters: On')
+        expect(find(title_filter).value).to eq(@issue.title)
+        expect(page).to have_css('.dataTable tbody tr', count: 1)
+        expect(page).to have_css('.dataTable tbody tr', text: @issue.title)
+
+        click_button 'Filters'
+        expect(page).to have_button('Filters: Off')
+        expect(page).to_not have_css(title_filter)
+        expect(page).to have_css('.dataTable tbody tr', count: 2)
+      end
+    end
   end
 end

@@ -35,6 +35,7 @@
 
 //= require hera/modules/datatable/main
 //= require hera/modules/datatable/checkbox
+//= require hera/modules/datatable/column_filters
 //= require hera/modules/datatable/delete
 //= require hera/modules/datatable/merge
 //= require hera/modules/datatable/state
