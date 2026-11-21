@@ -1,16 +1,20 @@
-<table class="table table-striped mb-0"
-  data-behavior="dradis-datatable"
-  data-can-publish="<%= can?(:publish, current_project) %>"
-  data-default-columns="<%= @default_columns.to_json %>"
-  data-item-name=<%= "issue_#{@issue.id}_evidence" %>
-  data-local-storage-key="project.ce.<%= dom_id(current_project) %>.<%= "issue_#{@issue.id}_evidence_datatable" %>"
-  data-state-icons="<%= state_icons.to_json %>"
-  >
+<%= tag.table class: 'table table-striped mb-0', data: {
+  behavior: 'dradis-datatable',
+  can_publish: can?(:publish, current_project),
+  default_columns: @default_columns,
+  item_name: "issue_#{@issue.id}_evidence",
+  local_storage_key: "project.ce.#{dom_id(current_project)}.issue_#{@issue.id}_evidence_datatable",
+  state_icons: state_icons,
+  validation_resource_type: ('Evidence' if local_assigns[:validation])
+} do %>
   <thead>
     <tr>
       <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Select</span></th>
       <% @all_columns.each do |column| %>
         <th><%= column %></th>
+      <% end %>
+      <% if local_assigns[:validation] %>
+        <th data-column="validation">Validation</th>
       <% end %>
       <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Actions</span></th>
     </tr>
@@ -44,6 +48,9 @@
             %>
             <td data-sort="<%= sort %>"><%= display %></td>
           <% end  %>
+          <% if local_assigns[:validation] %>
+            <td data-behavior="validate-column" data-sort>Loading</td>
+          <% end %>
           <td class="column-actions">
             <%= link_to edit_project_node_evidence_path(current_project, node, evidence, return_to: :issue), data: { qa_visible: false } do %>
               <i class="fa-solid fa-pencil"></i> Edit
@@ -62,4 +69,4 @@
       <% end %>
     <% end %>
   </tbody>
-</table>
+<% end %>

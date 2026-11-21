@@ -19,6 +19,16 @@ describe 'QA issue evidence' do
       expect(page).to have_content(node.label)
     end
 
+    it 'does not show the Validation column' do
+      click_link 'Evidence'
+
+      within '.dataTables_wrapper' do
+        expect(page).to have_content(node.label)
+        expect(page).to have_no_css('th[data-column="validation"]')
+        expect(page).to have_no_css('[data-behavior~=validate-column]')
+      end
+    end
+
     context 'with evidence not ready for review' do
       let!(:draft_node) { create(:node, project: current_project, label: 'Node with draft evidence') }
       let!(:draft_evidence) { create(:evidence, issue: issue, node: draft_node, state: :draft) }
