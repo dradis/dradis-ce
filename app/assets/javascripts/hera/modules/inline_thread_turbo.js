@@ -119,33 +119,68 @@ class InlineThreadTurbo {
       if (e.detail.success) {
         this.clearErrors();
         this.fetchAndHighlight();
-      } else {
-        this.showError(e.target);
+      } else if (!this.isTurboStream(e.detail.fetchResponse)) {
+        this.showError(e.target, e.detail.fetchResponse);
       }
     });
 
-    // Clear errors when the user starts typing again.
+    // Clear the generic alert when the user starts typing again. Field errors
+    // stay until the next submit, like in the reply form.
     this.panel.addEventListener('input', (e) => {
-      if (e.target.matches('textarea')) this.clearErrors();
+      if (e.target.matches('textarea')) this.clearAlert();
     });
   }
 
   // -- Error feedback ------------------------------------------------------
 
-  showError(form) {
+  // Shows the reasons the server sent back under the textarea, or a generic
+  // alert when there are none (e.g. a network error).
+  async showError(form, fetchResponse) {
     this.clearErrors();
+
+    const errors = await this.errorsFrom(fetchResponse);
+    const textarea = form.querySelector('textarea');
+
+    if (errors.length && textarea) {
+      const feedback = document.createElement('div');
+      feedback.className = 'invalid-feedback';
+      feedback.dataset.behavior = 'inline-thread-field-error';
+      feedback.textContent = errors.join(', ');
+      textarea.classList.add('is-invalid');
+      textarea.after(feedback);
+      this.invalidTextarea = textarea;
+      return;
+    }
 
     const alert = document.createElement('div');
     alert.className = 'alert alert-danger py-1 px-2 mb-2 small';
-    alert.dataset.behavior = 'inline-thread-error';
+    alert.dataset.behavior = 'inline-thread-alert';
     alert.textContent = 'Something went wrong. Please try again.';
     form.prepend(alert);
   }
 
-  clearErrors() {
-    this.frame.querySelectorAll('[data-behavior~=inline-thread-error]').forEach(
+  clearAlert() {
+    this.frame.querySelectorAll('[data-behavior~=inline-thread-alert]').forEach(
       el => el.remove()
     );
+  }
+
+  clearErrors() {
+    this.clearAlert();
+    this.frame.querySelectorAll('[data-behavior~=inline-thread-field-error]').forEach(
+      el => el.remove()
+    );
+    this.invalidTextarea?.classList.remove('is-invalid');
+    this.invalidTextarea = null;
+  }
+
+  async errorsFrom(fetchResponse) {
+    try {
+      const { errors } = JSON.parse(await fetchResponse.responseText);
+      return errors || [];
+    } catch {
+      return [];
+    }
   }
 
   // -- Helpers -------------------------------------------------------------
@@ -179,7 +214,6 @@ class InlineThreadTurbo {
     textarea.className = 'form-control form-control-sm';
     textarea.placeholder = 'Add a comment...';
     textarea.rows = 3;
-    textarea.required = true;
     textareaWrapper.appendChild(textarea);
     form.appendChild(textareaWrapper);
 
@@ -230,5 +264,10 @@ class InlineThreadTurbo {
       input.value = value;
       return input;
     });
+  }
+
+  // A Turbo Stream response re-renders the form with its own errors.
+  isTurboStream(fetchResponse) {
+    return !!fetchResponse?.contentType?.startsWith('text/vnd.turbo-stream.html');
   }
 }

@@ -37,7 +37,8 @@ class InlineThreadsController < AuthenticatedController
       )
       publish_event('inline_thread.created', @inline_thread.to_event_payload)
     else
-      head :unprocessable_entity
+      errors = comment.errors.full_messages_for(:content) + comment.errors.messages_for(:commentable)
+      render json: { errors: errors }, status: :unprocessable_entity
     end
   end
 
@@ -97,8 +98,9 @@ class InlineThreadsController < AuthenticatedController
     @project ||= commentable.respond_to?(:project) ? commentable.project : nil
   end
 
+  # A blank comment is left to the model, so its error goes back to the form.
   def require_comment
-    if inline_thread_params.dig(:comments_attributes, '0', :content).blank?
+    if inline_thread_params[:comments_attributes].blank?
       head :unprocessable_entity
     end
   end

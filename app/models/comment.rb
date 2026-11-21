@@ -14,7 +14,7 @@ class Comment < ApplicationRecord
 
   # -- Validations ----------------------------------------------------------
   validates :content, presence: true, length: { maximum: DB_MAX_TEXT_LENGTH }
-  validates :commentable, presence: true, associated: true
+  validates :commentable, presence: true, associated: { message: "This comment couldn't be saved." }
 
   # -- Scopes ---------------------------------------------------------------
 

@@ -91,6 +91,58 @@ shared_examples 'inline threads' do
       expect(comment.content).to eq('This needs revision')
       expect(comment.commentable).to eq(commentable)
     end
+
+    it 'returns the reason when the first comment is blank' do
+      expect do
+        post inline_threads_path,
+          params: {
+            inline_thread: {
+              commentable_type: commentable.class.to_s,
+              commentable_id: commentable.id,
+              anchor: valid_anchor,
+              comments_attributes: { '0' => { content: '  ' } }
+            }
+          },
+          headers: turbo_stream_headers
+      end.not_to change { InlineThread.count }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body['errors']).to eq(["Content can't be blank"])
+    end
+
+    it 'returns the reason when the first comment is too long' do
+      post inline_threads_path,
+        params: {
+          inline_thread: {
+            commentable_type: commentable.class.to_s,
+            commentable_id: commentable.id,
+            anchor: valid_anchor,
+            comments_attributes: { '0' => { content: 'a' * (DB_MAX_TEXT_LENGTH + 1) } }
+          }
+        },
+        headers: turbo_stream_headers
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body['errors']).to eq(["Content is too long (maximum is #{DB_MAX_TEXT_LENGTH} characters)"])
+    end
+
+    it 'returns a reason when the first comment fails for a reason unrelated to its content' do
+      allow_any_instance_of(commentable.class).to receive(:valid?).and_return(false)
+
+      post inline_threads_path,
+        params: {
+          inline_thread: {
+            commentable_type: commentable.class.to_s,
+            commentable_id: commentable.id,
+            anchor: valid_anchor,
+            comments_attributes: { '0' => { content: 'This needs revision' } }
+          }
+        },
+        headers: turbo_stream_headers
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body['errors']).to eq(["This comment couldn't be saved."])
+    end
   end
 
   describe 'DELETE /inline_threads/:id' do
@@ -155,6 +207,47 @@ shared_examples 'inline threads' do
       expect(comment.content).to eq('Good point, will fix')
       expect(comment.commentable).to eq(commentable)
       expect(comment.user).to eq(@logged_in_as)
+    end
+
+    it 'shows the error under the reply field when the reply is blank' do
+      thread = create(:inline_thread, commentable: commentable)
+
+      expect do
+        post inline_thread_comments_path(thread),
+          params: { comment: { content: '' } },
+          headers: turbo_stream_headers
+      end.not_to change { thread.comments.count }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.body).to include('Content can&#39;t be blank')
+      expect(response.body).not_to include('alert-danger')
+      expect(response.body).not_to include('action="append"')
+    end
+
+    it 'shows the error under the reply field when the reply is too long' do
+      thread = create(:inline_thread, commentable: commentable)
+
+      post inline_thread_comments_path(thread),
+        params: { comment: { content: 'a' * (DB_MAX_TEXT_LENGTH + 1) } },
+        headers: turbo_stream_headers
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.body).to include("Content is too long (maximum is #{DB_MAX_TEXT_LENGTH} characters)")
+    end
+
+    it 'shows a banner when the reply fails for a reason unrelated to its content' do
+      thread = create(:inline_thread, commentable: commentable)
+      allow_any_instance_of(commentable.class).to receive(:valid?).and_return(false)
+
+      expect do
+        post inline_thread_comments_path(thread),
+          params: { comment: { content: 'Good point, will fix' } },
+          headers: turbo_stream_headers
+      end.not_to change { thread.comments.count }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.body).to include(%(<div class="alert alert-danger">This comment couldn't be saved.</div>))
+      expect(response.body).not_to include('action="append"')
     end
   end
 end

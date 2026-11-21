@@ -19,7 +19,7 @@ class InlineThreads::CommentsController < AuthenticatedController
         user: current_user
       )
     else
-      head :unprocessable_entity
+      render :create, status: :unprocessable_entity
     end
   end
 

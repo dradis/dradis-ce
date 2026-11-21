@@ -1,7 +1,13 @@
-<%= turbo_stream.append "thread_#{@inline_thread.id}_comments" do %>
-  <%= render 'inline_threads/inline_comment', comment: @comment %>
+<% if @comment.persisted? %>
+  <%= turbo_stream.append "thread_#{@inline_thread.id}_comments" do %>
+    <%= render 'inline_threads/inline_comment', comment: @comment %>
+  <% end %>
 <% end %>
 
 <%= turbo_stream.replace "thread_#{@inline_thread.id}_reply_form" do %>
-  <%= render 'inline_threads/reply_form', inline_thread: @inline_thread %>
+  <%=
+    render 'inline_threads/reply_form',
+      comment: @comment.persisted? ? Comment.new : @comment,
+      inline_thread: @inline_thread
+  %>
 <% end %>
