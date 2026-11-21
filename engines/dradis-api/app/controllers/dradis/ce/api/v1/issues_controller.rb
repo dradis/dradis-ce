@@ -2,6 +2,7 @@ module Dradis::CE::API
   module V1
     class IssuesController < Dradis::CE::API::APIController
       include ActivityTracking
+      include EventPublisher
       include Dradis::CE::API::ProjectScoped
 
       before_action :set_issue, except: [:index]
@@ -24,6 +25,7 @@ module Dradis::CE::API
 
         if @issue.save
           track_created(@issue)
+          publish_event('issue.created', @issue.to_event_payload)
           @issue.tag_from_field_content!
           render status: 201, location: dradis_api.issue_url(@issue)
         else
@@ -34,6 +36,7 @@ module Dradis::CE::API
       def update
         if @issue.update(issue_params)
           track_updated(@issue)
+          publish_event('issue.updated', @issue.to_event_payload)
           render node: @node
         else
           render_validation_errors(@issue)
@@ -43,6 +46,7 @@ module Dradis::CE::API
       def destroy
         @issue.destroy
         track_destroyed(@issue)
+        publish_event('issue.destroyed', @issue.to_event_payload)
         render_successful_destroy_message
       end
 
