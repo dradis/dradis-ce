@@ -32,7 +32,7 @@
 }
 
 body:not(.unauthenticated) {
-  background-color: var(--primary-bg);
+  background-color: var(--body-bg);
   display: grid;
   font-family: 'ProximaNovaLight', 'system-ui';
   min-height: 100vh;
