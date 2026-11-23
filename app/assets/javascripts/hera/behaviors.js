@@ -122,16 +122,6 @@ document.addEventListener('turbo:load', function () {
           });
       });
 
-    // Init Bootstrap tooltips with 1ms delay for tooltips within <script type='text/x-tmpl'>
-    setTimeout(function () {
-      const tooltipTriggerList = document.querySelectorAll(
-        '[data-bs-toggle="tooltip"]'
-      );
-      [...tooltipTriggerList].map(
-        (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
-      );
-    }, 1);
-
     // Initialize clipboard.js
     const clipboard = new Clipboard(
       parentElement.querySelectorAll('[data-clipboard-text]')
