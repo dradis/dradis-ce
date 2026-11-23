@@ -1,5 +1,4 @@
 <%# locals: (state: :idle, uid: nil) %>
-<%# A job's live output. Without a uid it shows the idle state and subscribes to nothing. %>
 <%# Styled by the ajax-console mixin, included by the page that renders it. %>
 <div class="console" data-controller="console">
   <%= turbo_stream_from ConsoleLogger.stream_name(uid), data: { console_target: 'source' } if uid %>
