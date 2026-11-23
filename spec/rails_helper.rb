@@ -64,6 +64,10 @@ Capybara.server = :puma, { Silent: true }
 Capybara.javascript_driver = :firefox
 Selenium::WebDriver.logger
 
+# Needed for ActionCable connections, which check a real Warden session (the
+# ControllerMacros stub-login doesn't set one).
+Warden.test_mode!
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = ["#{::Rails.root}/spec/fixtures"]
@@ -102,6 +106,8 @@ RSpec.configure do |config|
   config.include SupportHelper, type: :request
   config.include FactoryBot::Syntax::Methods
   config.include WaitForAjax, type: :feature
+  config.include Warden::Test::Helpers, type: :feature
+  config.after(:each, type: :feature) { Warden.test_reset! }
 
   config.example_status_persistence_file_path = Rails.root.join('spec', '.examples.txt')
 

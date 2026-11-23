@@ -42,7 +42,7 @@ describe 'upload requests' do
 
       it 'imports the uploaded template' do
         attachments_path = Attachment.pwd.join(@uploads_node.id.to_s)
-        attachment_file  = attachments_path.join('temp').to_s
+        attachment_file = attachments_path.join('temp').to_s
 
         FileUtils.mkdir_p(attachments_path)
         FileUtils.cp(small_file, attachment_file)
@@ -61,6 +61,23 @@ describe 'upload requests' do
 
         send_request
       end
+
+      context 'when the importer rejects the file' do
+        before do
+          attachments_path = Attachment.pwd.join(@uploads_node.id.to_s)
+          FileUtils.mkdir_p(attachments_path)
+          FileUtils.cp(small_file, attachments_path.join('temp'))
+
+          allow(importer_class).to receive(:new).and_return(importer)
+          allow(importer).to receive(:import).and_return(false)
+        end
+
+        it 'logs failure' do
+          send_request
+
+          expect(Log.last.text).to eq('Worker process failed.')
+        end
+      end
     end
 
     context 'big file size (> 1Mb)' do
@@ -77,7 +94,7 @@ describe 'upload requests' do
 
       it 'enqueues a background job with the right parameters' do
         attachments_path = Attachment.pwd.join(@uploads_node.id.to_s)
-        attachment_file  = attachments_path.join('temp').to_s
+        attachment_file = attachments_path.join('temp').to_s
 
         FileUtils.mkdir_p(attachments_path)
         FileUtils.cp(big_file, attachment_file)

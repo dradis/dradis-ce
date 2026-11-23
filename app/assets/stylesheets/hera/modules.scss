@@ -4,6 +4,7 @@
 @import 'hera/modules/colors';
 @import 'hera/modules/combobox';
 @import 'hera/modules/comments';
+@import 'hera/modules/console';
 @import 'hera/modules/datatables';
 @import 'hera/modules/divider';
 @import 'hera/modules/dropdown';
@@ -159,14 +160,6 @@
     margin-top: 1em;
   }
 }
-
-#console {
-  @include ajax-console;
-  height: auto;
-  min-height: 25rem;
-  max-height: 70vh;
-}
-
 
 .gravatar {
   float: left;

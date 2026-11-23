@@ -1,7 +1,9 @@
 <% if @count > @max_deleted_inline %>
 {
   "success": true,
-  "jobId": "<%= @job_logger.uid %>"
+  "jobId": "<%= @job_logger.uid %>",
+  "streamTag": <%= raw turbo_stream_from(@job_logger.uid).to_json %>,
+  "statusHtml": <%= raw render(partial: 'logs/status', formats: [:html], locals: { log: Log.latest_for(@job_logger.uid) }).to_json %>
 }
 <% elsif @count > 0 %>
 {
