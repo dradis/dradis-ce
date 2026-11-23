@@ -1,9 +1,11 @@
 <%= form_with model: [Comment.new(commentable: @commentable)],
-  local: false,
   class: 'mt-3',
   data: {
+    action: 'turbo:submit-end->comment-form#reset',
     behavior: 'add-comment local-auto-save',
-    auto_save_key: "comment-#{dom_id(@commentable)}"
+    auto_save_key: "comment-#{dom_id(@commentable)}",
+    controller: 'comment-form',
+    turbo: true
   } do |f| %>
 
   <%= f.label :content, "Add a comment", class: 'form-label' %>

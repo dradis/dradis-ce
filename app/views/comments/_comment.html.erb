@@ -1,4 +1,5 @@
 <%= content_tag :div,
+  id: dom_id(comment, :wrapper),
   class: "comment-wrapper dradis-#{comment.commentable_type.parameterize}",
   data: {
     behavior: 'comment',
@@ -18,14 +19,18 @@
                 Missing User
               <% end %>
             </span>
-            <div class="actions">
-              <%= link_to main_app.edit_comment_path(comment), remote: true, data: { action: 'edit' } do %>
-                <i class="fa-solid fa-pencil"></i> Edit
+            <div class="<%= class_names('actions', current_user: local_assigns[:show_actions]) %>">
+              <% unless local_assigns[:editing] %>
+                <%= link_to main_app.edit_comment_path(comment), data: { action: 'edit', turbo: true, turbo_stream: true } do %>
+                  <i class="fa-solid fa-pencil"></i> Edit
+                <% end %>
               <% end %>
               <%= link_to main_app.comment_path(comment),
-                          method: :delete,
-                          data: { confirm: "Are you sure?\n\nProceeding will delete this comment, making it no longer visible to anyone." },
-                          remote: true,
+                          data: {
+                            turbo: true,
+                            turbo_confirm: "Are you sure?\n\nProceeding will delete this comment, making it no longer visible to anyone.",
+                            turbo_method: :delete
+                          },
                           class: 'text-error' do %>
                 <i class="fa-solid fa-trash"></i> Delete
               <% end %>
@@ -36,14 +41,18 @@
           </span>
         </div>
       </div>
-      <div class="content content-textile" data-behavior="content-textile">
-        <% if comment.inline_thread_id? %>
-          <blockquote>
-            <%= comment.inline_thread.quoted_text.chomp %>
-          </blockquote>
-        <% end %>
-        <%= comment_formatter(comment.content) %>
-      </div>
+      <% if local_assigns[:editing] %>
+        <%= render 'comments/form' %>
+      <% else %>
+        <div class="content content-textile" data-behavior="content-textile">
+          <% if comment.inline_thread_id? %>
+            <blockquote>
+              <%= comment.inline_thread.quoted_text.chomp %>
+            </blockquote>
+          <% end %>
+          <%= comment_formatter(comment.content) %>
+        </div>
+      <% end %>
     </div>
   <% end %>
 <% end %>

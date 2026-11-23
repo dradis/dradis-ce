@@ -1,0 +1,6 @@
+<%= turbo_stream.append 'comment-list', partial: 'comments/comment', locals: { comment: @comment, show_actions: @comment.user_id == current_user.id } %>
+<%= turbo_stream.replace 'no-comments', partial: 'comments/no_comments', locals: { visible: false } %>
+
+<% subscribable = @comment.commentable %>
+<%= turbo_stream.replace dom_id(subscribable, :subscription_links), partial: 'subscriptions/actions', locals: { subscribable: subscribable, subscribed: true } %>
+<%= turbo_stream.replace dom_id(subscribable, :dots_menu_subscription_links), partial: 'subscriptions/actions', locals: { subscribable: subscribable, dots_menu: true, subscribed: true } %>

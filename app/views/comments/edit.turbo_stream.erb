@@ -1,0 +1,1 @@
+<%= turbo_stream.replace dom_id(@comment, :wrapper), partial: 'comments/comment', locals: { comment: @comment, show_actions: @comment.user_id == current_user.id, editing: true } %>

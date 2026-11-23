@@ -1,0 +1,4 @@
+<%= turbo_stream.remove dom_id(@comment, :wrapper) %>
+<% if @comment.commentable.comments.empty? %>
+  <%= turbo_stream.replace 'no-comments', partial: 'comments/no_comments', locals: { visible: true } %>
+<% end %>

@@ -1,9 +1,9 @@
 <%= form_with model: [@comment],
-  local: false,
   html: {
     data: {
       behavior: 'local-auto-save',
-      auto_save_key: "comment-#{@comment.id}"
+      auto_save_key: "comment-#{@comment.id}",
+      turbo: true
     }
   } do |f| %>
 
@@ -21,8 +21,9 @@
   <%= link_to 'Cancel',
                 comment_path(@comment),
                 class: 'cancel-link',
-                remote: true,
                 data: {
-                  behavior: 'cancel-comment clear-local-auto-save'
+                  behavior: 'cancel-comment clear-local-auto-save',
+                  turbo: true,
+                  turbo_stream: true
                 } %>
 <% end %>
