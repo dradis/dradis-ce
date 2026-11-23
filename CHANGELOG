@@ -2,8 +2,9 @@
   - Tabs: remember the last selected tab when revisiting a view
   - [entity]:
     - [future tense verb] [feature]
+  - Ruby: Upgrade Ruby version to 4.0.10
   - Upgraded gems:
-    - msgpack, puma, sanitize
+    - json, msgpack, puma, sanitize
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
