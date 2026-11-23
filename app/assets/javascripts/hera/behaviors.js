@@ -241,9 +241,6 @@ document.addEventListener('turbo:load', function () {
   // don't fire turbo:frame-load, so content they insert never gets its
   // behaviors initialized. Reinitialize just the affected target after Turbo
   // applies the stream action.
-  //
-  // Console lines are plain text, and re-initializing the whole, growing list
-  // on every appended line would slow down long jobs, so they're skipped.
   document.addEventListener('turbo:before-stream-render', function (event) {
     const render = event.detail.render;
 
@@ -254,6 +251,7 @@ document.addEventListener('turbo:load', function () {
         streamElement.getAttribute('target')
       );
       if (!targetElement) return;
+      // Console lines are plain text; re-initializing on every line slows long jobs
       if (targetElement.matches('[data-console-target~=lines]')) return;
 
       initBehaviors(targetElement);

@@ -1,5 +1,4 @@
 <%# locals: (state: :idle, uid: nil) %>
-<%# Styled by the ajax-console mixin, included by the page that renders it. %>
 <div class="console" data-controller="console">
   <%= turbo_stream_from ConsoleLogger.stream_name(uid), data: { console_target: 'source' } if uid %>
   <%= render 'consoles/status', state: state, uid: uid %>

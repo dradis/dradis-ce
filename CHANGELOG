@@ -6,7 +6,6 @@
   - Upgraded gems:
     - json, msgpack, puma, sanitize
   - Bugs fixes:
-    - Upload: show when an upload fails instead of waiting for it forever
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:

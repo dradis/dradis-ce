@@ -6,10 +6,7 @@
 
   const $console = $('[data-behavior~=upload-console]');
   $console.html('<%= j render('consoles/console', state: :running, uid: @item_id) %>');
-  // Listen on this upload's console, not the wrapper, so the listeners go
-  // away when the next upload replaces it
   const consoleElement = $console[0].querySelector('[data-controller~=console]');
-  // Inserted after page load, so its behaviors (e.g. Copy log) need setting up
   window.initBehaviors(consoleElement);
 
   const data = {
@@ -21,8 +18,6 @@
     data.state = '<%= j @state %>';
   <% end %>
 
-  // If the request to start the import fails, no final status will be
-  // broadcast, so show the failure here
   const showFailed = () => {
     const $status = $(consoleElement).find('[data-console-target~=status]');
     if ($status.data('state') !== 'running') return;
@@ -33,8 +28,8 @@
     window.initBehaviors($failedStatus[0]);
   };
 
-  // Start the import once the console is listening, so it doesn't miss
-  // any line. Start anyway after a few seconds if it can't connect.
+  // Start the import once the console is listening, so it can't miss the
+  // final status. Start anyway if it can't connect.
   let started = false;
   const startImport = () => {
     if (started) return;
@@ -45,9 +40,7 @@
   consoleElement.addEventListener('console:connected', startImport, { once: true });
   setTimeout(startImport, 5000);
 
-  // Plugins (e.g. CSV, to open its column mapper) listen for job-done,
-  // which the polling console used to fire. Not on failure, so the
-  // failed status stays on screen.
+  // Plugins listen for job-done (e.g. CSV opens its column mapper)
   consoleElement.addEventListener('console:finished', (event) => {
     if (event.detail.state !== 'completed') return;
 
