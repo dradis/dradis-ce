@@ -151,7 +151,9 @@ document.addEventListener('turbo:load', function () {
 
     // Initialize clipboard.js
     const clipboard = new Clipboard(
-      parentElement.querySelectorAll('[data-clipboard-text]')
+      parentElement.querySelectorAll(
+        '[data-clipboard-text], [data-clipboard-target]'
+      )
     );
 
     clipboard.on('success', function (e) {
@@ -239,6 +241,9 @@ document.addEventListener('turbo:load', function () {
   // don't fire turbo:frame-load, so content they insert never gets its
   // behaviors initialized. Reinitialize just the affected target after Turbo
   // applies the stream action.
+  //
+  // Console lines are plain text, and re-initializing the whole, growing list
+  // on every appended line would slow down long jobs, so they're skipped.
   document.addEventListener('turbo:before-stream-render', function (event) {
     const render = event.detail.render;
 
@@ -248,7 +253,10 @@ document.addEventListener('turbo:load', function () {
       const targetElement = document.getElementById(
         streamElement.getAttribute('target')
       );
-      if (targetElement) initBehaviors(targetElement);
+      if (!targetElement) return;
+      if (targetElement.matches('[data-console-target~=lines]')) return;
+
+      initBehaviors(targetElement);
     };
   });
 

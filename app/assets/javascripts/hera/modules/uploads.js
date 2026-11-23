@@ -2,12 +2,10 @@ document.addEventListener('turbo:load', function () {
   if ($('body.upload').length) {
     const $bar = $('[data-behavior~=progress-bar]');
     const $percent = $('[data-behavior~=percent]');
-    const $status = $('[data-behavior~=status]');
 
     $('[data-behavior~=new-upload]').ajaxForm({
       dataType: 'script',
       beforeSend: function () {
-        $status.empty();
         const percentVal = '0%';
         $bar.width(percentVal);
         $bar.addClass('bg-primary');
@@ -29,9 +27,9 @@ document.addEventListener('turbo:load', function () {
 
     $('[data-behavior~=file-input]').change(function () {
       const fileName = this.value.split('\\').pop();
-      $('[data-behavior~=console]').empty();
       $('[data-behavior~=filename]').text(fileName);
-      $('[data-behavior~=spinner]').show();
+      $('[data-behavior~=filesize]').empty();
+      $('[data-behavior~=spinner]').removeClass('d-none');
       $('[data-behavior~=file-label]').text(fileName);
 
       $(this).closest('form').submit();

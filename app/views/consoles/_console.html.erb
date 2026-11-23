@@ -1,0 +1,13 @@
+<%# locals: (state: :idle, uid: nil) %>
+<%# A job's live output. Without a uid it shows the idle state and subscribes to nothing. %>
+<%# Styled by the ajax-console mixin, included by the page that renders it. %>
+<div class="console" data-controller="console">
+  <%= turbo_stream_from ConsoleLogger.stream_name(uid), data: { console_target: 'source' } if uid %>
+  <%= render 'consoles/status', state: state, uid: uid %>
+
+  <%= tag.div data: { console_target: 'lines' }, id: (ConsoleLogger.dom_id(uid, :lines) if uid) do %>
+    <% if state.to_sym == :idle %>
+      <p class="console-placeholder">Output will appear here once the job starts.</p>
+    <% end %>
+  <% end %>
+</div>

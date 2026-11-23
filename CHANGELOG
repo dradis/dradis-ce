@@ -1,9 +1,11 @@
 [v#.#.#] ([month] [YYYY])
+  - Upload: show the import's output live, with a clear working, complete or failed status
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
     - msgpack, puma, sanitize
   - Bugs fixes:
+    - Upload: show when an upload fails instead of waiting for it forever
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:

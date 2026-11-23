@@ -1,14 +1,69 @@
 @mixin ajax-console {
-  background-color: $black;
+  background-color: $console-bg;
   border-radius: 5px;
   color: $grey-500;
+  font-family: var(--bs-font-monospace);
+  font-size: $text-small;
+  height: 25rem;
   margin: 1rem 0;
-  height: 400px;
   overflow: auto;
   padding: 1rem;
 
+  .console-copy-btn {
+    background-color: $grey-900;
+    border: 1px solid $grey-500;
+    border-radius: 4px;
+    color: $grey-500;
+    font-size: inherit;
+    padding: 0.15rem 0.5rem;
+
+    &:hover {
+      background-color: $grey-800;
+      color: $grey-300;
+    }
+  }
+
+  .console-placeholder {
+    color: $grey-600;
+  }
+
+  // Stays at the top while the lines scroll underneath it
+  .console-status {
+    align-items: center;
+    background-color: $console-bg;
+    border-bottom: 1px solid $grey-800;
+    color: $grey-200;
+    display: flex;
+    gap: 0.5rem;
+    margin: -1rem -1rem 1rem;
+    padding: 1rem;
+    position: sticky;
+    top: -1rem;
+  }
+
+  .console-status-completed .console-status-dot {
+    background-color: $green;
+  }
+
+  .console-status-dot {
+    background-color: $grey-700;
+    border-radius: 50%;
+    display: inline-block;
+    height: 0.6rem;
+    width: 0.6rem;
+  }
+
+  .console-status-failed .console-status-dot {
+    background-color: $red;
+  }
+
+  .console-status-running .console-status-dot {
+    animation: console-status-pulse 2s infinite;
+    background-color: $yellow;
+  }
+
   .log {
-    margin-bottom: 5px;
+    margin-bottom: 0.3rem;
 
     span {
       white-space: pre;
@@ -25,6 +80,17 @@
     &.text-error {
       color: $red-300 !important;
     }
+  }
+}
+
+@keyframes console-status-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
   }
 }
 
