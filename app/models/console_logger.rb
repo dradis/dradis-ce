@@ -19,8 +19,8 @@ class ConsoleLogger
     [:console, uid]
   end
 
-  def initialize(uid: nil)
-    @uid = uid || SecureRandom.uuid
+  def initialize(uid:)
+    @uid = uid
   end
 
   def complete!
