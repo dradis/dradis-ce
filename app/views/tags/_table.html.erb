@@ -14,7 +14,7 @@
         <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Actions</span></th>
       </tr>
     </thead>
-    <tbody data-behavior='ui-sortable', data-sort-url="<%= sort_project_tags_path(current_project) %>">
+    <tbody data-controller="sortable" data-sort-url="<%= sort_project_tags_path(current_project) %>">
       <% @tags.each do |tag| %>
         <% cache [tag, @all_columns, 'tags-table'] do %>
           <tr id="tag-<%= tag.id %>">
