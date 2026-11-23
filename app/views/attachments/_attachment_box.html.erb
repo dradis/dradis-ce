@@ -33,6 +33,7 @@
                     <td rowspan="2" class="copy-link">
                       <button
                         class="btn btn-sm btn-transparent btn-copy"
+                        data-controller="clipboard"
                         data-clipboard-text="!<%= main_app.project_node_attachment_path(node.project, node, '') + attachment.url_encoded_filename %>!"
                       >
                         <i class="fa-solid fa-link fa-fw"></i>
@@ -135,6 +136,7 @@
                 <td rowspan="2" align="right" class="copy-link">
                   <button
                     class="btn btn-sm btn-transparent"
+                    data-controller="clipboard"
                     data-clipboard-text="!{%= file.url %}!"
                   >
                     <i class="fa-solid fa-link fa-fw"></i>
