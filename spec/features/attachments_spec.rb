@@ -59,7 +59,7 @@ describe 'Describe attachments' do
 
       filenames.each do |filename|
         url_encoded_filename = ERB::Util.url_encode(filename)
-        expect(page).to have_css("button[data-clipboard-text='!/projects/#{current_project.id}/nodes/#{@node.id}/attachments/#{url_encoded_filename}!']")
+        expect(page).to have_css("button[data-clipboard-text-value='!/projects/#{current_project.id}/nodes/#{@node.id}/attachments/#{url_encoded_filename}!']")
       end
     end
 

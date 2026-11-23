@@ -1,43 +1,40 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
+  static values = { text: String };
+
   connect() {
-    const clipboard = new Clipboard(this.element);
-
-    clipboard.on('success', function (e) {
-      const $copyBtn = $(e.trigger);
+    this.clipboard = new Clipboard(this.element, { text: () => this.textValue });
+    this.clipboard.on('success', (e) => {
       e.clearSelection();
-      $copyBtn.tooltip({
-        placement: 'bottom',
-        title: 'Copied to clipboard!',
-        trigger: 'manual',
-      });
-      $copyBtn.tooltip('show');
-      setTimeout(function () {
-        $copyBtn.tooltip('hide');
-      }, 1000);
+      this.showFeedback('Copied to clipboard!');
     });
-
-    clipboard.on('error', function (e) {
-      const actionKey = e.action === 'cut' ? 'X' : 'C',
-        $copyBtn = $(e.trigger);
-      let actionMsg;
-
-      if (/Mac/i.test(navigator.userAgent)) {
-        actionMsg = 'Press ⌘-' + actionKey + ' to ' + e.action;
-      } else {
-        actionMsg = 'Press Ctrl-' + actionKey + ' to ' + e.action;
-      }
-
-      $copyBtn.tooltip({
-        placement: 'bottom',
-        title: actionMsg,
-        trigger: 'manual',
-      });
-      $copyBtn.tooltip('show');
-      setTimeout(function () {
-        $copyBtn.tooltip('hide');
-      }, 1000);
+    this.clipboard.on('error', (e) => {
+      const actionKey = e.action === 'cut' ? 'X' : 'C';
+      const modifierKey = /Mac/i.test(navigator.userAgent) ? '⌘' : 'Ctrl';
+      this.showFeedback(`Press ${modifierKey}-${actionKey} to ${e.action}`);
     });
+  }
+
+  disconnect() {
+    this.clipboard.destroy();
+    this.disposeFeedback();
+  }
+
+  disposeFeedback() {
+    clearTimeout(this.feedbackTimeout);
+    this.feedback?.dispose();
+    this.feedback = null;
+  }
+
+  showFeedback(title) {
+    this.disposeFeedback();
+    this.feedback = new bootstrap.Tooltip(this.element, {
+      placement: 'bottom',
+      title: title,
+      trigger: 'manual',
+    });
+    this.feedback.show();
+    this.feedbackTimeout = setTimeout(() => this.feedback.hide(), 1000);
   }
 }
