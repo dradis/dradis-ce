@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.4.6'
+ruby '4.0.10'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 8.0.5.2'
@@ -88,7 +88,7 @@ gem 'sprockets-rails', '>= 3.0.0'
 gem 'bcrypt', '3.1.22'
 
 # Required by Rails (uglifier and activesupport)
-gem 'json', '2.3.0'
+gem 'json', '2.21.2'
 
 # XML manipulation
 gem 'nokogiri', '>= 1.19.5'
@@ -141,7 +141,7 @@ gem 'net-smtp'
 gem 'net-pop'
 gem 'net-imap', '>= 0.6.4.1'
 
-gem 'puma', '~> 7.2.2'
+gem 'puma', '~> 7.2.3'
 
 gem 'csv'
 
@@ -180,9 +180,9 @@ group :development do
   gem 'abbrev'
 
   gem 'bundler-audit', require: false
-  gem 'ruby_audit', '~> 3.0.0', require: false
+  gem 'ruby_audit', '~> 3.1.0', require: false
 
-  gem 'rubocop', '1.79.0', require: false
+  gem 'rubocop', '1.82.1', require: false
 
   # syntax highlighter for styles
   gem 'rouge'
@@ -222,14 +222,14 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 5.4.0'
+gem 'dradis-plugins', '~> 5.5.0'
 
 # Built-in Engines
 gem 'dradis-api', path: 'engines/dradis-api'
 gem 'dradis-echo', path: 'engines/dradis-echo'
 
 # Import / export project data
-gem 'dradis-projects', '~> 5.4.0'
+gem 'dradis-projects', '~> 5.5.0'
 
 plugins_file = 'Gemfile.plugins'
 if File.exist?(plugins_file)
@@ -240,36 +240,36 @@ end
 # effective.
 
 # ----------------------------------------------------------------- Calculators
-gem 'dradis-calculator_aivss-ssvc', github: 'dradis/dradis-calculator_aivss-ssvc', branch: 'main'
-gem 'dradis-calculator_cvss', '~> 5.4.0'
-gem 'dradis-calculator_dread', '~> 5.4.0'
-gem 'dradis-calculator_mitre', '~> 5.4.0'
-gem 'dradis-calculator_stride', github: 'dradis/dradis-calculator_stride', branch: 'implement-stride-calculator'
+gem 'dradis-calculator_aivss-ssvc', '~> 5.5.0'
+gem 'dradis-calculator_cvss', '~> 5.5.0'
+gem 'dradis-calculator_dread', '~> 5.5.0'
+gem 'dradis-calculator_mitre', '~> 5.5.0'
+gem 'dradis-calculator_stride', '~> 5.5.0'
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv_export', '~> 5.4.0'
-gem 'dradis-html_export', '~> 5.4.0'
+gem 'dradis-csv_export', '~> 5.5.0'
+gem 'dradis-html_export', '~> 5.5.0'
 
 # ---------------------------------------------------------------------- Import
-gem 'dradis-csv', '~> 5.4.0'
+gem 'dradis-csv', '~> 5.5.0'
 
 # ---------------------------------------------------------------------- Upload
-gem 'dradis-acunetix', '~> 5.4.0'
-gem 'dradis-brakeman', '~> 5.4.0'
-gem 'dradis-burp', '~> 5.4.0'
-gem 'dradis-coreimpact', '~> 5.4.0'
-gem 'dradis-metasploit', '~> 5.4.0'
-gem 'dradis-nessus', '~> 5.4.0'
-gem 'dradis-netsparker', '~> 5.4.0'
-gem 'dradis-nexpose', '~> 5.4.0'
-gem 'dradis-nikto', '~> 5.4.0'
-gem 'dradis-nipper', '~> 5.4.0'
-gem 'dradis-nmap', '~> 5.4.0'
-gem 'dradis-ntospider', '~> 5.4.0'
-gem 'dradis-openvas', '~> 5.4.0'
-gem 'dradis-pentera', '~> 5.4.0'
-gem 'dradis-qualys', '~> 5.4.0'
-gem 'dradis-saint', '~> 5.4.0'
-gem 'dradis-veracode', '~> 5.4.0'
-gem 'dradis-wpscan', '~> 5.4.0'
-gem 'dradis-zap', '~> 5.4.0'
+gem 'dradis-acunetix', '~> 5.5.0'
+gem 'dradis-brakeman', '~> 5.5.0'
+gem 'dradis-burp', '~> 5.5.0'
+gem 'dradis-coreimpact', '~> 5.5.0'
+gem 'dradis-metasploit', '~> 5.5.0'
+gem 'dradis-nessus', '~> 5.5.0'
+gem 'dradis-netsparker', '~> 5.5.0'
+gem 'dradis-nexpose', '~> 5.5.0'
+gem 'dradis-nikto', '~> 5.5.0'
+gem 'dradis-nipper', '~> 5.5.0'
+gem 'dradis-nmap', '~> 5.5.0'
+gem 'dradis-ntospider', '~> 5.5.0'
+gem 'dradis-openvas', '~> 5.5.0'
+gem 'dradis-pentera', '~> 5.5.0'
+gem 'dradis-qualys', '~> 5.5.0'
+gem 'dradis-saint', '~> 5.5.0'
+gem 'dradis-veracode', '~> 5.5.0'
+gem 'dradis-wpscan', '~> 5.5.0'
+gem 'dradis-zap', '~> 5.5.0'
