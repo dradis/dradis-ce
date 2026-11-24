@@ -23,9 +23,7 @@
     if ($status.data('state') !== 'running') return;
 
     $(consoleElement).find('[data-console-target~=lines]').append('<%= j render('consoles/line', text: 'The import could not be started. Please try again, or check the server logs.') %>');
-    const $failedStatus = $('<%= j render('consoles/status', state: :failed, uid: @item_id) %>');
-    $status.replaceWith($failedStatus);
-    window.initBehaviors($failedStatus[0]);
+    $status.replaceWith('<%= j render('consoles/status', state: :failed) %>');
   };
 
   // Start the import once the console is listening, so it can't miss the

@@ -26,10 +26,10 @@ describe ConsoleLogger do
     expect(Rails.logger).to have_received(:warn).with(/broadcast failed \(Redis::CannotConnectError/)
   end
 
-  it 'replaces the status with the final state' do
+  it 'updates the status with the final state' do
     broadcasts = capture_turbo_stream_broadcasts(stream) { logger.complete! }
 
-    expect(broadcasts.first['action']).to eq 'replace'
+    expect(broadcasts.first['action']).to eq 'update'
     expect(broadcasts.first['target']).to eq 'console_job-uid_status'
     expect(broadcasts.first.at_css('[data-state=completed]')).to be_present
   end

@@ -1,12 +1,6 @@
-<%# locals: (state:, uid:) %>
-<%= tag.div class: "console-status console-status-#{state}",
-  data: { console_target: 'status', state: state },
-  id: (ConsoleLogger.dom_id(uid, :status) if uid) do %>
+<%# locals: (state:) %>
+<%= tag.span class: "console-status-state console-status-#{state}",
+  data: { console_target: 'status', state: state } do %>
   <span class="console-status-dot"></span>
-  <span><%= console_summary(state) %></span>
-  <%= tag.button type: 'button',
-    class: class_names('btn btn-sm console-copy-btn ms-auto', invisible: uid.nil?),
-    data: { clipboard_target: ("##{ConsoleLogger.dom_id(uid, :lines)}" if uid) } do %>
-    <i class="fa-solid fa-copy"></i> Copy log
-  <% end %>
+  <%= console_summary(state) %>
 <% end %>

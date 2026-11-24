@@ -62,6 +62,12 @@
     background-color: $yellow;
   }
 
+  .console-status-state {
+    align-items: center;
+    display: inline-flex;
+    gap: 0.5rem;
+  }
+
   .log {
     margin-bottom: 0.3rem;
 

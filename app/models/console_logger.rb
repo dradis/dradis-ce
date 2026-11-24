@@ -62,11 +62,11 @@ class ConsoleLogger
 
   def broadcast_state(state)
     broadcast do
-      Turbo::StreamsChannel.broadcast_replace_to(
+      Turbo::StreamsChannel.broadcast_update_to(
         self.class.stream_name(uid),
         target: self.class.dom_id(uid, :status),
         partial: 'consoles/status',
-        locals: { state: state, uid: uid }
+        locals: { state: state }
       )
     end
   end
