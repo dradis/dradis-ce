@@ -7,7 +7,7 @@
   height: 25rem;
   margin: 1rem 0;
   overflow: auto;
-  padding: 1rem;
+  padding: $console-padding;
 
   .console-copy-btn {
     background-color: $grey-900;
@@ -35,10 +35,10 @@
     color: $grey-200;
     display: flex;
     gap: 0.5rem;
-    margin: -1rem -1rem 1rem;
-    padding: 1rem;
+    margin: (-$console-padding) (-$console-padding) $console-padding;
+    padding: $console-padding;
     position: sticky;
-    top: -1rem;
+    top: -$console-padding;
   }
 
   .console-status-completed .console-status-dot {
@@ -90,14 +90,8 @@
 }
 
 @keyframes console-status-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.4;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
 
 @mixin comment-item {

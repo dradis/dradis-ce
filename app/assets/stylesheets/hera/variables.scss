@@ -21,6 +21,7 @@ $shadow-color-dark: $grey-800;
 
 // Console (compile-time only, consoles are dark in both themes)
 $console-bg: lighten($black, 5%);
+$console-padding: 1rem;
 
 // Navbar
 $navbar-height: calc(3.2rem - 1px); // 1px to account for border
