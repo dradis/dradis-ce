@@ -1,26 +1,47 @@
-<% if @success -%>
-  ConsoleUpdater.jobId = '<%= @item_id %>'
-  $('[data-behavior~=result]').data('id', ConsoleUpdater.jobId)
-  $('[data-behavior~=result]').show()
-  $('[data-behavior~=item-id]').val(ConsoleUpdater.jobId)
+(() => {
+  $('[data-behavior~=item-id]').val('<%= @item_id %>');
+  $('[data-behavior~=attachment]').val('<%= j @attachment.filename %>');
+  $('[data-behavior~=filesize]').text('(<%=j number_to_human_size(File.size(@attachment.fullpath)) %>)');
+  $('[data-behavior~=spinner]').addClass('d-none');
 
-  $('[data-behavior~=filesize]').text('<%=j number_to_human_size( File.size(@attachment.fullpath) ) %>');
-  $('[data-behavior~=spinner]').hide();
-  ConsoleUpdater.parsing = true;
-  url = $('[data-behavior~=new-upload]').data('parse-url');
-  data = {
-    file: '<%= @attachment.filename %>',
+  const $console = $('[data-behavior~=upload-console]');
+  $console.html('<%= j render('consoles/console', state: :running, uid: @item_id) %>');
+  const consoleElement = $console[0].querySelector('[data-controller~=console]');
+  window.initBehaviors(consoleElement);
+
+  const data = {
+    file: '<%= j @attachment.filename %>',
     item_id: '<%= @item_id %>',
-    uploader: '<%= params[:uploader] %>'
+    uploader: '<%= j params[:uploader] %>'
   };
   <% if @state %>
-    data.state = '<%= @state %>';
+    data.state = '<%= j @state %>';
   <% end %>
 
-  $.post(url, data, null, 'script');
+  const showFailed = () => {
+    const $status = $(consoleElement).find('[data-console-target~=status]');
+    if ($status.data('state') !== 'running') return;
 
-  $('[data-behavior~=attachment]').val('<%= @attachment.filename %>');
-  setTimeout(ConsoleUpdater.updateConsole, 1000);
-<% else -%>
-  $("#<%= @item_id  %>").find('span').html('(<%=h flash.now[:error] %>)');
-<% end -%>
+    $(consoleElement).find('[data-console-target~=lines]').append('<%= j render('consoles/line', text: 'The import could not be started. Please try again, or check the server logs.') %>');
+    $status.replaceWith('<%= j render('consoles/status', state: :failed) %>');
+  };
+
+  // Start the import once the console is listening, so it can't miss the
+  // final status. Start anyway if it can't connect.
+  let started = false;
+  const startImport = () => {
+    if (started) return;
+    started = true;
+    $.post($('[data-behavior~=new-upload]').data('parse-url'), data, null, 'script')
+      .fail(showFailed);
+  };
+  consoleElement.addEventListener('console:connected', startImport, { once: true });
+  setTimeout(startImport, 5000);
+
+  // Plugins listen for job-done (e.g. CSV opens its column mapper)
+  consoleElement.addEventListener('console:finished', (event) => {
+    if (event.detail.state !== 'completed') return;
+
+    window.dispatchEvent(new CustomEvent('job-done', { detail: { state: 'end' } }));
+  }, { once: true });
+})();

@@ -1,0 +1,25 @@
+<%# locals: (state: :idle, uid: nil) %>
+<div class="console" data-controller="console">
+  <%= turbo_stream_from ConsoleLogger.stream_name(uid), data: { console_target: 'source' } if uid %>
+
+  <%# Kept outside _status so screen readers announce changes to it %>
+  <div class="console-status">
+    <%= tag.div id: (ConsoleLogger.dom_id(uid, :status) if uid), role: 'status' do %>
+      <%= render 'consoles/status', state: state %>
+    <% end %>
+    <%= tag.button type: 'button',
+      class: class_names('btn btn-sm console-copy-btn ms-auto', invisible: uid.nil?),
+      data: { clipboard_target: ("##{ConsoleLogger.dom_id(uid, :lines)}" if uid) } do %>
+      <i class="fa-solid fa-copy"></i> Copy log
+    <% end %>
+  </div>
+
+  <%= tag.div aria: { live: 'off' },
+    data: { console_target: 'lines' },
+    id: (ConsoleLogger.dom_id(uid, :lines) if uid),
+    role: 'log' do %>
+    <% if state.to_sym == :idle %>
+      <p class="console-placeholder">Output will appear here once the job starts.</p>
+    <% end %>
+  <% end %>
+</div>

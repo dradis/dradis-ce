@@ -1,4 +1,8 @@
 body.upload {
+  .console {
+    @include ajax-console;
+  }
+
   .progress-bar {
     position: relative;
 

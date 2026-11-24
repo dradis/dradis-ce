@@ -151,7 +151,9 @@ document.addEventListener('turbo:load', function () {
 
     // Initialize clipboard.js
     const clipboard = new Clipboard(
-      parentElement.querySelectorAll('[data-clipboard-text]')
+      parentElement.querySelectorAll(
+        '[data-clipboard-text], [data-clipboard-target]'
+      )
     );
 
     clipboard.on('success', function (e) {
@@ -248,7 +250,11 @@ document.addEventListener('turbo:load', function () {
       const targetElement = document.getElementById(
         streamElement.getAttribute('target')
       );
-      if (targetElement) initBehaviors(targetElement);
+      if (!targetElement) return;
+      // Console lines are plain text; re-initializing on every line slows long jobs
+      if (targetElement.matches('[data-console-target~=lines]')) return;
+
+      initBehaviors(targetElement);
     };
   });
 

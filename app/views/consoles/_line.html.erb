@@ -1,0 +1,2 @@
+<%# locals: (text:) %>
+<p class="log"><%= text.to_s.gsub(/\e\[\d+m/, '') %></p>

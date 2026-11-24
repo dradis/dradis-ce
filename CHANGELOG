@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Upload: show the import's output live, with a clear working, complete or failed status
   - [entity]:
     - [future tense verb] [feature]
   - Ruby: Upgrade Ruby version to 4.0.10

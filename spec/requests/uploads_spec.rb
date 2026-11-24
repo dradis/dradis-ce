@@ -42,7 +42,7 @@ describe 'upload requests' do
 
       it 'imports the uploaded template' do
         attachments_path = Attachment.pwd.join(@uploads_node.id.to_s)
-        attachment_file  = attachments_path.join('temp').to_s
+        attachment_file = attachments_path.join('temp').to_s
 
         FileUtils.mkdir_p(attachments_path)
         FileUtils.cp(small_file, attachment_file)
@@ -61,6 +61,40 @@ describe 'upload requests' do
 
         send_request
       end
+
+      context 'the console' do
+        include ActionCable::TestHelper
+        include Turbo::Broadcastable::TestHelper
+
+        let(:item_id) { SecureRandom.uuid }
+
+        before do
+          attachments_path = Attachment.pwd.join(@uploads_node.id.to_s)
+          FileUtils.mkdir_p(attachments_path)
+          FileUtils.cp(small_file, attachments_path.join('temp'))
+
+          allow(importer_class).to receive(:new).and_return(importer)
+        end
+
+        def final_state
+          broadcasts = capture_turbo_stream_broadcasts(ConsoleLogger.stream_name(item_id)) do
+            post project_upload_parse_path(@project), params: { file: 'temp', format: :js, item_id: item_id, uploader: uploader }
+          end
+          broadcasts.last.at_css('[data-state]')['data-state']
+        end
+
+        it 'broadcasts the completed state when the file is imported' do
+          allow(importer).to receive(:import).and_return(nil)
+
+          expect(final_state).to eq 'completed'
+        end
+
+        it 'broadcasts the failed state when the importer rejects the file' do
+          allow(importer).to receive(:import).and_return(false)
+
+          expect(final_state).to eq 'failed'
+        end
+      end
     end
 
     context 'big file size (> 1Mb)' do
@@ -77,7 +111,7 @@ describe 'upload requests' do
 
       it 'enqueues a background job with the right parameters' do
         attachments_path = Attachment.pwd.join(@uploads_node.id.to_s)
-        attachment_file  = attachments_path.join('temp').to_s
+        attachment_file = attachments_path.join('temp').to_s
 
         FileUtils.mkdir_p(attachments_path)
         FileUtils.cp(big_file, attachment_file)

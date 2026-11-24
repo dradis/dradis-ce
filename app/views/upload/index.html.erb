@@ -59,12 +59,14 @@
   <div class="col-lg-6 col-xl-7 mb-4">
     <div class="content-container mb-0 h-100">
       <h4 class="header-underline">Output console</h4>
-      <div data-behavior="status"></div>
-      <%= content_tag :div, id: 'result', style: 'display:none', data: { url: status_console_index_path, behavior: 'result' }  do %>
-        <div><strong>Filename</strong>: <span data-behavior="filename"></span> <span data-behavior="spinner"><%= image_tag 'loading.gif', style: "margin:0;", alt: 'loading spinner' %></span></div>
-        <div><strong>Size</strong>: <span data-behavior="filesize"></span></div>
-        <div id="console" class="mx-0 mb-0" data-behavior="console"></div>
-      <% end %>
+      <p class="mb-0">
+        <span data-behavior="filename">No file uploaded yet</span>
+        <span data-behavior="filesize"></span>
+        <span class="d-none" data-behavior="spinner"><%= image_tag 'loading.gif', alt: 'loading spinner' %></span>
+      </p>
+      <div data-behavior="upload-console">
+        <%= render 'consoles/console' %>
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,6 @@
+<%# locals: (state:) %>
+<%= tag.span class: "console-status-state console-status-#{state}",
+  data: { console_target: 'status', state: state } do %>
+  <span class="console-status-dot"></span>
+  <%= console_summary(state) %>
+<% end %>

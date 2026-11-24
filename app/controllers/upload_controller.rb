@@ -25,8 +25,7 @@ class UploadController < AuthenticatedController
     @attachment << upload_params[:file].read
     @attachment.save
 
-    @success = true
-    @item_id = Log.new.uid
+    @item_id = SecureRandom.uuid
     flash.now[:notice] = "Successfully uploaded #{ filename }"
   end
 
@@ -43,18 +42,18 @@ class UploadController < AuthenticatedController
     if Rails.env.production? || (File.size(attachment.fullpath) > 1024 * 1024)
       process_upload_background(attachment: attachment)
     else
-      process_upload_inline(attachment: attachment)
+      imported = process_upload_inline(attachment: attachment)
+      imported ? job_logger.complete! : job_logger.fail!
     end
 
-    # Nothing to do, the client-side JS will poll ./status for updates
-    # from now on
+    # Nothing to do, the job's output is broadcast to the upload console
     head :ok
   end
 
   private
 
   def job_logger
-    @job_logger ||= Log.new(uid: upload_params[:item_id])
+    @job_logger ||= ConsoleLogger.new(uid: upload_params[:item_id])
   end
 
   def upload_params
