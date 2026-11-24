@@ -29,9 +29,7 @@ class SubscriptionsController < AuthenticatedController
   end
 
   def subscribe
-    subscription = Subscription.new(subscription_params)
-    subscription.user = current_user
-    subscription.save
+    Subscription.subscribe(user: current_user, to: subscribable)
   end
 
   def subscribable
@@ -56,6 +54,6 @@ class SubscriptionsController < AuthenticatedController
       subscribable_type: subscription_params[:subscribable_type],
       subscribable_id: subscription_params[:subscribable_id]
     )
-    subscription.destroy
+    subscription&.destroy
   end
 end
