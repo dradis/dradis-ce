@@ -13,7 +13,8 @@ module Tracked
   def track_pending
     tracker.update_state(state: :pending)
     yield
-    unless tracker.state[:state] == :failed
+    # The state is read back from JSON in Redis, so it is always a String.
+    unless tracker.state[:state] == 'failed'
       tracker.update_state(state: :completed)
     end
   end
