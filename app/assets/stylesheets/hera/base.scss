@@ -93,8 +93,8 @@ th {
 }
 
 .badge-outline-danger {
-  border: 1px solid $red;
-  color: $red;
+  border: 1px solid var(--text-error);
+  color: var(--text-error);
 }
 
 .badge-outline-info {
@@ -373,7 +373,7 @@ pre {
 }
 
 .required-input {
-  color: $red;
+  color: var(--text-error);
 }
 
 ::selection,
