@@ -1,3 +1,8 @@
+v5.5.1 (November 2026)
+  - Ruby: Upgrade Ruby version to 4.0.10
+  - Upgraded gems:
+    - json, puma
+
 v5.5.0 (November 2026)
   - Echo: Allow Roslin's LanguageTool grammar and spell checking language to be changed
   - Editing: Warn user if another user is currently editing a record
