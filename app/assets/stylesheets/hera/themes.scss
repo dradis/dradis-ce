@@ -5,6 +5,20 @@
 // Components reference var(--name) rather than the SCSS variables directly.
 
 @mixin dark-theme {
+  // Alerts
+  --alert-danger-accent: #{lighten($red-200, 3%)};
+  --alert-danger-bg: #{rgba($red-500, 0.16)};
+  --alert-danger-border: #{rgba($red-500, 0.55)};
+  --alert-info-accent: #{$blue-200};
+  --alert-info-bg: #{rgba($blue-500, 0.12)};
+  --alert-info-border: #{rgba($blue-500, 0.4)};
+  --alert-success-accent: #{$green-300};
+  --alert-success-bg: #{rgba($green-500, 0.1)};
+  --alert-success-border: #{rgba($green-500, 0.25)};
+  --alert-warning-accent: #{$yellow-300};
+  --alert-warning-bg: #{rgba($yellow-500, 0.1)};
+  --alert-warning-border: #{rgba($yellow-500, 0.25)};
+
   // Backgrounds
   --brand-bg: #{$brand-500};
   --brand-fg: #{$white};
@@ -25,15 +39,6 @@
   --btn-outline-secondary-color: #{$grey-400};
   --btn-outline-success-color: #{$green-500};
   --btn-outline-warning-color: #{$yellow-500};
-
-  .alert .btn-close {
-    filter: none;
-    opacity: 0.75;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
 
   .btn-close {
     filter: invert(1) grayscale(100%) brightness(200%);
@@ -108,6 +113,20 @@
 }
 
 :root {
+  // Alerts
+  --alert-danger-accent: #{$red-600};
+  --alert-danger-bg: #{lighten($red-100, 7%)};
+  --alert-danger-border: #{rgba($red-500, 0.3)};
+  --alert-info-accent: #{$blue-800};
+  --alert-info-bg: #{lighten($blue-100, 6%)};
+  --alert-info-border: #{rgba($blue-500, 0.4)};
+  --alert-success-accent: #{$green-800};
+  --alert-success-bg: #{lighten($green-100, 1%)};
+  --alert-success-border: #{rgba($green-600, 0.5)};
+  --alert-warning-accent: #{$yellow-800};
+  --alert-warning-bg: #{$yellow-100};
+  --alert-warning-border: #{rgba($yellow-600, 0.5)};
+
   // Backgrounds
   --brand-bg: #{$brand-500};
   --brand-fg: #{$white};
