@@ -5,6 +5,7 @@
   - Upgraded gems:
     - json, msgpack, puma, sanitize
   - Bugs fixes:
+    - Alerts: tone down alerts in dark mode and keep their links readable
     - Uploads: report failed background uploads as failed in the API
     - [entity]:
       - [future tense verb] [bug fix]
