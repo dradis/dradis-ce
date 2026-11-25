@@ -219,6 +219,16 @@
       return this.$element.val().match(regex);
     },
 
+    _initReorderableFields() {
+      $('[data-behavior~=textile-form-body]', this.options.$fields).sortable({
+        axis: 'y',
+        containment: 'parent',
+        cursor: 'grabbing',
+        handle: '[data-behavior~=reorder-handle]',
+        tolerance: 'pointer',
+        update: () => this._timedPreview(),
+      });
+    },
     // Ajax form
     _loadFields: function(data, fieldValues) {
       $.post({
@@ -231,6 +241,7 @@
           this.options.$fields.removeClass('loading-indicator')
             .html(result);
           this.bindFieldGroup(this.options.$fields);
+          this._initReorderableFields();
           this.options.$fields.trigger('textile:formLoaded');
         }.bind(this)
       });

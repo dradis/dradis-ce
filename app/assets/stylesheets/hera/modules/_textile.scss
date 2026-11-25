@@ -236,6 +236,11 @@ body form:has(.textile-wrap.textile-fullscreen) {
           }
         }
 
+        &.ui-sortable-helper {
+          background-color: var(--primary-bg);
+          display: block;
+        }
+
         &:hover {
           border-color: $light;
 
