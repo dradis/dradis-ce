@@ -39,6 +39,10 @@
     </div>
   </div>
   <div class="actions">
+    <div class="text-secondary mb-1">
+      <i class="fa-solid fa-grip-vertical" data-behavior="reorder-handle" title="Drag to reorder"></i>
+      <span class="visually-hidden">Reorder field</span>
+    </div>
     <%= link_to 'javascript:void(0)', class: 'text-error-hover', tabindex: '-1',  data: { behavior: 'delete-field' } do %>
       <i class="fa-solid fa-trash" title="Delete Field"></i>
       <span class="visually-hidden">Delete Field</span>
