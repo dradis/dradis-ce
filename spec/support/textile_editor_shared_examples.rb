@@ -71,6 +71,31 @@ shared_examples 'a textile form view' do |klass|
     end.to change { all('.textile-form-field').count }.by(-1)
   end
 
+  it 'reorders fields in the form', js: true do
+    content_attribute = get_content_attribute(klass)
+    source_id = "#{klass.to_s.underscore}_#{content_attribute}"
+
+    click_link 'Source'
+    fill_in source_id, with: "#[Title]#\nTest Item\n\n#[Description]#\nTest Value"
+
+    find('body').click
+    click_link 'Fields'
+
+    all('[data-behavior~=textile-form-field]', count: 2).last.hover
+    handles = all('[data-behavior~=reorder-handle]')
+    page.driver.browser.action
+      .click_and_hold(handles.last.native)
+      .move_by(0, -20)
+      .move_to(handles.first.native, 0, -10)
+      .release
+      .perform
+
+    expect(find('.textile-preview')).to have_text(/Test Value.*Test Item/m)
+    expect(find("##{source_id}", visible: :all).value).to eq(
+      "#[Description]#\nTest Value\n\n#[Title]#\nTest Item"
+    )
+  end
+
   it 'saves the item when submitted', js: true do
     fill_in('item_form[field_name_0]', with: 'Title')
     fill_in('item_form[field_value_0]', with: 'Test Item')
