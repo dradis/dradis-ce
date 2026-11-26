@@ -39,29 +39,31 @@ if ENV['SELENIUM_HOST']
   Capybara.server_port = 3001
 end
 
-Capybara.register_driver :firefox do |app|
+Capybara.register_driver :chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new(
+    args: %w[--headless=new --disable-gpu --window-size=1400,1400]
+  )
+
   if ENV['SELENIUM_HOST']
     Capybara::Selenium::Driver.new(
       app,
       browser: :remote,
       clear_local_storage: true,
       url: "http://#{ENV['SELENIUM_HOST']}:4444",
-      options: Selenium::WebDriver::Firefox::Options.new
+      options: options
     )
   else
     Capybara::Selenium::Driver.new(
       app,
-      browser: :firefox,
+      browser: :chrome,
       clear_local_storage: true,
-      options: Selenium::WebDriver::Firefox::Options.new(
-        args: %w[--headless --disable-gpu]
-      )
+      options: options
     )
   end
 end
 
 Capybara.server = :puma, { Silent: true }
-Capybara.javascript_driver = :firefox
+Capybara.javascript_driver = :chrome
 Selenium::WebDriver.logger
 
 RSpec.configure do |config|
