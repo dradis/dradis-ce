@@ -66,7 +66,7 @@ shared_examples 'a page with a comments feed' do |commentable_factory|
             fill_in 'comment[content]', with: 'test comment'
             # debounceTimer is 0 in test env, see local.js
           end
-          page.driver.browser.navigate.refresh
+          page.refresh
           content = page.find_field('comment[content]').value
           expect(content).to eq 'test comment'
         end
@@ -79,7 +79,7 @@ shared_examples 'a page with a comments feed' do |commentable_factory|
             # debounceTimer is 0 in test env, see local.js
             click_button 'Add comment'
           end
-          page.driver.browser.navigate.refresh
+          page.refresh
           content = page.find_field('comment[content]').value
           expect(content).to eq ''
         end
@@ -132,7 +132,7 @@ shared_examples 'a page with a comments feed' do |commentable_factory|
 
       context 'when comment is not updated' do
         it 'prefills textarea with cached value' do
-          page.driver.browser.navigate.refresh
+          page.refresh
           find("div#comment_#{model.id}").hover
           within "div#comment_#{model.id}" do
             click_link 'Edit'
@@ -148,7 +148,7 @@ shared_examples 'a page with a comments feed' do |commentable_factory|
 
       context 'when cancel is clicked' do
         it 'clears cached value' do
-          page.driver.browser.navigate.refresh
+          page.refresh
           find("div#comment_#{model.id}").hover
           within "div#comment_#{model.id}" do
             click_link 'Edit'
@@ -156,7 +156,7 @@ shared_examples 'a page with a comments feed' do |commentable_factory|
           end
 
           page.driver.browser.action.move_to(nil, 0, 0).perform # needed so hover works after page refresh
-          page.driver.browser.navigate.refresh
+          page.refresh
           find("div#comment_#{model.id}").hover
 
           within "div#comment_#{model.id}" do

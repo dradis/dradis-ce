@@ -5,6 +5,7 @@
   data-theme-preferences-path-value="<%= main_app.preferences_path %>">
   
   <head>
+    <%= capybara_lockstep if defined?(Capybara::Lockstep) %>
     <title><%= page_title %></title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">

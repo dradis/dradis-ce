@@ -54,7 +54,7 @@ shared_examples 'a form with local auto save' do |klass, action|
 
   context 'when form is not saved' do
     it 'prefill fields with cached data' do
-      page.driver.browser.navigate.refresh
+      page.refresh
       click_link 'Source'
 
       if action == :new
@@ -136,7 +136,7 @@ shared_examples 'a form with local auto save' do |klass, action|
 
       context 'when form is not saved' do
         it 'prefill fields with cached data' do
-          page.driver.browser.navigate.refresh
+          page.refresh
           click_link 'Source'
 
           model_attributes_for_template.each do |model_attribute|

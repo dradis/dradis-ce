@@ -68,6 +68,11 @@ Rails.application.configure do
   # of failing the strict "precompiled?" check that only makes sense in prod.
   config.assets.check_precompiled_asset = false
 
+  # Keep Capybara in step with the browser and server so JS specs don't race
+  # (see the capybara_lockstep tag in the layouts).
+  config.middleware.insert_before 0, Capybara::Lockstep::Middleware
+  ActiveSupport.on_load(:action_view) { include Capybara::Lockstep::Helper }
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 

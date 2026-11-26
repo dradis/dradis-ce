@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <%= capybara_lockstep if defined?(Capybara::Lockstep) %>
     <%= stylesheet_link_tag 'errors', media: 'all', data: { turbo_track: true } %>
 
     <title>
