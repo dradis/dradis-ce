@@ -33,8 +33,14 @@
             <span class="board-tile-details-name h5" title="<%= board.name %>"><%= board.name %></span>
             <span class="board-tile-updated">Last updated <%= local_time_ago(board.updated_at) %></span>
             <span class="board-tile-stats">
-              <span><i class="fa-regular fa-address-card fa-fw me-1"></i><%= pluralize(board.lists.sum { |list| list.cards.size }, 'task') %></span>
-              <span><i class="fa-solid fa-table-columns fa-fw me-1"></i><%= pluralize(board.lists.size, 'list') %></span>
+              <span>
+                <i class="fa-regular fa-address-card fa-fw"></i>
+                <%= pluralize(board.lists.sum { |list| list.cards.size }, 'task') %>
+              </span>
+              <span>
+                <i class="fa-solid fa-table-columns fa-fw"></i>
+                <%= pluralize(board.lists.size, 'list') %>
+              </span>
             </span>
           <% end %>
 
@@ -47,7 +53,13 @@
               <%= link_to("#modal-board-edit-#{board.id}", class: 'dropdown-item', data: { bs_toggle: 'modal' }) do %>
                 <i class="fa-solid fa-pencil fa-fw"></i> Edit
               <% end %>
-              <%= link_to([current_project, board], class: 'dropdown-item text-error-hover', data: { confirm: "Are you sure?\n\nProceeding will delete this methodology from the project, as well as with any associated lists and tasks." }, method: 'delete') do %>
+              <%=
+                link_to(
+                  [current_project, board],
+                  class: 'dropdown-item text-error-hover',
+                  data: { confirm: "Are you sure?\n\nProceeding will delete this methodology from the project, as well as with any associated lists and tasks." },
+                  method: 'delete'
+                ) do %>
                 <i class="fa-solid fa-trash fa-fw"></i> Delete
               <% end %>
             </div>
