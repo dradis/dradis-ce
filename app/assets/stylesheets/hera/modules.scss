@@ -106,8 +106,11 @@
     }
 
     &:last-of-type {
+      flex: 1 1 0;
+      min-width: 8rem;
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }
