@@ -294,7 +294,8 @@ class ActivitiesPoller {
       if (this.action === 'index') {
         const $board = $(`li.board-list-item[data-board-id='${boardId}']`);
         if ($board.length) {
-          $board.find('.board-tile-details-name').html(boardName);
+          $board.find('.board-tile-details-name').html(boardName).attr('title', boardName);
+          $board.find('.board-actions .visually-hidden').text(`Toggle menu for ${boardName}`);
         }
       } else if (this._currentlyViewingBoard(boardId)) {
         document.title = boardName;

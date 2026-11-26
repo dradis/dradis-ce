@@ -7,69 +7,58 @@ body.cards {
 
 body.boards.index {
   .board-actions {
-    visibility: hidden;
-    float: right;
-
-    a {
-      margin-left: 0.5rem;
-      white-space: nowrap;
-    }
+    align-self: start;
+    grid-area: 1 / 1;
+    justify-self: end;
+    margin: 0.25rem;
   }
 
   .board-list {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    gap: 2.5rem 1rem;
+    grid-auto-rows: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
     list-style: none;
+    margin: 1.5rem 0 0;
     padding: 0;
-    margin: 0;
   }
 
+  // Stack the tile and its menu in one cell (a menu can't go inside the link)
   .board-list-item {
-    box-sizing: border-box;
-    padding: 0 1rem 0.5rem 0;
-    position: relative;
-    width: 20%;
-
-    &:hover {
-      .board-actions {
-        visibility: visible;
-      }
-    }
-
-    &:nth-child(5n) {
-      padding-right: 0;
-    }
-
-    @include media-breakpoint-down(lg) {
-      padding-right: 0;
-      width: 100%;
-    }
+    display: grid;
   }
 
   .board-tile {
-    background-color: $primary;
-    border-radius: 3px;
-    color: $white;
-    display: block;
-    line-height: 20px;
-    padding: 0.5rem 0.75rem;
-    transition: background-color 0.2s ease-in-out;
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    display: flex;
+    flex-direction: column;
+    grid-area: 1 / 1;
+    padding: 0.75rem 1rem;
+    transition: border-color 0.15s ease-in-out;
 
     &:hover {
-      background-color: darken($primary, 5%);
+      border-color: var(--text-link);
     }
 
     .board-tile-details {
-      display: block;
-      min-height: 4rem;
+      padding-right: 1.5rem;
     }
 
     .board-tile-details-name {
-      font-size: 1rem;
-      font-weight: 700;
-      display: inline-block;
-      max-height: 40px;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      display: -webkit-box;
+      font-weight: 600;
       overflow: hidden;
+    }
+
+    .board-tile-stats {
+      color: var(--text-muted);
+      font-size: 0.875em;
+      margin-top: auto;
+      padding-top: 0.75rem;
     }
   }
 
