@@ -62,8 +62,9 @@ shared_examples 'qa pages' do |item_type|
           click_button('State')
           expect do
             click_link state
-            # Wait for action to complete
-            page.find('.alert')
+            # Wait for action to complete. Scoped to .alert-success because Chrome
+            # reports the layout's <noscript> alert as visible after Turbo renders.
+            page.find('.alert-success')
           end.to have_enqueued_job(ActivityTrackingJob).with(job_params(record))
 
           expect(current_path).to eq polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
