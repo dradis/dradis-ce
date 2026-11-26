@@ -28,12 +28,13 @@ export default class extends Controller {
   }
 
   showFeedback(title) {
-    this.disposeFeedback();
-    this.feedback = new bootstrap.Tooltip(this.element, {
+    clearTimeout(this.feedbackTimeout);
+    this.feedback ??= new bootstrap.Tooltip(this.element, {
       placement: 'bottom',
       title: title,
       trigger: 'manual',
     });
+    this.feedback.setContent({ '.tooltip-inner': title });
     this.feedback.show();
     this.feedbackTimeout = setTimeout(() => this.feedback.hide(), 1000);
   }
