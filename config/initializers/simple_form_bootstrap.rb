@@ -114,7 +114,7 @@ SimpleForm.setup do |config|
     b.use :html5
     b.optional :readonly
     b.use :label, class: 'form-label'
-    b.use :input, class: 'form-select', error_class: 'is-invalid', valid_class: ''
+    b.use :input, class: 'form-select', error_class: 'is-invalid', data: { controller: 'combobox' }, valid_class: ''
     b.use :full_error, wrap_with: { class: 'invalid-feedback' }
     b.use :hint, wrap_with: { class: 'form-text' }
   end
@@ -221,7 +221,7 @@ SimpleForm.setup do |config|
     b.optional :readonly
     b.use :label, class: 'col-sm-3 col-form-label'
     b.wrapper :grid_wrapper, class: 'col-sm-9' do |ba|
-      ba.use :input, class: 'form-select', error_class: 'is-invalid', valid_class: ''
+      ba.use :input, class: 'form-select', error_class: 'is-invalid', data: { controller: 'combobox' }, valid_class: ''
       ba.use :full_error, wrap_with: { class: 'invalid-feedback' }
       ba.use :hint, wrap_with: { class: 'form-text' }
     end
@@ -340,7 +340,7 @@ SimpleForm.setup do |config|
   config.wrappers :floating_labels_select, class: 'form-floating mb-3' do |b|
     b.use :html5
     b.optional :readonly
-    b.use :input, class: 'form-select', error_class: 'is-invalid', valid_class: ''
+    b.use :input, class: 'form-select', error_class: 'is-invalid', data: { controller: 'combobox' }, valid_class: ''
     b.use :label
     b.use :full_error, wrap_with: { class: 'invalid-feedback' }
     b.use :hint, wrap_with: { class: 'form-text' }

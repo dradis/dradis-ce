@@ -23,7 +23,7 @@
       f.select :icon,
         options_for_select(prompt_icons_collection, @prompt.icon),
         {},
-        class: 'form-select'
+        class: 'form-select', data: { controller: 'combobox' }
     %>
   </div>
 
@@ -33,7 +33,7 @@
       f.select :scope,
         options_for_select(Dradis::Plugins::Echo::Prompt::SCOPES.map { |scope| [scope.to_s.titleize, scope] }, @prompt.scope),
         {},
-        class: 'form-select'
+        class: 'form-select', data: { controller: 'combobox' }
     %>
   </div>
 
