@@ -294,8 +294,10 @@ class ActivitiesPoller {
       if (this.action === 'index') {
         const $board = $(`li.board-list-item[data-board-id='${boardId}']`);
         if ($board.length) {
-          $board.find('.board-tile-details-name').html(boardName).attr('title', boardName);
-          $board.find('.board-actions .visually-hidden').text(`Toggle menu for ${boardName}`);
+          const $name = $board.find('.board-tile-details-name').html(boardName);
+          const name = $name.text();
+          $name.attr('title', name);
+          $board.find('.board-actions .visually-hidden').text(`Toggle menu for ${name}`);
         }
       } else if (this._currentlyViewingBoard(boardId)) {
         document.title = boardName;
