@@ -38,7 +38,7 @@ shared_examples 'a form with local auto save' do |klass, action|
       check @first_user.name
     elsif klass == Evidence
       find('#evidence_issue_id + .combobox').click
-      find('.combobox-menu .combobox-option', text:  @issue_1.title).click
+      find('.combobox-menu .combobox-option', text: @issue_1.title).click
     elsif klass == Issue
       dropdown_toggle = page.find('.dropdown-toggle span.tag')
       dropdown_toggle.click
