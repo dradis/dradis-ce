@@ -8,29 +8,30 @@
             <div class="list-header">
               <h4>
                 <%= list.name %>
-                <span class="js-list-count badge bg-secondary pull-right"><%= list.cards.count %></span>
+                <span class="js-list-count badge bg-secondary align-middle"><%= list.cards.count %></span>
               </h4>
 
-              <div class="list-actions">
-                <%=
-                link_to(
-                  "#modal-list-edit-#{list.id}",
-                  data: { bs_toggle: 'modal' }
-                ) do
-              %>
-                <i class="fa-solid fa-pencil"></i> Edit
-              <% end %>
-              <%=
-                link_to(
-                  [current_project, board, list],
-                  class: 'text-error-hover',
-                  data: { confirm: "Are you sure?\n\nProceeding will delete this list from the methodology, along with any associated tasks." },
-                  method: 'delete'
-                ) do %>
-                <i class="fa-solid fa-trash"></i> Delete
-              <% end %>
+              <div class="dropdown dots-dropdown">
+                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+                  <i class="fa-solid fa-ellipsis-h fa-lg"></i>
+                  <span class="visually-hidden">Toggle menu for <%= list.name %></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end">
+                  <%= link_to "#modal-list-edit-#{list.id}", class: 'dropdown-item', data: { bs_toggle: 'modal' } do %>
+                    <i class="fa-solid fa-pencil fa-fw"></i> Edit
+                  <% end %>
+                  <%=
+                    link_to(
+                      [current_project, board, list],
+                      class: 'dropdown-item text-error-hover',
+                      data: { confirm: "Are you sure?\n\nProceeding will delete this list from the methodology, along with any associated tasks." },
+                      method: 'delete'
+                    ) do %>
+                    <i class="fa-solid fa-trash fa-fw"></i> Delete
+                  <% end %>
+                </div>
+              </div>
             </div>
-          </div>
 
           <ul class="list-cards js-sortable-cards">
             <% list.ordered_cards.each do |card| %>
@@ -38,7 +39,7 @@
                 <li class="card" data-card-id="<%= card.id %>" data-move-url="<%= project_board_list_card_position_path(current_project, board, list, card) %>">
                   <%= link_to project_board_list_card_path(current_project, board, list, card) do %>
                     <div class="card-details">
-                      <div class="card-title"><%= card.name %></div>
+                      <div class="card-title" title="<%= card.name %>"><%= card.name %></div>
                       <div class="card-badges">
                         <% if card.due_date %>
                           <% case (card.due_date - Date.today).to_i %>
@@ -65,17 +66,16 @@
                 <% end %> <%# board-list-card cache %>
               <% end %>
             </ul>
-            <%= link_to 'Add a task...', new_project_board_list_card_path(current_project, board, list), class: 'card-new' %>
+            <%= link_to new_project_board_list_card_path(current_project, board, list), class: 'card-new' do %>
+              <i class="fa-solid fa-plus fa-fw me-1"></i>Add a task
+            <% end %>
           </li>
         <% end %> <%# board-list cache %>
       <% end %>
 
       <li class="list list-new">
-        <a
-          href="#modal-list-new"
-          data-bs-toggle="modal"
-        >
-          Add a list...
+        <a href="#modal-list-new" data-bs-toggle="modal">
+          <i class="fa-solid fa-plus fa-fw me-1"></i>Add a list
         </a>
       </li>
     </ul>
