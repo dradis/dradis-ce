@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en" data-theme="auto">
   <head>
-    <%= capybara_lockstep if defined?(Capybara::Lockstep) %>
     <title><%= [content_for(:title), 'Dradis Community Edition'].compact.join(' | ') %></title>
     <script>(() => { const t = localStorage.getItem('dradis-theme'); if (t) document.documentElement.dataset.theme = t; })();</script>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track' => true %>
