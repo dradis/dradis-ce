@@ -30,10 +30,12 @@
 
         <li class="board-list-item" data-board-id="<%= board.id %>">
           <%= link_to main_app.project_board_path(current_project, board), class: 'board-tile' do %>
-            <span class="board-tile-details">
-              <span class="board-tile-details-name" title="<%= board.name %>"><%= board.name %></span>
+            <span class="board-tile-details-name h5" title="<%= board.name %>"><%= board.name %></span>
+            <span class="board-tile-updated">Last updated <%= local_time_ago(board.updated_at) %></span>
+            <span class="board-tile-stats">
+              <span><i class="fa-regular fa-address-card fa-fw me-1"></i><%= pluralize(board.lists.sum { |list| list.cards.size }, 'task') %></span>
+              <span><i class="fa-solid fa-table-columns fa-fw me-1"></i><%= pluralize(board.lists.size, 'list') %></span>
             </span>
-            <span class="board-tile-stats"><%= pluralize(board.lists.sum { |list| list.cards.size }, 'task') %> · <%= pluralize(board.lists.size, 'list') %></span>
           <% end %>
 
           <div class="board-actions dropdown dots-dropdown">

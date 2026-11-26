@@ -10,12 +10,12 @@ body.boards.index {
     align-self: start;
     grid-area: 1 / 1;
     justify-self: end;
-    margin: 0.25rem;
+    margin: 0.25rem 0.5rem 0 0;
   }
 
   .board-list {
     display: grid;
-    gap: 2.5rem 1rem;
+    gap: 1rem;
     grid-auto-rows: 1fr;
     grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
     list-style: none;
@@ -32,33 +32,38 @@ body.boards.index {
     background-color: var(--secondary-bg);
     border: 1px solid var(--border-color);
     border-radius: $border-radius;
+    color: var(--text-default);
     display: flex;
     flex-direction: column;
     grid-area: 1 / 1;
-    padding: 0.75rem 1rem;
     transition: border-color 0.15s ease-in-out;
 
     &:hover {
       border-color: var(--text-link);
     }
 
-    .board-tile-details {
-      padding-right: 1.5rem;
-    }
-
     .board-tile-details-name {
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
+      color: var(--text-link);
       display: -webkit-box;
-      font-weight: 600;
+      margin: 2.5rem 1.25rem 0;
       overflow: hidden;
     }
 
     .board-tile-stats {
-      color: var(--text-muted);
-      font-size: 0.875em;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      font-size: 0.875rem;
+      justify-content: space-between;
       margin-top: auto;
-      padding-top: 0.75rem;
+      padding: 0.75rem 1.25rem;
+    }
+
+    .board-tile-updated {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      margin: 0.25rem 1.25rem 2.5rem;
     }
   }
 

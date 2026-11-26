@@ -45,7 +45,9 @@ describe 'Board pages:' do
 
         visit project_boards_path(current_project)
 
-        expect(page).to have_text '3 tasks · 2 lists'
+        expect(page).to have_text '3 tasks'
+        expect(page).to have_text '2 lists'
+        expect(page).to have_text 'Last updated'
       end
 
       context 'creating a board using a template', js: true do
