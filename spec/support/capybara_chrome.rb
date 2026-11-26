@@ -1,6 +1,7 @@
 # Capybara 3.40 resets Chrome between examples with
 # Storage.clearDataForOrigin(origin: '*'), which current Chrome rejects as an
 # invalid URL. Scope the clear to the test server's origin instead.
+# SEE: https://github.com/teamcapybara/capybara/issues/2865
 module ChromeStorageClearPatch
   def execute_cdp(cmd, **args)
     if cmd == 'Storage.clearDataForOrigin' && args[:origin] == '*'
