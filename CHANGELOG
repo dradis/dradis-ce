@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Editor: add drag and drop reordering of fields
   - [entity]:
     - [future tense verb] [feature]
   - Methodologies: show task counts and last update, and tidy up the board layout
