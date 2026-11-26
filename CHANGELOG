@@ -1,7 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
-  - Methodologies: show task and list counts on the methodologies page and tidy up the board layout
+  - Methodologies: show task and list counts and the last update on the methodologies page, and tidy up the board layout
   - Ruby: Upgrade Ruby version to 4.0.10
   - Upgraded gems:
     - json, msgpack, puma, sanitize
