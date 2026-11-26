@@ -1,3 +1,37 @@
+[v#.#.#] ([month] [YYYY])
+  - Editor: add drag and drop reordering of fields
+  - [entity]:
+    - [future tense verb] [feature]
+  - Upgraded gems:
+    - msgpack, sanitize
+  - Bugs fixes:
+    - Alerts: tone down alerts in dark mode and keep their links readable
+    - Uploads: report failed background uploads as failed in the API
+    - [entity]:
+      - [future tense verb] [bug fix]
+    - Bug tracker items:
+      - [item]
+  - Echo enhancements:
+    - [Echo entity]:
+      - [future tense verb] [Echo enhancement]
+  - New integrations:
+    - [integration]
+  - Integration enhancements:
+    - [integration]:
+      - [future tense verb] [integration enhancement]
+      - [integration bug fixes]:
+        - [future tense verb] [integration bug fix]
+  - Reporting enhancements:
+    - [report type]:
+      - [future tense verb] [reporting enhancement]
+  - REST/JSON API enhancements:
+    - [API entity]:
+      - [future tense verb] [API enhancement]
+  - Security Fixes:
+    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
 v5.5.1 (November 2026)
   - Ruby: Upgrade Ruby version to 4.0.10
   - Upgraded gems:

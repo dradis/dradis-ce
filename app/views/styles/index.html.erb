@@ -280,7 +280,8 @@
   <div class="style-example">
     <p class="m-0">Badges are created with the class <code>badge</code>, and a contextual class (e.g. <code>bg-danger</code>).</p>
     <p class="m-0">In their solid form <code>bg-success</code>, <code>bg-warning</code>, and <code>bg-danger</code> are used for due-dates, while <code>bg-primary</code> for informational purposes.</p>
-    <p>In their outline form they're used to display project information.</p>
+    <p class="m-0">In their outline form they're used to display project information.</p>
+    <p>State badges show the QA state of a record (issues, evidence, content blocks). Render them with the <code>state_badge(record)</code> helper.</p>
 
     <div class="d-flex flex-row mb-3">
       <span class="badge bg-primary me-2">Badge primary</span>
@@ -288,10 +289,15 @@
       <span class="badge bg-success me-2">Future due date</span>
       <span class="badge bg-warning me-2">Due today</span>
     </div>
-    <div class="d-flex flex-row">
+    <div class="d-flex flex-row mb-3">
       <span class="badge badge-outline-lavender me-2">Team name</span>
       <span class="badge badge-outline-info me-2">Project state</span> 
       <span class="badge badge-outline-danger me-2">Danger badge</span> 
+    </div>
+    <div class="d-flex flex-row">
+      <span class="badge badge-state-draft me-2">Draft</span>
+      <span class="badge badge-state-ready-for-review me-2">Ready for review</span>
+      <span class="badge badge-state-published me-2">Published</span>
     </div>
   </div>
 
@@ -304,7 +310,11 @@
 
 <span class="badge badge-outline-lavender">Team name</span>
 <span class="badge badge-outline-info">Project state</span> 
-<span class="badge badge-outline-danger">Danger badge</span>', 'html').html_safe %>
+<span class="badge badge-outline-danger">Danger badge</span>
+
+<span class="badge badge-state-draft">Draft</span>
+<span class="badge badge-state-ready-for-review">Ready for review</span>
+<span class="badge badge-state-published">Published</span>', 'html').html_safe %>
   </div>
 </div>
 

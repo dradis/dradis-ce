@@ -69,8 +69,8 @@
   }
 
   &.btn-outline-danger {
-    color: $red;
-    border-color: $red;
+    border-color: var(--text-error);
+    color: var(--text-error);
 
     &:hover,
     &:focus,
