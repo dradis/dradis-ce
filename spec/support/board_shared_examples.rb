@@ -171,7 +171,8 @@ shared_examples 'managing boards' do
     before do
       @b = board
       visit boards_path
-      find("li[data-board-id='#{@b.id}'] .dropdown-toggle").click
+      toggle = "li[data-board-id='#{@b.id}'] .dropdown-toggle"
+      find(toggle).click if page.has_css?(toggle, wait: 0)
       find("a[href='#{modal_selector}']").click
       expect(page).to have_selector(modal_selector, visible: true)
     end
