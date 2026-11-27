@@ -7,7 +7,7 @@ class BoardsController < AuthenticatedController
   before_action :redirect_if_node_board, only: :show
 
   def index
-    @boards = current_project.methodology_library.boards
+    @boards = current_project.methodology_library.boards.includes(lists: :cards)
     @templates = Methodology.all
 
     respond_to do |format|
