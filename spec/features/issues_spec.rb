@@ -74,6 +74,11 @@ describe 'Issues pages' do
         it_behaves_like 'a .textile form'
 
         context 'submitting the form with valid information' do
+          let(:submit_form) do
+            click_button 'Create Issue'
+            expect(page).to have_text 'Issue added.'
+          end
+
           before do
             visit new_project_issue_path(current_project)
             click_link 'Source'
@@ -159,6 +164,11 @@ describe 'Issues pages' do
         end
 
         context 'when the issue has a Tags field' do
+          let(:submit_form) do
+            click_button 'Create Issue'
+            expect(page).to have_text 'Issue added.'
+          end
+
           it 'tags the issue with the corresponding tag if only one is present' do
             tag_field = '!f89406_private'
             visit new_project_issue_path(current_project)
@@ -223,7 +233,10 @@ describe 'Issues pages' do
             find('#issue_text').send_keys :enter, value
           end
 
-          let(:submit_form) { click_button 'Update Issue' }
+          let(:submit_form) do
+            click_button 'Update Issue'
+            expect(page).to have_text 'Issue updated.'
+          end
 
           it 'updates and shows the issue' do
             submit_form

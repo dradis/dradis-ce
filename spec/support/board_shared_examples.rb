@@ -177,6 +177,11 @@ shared_examples 'managing boards' do
     end
 
     describe 'submitting the form with valid information' do
+      let(:submit_form) do
+        click_button 'Update methodology'
+        expect(page).to have_text(/Methodology renamed/i)
+      end
+
       before do
         within modal_selector do
           fill_in "board_#{board.id}_name", with: 'New Board Name'

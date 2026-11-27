@@ -32,6 +32,11 @@ describe 'Card pages:' do
       end
 
       describe 'submitting the form with valid information' do
+        let(:submit_form) do
+          click_button 'Create Card'
+          expect(page).to have_text 'Task added.'
+        end
+
         before do
           visit new_project_board_list_card_path(current_project, @board, @list)
           click_link 'Source'
@@ -83,9 +88,10 @@ describe 'Card pages:' do
           expect(page).to have_checked_field("card_assignee_ids_#{@second_user.id}")
 
           submit_form
+          expect(page).to have_text 'Task added.'
 
           card = Card.last
-          expect(current_path).to eq(project_board_list_card_path(current_project, @board, @list, card))
+          expect(page).to have_current_path(project_board_list_card_path(current_project, @board, @list, card))
 
           assignee_ids = card.reload.assignees.pluck(:id)
           expect(assignee_ids.count).to eq 2
@@ -130,6 +136,11 @@ describe 'Card pages:' do
       end
 
       describe 'submitting the form with valid information' do
+        let(:submit_form) do
+          click_button 'Update Card'
+          expect(page).to have_text 'Task updated.'
+        end
+
         before do
           visit edit_project_board_list_card_path(current_project, @board, @list, @card)
           click_link 'Source'
@@ -195,7 +206,7 @@ describe 'Card pages:' do
 
           submit_form
 
-          expect(current_path).to eq(project_board_list_card_path(current_project, @board, @list, @card))
+          expect(page).to have_current_path(project_board_list_card_path(current_project, @board, @list, @card))
 
           assignee_ids = @card.reload.assignees.pluck(:id)
           expect(assignee_ids.include? @first_user.id).to be false
@@ -253,6 +264,7 @@ describe 'Card pages:' do
             find('.dots-dropdown').click
             click_link 'Delete'
           end
+          expect(page).to have_text 'Task deleted'
         end
 
         it 'deletes the card' do
@@ -270,12 +282,6 @@ describe 'Card pages:' do
         end
 
         let(:model) { @card }
-        let(:submit_form) do
-          within('.actions', match: :first) do
-            find('.dots-dropdown').click
-            click_link 'Delete'
-          end
-        end
         let(:trackable) { @card }
 
         include_examples 'creates an Activity', :destroy

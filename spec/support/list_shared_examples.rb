@@ -88,6 +88,11 @@ shared_examples 'managing lists' do
     end
 
     describe 'submitting the form with valid information' do
+      let(:submit_form) do
+        click_button 'Update list'
+        expect(page).to have_text(/List renamed/i)
+      end
+
       before do
         within modal_selector do
           fill_in "new_list_#{@list.id}_name", with: 'New List Name'

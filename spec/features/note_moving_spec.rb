@@ -49,6 +49,7 @@ describe 'moving a note', js: true do
         click_link @node_1.label
         click_submit
       end
+      expect(page).to have_text 'Note updated.'
     end
 
     it "should update the note's node_id" do

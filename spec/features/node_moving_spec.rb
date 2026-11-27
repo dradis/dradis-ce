@@ -38,6 +38,7 @@ describe "moving a node", js: true do
       click_link(@node_3.label)
       find_button("Move").click
     end
+    expect(page).to have_text 'Node updated.'
     expect(@node_2.reload.parent).to eq @node_3
     expect(current_path).to eq project_node_path(current_project, @node_2)
   end
@@ -50,6 +51,7 @@ describe "moving a node", js: true do
       click_link @node_4.label
       click_button "Move"
     end
+    expect(page).to have_text 'Node updated.'
 
     expect(@node_2.reload.parent).to eq @node_4
     expect(current_path).to eq project_node_path(current_project, @node_2)

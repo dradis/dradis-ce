@@ -60,6 +60,7 @@ shared_examples 'recover deleted item without node' do |item_type|
       within '#modal_delete_node' do
         click_link 'Delete'
       end
+      expect(page).to have_no_current_path(project_node_path(model.node.project, model.node.id))
 
       expect do
         visit project_trash_path(current_project)

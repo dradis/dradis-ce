@@ -81,6 +81,7 @@ shared_examples 'a textile form view' do |klass|
     within '.form-actions' do
       find('[type="submit"]').click
     end
+    expect(page).to have_no_current_path(action_path)
 
     updated_item = defined?(item) ? item : klass.last
 

@@ -82,6 +82,7 @@ shared_examples 'a form with local auto save' do |klass, action|
       within '.content-container' do
         page.find('[type="submit"]').click
       end
+      expect(page).to have_no_current_path(model_path, ignore_query: true)
       visit model_path
       click_link 'Source'
 
@@ -157,6 +158,7 @@ shared_examples 'a form with local auto save' do |klass, action|
           within '.content-container' do
             page.find('[type="submit"]').click
           end
+          expect(page).to have_no_current_path(model_path, ignore_query: true)
           visit "#{model_path}?template=simple_note"
           click_link 'Source'
 

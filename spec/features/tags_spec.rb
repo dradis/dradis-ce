@@ -41,8 +41,8 @@ describe 'Tag pages:' do
         fill_in :tag_color, with: '#000000'
         expect do
           click_button 'Update Tag'
+          expect(page).to have_text('Tag updated.')
         end.to change { tag.reload.name }.from('!9467bd_critical').to('!000000_test')
-        expect(page).to have_text('Tag updated.')
       end
     end
 
@@ -75,8 +75,8 @@ describe 'Tag pages:' do
         fill_in :tag_color, with: '#000000'
         expect do
           click_button 'Create Tag'
+          expect(page).to have_text('Tag created.')
         end.to change { current_project.tags.count }.by(1)
-        expect(page).to have_text('Tag created.')
         page.find('.dropdown-toggle span.tag').click
         expect(page).to have_link('Test')
       end
@@ -102,8 +102,8 @@ describe 'Tag pages:' do
         fill_in :tag_color, with: '#555555'
         expect do
           click_button 'Create Tag'
+          expect(page).to have_text('Tag created.')
         end.to change { current_project.tags.count }.by(1)
-        expect(page).to have_text('Tag created.')
         page.find('td.select-checkbox', match: :first).click
         click_button('Tag')
         expect(page).to have_link('Ultra')
@@ -111,7 +111,7 @@ describe 'Tag pages:' do
 
       it 'renders manage tags' do
         click_link 'Manage Tags'
-        expect(current_path).to eq(project_tags_path(current_project))
+        expect(page).to have_current_path(project_tags_path(current_project))
       end
     end
   end

@@ -90,16 +90,16 @@ describe 'QA issue evidence' do
       it 'updates the state and shows the next evidence ready for review' do
         click_button 'Published'
 
-        expect(evidence.reload.state).to eq 'published'
         expect(page).to have_current_path(project_qa_issue_evidence_path(current_project, issue, other_evidence))
+        expect(evidence.reload.state).to eq 'published'
       end
     end
 
     it 'redirects to the evidence tab when there is no more evidence ready for review' do
       click_button 'Published'
 
-      expect(evidence.reload.state).to eq 'published'
       expect(page).to have_current_path(project_qa_issue_path(current_project, issue, tab: 'evidence-tab'))
+      expect(evidence.reload.state).to eq 'published'
     end
   end
 

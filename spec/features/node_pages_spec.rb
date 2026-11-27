@@ -23,7 +23,10 @@ describe 'node pages' do
         find('.main-sidebar .header a').click
       end
 
-      let(:submit_form) { click_button 'Add' }
+      let(:submit_form) do
+        click_button 'Add'
+        expect(page).to have_text 'Successfully created node'
+      end
 
       it 'shows a modal for adding a top-level node' do
         expect(page).to have_field :add_node_label
@@ -56,6 +59,7 @@ describe 'node pages' do
 
         expect do
           click_button 'Add'
+          expect(page).to have_text 'Successfully created 3 nodes'
         end.to change { current_project.nodes.in_tree.count }.by(3) \
           .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(3)
 
@@ -94,6 +98,7 @@ describe 'node pages' do
 
         expect do
           click_button 'Add'
+          expect(page).to have_text 'Successfully created 2 nodes'
         end.to change { current_project.nodes.in_tree.count }.by(2)
 
         expect(
@@ -115,6 +120,7 @@ describe 'node pages' do
         fill_in 'add_node_label', with: 'My new node'
         expect do
           click_button 'Add'
+          expect(page).to have_text 'Successfully created node'
         end.to change { node.children.count }.by(1)
           .and have_enqueued_job(ActivityTrackingJob).with(
             action: 'create',
@@ -143,6 +149,7 @@ describe 'node pages' do
 
         expect do
           click_button 'Add'
+          expect(page).to have_text 'Successfully created 3 nodes'
         end.to change { node.children.count }.by(3)
         .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(3)
 
@@ -196,7 +203,10 @@ describe 'node pages' do
       expect(page).to have_selector('#modal_add_node .modal-title', text: node.label)
       fill_in 'add_node_label', with: 'My new node'
 
-      expect { click_button 'Add' }.to change { node.children.count }.by(1)
+      expect do
+        click_button 'Add'
+        expect(page).to have_text 'Successfully created node'
+      end.to change { node.children.count }.by(1)
       expect(other_node.children.count).to eq 0
     end
   end
@@ -217,6 +227,11 @@ describe 'node pages' do
     end
 
     describe 'submitting a new name' do
+      let(:submit_form) do
+        click_button 'Rename'
+        expect(page).to have_text 'Node updated.'
+      end
+
       before { fill_in :node_new_label, with: 'new node name' }
 
       it "updates the node's name" do
@@ -262,10 +277,8 @@ describe 'node pages' do
 
     describe 'confirming the deletion' do
       let(:submit_form) do
-        within '#modal_delete_node' do
-          click_link 'Delete'
-          expect(current_path).to eq project_path(current_project)
-        end
+        within('#modal_delete_node') { click_link 'Delete' }
+        expect(page).to have_current_path(project_path(current_project))
       end
 
       it 'deletes the node' do
