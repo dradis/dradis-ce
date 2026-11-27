@@ -8,7 +8,11 @@
   <%= render partial: 'breadcrumbs' %>
 <% end %>
 
-<ul class="tabs-container nav nav-tabs main-tabs">
+<ul
+  class="tabs-container nav nav-tabs main-tabs"
+  data-controller="tab-memory"
+  data-local-storage-key="<%= dom_id(@evidence) %>"
+>
   <li class="nav-item">
     <a href="#evidence-tab" data-bs-toggle="tab" class="nav-link active">
       <%= colored_icon_for_model(@evidence, 'fa-flag')%> Evidence

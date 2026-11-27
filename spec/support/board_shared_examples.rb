@@ -171,7 +171,8 @@ shared_examples 'managing boards' do
     before do
       @b = board
       visit boards_path
-      find("a[href='#{project_board_path(current_project, @b)}']").hover
+      toggle = "li[data-board-id='#{@b.id}'] .dropdown-toggle"
+      find(toggle).click if page.has_css?(toggle, wait: 0)
       find("a[href='#{modal_selector}']").click
       expect(page).to have_selector(modal_selector, visible: true)
     end
@@ -271,7 +272,7 @@ shared_examples 'a board page with poller' do
     end
 
     it 'adds the list' do
-      expect(page).to have_selector 'h4', text: /#{@new_list.name}\n0/i
+      expect(page).to have_selector 'h4', text: /#{@new_list.name}\s0/i
     end
   end
 

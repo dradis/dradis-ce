@@ -38,6 +38,18 @@ describe 'Board pages:' do
         expect(page).not_to have_text node_board.name
       end
 
+      it 'displays the task and list counts of each board' do
+        list = create(:list, board: board)
+        create(:list, board: board, previous_id: list.id)
+        create_list(:card, 3, list: list)
+
+        visit project_boards_path(current_project)
+
+        expect(page).to have_text '3 tasks'
+        expect(page).to have_text '2 lists'
+        expect(page).to have_text 'Last updated'
+      end
+
       context 'creating a board using a template', js: true do
         it 'creates the board using the template data' do
           template_path = Rails.root.join('spec/fixtures/files/methodologies/')
