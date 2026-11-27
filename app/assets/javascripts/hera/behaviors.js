@@ -103,9 +103,6 @@ document.addEventListener('turbo:load', function () {
     // Activate the issue tag dropdown
     initTagInput(parentElement);
 
-    // Activate the state dropdown
-    initStateButton(parentElement);
-
     // Fetch content
     $(parentElement)
       .find('[data-behavior~=fetch]')
