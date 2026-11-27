@@ -104,6 +104,8 @@ describe 'Issues pages' do
               within '.btn-states' do
                 click_button 'Toggle Dropdown'
                 find('label', text: 'Ready for review').click
+                expect(page).to have_button('Create Issue (Ready for review)')
+                expect(page).to have_css('[data-state-button-target="record"][data-state="ready_for_review"]')
               end
               expect { submit_form }.to change { current_project.issues.count }.by(1)
               issue = current_project.issues.last
@@ -114,6 +116,8 @@ describe 'Issues pages' do
               within '.btn-states' do
                 click_button 'Toggle Dropdown'
                 find('label', text: 'Published').click
+                expect(page).to have_button('Create Issue (Published)')
+                expect(page).to have_css('[data-state-button-target="record"][data-state="published"]')
               end
               expect { submit_form }.to change { current_project.issues.count }.by(1)
               issue = current_project.issues.last
@@ -246,6 +250,8 @@ describe 'Issues pages' do
               within '.btn-states' do
                 click_button 'Toggle Dropdown'
                 find('label', text: 'Draft').click
+                expect(page).to have_button('Update Issue (Draft)')
+                expect(page).to have_css('[data-state-button-target="record"][data-state="draft"]')
               end
               submit_form
               expect(@issue.reload.state).to eq('draft')
@@ -255,6 +261,8 @@ describe 'Issues pages' do
               within '.btn-states' do
                 click_button 'Toggle Dropdown'
                 find('label', text: 'Ready for review').click
+                expect(page).to have_button('Update Issue (Ready for review)')
+                expect(page).to have_css('[data-state-button-target="record"][data-state="ready_for_review"]')
               end
               submit_form
               expect(@issue.reload.state).to eq('ready_for_review')
@@ -267,6 +275,8 @@ describe 'Issues pages' do
               within '.btn-states' do
                 click_button 'Toggle Dropdown'
                 find('label', text: 'Published').click
+                expect(page).to have_button('Update Issue (Published)')
+                expect(page).to have_css('[data-state-button-target="record"][data-state="published"]')
               end
               submit_form
               expect(@issue.reload.state).to eq('published')
