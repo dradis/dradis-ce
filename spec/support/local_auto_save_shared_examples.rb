@@ -108,6 +108,7 @@ shared_examples 'a form with local auto save' do |klass, action|
         scroll_to(:bottom)
       end
       click_link 'Cancel'
+      expect(page).to have_no_current_path(model_path, ignore_query: true)
       visit model_path
       click_link 'Source'
 
