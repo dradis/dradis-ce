@@ -104,7 +104,7 @@ document.addEventListener('turbo:load', function () {
     initTagInput(parentElement);
   }
 
-  window.initBehaviors = initBehaviors
+  window.initBehaviors = initBehaviors;
 
   document.addEventListener('turbo:load', function () {
     initBehaviors(document.querySelector('body'));
