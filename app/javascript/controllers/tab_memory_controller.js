@@ -10,6 +10,11 @@ export default class extends Controller {
 
   connect() {
     this.storageKey = `dradis:tab-memory:${this.element.dataset.localStorageKey}`;
+    // Keep the original default when Turbo snapshots an already-switched strip.
+    if (this.element.dataset.tabMemoryDefault === undefined) {
+      const activeTab = this.tabs.find((tab) => tab.classList.contains('active'));
+      this.element.dataset.tabMemoryDefault = activeTab ? this.tabTarget(activeTab) : '';
+    }
     this.element.addEventListener('click', this.clicked);
     this.element.addEventListener('shown.bs.tab', this.shown);
     this.restore();
@@ -49,7 +54,11 @@ export default class extends Controller {
     if (!this.findTab(target)) return;
 
     try {
-      localStorage.setItem(this.storageKey, target);
+      if (target === this.element.dataset.tabMemoryDefault) {
+        localStorage.removeItem(this.storageKey);
+      } else {
+        localStorage.setItem(this.storageKey, target);
+      }
     } catch {
       // A blocked or full localStorage must not prevent navigation.
     }

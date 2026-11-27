@@ -33,12 +33,25 @@ describe 'Issue tab memory', js: true do
     expect_active_tab(other_tab)
   end
 
-  it 'gives an explicit URL precedence and remembers it even when already active' do
+  it 'only stores a preference while a non-default tab is selected' do
+    visit record_path
+    expect_active_tab(default_tab)
+    expect(page.evaluate_script('localStorage.getItem(arguments[0])', storage_key)).to be_nil
+
+    select_tab(other_tab)
+    expect(page.evaluate_script('localStorage.getItem(arguments[0])', storage_key)).to eq(other_tab)
+
+    select_tab(default_tab)
+    expect(page.evaluate_script('localStorage.getItem(arguments[0])', storage_key)).to be_nil
+  end
+
+  it 'clears the preference when an explicit URL opens the default tab' do
     visit record_path
     select_tab(other_tab)
 
     visit "#{record_path}?tab=#{default_tab.delete_prefix('#')}"
     expect_active_tab(default_tab)
+    expect(page.evaluate_script('localStorage.getItem(arguments[0])', storage_key)).to be_nil
 
     visit record_path
     expect_active_tab(default_tab)
