@@ -44,7 +44,7 @@
             <% if @nodes.any? %>
               <div class="mb-3">
                 <%= f.label :node_ids, class: 'visually-hidden' %>
-                <%= f.collection_select :node_ids, @nodes_for_add_evidence, :id, :label, {}, { class: 'form-select', multiple: 'multiple' } %>
+                <%= f.collection_select :node_ids, @nodes_for_add_evidence, :id, :label, {}, { class: 'form-select', multiple: 'multiple', data: { controller: 'combobox' } } %>
               </div>
             <% else %>
               <p>There are no existing nodes yet. <a href="#modal_add_node" data-bs-toggle="modal" tabindex="-1">Create one</a>.</p>
@@ -84,7 +84,7 @@
                   :id,
                   :label,
                   { include_blank: 'The root of the tree' },
-                  { class: 'form-select' }
+                  { class: 'form-select', data: { controller: 'combobox' } }
                 ) %>
         </div>
       </div>

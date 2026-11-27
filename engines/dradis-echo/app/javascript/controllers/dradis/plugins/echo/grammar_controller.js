@@ -270,9 +270,9 @@ export default class extends Controller {
     const contentEl = this._contentEl();
 
     if (contentEl) {
-      contentEl.dataset.content = newRaw;
+      contentEl.dataset.liquidAsyncContentValue = newRaw;
 
-      fetch(contentEl.dataset.path, {
+      fetch(contentEl.dataset.liquidAsyncUrlValue, {
         method:  'POST',
         headers: {
           'Accept':       'text/html',
