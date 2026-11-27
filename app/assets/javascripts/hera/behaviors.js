@@ -122,73 +122,8 @@ document.addEventListener('turbo:load', function () {
           });
       });
 
-    // Init Bootstrap tooltips with 1ms delay for tooltips within <script type='text/x-tmpl'>
-    setTimeout(function () {
-      const tooltipTriggerList = document.querySelectorAll(
-        '[data-bs-toggle="tooltip"]'
-      );
-      [...tooltipTriggerList].map(
-        (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
-      );
-    }, 1);
-
-    // Initialize clipboard.js
-    const clipboard = new Clipboard(
-      parentElement.querySelectorAll('[data-clipboard-text]')
-    );
-
-    clipboard.on('success', function (e) {
-      const $copyBtn = $(e.trigger);
-      e.clearSelection();
-      $copyBtn.tooltip({
-        placement: 'bottom',
-        title: 'Copied to clipboard!',
-        trigger: 'manual',
-      });
-      $copyBtn.tooltip('show');
-      setTimeout(function () {
-        $copyBtn.tooltip('hide');
-      }, 1000);
-    });
-
-    clipboard.on('error', function (e) {
-      const actionKey = e.action === 'cut' ? 'X' : 'C',
-        $copyBtn = $(e.trigger);
-      let actionMsg;
-
-      if (/Mac/i.test(navigator.userAgent)) {
-        actionMsg = 'Press ⌘-' + actionKey + ' to ' + e.action;
-      } else {
-        actionMsg = 'Press Ctrl-' + actionKey + ' to ' + e.action;
-      }
-
-      $copyBtn.tooltip({
-        placement: 'bottom',
-        title: actionMsg,
-        trigger: 'manual',
-      });
-      $copyBtn.tooltip('show');
-      setTimeout(function () {
-        $copyBtn.tooltip('hide');
-      }, 1000);
-    });
-
     // Render Liquid dynamic content
     initLiquidAsync(parentElement);
-
-    // Sortable lists
-    $('[data-behavior~=ui-sortable]').sortable({
-      axis: 'y',
-      containment: 'parent',
-      cursor: 'grabbing',
-      handle: '.fa-grip-vertical',
-      update: function () {
-        $.post(
-          $(this).data('sort-url'),
-          $(this).sortable('serialize', { key: 'sorted_ids[]' })
-        );
-      },
-    });
 
     window.initBehaviors = initBehaviors;
   }
