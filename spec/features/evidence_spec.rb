@@ -107,6 +107,7 @@ describe 'evidence' do
         choose 'evidence_state_ready_for_review', allow_label_click: true
 
         submit_form
+        expect(page).to have_text 'Evidence updated.'
 
         expect(@evidence.reload.state).to eq 'ready_for_review'
       end
@@ -151,6 +152,11 @@ describe 'evidence' do
     end
 
     describe 'submitting the form with valid information', js: true do
+      let(:submit_form) do
+        click_button 'Update Evidence'
+        expect(page).to have_text 'Evidence updated.'
+      end
+
       let(:new_content) { 'new content' }
       before do
         fill_in :evidence_content, with: new_content
@@ -232,6 +238,11 @@ describe 'evidence' do
       it 'uses the textile-editor plugin'
 
       describe 'submitting the form with valid information' do
+        let(:submit_form) do
+          click_button 'Create Evidence'
+          expect(page).to have_text 'Evidence added'
+        end
+
         before do
           find('#evidence_issue_id + .combobox').click
           find('.combobox-option', text: @issue_1.title).click
@@ -256,6 +267,11 @@ describe 'evidence' do
       end
 
       context 'submitting the form without an existing issue' do
+        let(:submit_form) do
+          click_button 'Create Evidence'
+          expect(page).to have_text 'Evidence added'
+        end
+
         before do
           @issue_0.destroy
           @issue_1.destroy

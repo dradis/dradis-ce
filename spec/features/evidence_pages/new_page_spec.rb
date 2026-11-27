@@ -32,7 +32,10 @@ describe 'Evidence new page' do
         find('.combobox-option', text: @node.label).click
       end
 
-      expect { click_button('Create Evidence') }.to change { Evidence.count }.by(1)
+      expect do
+        click_button('Create Evidence')
+        expect(page).to have_text 'Evidence added for selected nodes.'
+      end.to change { Evidence.count }.by(1)
 
       evidence = Evidence.last
       expect(evidence.content).to eq(NoteTemplate.find('simple_note').content.gsub("\n", "\r\n"))
@@ -61,6 +64,7 @@ describe 'Evidence new page' do
 
       expect do
         click_button('Create Evidence')
+        expect(page).to have_text 'Evidence added for selected nodes.'
       end.to change { Evidence.count }.by(2).and change { Node.count }.by(1)
 
       # Check if existing nodes' parents have their parent changed
@@ -93,7 +97,10 @@ describe 'Evidence new page' do
       expect(page).to have_field 'evidence_state_draft', checked: true, visible: :all
       choose 'evidence_state_ready_for_review', allow_label_click: true
 
-      expect { click_button('Create Evidence') }.to change { Evidence.count }.by(1)
+      expect do
+        click_button('Create Evidence')
+        expect(page).to have_text 'Evidence added for selected nodes.'
+      end.to change { Evidence.count }.by(1)
       expect(Evidence.last.state).to eq 'ready_for_review'
     end
 
@@ -102,7 +109,10 @@ describe 'Evidence new page' do
         find('.combobox').click
         find('.combobox-option', text: @node.label).click
       end
-      expect { click_button('Create Evidence') }.to change { Evidence.count }.by(1)
+      expect do
+        click_button('Create Evidence')
+        expect(page).to have_text 'Evidence added for selected nodes.'
+      end.to change { Evidence.count }.by(1)
       expect(@node.reload.evidence.last.author).to eq(@logged_in_as.email)
     end
 

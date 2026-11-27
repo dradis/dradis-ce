@@ -38,7 +38,7 @@ shared_examples 'a form with local auto save' do |klass, action|
       check @first_user.name
     elsif klass == Evidence
       find('#evidence_issue_id + .combobox').click
-      find('.combobox-menu .combobox-option', text:  @issue_1.title).click
+      find('.combobox-menu .combobox-option', text: @issue_1.title).click
     elsif klass == Issue
       dropdown_toggle = page.find('.dropdown-toggle span.tag')
       dropdown_toggle.click
@@ -54,7 +54,7 @@ shared_examples 'a form with local auto save' do |klass, action|
 
   context 'when form is not saved' do
     it 'prefill fields with cached data' do
-      page.driver.browser.navigate.refresh
+      page.refresh
       click_link 'Source'
 
       if action == :new
@@ -82,6 +82,7 @@ shared_examples 'a form with local auto save' do |klass, action|
       within '.content-container' do
         page.find('[type="submit"]').click
       end
+      expect(page).to have_no_current_path(model_path, ignore_query: true)
       visit model_path
       click_link 'Source'
 
@@ -107,6 +108,7 @@ shared_examples 'a form with local auto save' do |klass, action|
         scroll_to(:bottom)
       end
       click_link 'Cancel'
+      expect(page).to have_no_current_path(model_path, ignore_query: true)
       visit model_path
       click_link 'Source'
 
@@ -136,7 +138,7 @@ shared_examples 'a form with local auto save' do |klass, action|
 
       context 'when form is not saved' do
         it 'prefill fields with cached data' do
-          page.driver.browser.navigate.refresh
+          page.refresh
           click_link 'Source'
 
           model_attributes_for_template.each do |model_attribute|
@@ -157,6 +159,7 @@ shared_examples 'a form with local auto save' do |klass, action|
           within '.content-container' do
             page.find('[type="submit"]').click
           end
+          expect(page).to have_no_current_path(model_path, ignore_query: true)
           visit "#{model_path}?template=simple_note"
           click_link 'Source'
 

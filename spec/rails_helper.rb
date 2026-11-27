@@ -39,29 +39,33 @@ if ENV['SELENIUM_HOST']
   Capybara.server_port = 3001
 end
 
-Capybara.register_driver :firefox do |app|
+Capybara.register_driver :chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new(
+    args: %w[--headless=new --disable-gpu --window-size=1400,1400]
+  )
+  # Chrome saves downloads to ~/Downloads by default; keep them in tmp instead.
+  options.add_preference(:download, default_directory: Rails.root.join('tmp/downloads').to_s, prompt_for_download: false)
+
   if ENV['SELENIUM_HOST']
     Capybara::Selenium::Driver.new(
       app,
       browser: :remote,
       clear_local_storage: true,
       url: "http://#{ENV['SELENIUM_HOST']}:4444",
-      options: Selenium::WebDriver::Firefox::Options.new
+      options: options
     )
   else
     Capybara::Selenium::Driver.new(
       app,
-      browser: :firefox,
+      browser: :chrome,
       clear_local_storage: true,
-      options: Selenium::WebDriver::Firefox::Options.new(
-        args: %w[--headless --disable-gpu]
-      )
+      options: options
     )
   end
 end
 
 Capybara.server = :puma, { Silent: true }
-Capybara.javascript_driver = :firefox
+Capybara.javascript_driver = :chrome
 Selenium::WebDriver.logger
 
 RSpec.configure do |config|
@@ -110,6 +114,7 @@ RSpec.configure do |config|
     # tmp/storage so we only need to clean one place.
     FileUtils.rm_rf(Rails.root.join('tmp/storage'))
     FileUtils.mkdir_p(Attachment.pwd)
+    FileUtils.rm_rf(Rails.root.join('tmp/downloads'))
   end
 end
 

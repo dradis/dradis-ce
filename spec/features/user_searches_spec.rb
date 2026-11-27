@@ -25,7 +25,7 @@ describe 'User searches', type: :feature do
       fill_in 'q', with: 'test', visible: false
       click_on 'search-btn'
     end
-    expect(page.current_path).to eq project_search_path(current_project)
+    expect(page).to have_current_path(project_search_path(current_project), ignore_query: true)
     expect(page).to have_content 'Search Results: test'
   end
 

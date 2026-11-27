@@ -48,6 +48,7 @@ describe 'moving an evidence', js: true do
         click_link @node_1.label
         click_submit
       end
+      expect(page).to have_text 'Evidence updated.'
     end
 
     it 'should update the evidence\'s node_id' do

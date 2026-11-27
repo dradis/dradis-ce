@@ -53,6 +53,7 @@ describe 'Board pages:' do
             find('#board_new_board_template ~ .combobox').click
             find('.combobox-option', text: 'Methodology Template v3').click
             click_button 'Add methodology'
+            expect(page).to have_text 'Methodology added.'
           end.to change { Board.count }.by(1)
         end
       end

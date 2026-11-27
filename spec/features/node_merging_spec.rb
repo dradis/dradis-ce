@@ -116,5 +116,6 @@ describe 'merging a node', js: true do
 
   def within_merge_node_modal
     within('#modal_merge_node') { yield }
+    expect(page).to have_text "#{source_node.label} merged into #{target_node.label}."
   end
 end

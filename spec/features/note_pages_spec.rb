@@ -15,8 +15,8 @@ describe 'note pages' do
   end
 
   example 'show page with wrong Node ID in URL' do
-    node       = create(:node, project: current_project)
-    note       = create(:note, node: node)
+    node = create(:node, project: current_project)
+    note = create(:note, node: node)
     wrong_node = create(:node, project: current_project)
     expect do
       visit project_node_note_path(current_project, wrong_node, note)
@@ -37,9 +37,9 @@ describe 'note pages' do
 
     it "shows the note's contents" do
       should have_selector 'h5', text: 'Title'
-      should have_selector 'p',  text: 'My note'
+      should have_selector 'p', text: 'My note'
       should have_selector 'h5', text: 'Description'
-      should have_selector 'p',  text: 'My description'
+      should have_selector 'p', text: 'My description'
     end
 
     let(:commentable) { @note }
@@ -111,6 +111,10 @@ describe 'note pages' do
     # TODO handle the case where a Note has no paperclip versions (legacy data)
 
     describe 'submitting the form with valid information', js: true do
+      let(:submit_form) do
+        click_button 'Update Note'
+        expect(page).to have_text 'Note updated.'
+      end
       let(:new_content) { 'New note text' }
       before do
         fill_in :note_text, with: new_content
@@ -195,6 +199,10 @@ describe 'note pages' do
       it_behaves_like 'a form with a help button'
 
       describe 'submitting the form with valid information' do
+        let(:submit_form) do
+          click_button 'Create Note'
+          expect(page).to have_text 'Note created'
+        end
         let(:new_note) { @node.notes.order('created_at ASC').last }
 
         before do
@@ -238,7 +246,7 @@ describe 'note pages' do
     end
 
     context 'when a NoteTemplate is specified' do
-      let(:params)  { { template: 'simple_note' } }
+      let(:params) { { template: 'simple_note' } }
 
       it 'pre-populates the textarea with the template contents' do
         click_link 'Fields'

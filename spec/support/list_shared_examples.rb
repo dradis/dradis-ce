@@ -9,10 +9,10 @@ shared_examples 'managing lists' do
   let(:delete_link) do
     "a[href='#{project_board_list_path(current_project, @board, @list)}'][data-method='delete']"
   end
-  
+
   before do
     @board = board
-    @list  = create(:list, board: @board)
+    @list = create(:list, board: @board)
     @list2 = create(:list, board: @board, previous_id: @list.id)
     visit board_path
   end
@@ -29,7 +29,7 @@ shared_examples 'managing lists' do
   end
 
   it 'contains a link to add a card to the lists' do
-    expect(page).to have_selector("a[href='#{new_project_board_list_card_path(current_project, @board,@list)}']")
+    expect(page).to have_selector("a[href='#{new_project_board_list_card_path(current_project, @board, @list)}']")
   end
 
   describe 'adding a list' do
@@ -52,7 +52,7 @@ shared_examples 'managing lists' do
           submit_form
           expect(page).to have_text('List added.')
           expect(page).to have_current_path(board_path)
-        end.to change{List.count}.by(1)
+        end.to change { List.count }.by(1)
       end
 
       include_examples 'creates an Activity', :create, List
@@ -88,6 +88,11 @@ shared_examples 'managing lists' do
     end
 
     describe 'submitting the form with valid information' do
+      let(:submit_form) do
+        click_button 'Update list'
+        expect(page).to have_text(/List renamed/i)
+      end
+
       before do
         within modal_selector do
           fill_in "new_list_#{@list.id}_name", with: 'New List Name'
@@ -100,7 +105,7 @@ shared_examples 'managing lists' do
           expect(page).to have_text(/List renamed/i)
           expect(page).to have_text(/New List Name/i)
           expect(page).to have_current_path(board_path)
-        end.not_to(change { List.count } )
+        end.not_to(change { List.count })
       end
 
       include_examples 'creates an Activity', :update, @list
@@ -149,8 +154,8 @@ shared_examples 'managing lists' do
 
   it 'displays assignees in each card' do
     # create card with 2 assigned users
-    @card        = create(:card, list: @list)
-    @first_user  = create(:user)
+    @card = create(:card, list: @list)
+    @first_user = create(:user)
     @second_user = create(:user)
     @card.assignees << [@first_user, @second_user]
     @card.save
