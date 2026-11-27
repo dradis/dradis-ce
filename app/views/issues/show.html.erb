@@ -53,8 +53,8 @@
             content_tag :div,
             spinner_tag,
             data: {
-              behavior: 'fetch',
-              path: project_issue_evidence_index_path(issue_id: @issue.id)
+              controller: 'fetch',
+              fetch_url_value: project_issue_evidence_index_path(issue_id: @issue.id)
             }
           %>
         </div>
@@ -67,8 +67,9 @@
       <%= content_tag :div,
           spinner_tag,
           data: {
-            behavior: 'fetch fetch-comments',
-            path: comments_path(
+            behavior: 'fetch-comments',
+            controller: 'fetch',
+            fetch_url_value: comments_path(
               comment: {
                 commentable_type: @issue.class,
                 commentable_id: @issue.id
@@ -84,8 +85,9 @@
       <%= content_tag :div,
           spinner_tag,
           data: {
-            behavior: 'fetch fetch-subscriptions',
-            path: subscriptions_path(
+            behavior: 'fetch-subscriptions',
+            controller: 'fetch',
+            fetch_url_value: subscriptions_path(
               subscription: {
                 subscribable_type: @issue.class,
                 subscribable_id: @issue.id
