@@ -20,8 +20,6 @@ export default class extends Controller {
         body: JSON.stringify({ text: this.contentValue }),
         signal,
       })
-      if (!response.ok) throw new Error(`Liquid preview failed: ${response.status}`)
-
       const html = await response.text()
       if (signal.aborted) return
 
