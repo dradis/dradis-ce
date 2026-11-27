@@ -29,7 +29,7 @@ class ComboBox {
 
   init() {
     if (this.isAlreadyInitialized()) {
-      this.reinitialize();
+      this.restoreSelect(this.$target.parent());
     }
 
     this.buildDom();
@@ -44,14 +44,31 @@ class ComboBox {
     return this.$target.parent().is('[data-behavior~=combobox-container]');
   }
 
-  reinitialize() {
-    const $existingContainer = this.$target.parent(),
-      $targetParent = $existingContainer.parent(),
-      $targetSelect = this.$target.clone();
+  destroy() {
+    if (!this.$comboboxContainer) return;
 
-    $targetSelect.appendTo($targetParent);
-    $existingContainer.remove();
-    this.$target = $targetSelect;
+    this.observer.disconnect();
+    this.popper?.destroy();
+    this.remoteFilterAbortController?.abort();
+    clearTimeout(this.debounceTimeout);
+    clearTimeout(this.refreshTimeout);
+    this.$target.off('.combobox');
+    this.restoreSelect(this.$comboboxContainer);
+    this.$comboboxContainer = null;
+  }
+
+  restoreSelect($container) {
+    if (!$container.is('[data-combobox-select-was-hidden]')) {
+      this.$target.removeClass('d-none');
+    }
+
+    if (this.$target.parent().is($container)) {
+      $container.replaceWith(this.$target);
+    } else {
+      this.$combobox.remove();
+      this.$comboboxMenu.remove();
+      $container.replaceWith($container.contents());
+    }
   }
 
   // ==========================================================================
@@ -59,6 +76,8 @@ class ComboBox {
   // ==========================================================================
 
   buildDom() {
+    const wasHidden = this.$target.hasClass('d-none');
+
     this.$target
       .addClass('d-none')
       .wrap(
@@ -66,6 +85,7 @@ class ComboBox {
       );
 
     this.$comboboxContainer = this.$target.parent();
+    if (wasHidden) this.$comboboxContainer.attr('data-combobox-select-was-hidden', '');
 
     this.$comboboxContainer.append(`
       <div
@@ -189,7 +209,8 @@ class ComboBox {
       // setTimeout to let other handlers run first, then update UI to match
       // the final selected value. This is needed to support other scripts
       // canceling the change event (ie. browser alert in Mappings Manager).
-      setTimeout(() => {
+      clearTimeout(this.refreshTimeout);
+      this.refreshTimeout = setTimeout(() => {
         this.refreshComboboxUI();
       }, 0);
     });
@@ -206,7 +227,7 @@ class ComboBox {
   }
 
   setupMutationObserver() {
-    const observer = new MutationObserver((mutations) => {
+    this.observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         // Handle changes to the `disabled` attribute of the target select
         if (mutation.attributeName === 'disabled') {
@@ -235,7 +256,7 @@ class ComboBox {
       });
     });
 
-    observer.observe(this.$target[0], {
+    this.observer.observe(this.$target[0], {
       attributes: true,
       childList: true,
     });
@@ -320,9 +341,14 @@ class ComboBox {
           </div>`,
         );
 
-        fetch(url + '?query=' + filterText)
+        this.remoteFilterAbortController ??= new AbortController();
+        const { signal } = this.remoteFilterAbortController;
+
+        fetch(`${url}?query=${filterText}`, { signal })
           .then((response) => response.json())
           .then((data) => {
+            if (signal.aborted) return;
+
             if (data.length) {
               data.forEach((option) => {
                 const $option = $(
@@ -337,6 +363,9 @@ class ComboBox {
                 .toggleClass('d-none', true);
             }
             this.$comboboxMenu.find('[data-behavior~=spinner]').remove();
+          })
+          .catch((error) => {
+            if (error.name !== 'AbortError') throw error;
           });
       } else {
         let matchedOptions = 0;

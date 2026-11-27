@@ -33,7 +33,7 @@
             <% if @templates.any? %>
               <div>
                 <%= f.label :new_board_template, 'List of methodology templates', class: 'visually-hidden' %>
-                <%= select_tag 'template', options_from_collection_for_select(@templates, :id, :name), class: 'my-1 form-select', id: 'board_new_board_template', data: { behavior: 'new-board-template' } %>
+                <%= select_tag 'template', options_from_collection_for_select(@templates, :id, :name), class: 'my-1 form-select', id: 'board_new_board_template', data: { behavior: 'new-board-template', controller: 'combobox' } %>
               </div>
             <% else %>
               <p class="mb-0">

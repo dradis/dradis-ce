@@ -23,13 +23,13 @@
             <%= label_tag :uploader do %>
               <h5>1. Tool you are uploading output from</h5>
             <% end %>
-            <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { class: 'form-select', data: { behavior: 'tool-select' } } %>
+            <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { class: 'form-select', data: { behavior: 'tool-select', controller: 'combobox' } } %>
           </div>
           <div class="mb-5">
             <%= label_tag :state do %>
               <h5>2. State of uploaded records</h5>
             <% end %>
-            <%= select_tag 'state', options_for_select(Issue.states.map { |s, id| [s.humanize, s] }), { class: 'form-select state-select', data: { behavior: 'state-select' } } %>
+            <%= select_tag 'state', options_for_select(Issue.states.map { |s, id| [s.humanize, s] }), { class: 'form-select state-select', data: { behavior: 'state-select', controller: 'combobox' } } %>
           </div>
           <div class="mb-4">
             <%= label_tag :file do %>

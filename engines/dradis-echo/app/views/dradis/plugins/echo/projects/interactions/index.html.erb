@@ -30,7 +30,7 @@
         <div class="row" data-controller="dradis--plugins--echo--prompt-selector">
           <div class="col-12 mb-3">
             <p class="form-label">Saved Prompts</p>
-            <select class="form-select">
+            <select class="form-select" data-controller="combobox">
               <% @prompts.each do |prompt| %>
                 <option
                   data-combobox-option-icon="fa-solid <%= prompt.icon %>"
