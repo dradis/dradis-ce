@@ -6,6 +6,7 @@
     - msgpack, sanitize
   - Bugs fixes:
     - Alerts: tone down alerts in dark mode and keep their links readable
+    - Projects: update image URLs that use the new image syntax when importing a project package
     - Uploads: report failed background uploads as failed in the API
     - [entity]:
       - [future tense verb] [bug fix]

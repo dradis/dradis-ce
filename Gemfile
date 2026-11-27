@@ -229,7 +229,7 @@ gem 'dradis-api', path: 'engines/dradis-api'
 gem 'dradis-echo', path: 'engines/dradis-echo'
 
 # Import / export project data
-gem 'dradis-projects', '~> 5.5.0'
+gem 'dradis-projects', github: 'dradis/dradis-projects', branch: 'projects/remap-styled-image-urls'
 
 plugins_file = 'Gemfile.plugins'
 if File.exist?(plugins_file)
