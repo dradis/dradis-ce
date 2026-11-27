@@ -122,13 +122,6 @@ document.addEventListener('turbo:load', function () {
           });
       });
 
-    // Initialize ComboBox
-    $(parentElement)
-      .find('select:not(.custom-select)')
-      .each(function () {
-        new ComboBox($(this));
-      });
-
     // Render Liquid dynamic content
     initLiquidAsync(parentElement);
 
@@ -142,8 +135,7 @@ document.addEventListener('turbo:load', function () {
   // Native <turbo-frame> navigations (including loading="lazy") don't fire
   // turbo:load. Turbo repaints between swapping the frame contents and firing
   // turbo:frame-load, so initialize behaviors as part of the swap itself to
-  // avoid painting uninitialized markup (e.g. a native select before its
-  // ComboBox replaces it).
+  // avoid painting uninitialized markup.
   document.addEventListener('turbo:before-frame-render', function (event) {
     const render = event.detail.render;
 
