@@ -102,25 +102,9 @@ document.addEventListener('turbo:load', function () {
 
     // Activate the issue tag dropdown
     initTagInput(parentElement);
-
-    // Fetch content
-    $(parentElement)
-      .find('[data-behavior~=fetch]')
-      .each(function () {
-        var that = this;
-        $.ajax(that.dataset.path, { credentials: 'include' })
-          .then(function (response) {
-            return response;
-          })
-          .then(function (html) {
-            $(that).html(html);
-            $(that).trigger('dradis:fetch');
-            initBehaviors(that);
-          });
-      });
-
-    window.initBehaviors = initBehaviors;
   }
+
+  window.initBehaviors = initBehaviors
 
   document.addEventListener('turbo:load', function () {
     initBehaviors(document.querySelector('body'));

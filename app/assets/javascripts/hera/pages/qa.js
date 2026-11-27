@@ -12,7 +12,7 @@
   });
 
   // QA content fetched into the page after turbo:load (e.g. a tab loaded via
-  // [data-behavior~=fetch]) needs its own qa-visible links toggled, since the
+  // the fetch controller) needs its own qa-visible links toggled, since the
   // turbo:load handler above already ran before this content existed.
   $(document).on('dradis:fetch', '[data-behavior~=qa-viewer]', (event) => {
     toggleQaVisibility(event.target);

@@ -65,8 +65,9 @@
         <%= content_tag :div,
             spinner_tag,
             data: {
-              behavior: 'fetch fetch-comments',
-              path: comments_path(
+              behavior: 'fetch-comments',
+              controller: 'fetch',
+              fetch_url_value: comments_path(
                 comment: {
                   commentable_type: @card.class,
                   commentable_id: @card.id
@@ -80,8 +81,9 @@
         <%= content_tag :div,
             spinner_tag,
             data: {
-              behavior: 'fetch fetch-subscriptions',
-              path: subscriptions_path(
+              behavior: 'fetch-subscriptions',
+              controller: 'fetch',
+              fetch_url_value: subscriptions_path(
                 subscription: {
                   subscribable_type: @card.class,
                   subscribable_id: @card.id

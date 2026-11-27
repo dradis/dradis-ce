@@ -72,8 +72,9 @@
             content_tag :div,
             spinner_tag,
             data: {
-              behavior: 'fetch qa-viewer',
-              path: project_qa_issue_evidence_index_path(current_project, @issue)
+              behavior: 'qa-viewer',
+              controller: 'fetch',
+              fetch_url_value: project_qa_issue_evidence_index_path(current_project, @issue)
             }
           %>
         </div>
@@ -94,8 +95,9 @@
       <%= content_tag :div,
           spinner_tag,
           data: {
-            behavior: 'fetch fetch-comments',
-            path: comments_path(
+            behavior: 'fetch-comments',
+            controller: 'fetch',
+            fetch_url_value: comments_path(
               comment: {
                 commentable_type: @issue.class,
                 commentable_id: @issue.id
@@ -111,8 +113,9 @@
       <%= content_tag :div,
           spinner_tag,
           data: {
-            behavior: 'fetch fetch-subscriptions',
-            path: subscriptions_path(
+            behavior: 'fetch-subscriptions',
+            controller: 'fetch',
+            fetch_url_value: subscriptions_path(
               subscription: {
                 subscribable_type: @issue.class,
                 subscribable_id: @issue.id
