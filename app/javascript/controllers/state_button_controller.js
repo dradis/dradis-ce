@@ -22,7 +22,7 @@ export default class extends Controller {
   }
 
   toggleTargetConnected(toggle) {
-    if (toggle.getAttribute("aria-expanded") === "true") {
+    if (toggle.getAttribute('aria-expanded') === 'true') {
       bootstrap.Dropdown.getOrCreateInstance(toggle).hide()
     }
   }
