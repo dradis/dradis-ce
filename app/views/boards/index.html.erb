@@ -34,12 +34,12 @@
             <span class="board-tile-updated">Last updated <%= local_time_ago(board.updated_at) %></span>
             <span class="board-tile-stats">
               <span>
-                <i class="fa-regular fa-address-card fa-fw"></i>
-                <%= pluralize(board.lists.sum { |list| list.cards.size }, 'task') %>
-              </span>
-              <span>
                 <i class="fa-solid fa-table-columns fa-fw"></i>
                 <%= pluralize(board.lists.size, 'list') %>
+              </span>
+              <span>
+                <i class="fa-regular fa-address-card fa-fw"></i>
+                <%= pluralize(board.lists.sum { |list| list.cards.size }, 'task') %>
               </span>
             </span>
           <% end %>
