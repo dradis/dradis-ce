@@ -32,6 +32,7 @@
   // Borders & shadows
   --border-color: #{$grey-700};
   --border-color-dark: #{$grey-300};
+  --border-color-medium: #{$grey-600};
 
   // Buttons
   --btn-outline-info-color: #{$green-500};
@@ -140,6 +141,7 @@
   // Borders & shadows
   --border-color: #{$grey-200};
   --border-color-dark: #{$grey-900};
+  --border-color-medium: #{$grey-500};
 
   // Buttons
   --btn-outline-info-color: #{darken($green-700, 10%)};
