@@ -43,6 +43,8 @@ Capybara.register_driver :chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new(
     args: %w[--headless=new --disable-gpu --window-size=1400,1400]
   )
+  # Chrome saves downloads to ~/Downloads by default; keep them in tmp instead.
+  options.add_preference(:download, default_directory: Rails.root.join('tmp/downloads').to_s, prompt_for_download: false)
 
   if ENV['SELENIUM_HOST']
     Capybara::Selenium::Driver.new(
@@ -112,6 +114,7 @@ RSpec.configure do |config|
     # tmp/storage so we only need to clean one place.
     FileUtils.rm_rf(Rails.root.join('tmp/storage'))
     FileUtils.mkdir_p(Attachment.pwd)
+    FileUtils.rm_rf(Rails.root.join('tmp/downloads'))
   end
 end
 
