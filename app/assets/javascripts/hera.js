@@ -54,7 +54,6 @@
 //= require hera/modules/export
 //= require hera/modules/fileupload
 //= require hera/modules/issues
-//= require hera/modules/liquid_async
 //= require hera/modules/nodes
 //= require hera/modules/project_board_colors
 //= require hera/modules/record_locking

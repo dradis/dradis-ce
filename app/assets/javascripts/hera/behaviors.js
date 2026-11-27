@@ -180,9 +180,6 @@ document.addEventListener('turbo:load', function () {
         new ComboBox($(this));
       });
 
-    // Render Liquid dynamic content
-    initLiquidAsync(parentElement);
-
     // Sortable lists
     $('[data-behavior~=ui-sortable]').sortable({
       axis: 'y',
