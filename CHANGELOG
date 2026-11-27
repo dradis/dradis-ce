@@ -1,6 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Editor: add drag and drop reordering of fields
   - Methodologies: show task counts and last update, and tidy up the board layout
+  - Tabs: remember the last selected tab when revisiting a view
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
