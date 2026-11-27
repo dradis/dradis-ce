@@ -5,6 +5,7 @@ export default class extends Controller {
     if (this.combobox) return
 
     this.combobox = new ComboBox($(this.element))
+    this.dispatch('ready')
   }
 
   disconnect() {
