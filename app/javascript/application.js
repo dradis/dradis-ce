@@ -7,3 +7,9 @@ import 'stupidtable'
 import 'controllers'
 
 Turbo.session.drive = false; // Do not enable Turbo Drive globally
+
+// Event delegation, registered once, as the Turbo handbook recommends. <html> is
+// never replaced, so this also covers tooltips added later by frames and streams.
+new bootstrap.Tooltip(document.documentElement, {
+  selector: '[data-bs-toggle="tooltip"]',
+});

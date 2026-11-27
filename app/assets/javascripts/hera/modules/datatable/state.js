@@ -33,10 +33,6 @@ $(document).on('init.dt', function (e, settings) {
       DradisDatatable.prototype.toggleStateBtn.call(api, selectedCount !== 0);
     }.bind(api)
   );
-
-  $('[data-behavior~=datatable-state-button]').click(
-    DradisDatatable.prototype.reenableTooltip
-  )
 });
 
 DradisDatatable.prototype.setupStateButtons = function () {
@@ -117,12 +113,4 @@ DradisDatatable.prototype.updateRecordState = function (newState, canPublish) {
 DradisDatatable.prototype.toggleStateBtn = function (isShown) {
   var stateBtn = this.buttons('stateBtn:name');
   $(stateBtn[0].node).toggleClass('d-none', !isShown);
-};
-
-DradisDatatable.prototype.reenableTooltip = function (e) {
-  var button = $(this).siblings('.dt-button-collection:first').find('.dt-button.disabled');
-
-  if (button.length) {
-    window.initBehaviors(button.html());
-  }
 };
