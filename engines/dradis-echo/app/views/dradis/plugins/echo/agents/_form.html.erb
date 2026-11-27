@@ -56,7 +56,7 @@
     <%= f.select :provider_id,
           @providers.map { |p| [p.name, p.id] },
           { include_blank: 'Select a provider' },
-          class: 'form-select', required: true %>
+          class: 'form-select', required: true, data: { controller: 'combobox' } %>
   </div>
 
   <div class="mb-3">

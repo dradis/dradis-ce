@@ -21,10 +21,8 @@ describe 'issue pages' do
         expect(page).to have_content /You're merging 2 Issues into a target Issue/i
       end
 
-      # After the merge form submits, the redirect lands on Issues#show
-      # which fires an async fetch (liquid_async). Wait for it to
-      # complete (spinner hidden) so it doesn't become a ghost request
-      # after the transactional fixture rolls back.
+      # Wait for the Liquid preview on the issue page before the fixture
+      # transaction rolls back.
       def submit_and_wait
         click_button 'Merge issues'
         expect(page).to have_css('[data-behavior~="liquid-spinner"].d-none', visible: :all)

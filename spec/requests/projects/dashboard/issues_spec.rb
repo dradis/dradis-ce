@@ -47,7 +47,9 @@ describe 'Projects::Dashboard::Issues', type: :request do
 
       get project_dashboard_issues_path(current_project, grouping: 'other')
 
-      expect(response.body).to include('<option selected="selected" value="other">Other</option>')
+      selector = Nokogiri::HTML(response.body).at_css('select[data-issues-summary-target="selector"]')
+      expect(selector['data-controller']).to eq 'combobox'
+      expect(selector.at_css('option[selected]')['value']).to eq 'other'
       expect(response.body).to include('Custom', issue.title)
     end
 

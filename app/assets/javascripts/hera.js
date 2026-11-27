@@ -30,7 +30,6 @@
 //= require hera/modules/mentions
 //= require hera/modules/notifications
 //= require hera/modules/rtp_validation
-//= require hera/modules/state_button
 //= require hera/modules/subscriptions
 
 //= require hera/modules/datatable/main
@@ -54,7 +53,6 @@
 //= require hera/modules/export
 //= require hera/modules/fileupload
 //= require hera/modules/issues
-//= require hera/modules/liquid_async
 //= require hera/modules/nodes
 //= require hera/modules/project_board_colors
 //= require hera/modules/record_locking

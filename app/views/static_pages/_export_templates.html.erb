@@ -8,28 +8,29 @@
 <% end %>
 
 <div class="mt-4">
-  <div class="btn-group btn-states" data-behavior="btn-states">
+  <div class="btn-group btn-states" data-controller="state-button">
     <a 
       href="javascript:void(0)"
       id="export-button"
       class="btn btn-lg btn-primary js-try-pro"
+      data-state-button-target="record"
       data-term="<%= exporter %>-reports"
       data-url=<%= url %>>
       Export 
-      <span data-behavior="state-button"><%= @default_button_state.humanize %></span> 
+      <span data-state-button-target="label"><%= @default_button_state.humanize %></span>
       Records
     </a>
-    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" data-state-button-target="toggle" aria-haspopup="true" aria-expanded="false">
       <span class="visually-hidden">Toggle Dropdown</span>
     </button>
     <div class="dropdown-menu">
       <%= collection_radio_buttons(nil, :scope, [['published', 'published'], ['all', 'all']], :first, :first) do |b| %>
         <span>
           <%= b.label class: 'state', for: "#{exporter}_scope_#{b.value}" do %>
-            <%= b.radio_button id: "#{exporter}_scope_#{b.value}", class: 'd-none', name: "#{exporter}-scope", data: { behavior: 'state-radio' }, checked: b.value == @default_button_state %>
+            <%= b.radio_button id: "#{exporter}_scope_#{b.value}", class: 'd-none', name: "#{exporter}-scope", data: { action: 'change->state-button#select', state_button_label_param: b.text.humanize }, checked: b.value == @default_button_state %>
             <i class="fa-solid fa-check fa-fw"></i>
             <div class="state-label">
-              <p data-behavior="state-label"><%= b.text.humanize %></p>
+              <p><%= b.text.humanize %></p>
               <% case b.value %>
               <% when 'published' %>
                 <span>Only records that have been reviewed and published.</span>
