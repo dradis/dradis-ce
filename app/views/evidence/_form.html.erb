@@ -39,8 +39,10 @@
       link_to 'Cancel',
       @form_cancel_path,
       data: {
-        behavior: class_names('clear-local-auto-save', 'record-locking': @evidence.persisted?),
-        'record-locking-path': @evidence.persisted? ? project_node_evidence_editing_session_path(current_project, @node, @evidence) : nil
+        action: ('record-locking#release' if @evidence.persisted?),
+        behavior: 'clear-local-auto-save',
+        controller: ('record-locking' if @evidence.persisted?),
+        record_locking_path_value: (project_node_evidence_editing_session_path(current_project, @node, @evidence) if @evidence.persisted?)
       }
     %>
   </div>

@@ -35,8 +35,10 @@
       @form_cancel_path,
       class: 'cancel-link',
       data: {
-        behavior: class_names('clear-local-auto-save', 'record-locking': @note.persisted?),
-        'record-locking-path': @note.persisted? ? project_node_note_editing_session_path(current_project, @node, @note) : nil
+        action: ('record-locking#release' if @note.persisted?),
+        behavior: 'clear-local-auto-save',
+        controller: ('record-locking' if @note.persisted?),
+        record_locking_path_value: (project_node_note_editing_session_path(current_project, @node, @note) if @note.persisted?)
       }
     %>
   </div>

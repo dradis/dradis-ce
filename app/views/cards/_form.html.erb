@@ -47,8 +47,10 @@
       @form_cancel_path,
       class: 'cancel-link',
       data: {
-        behavior: class_names('clear-local-auto-save', 'record-locking': @card.persisted?),
-        'record-locking-path': @card.persisted? ? project_board_list_card_editing_session_path(current_project, @board, @list, @card) : nil
+        action: ('record-locking#release' if @card.persisted?),
+        behavior: 'clear-local-auto-save',
+        controller: ('record-locking' if @card.persisted?),
+        record_locking_path_value: (project_board_list_card_editing_session_path(current_project, @board, @list, @card) if @card.persisted?)
       }
     %>
   </div>
