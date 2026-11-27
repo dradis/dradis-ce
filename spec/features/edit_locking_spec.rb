@@ -54,8 +54,9 @@ describe 'Edit locking multi-actor flow' do
       visit edit_project_issue_path(project, issue)
 
       cancel_link = find_link('Cancel')
-      expect(cancel_link['data-behavior']).to include('record-locking')
-      expect(cancel_link['data-record-locking-path']).to eq(project_issue_editing_session_path(project, issue))
+      expect(cancel_link['data-action']).to eq('record-locking#release')
+      expect(cancel_link['data-controller']).to eq('record-locking')
+      expect(cancel_link['data-record-locking-path-value']).to eq(project_issue_editing_session_path(project, issue))
     end
   end
 end
