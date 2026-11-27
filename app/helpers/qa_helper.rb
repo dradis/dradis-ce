@@ -28,7 +28,7 @@ module QAHelper
 
     form_helper.radio_button(
       class: 'd-none',
-      data: { behavior: 'state-radio' },
+      data: { action: 'change->state-button#select', state_button_label_param: form_helper.text.humanize },
       disabled: is_disabled
     )
   end
