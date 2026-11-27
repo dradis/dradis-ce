@@ -1,11 +1,10 @@
 [v#.#.#] ([month] [YYYY])
   - Editor: add drag and drop reordering of fields
+  - Methodologies: show task counts and last update, and tidy up the board layout
   - [entity]:
     - [future tense verb] [feature]
-  - Methodologies: show task counts and last update, and tidy up the board layout
-  - Ruby: Upgrade Ruby version to 4.0.10
   - Upgraded gems:
-    - json, msgpack, puma, sanitize
+    - msgpack, sanitize
   - Bugs fixes:
     - Alerts: tone down alerts in dark mode and keep their links readable
     - Uploads: report failed background uploads as failed in the API
@@ -33,6 +32,11 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v5.5.1 (November 2026)
+  - Ruby: Upgrade Ruby version to 4.0.10
+  - Upgraded gems:
+    - json, puma
 
 v5.5.0 (November 2026)
   - Echo: Allow Roslin's LanguageTool grammar and spell checking language to be changed
