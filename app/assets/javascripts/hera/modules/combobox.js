@@ -65,7 +65,9 @@ class ComboBox {
     if (this.$target.parent().is($container)) {
       $container.replaceWith(this.$target);
     } else {
-      $container.remove();
+      this.$combobox.remove();
+      this.$comboboxMenu.remove();
+      $container.replaceWith($container.contents());
     }
   }
 
