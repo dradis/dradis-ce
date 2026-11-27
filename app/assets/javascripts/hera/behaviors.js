@@ -122,9 +122,6 @@ document.addEventListener('turbo:load', function () {
           });
       });
 
-    // Render Liquid dynamic content
-    initLiquidAsync(parentElement);
-
     window.initBehaviors = initBehaviors;
   }
 
